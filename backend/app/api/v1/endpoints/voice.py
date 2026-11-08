@@ -40,7 +40,8 @@ async def process_voice_query(
     lang = payload.language or QueryUnderstanding.detect_language(query_text)
 
     # Step 0: Intelligent Query Understanding & Entity Extraction
-    analysis = QueryUnderstanding.analyze_query(query_text, context_crop=payload.crop_name)
+    canonical_input_crop = QueryUnderstanding.canonical_crop(payload.crop_name)
+    analysis = QueryUnderstanding.analyze_query(query_text, context_crop=canonical_input_crop)
     crop = analysis.get("crop")
     target_entity = payload.pest_or_disease or analysis.get("target_entity")
 
@@ -129,6 +130,8 @@ async def process_voice_query(
         p = safety_decision.approved_product
         if lang == "te":
             generated_text = f"CIBRC అధికారిక మోతాదు: ఎకరాకు {p.get('dosage_per_acre')} ({p.get('dosage_per_hectare')}). {p.get('safety_precautions')}"
+        elif lang == "hi":
+            generated_text = f"CIBRC आधिकारिक मात्रा: प्रति एकड़ {p.get('dosage_per_acre')} ({p.get('dosage_per_hectare')})। {p.get('safety_precautions')}"
         else:
             generated_text = f"Official CIBRC Dosage: {p.get('dosage_per_acre')} ({p.get('dosage_per_hectare')}). {p.get('safety_precautions')}"
 

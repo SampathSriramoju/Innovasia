@@ -139,6 +139,12 @@ fun HomeScreen(
                 tts.language = locale
             } else {
                 tts.language = Locale.US
+                val missingVoiceMsg = when (currentLang) {
+                    "te" -> "తెలుగు వాయిస్ ప్యాక్ పరికరంలో అందుబాటులో లేదు. డిఫాల్ట్ వాయిస్ ఉపయోగించబడుతోంది."
+                    "hi" -> "डिवाइस पर हिन्दी वॉयस पैक उपलब्ध नहीं है। डिफ़ॉल्ट वॉयस का उपयोग किया जा रहा है।"
+                    else -> "Voice pack not available on device. Using default speech."
+                }
+                android.widget.Toast.makeText(context, missingVoiceMsg, android.widget.Toast.LENGTH_SHORT).show()
             }
             val cleanSpeech = text
                 .replace(Regex("\\[.*?\\]"), "")
@@ -1216,7 +1222,7 @@ fun HomeScreen(
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
                                 Text(
-                                    text = "$label ($cropKey)",
+                                    text = label,
                                     fontSize = 14.sp,
                                     fontWeight = FontWeight.Bold,
                                     color = if (isSelected) CardWhite else Color(0xFF14532D)

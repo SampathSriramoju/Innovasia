@@ -801,7 +801,8 @@ class RAGService:
 
         # 1. Expand multilingual query tokens
         from app.ai.query_understanding import QueryUnderstanding
-        analysis = QueryUnderstanding.analyze_query(query, context_crop=crop)
+        canonical_c = QueryUnderstanding.canonical_crop(crop)
+        analysis = QueryUnderstanding.analyze_query(query, context_crop=canonical_c)
         if not analysis.get("is_agricultural", True) and not crop:
             # Out-of-domain query (e.g., cricket, smartphones, entertainment) -> abstain
             return []

@@ -249,3 +249,17 @@ class QueryUnderstanding:
             "is_agricultural": has_agri_evidence,
             "recommended_collections": recommended_collections
         }
+
+    @classmethod
+    def canonical_crop(cls, crop: Optional[str]) -> Optional[str]:
+        if not crop:
+            return None
+        crop_lower = crop.lower().strip()
+        for canonical, patterns in cls.CROP_PATTERNS.items():
+            for pat in patterns:
+                if pat.startswith(r"\b"):
+                    if re.search(pat, crop_lower):
+                        return canonical
+                elif pat in crop:
+                    return canonical
+        return crop

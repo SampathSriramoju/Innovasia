@@ -27,6 +27,7 @@ import com.bolkisan.farmer.domain.OfflineInferenceEngine
 import com.bolkisan.farmer.domain.OfflineModelCandidate
 import com.bolkisan.farmer.presentation.common.NetworkStatusBar
 import com.bolkisan.farmer.presentation.common.appStrings
+import com.bolkisan.farmer.presentation.common.canonicalCropName
 import com.bolkisan.farmer.presentation.common.cropFilterOptions
 import com.bolkisan.farmer.presentation.common.localizedCropName
 import com.bolkisan.farmer.theme.*
@@ -56,12 +57,15 @@ fun OfflineLibraryScreen(
     val cropFilters = remember(currentLang) { cropFilterOptions(currentLang) }
 
     val filteredList = knowledgeList.filter { item ->
-        val matchesCrop = selectedCropFilter == "All" || item.crop.contains(selectedCropFilter, ignoreCase = true)
+        val matchesCrop = selectedCropFilter == "All" ||
+                item.crop.contains(selectedCropFilter, ignoreCase = true) ||
+                canonicalCropName(item.crop).equals(canonicalCropName(selectedCropFilter), ignoreCase = true)
         val matchesQuery = searchQuery.isBlank() ||
                 item.title.contains(searchQuery, ignoreCase = true) ||
                 item.content.contains(searchQuery, ignoreCase = true) ||
                 item.crop.contains(searchQuery, ignoreCase = true)
-        val matchesLang = item.language == currentLang || item.language == "en"
+        val hasCurrentLang = knowledgeList.any { it.language == currentLang }
+        val matchesLang = if (hasCurrentLang) item.language == currentLang else (item.language == "en")
         matchesCrop && matchesQuery && matchesLang
     }
 

@@ -696,11 +696,24 @@ class CropVisionEngine:
         # Follow-up differential questions when ambiguity exists
         follow_ups = []
         if not is_high_confidence:
-            follow_ups = [
-                f"ఈ లక్షణాలు పంటలో ఏ దశలో కనిపించడం ప్రారంభించాయి? (At what crop growth stage did symptoms start?)",
-                f"నష్ట లక్షణాలు ఆకులపై మాత్రమే ఉన్నాయా లేదా కాండం మరియు కాయలకు వ్యాపిస్తున్నాయా? (Are symptoms confined to leaves or spreading to stems/bolls?)",
-                f"ఆకులపై పురుగులు లేదా తెల్లదోమ/తామరపురుగులు కంటికి కనిపిస్తున్నాయా? (Are insects, whiteflies, or thrips visible under the leaves?)"
-            ]
+            if language == "hi":
+                follow_ups = [
+                    "ये लक्षण फसल की किस अवस्था में शुरू हुए?",
+                    "क्या क्षति के लक्षण केवल पत्तियों तक सीमित हैं या तने और फलों/टिंडों में भी फैल रहे हैं?",
+                    "क्या पत्तियों की निचली सतह पर कोई कीट, सफेद मक्खी या थ्रिप्स दिखाई दे रहे हैं?"
+                ]
+            elif language == "en":
+                follow_ups = [
+                    "At what crop growth stage did these symptoms first appear?",
+                    "Are damage symptoms confined to leaves or spreading to stems and fruits/bolls?",
+                    "Are any insects, whiteflies, or thrips visible under the foliage?"
+                ]
+            else:
+                follow_ups = [
+                    "ఈ లక్షణాలు పంటలో ఏ దశలో కనిపించడం ప్రారంభించాయి?",
+                    "నష్ట లక్షణాలు ఆకులపై మాత్రమే ఉన్నాయా లేదా కాండం మరియు కాయలకు వ్యాపిస్తున్నాయా?",
+                    "ఆకుల కింద పురుగులు లేదా తెల్లదోమ/తామరపురుగులు కంటికి కనిపిస్తున్నాయా?"
+                ]
 
         # Retrieve RAG Knowledge References
         rag_query = f"{resolved_crop} {top_disease['name']} symptoms management"

@@ -246,6 +246,7 @@ async def diagnose_crop_disease(
     farmer_notes: Optional[str] = Form(None),
     latitude: Optional[float] = Form(None),
     longitude: Optional[float] = Form(None),
+    language: Optional[str] = Form(None),
     current_user: Dict[str, Any] = Depends(get_optional_user),
     db: Session = Depends(get_db)
 ):
@@ -260,7 +261,9 @@ async def diagnose_crop_disease(
     7. Automatically creates an AgriculturalTicket escalation if confidence < 0.78 or symptoms are ambiguous.
     """
     user_id = current_user.get("sub", "user-test-farmer-01")
-    user_lang = current_user.get("lang", "te")
+    user_lang = (language or current_user.get("lang") or "te").lower()
+    if user_lang not in ["te", "hi", "en"]:
+        user_lang = "te"
 
     # Step 1: Read and validate image file
     raw_bytes = await file.read()
@@ -294,13 +297,23 @@ async def diagnose_crop_disease(
             "en": quality.farmer_guidance_en
         }.get(user_lang, quality.farmer_guidance_te)
 
+        if user_lang == "hi":
+            rej_disease = "गुणवत्ता अस्वीकृत / फोटो स्पष्ट नहीं है"
+            rej_treatment = "कृपया अच्छी रोशनी में पत्ती के पास से स्थिर और स्पष्ट फोटो लें।"
+        elif user_lang == "en":
+            rej_disease = "Quality Rejected / Image Unclear"
+            rej_treatment = "Please retake a clear, steady close-up photo in good daylight."
+        else:
+            rej_disease = "చిత్రం సరిగ్గా లేదు / నాణ్యత ఆమోదించబడలేదు"
+            rej_treatment = "దయచేసి మంచి వెలుతురులో ఆకును దగ్గరగా ఉంచి స్థిరంగా ఫోటో తీయండి."
+
         return {
             "status": "quality_rejected",
             "is_escalated": False,
             "confidence": 0.0,
-            "disease_name": "Quality Rejected / చిత్రం సరిగ్గా లేదు",
+            "disease_name": rej_disease,
             "symptoms": guidance,
-            "treatment": "దయచేసి మంచి వెలుతురులో ఆకును దగ్గరగా ఉంచి స్థిరంగా ఫోటో తీయండి. (Please retake clear photo in good daylight).",
+            "treatment": rej_treatment,
             "citations": ["Bol Kisan Image Quality Gate (Laplacian Variance / Foliage Ratio)"],
             "error_code": quality.error_code,
             "blur_score": quality.blur_score,
@@ -338,19 +351,32 @@ async def diagnose_crop_disease(
         db.commit()
         db.refresh(ticket)
 
+        if user_lang == "hi":
+            esc_disease = f"संदिग्ध रोग: {diag_res.primary_diagnosis or 'अस्पष्ट लक्षण'}"
+            esc_treatment = "लक्षण स्पष्ट नहीं होने के कारण कृषि विस्तार अधिकारी (MAO) की समीक्षा हेतु भेजा गया है। शीघ्र समाधान उपलब्ध कराया जाएगा।"
+            esc_msg = "निदान विश्वसनीयता 78% से कम है। मंडल कृषि अधिकारी के लिए निरीक्षण टिकट स्वचालित रूप से बनाया गया है।"
+        elif user_lang == "en":
+            esc_disease = f"Suspected Pathology: {diag_res.primary_diagnosis or 'Ambiguous Symptoms'}"
+            esc_treatment = "Due to symptom ambiguity, this case has been escalated to your Mandal Agricultural Extension Officer (MAO) for inspection."
+            esc_msg = "Diagnosis confidence is below 78% or visually ambiguous. An inspection ticket has been automatically created for the Mandal Agricultural Extension Officer."
+        else:
+            esc_disease = f"అనుమానిత తెగులు: {diag_res.primary_diagnosis or 'స్పష్టత లేని లక్షణాలు'}"
+            esc_treatment = "లక్షణాలు స్పష్టంగా లేనందున వ్యవసాయ అధికారి (MAO) పరిశీలనకు పంపబడింది. ఫీల్డ్ విజిట్ త్వరలో జరుగుతుంది."
+            esc_msg = "రోగ నిర్ధారణ విశ్వసనీయత 78% కంటే తక్కువగా ఉంది. మండల వ్యవసాయ విస్తరణ అధికారి పరిశీలనకు టికెట్ సృష్టించబడింది."
+
         return {
             "status": "escalated",
             "is_escalated": True,
             "confidence": diag_res.confidence,
             "entropy": diag_res.entropy,
-            "disease_name": f"అనుమానిత తెగులు: {diag_res.primary_diagnosis or 'స్పష్టత లేని లక్షణాలు'}",
+            "disease_name": esc_disease,
             "symptoms": diag_res.visible_symptoms or escalation_reason,
-            "treatment": "లక్షణాలు స్పష్టంగా లేనందున వ్యవసాయ అధికారి (MAO) పరిశీలనకు పంపబడింది. ఫీల్డ్ విజిట్ త్వరలో జరుగుతుంది.",
+            "treatment": esc_treatment,
             "citations": [f"Ticket #{ticket.ticket_number}", "PJTSAU Advisory Protocol"],
             "ticket_id": ticket.id,
             "ticket_number": ticket.ticket_number,
             "escalation_reason": escalation_reason,
-            "message": "Diagnosis confidence is below 78% or visually ambiguous. An inspection ticket has been automatically created for the Mandal Agricultural Extension Officer.",
+            "message": esc_msg,
             "image_url": image_url,
             "crop_name": crop_str,
             "differential_candidates": [c.model_dump() for c in diag_res.differential_candidates],
@@ -358,13 +384,33 @@ async def diagnose_crop_disease(
         }
 
     # Step 4: High Confidence Verified Diagnosis
-    treatment_str = (
-        f"• సహజ / సస్యరక్షణ చర్యలు:\n  1. {diag_res.cultural_remedies[0] if diag_res.cultural_remedies else 'సాగు పరిశుభ్రత'}\n"
-        f"  2. {diag_res.biological_remedies[0] if diag_res.biological_remedies else 'జీవ నియంత్రణ'}"
-    )
-    if diag_res.chemical_management and diag_res.chemical_management.get("is_approved"):
-        cm = diag_res.chemical_management
-        treatment_str += f"\n• CIBRC సిఫార్సు చేసిన రసాయన మందు: {cm.get('product_trade_name')} ({cm.get('active_ingredient')}) @ {cm.get('dosage_per_15l_knapsack')} (PHI: {cm.get('pre_harvest_interval_days')} రోజులు)"
+    if user_lang == "hi":
+        c_lead = diag_res.cultural_remedies[0] if diag_res.cultural_remedies else "खेत की स्वच्छता एवं फसल चक्र"
+        b_lead = diag_res.biological_remedies[0] if diag_res.biological_remedies else "जैविक नियंत्रण"
+        treatment_str = (
+            f"• सस्य प्रबंधन एवं प्राकृतिक उपचार:\n  1. {c_lead}\n  2. {b_lead}"
+        )
+        if diag_res.chemical_management and diag_res.chemical_management.get("is_approved"):
+            cm = diag_res.chemical_management
+            treatment_str += f"\n• CIBRC अनुशंसित कीटनाशक: {cm.get('product_trade_name')} ({cm.get('active_ingredient')}) @ {cm.get('dosage_per_15l_knapsack')} (प्रतीक्षा अवधि PHI: {cm.get('pre_harvest_interval_days')} दिन)"
+    elif user_lang == "en":
+        c_lead = diag_res.cultural_remedies[0] if diag_res.cultural_remedies else "Crop sanitation and field aeration"
+        b_lead = diag_res.biological_remedies[0] if diag_res.biological_remedies else "Biological control"
+        treatment_str = (
+            f"• Cultural / Agronomic Remedies:\n  1. {c_lead}\n  2. {b_lead}"
+        )
+        if diag_res.chemical_management and diag_res.chemical_management.get("is_approved"):
+            cm = diag_res.chemical_management
+            treatment_str += f"\n• CIBRC Approved Pesticide: {cm.get('product_trade_name')} ({cm.get('active_ingredient')}) @ {cm.get('dosage_per_15l_knapsack')} (PHI: {cm.get('pre_harvest_interval_days')} days)"
+    else:
+        c_lead = diag_res.cultural_remedies[0] if diag_res.cultural_remedies else 'సాగు పరిశుభ్రత'
+        b_lead = diag_res.biological_remedies[0] if diag_res.biological_remedies else 'జీవ నియంత్రణ'
+        treatment_str = (
+            f"• సహజ / సస్యరక్షణ చర్యలు:\n  1. {c_lead}\n  2. {b_lead}"
+        )
+        if diag_res.chemical_management and diag_res.chemical_management.get("is_approved"):
+            cm = diag_res.chemical_management
+            treatment_str += f"\n• CIBRC సిఫార్సు చేసిన రసాయన మందు: {cm.get('product_trade_name')} ({cm.get('active_ingredient')}) @ {cm.get('dosage_per_15l_knapsack')} (PHI: {cm.get('pre_harvest_interval_days')} రోజులు)"
 
     formatted_citations = []
     for c in diag_res.citations:

@@ -217,6 +217,18 @@ class GeminiService:
             fallback_res["fallback_reason"] = f"Cascade exhausted ({last_failure_reason}); deterministic ICAR/PJTSAU knowledge grounding activated"
         return fallback_res
 
+    def _detect_dominant_script(self, text: str) -> str:
+        te_chars = len(re.findall(r'[\u0C00-\u0C7F]', text))
+        hi_chars = len(re.findall(r'[\u0900-\u097F]', text))
+        latin_chars = len(re.findall(r'[a-zA-Z]', text))
+        if te_chars > hi_chars and te_chars > 15:
+            return "te"
+        if hi_chars > te_chars and hi_chars > 15:
+            return "hi"
+        if latin_chars > 15:
+            return "en"
+        return "unknown"
+
     def _generate_grounded_fallback(
         self,
         query: str,
@@ -332,6 +344,14 @@ class GeminiService:
                 if target_entity and target_entity in (ctx.get("target") or "").lower():
                     affinity += 0.40
 
+                # Language affinity bonus
+                ctx_content = ctx.get("content", "")
+                ctx_lang = ctx.get("language")
+                if (language == "te" and "Telugu Advisory:" in ctx_content) or (language == "hi" and "Hindi Advisory:" in ctx_content):
+                    affinity += 0.50
+                elif ctx_lang == language:
+                    affinity += 0.50
+
                 valid_candidates.append((affinity, ctx))
 
             if valid_candidates:
@@ -345,41 +365,71 @@ class GeminiService:
                 doc_id = top_ctx.get("document_id", "KB-01")
 
                 # Extract language-targeted advisory if multilingual Q&A
-                extracted_body = content
-                if "Telugu Advisory:" in content and language == "te":
-                    parts = content.split("Telugu Advisory:")
-                    if len(parts) > 1:
-                        extracted_body = parts[1].split("Hindi Advisory:")[0].strip()
-                elif "Hindi Advisory:" in content and language == "hi":
-                    parts = content.split("Hindi Advisory:")
-                    if len(parts) > 1:
-                        extracted_body = parts[1].strip()
-                elif "Recommendation:" in content:
-                    parts = content.split("Recommendation:")
-                    if len(parts) > 1:
-                        extracted_body = parts[1].split("Telugu Advisory:")[0].strip()
-
-                clean_content = self._clean_response_text(extracted_body)
+                extracted_body = ""
                 if language == "te":
-                    text = f"వ్యవసాయ సలహా ({title}):\n{clean_content}\n\nఆధారం: {citation}"
+                    if "Telugu Advisory:" in content:
+                        parts = content.split("Telugu Advisory:")
+                        if len(parts) > 1:
+                            extracted_body = parts[1].split("Hindi Advisory:")[0].strip()
+                    elif self._detect_dominant_script(content) == "te":
+                        extracted_body = content
+                    elif "Recommendation:" in content:
+                        parts = content.split("Recommendation:")
+                        if len(parts) > 1:
+                            extracted_body = parts[1].split("Telugu Advisory:")[0].strip()
                 elif language == "hi":
-                    text = f"कृषि सलाह ({title}):\n{clean_content}\n\nस्रोत: {citation}"
-                else:
-                    text = f"Agricultural Advisory ({title}):\n{clean_content}\n\nSource: {citation}"
+                    if "Hindi Advisory:" in content:
+                        parts = content.split("Hindi Advisory:")
+                        if len(parts) > 1:
+                            extracted_body = parts[1].strip()
+                    elif self._detect_dominant_script(content) == "hi":
+                        extracted_body = content
+                elif language == "en":
+                    if "Recommendation:" in content:
+                        parts = content.split("Recommendation:")
+                        if len(parts) > 1:
+                            extracted_body = parts[1].split("Telugu Advisory:")[0].strip()
+                    elif self._detect_dominant_script(content) == "en":
+                        extracted_body = content
 
-                return {
-                    "text": text,
-                    "model": "grounded-rag-synthesizer",
-                    "model_used": "grounded-rag-synthesizer",
-                    "is_fallback": True,
-                    "fallback_reason": "Offline / Deterministic Knowledge Retrieval",
-                    "is_grounded": True,
-                    "provider": "verified-knowledge-base",
-                    "topic": topic,
-                    "crop": crop,
-                    "evidence_sufficient": True,
-                    "claims": [{"claim": clean_content[:120], "source_ids": [doc_id]}]
-                }
+                if not extracted_body:
+                    script = self._detect_dominant_script(content)
+                    # Strictly prevent cross-language script pollution:
+                    # Do not return pure Telugu script to a Hindi/English user, or pure Hindi to Telugu
+                    if (language in ["hi", "en"] and script == "te") or (language == "te" and script == "hi"):
+                        extracted_body = None
+                    else:
+                        extracted_body = content
+
+                if extracted_body:
+                    clean_content = self._clean_response_text(extracted_body)
+                    body_script = self._detect_dominant_script(clean_content)
+                    lang_disclaimer = ""
+                    if language == "te" and body_script == "en":
+                        lang_disclaimer = "(గమనిక: ధృవీకరించిన రికార్డు ఆంగ్లంలో భద్రపరచబడింది)\n"
+                    elif language == "hi" and body_script == "en":
+                        lang_disclaimer = "(नोट: प्रमाणित रिकॉर्ड अंग्रेजी में उपलब्ध है)\n"
+
+                    if language == "te":
+                        text = f"వ్యవసాయ సలహా ({title}):\n{lang_disclaimer}{clean_content}\n\nఆధారం: {citation}"
+                    elif language == "hi":
+                        text = f"कृषि सलाह ({title}):\n{lang_disclaimer}{clean_content}\n\nस्रोत: {citation}"
+                    else:
+                        text = f"Agricultural Advisory ({title}):\n{clean_content}\n\nSource: {citation}"
+
+                    return {
+                        "text": text,
+                        "model": "grounded-rag-synthesizer",
+                        "model_used": "grounded-rag-synthesizer",
+                        "is_fallback": True,
+                        "fallback_reason": "Offline / Deterministic Knowledge Retrieval",
+                        "is_grounded": True,
+                        "provider": "verified-knowledge-base",
+                        "topic": topic,
+                        "crop": crop,
+                        "evidence_sufficient": True,
+                        "claims": [{"claim": clean_content[:120], "source_ids": [doc_id]}]
+                    }
 
         # Case 3: No valid, relevant documents found or low relevance — ABSTAIN
         if language == "te":

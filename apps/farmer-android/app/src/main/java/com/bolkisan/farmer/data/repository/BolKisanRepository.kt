@@ -19,6 +19,7 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.bolkisan.farmer.presentation.common.canonicalCropName
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import java.io.File
@@ -247,8 +248,9 @@ class BolKisanRepository(private val context: Context) {
             else -> null
         }
 
-        val cropCards = dao.getKnowledgeByCropSync(selectedCrop, currentLanguage)
-        val allCards = if (cropCards.isNotEmpty()) cropCards else dao.getKnowledgeByCropSync(selectedCrop, "en")
+        val canonicalCrop = canonicalCropName(selectedCrop)
+        val cropCards = dao.getKnowledgeByCropSync(canonicalCrop, currentLanguage)
+        val allCards = if (cropCards.isNotEmpty()) cropCards else dao.getKnowledgeByCropSync(canonicalCrop, "en")
 
         var bestCard: OfflineKnowledgeEntity? = null
         var highestScore = 0
@@ -288,13 +290,21 @@ class BolKisanRepository(private val context: Context) {
         val finalMatch = if (highestScore >= 6) bestCard else null
 
         if (finalMatch != null) {
+            val langNotice = if (finalMatch.language != currentLanguage) {
+                when (currentLanguage) {
+                    "te" -> "\n\n(గమనిక: ధృవీకరించిన ఆఫ్‌లైన్ సమాచారం ${finalMatch.language.uppercase()} లో అందుబాటులో ఉంది)"
+                    "hi" -> "\n\n(नोट: प्रमाणित ऑफ़लाइन सामग्री ${finalMatch.language.uppercase()} में उपलब्ध है)"
+                    else -> "\n\n(Note: Verified offline advisory is available in ${finalMatch.language.uppercase()})"
+                }
+            } else ""
+
             val fallbackAnswer = VoiceAnswerDto(
                 status = "answered_offline_fallback",
                 isSafe = true,
                 responseText = when (currentLanguage) {
-                    "te" -> "ఆఫ్‌లైన్ వ్యవసాయ సమాచారం:\n${finalMatch.content}"
-                    "hi" -> "ऑफ़लाइन कृषि जानकारी:\n${finalMatch.content}"
-                    else -> "Offline Agricultural Advisory:\n${finalMatch.content}"
+                    "te" -> "ఆఫ్‌లైన్ వ్యవసాయ సమాచారం:\n${finalMatch.content}$langNotice"
+                    "hi" -> "ऑफ़लाइन कृषि जानकारी:\n${finalMatch.content}$langNotice"
+                    else -> "Offline Agricultural Advisory:\n${finalMatch.content}$langNotice"
                 },
                 citations = listOf(finalMatch.sourceCitation),
                 warnings = listOf("Offline Local Knowledge Cache - Matches authentic ICAR / CIBRC standards.")
@@ -410,10 +420,12 @@ class BolKisanRepository(private val context: Context) {
         SyncWorker.enqueue(context)
 
         // 4. Retrieve local verified ICAR knowledge for this crop
-        val localCropCards = dao.getKnowledgeByCropSync(cropName, currentLanguage)
-        val diseaseCard = localCropCards.firstOrNull { it.category == "disease" }
-            ?: localCropCards.firstOrNull { it.category == "pest_management" }
-            ?: localCropCards.firstOrNull()
+        val canonicalCrop = canonicalCropName(cropName)
+        val localCropCards = dao.getKnowledgeByCropSync(canonicalCrop, currentLanguage)
+        val effectiveCards = if (localCropCards.isNotEmpty()) localCropCards else dao.getKnowledgeByCropSync(canonicalCrop, "en")
+        val diseaseCard = effectiveCards.firstOrNull { it.category == "disease" }
+            ?: effectiveCards.firstOrNull { it.category == "pest_management" }
+            ?: effectiveCards.firstOrNull()
 
         val diagnosisDto = DiseaseDiagnosisDto(
             diseaseName = diseaseCard?.title ?: when (currentLanguage) {
@@ -469,7 +481,9 @@ class BolKisanRepository(private val context: Context) {
     fun getOfflineKnowledgeByLang(lang: String): Flow<List<OfflineKnowledgeEntity>> = dao.getAllKnowledgeByLang(lang)
 
     suspend fun getOfflineGuidelinesForCrop(crop: String): List<OfflineKnowledgeEntity> = withContext(Dispatchers.IO) {
-        dao.getKnowledgeByCropSync(crop, currentLanguage)
+        val canonical = canonicalCropName(crop)
+        val cards = dao.getKnowledgeByCropSync(canonical, currentLanguage)
+        if (cards.isNotEmpty()) cards else dao.getKnowledgeByCropSync(canonical, "en")
     }
 
     // Seed Offline Knowledge

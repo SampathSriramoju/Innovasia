@@ -299,12 +299,17 @@ async def respond_to_ticket(
     if ticket.conversation_id:
         conv = db.query(Conversation).filter(Conversation.id == ticket.conversation_id).first()
         if conv:
+            prefix = (
+                "👨‍🌾 [అధికారి సిఫార్సు]" if conv.language == "te"
+                else ("👨‍🌾 [कृषि अधिकारी सलाह]" if conv.language == "hi"
+                else "👨‍🌾 [Officer Prescription]")
+            )
             conv_msg = ConversationMessage(
                 conversation_id=conv.id,
                 sender_type="OFFICER",
                 original_query=None,
                 transcript=None,
-                response=f"👨‍🌾 [అధికారి సిఫార్సు / Officer Prescription]: {payload.prescription}",
+                response=f"{prefix}: {payload.prescription}",
                 source_citations=["Regional Mandal Agricultural Officer (MAO)"],
                 language=conv.language,
                 is_safe=True,
