@@ -283,43 +283,111 @@ class GeminiService:
                 "claims": [{"claim": f"CIBRC Approved {p.get('product_trade_name')}", "source_ids": [p.get("cibrc_registration_number") or "CIBRC-REG"]}]
             }
 
-        # Case 2: Synthesize directly from retrieved context chunks
+        # Case 2: Synthesize directly from retrieved context chunks with intent and relevance validation
         if retrieved_contexts:
-            top_ctx = retrieved_contexts[0]
-            content = top_ctx.get("content", "")
-            title = top_ctx.get("title", "ICAR Verified Practice")
-            citation = top_ctx.get("citation", "[ICAR/PJTSAU Agricultural Guide]")
-            doc_id = top_ctx.get("document_id", "KB-01")
+            target_crop = (query_analysis or {}).get("crop")
+            target_crop_lower = target_crop.lower().strip() if target_crop else None
+            intent = (query_analysis or {}).get("intent") or "general_agri"
+            target_entity = ((query_analysis or {}).get("target_entity") or "").lower()
 
-            clean_content = self._clean_response_text(content)
-            if language == "te":
-                text = f"వ్యవసాయ సమాచారం ({title}):\n{clean_content}"
-            elif language == "hi":
-                text = f"कृषि जानकारी ({title}):\n{clean_content}"
-            else:
-                text = f"Agricultural Advisory ({title}):\n{clean_content}"
-
-            return {
-                "text": text,
-                "model": "grounded-rag-synthesizer",
-                "model_used": "grounded-rag-synthesizer",
-                "is_fallback": True,
-                "fallback_reason": "Offline / Deterministic Knowledge Retrieval",
-                "is_grounded": True,
-                "provider": "verified-knowledge-base",
-                "topic": topic,
-                "crop": crop,
-                "evidence_sufficient": True,
-                "claims": [{"claim": clean_content[:120], "source_ids": [doc_id]}]
+            # Intent collection mapping for affinity scoring (prioritizing primary specialized collections)
+            intent_cols_map = {
+                "crop_disease": {"KB04", "KB06"},
+                "pest_management": {"KB05", "KB06"},
+                "fertilizer_soil": {"KB09", "KB10"},
+                "soil_health": {"KB10"},
+                "irrigation": {"KB11"},
+                "weed_management": {"KB13"},
+                "sowing_cultivation": {"KB01", "KB02", "KB03"},
+                "pesticide_safety": {"KB08", "KB07"},
+                "mandi_market": {"KB18"},
+                "weather_advisory": {"KB16"},
+                "harvesting": {"KB14", "KB15"},
+                "crop_rotation": {"KB12"},
             }
+            allowed_cols = intent_cols_map.get(intent, set())
 
-        # Case 3: No documents found
+            valid_candidates = []
+            for ctx in retrieved_contexts:
+                ctx_score = ctx.get("score", 0.0)
+                # Minimum score floor
+                if ctx_score < 0.28:
+                    continue
+
+                ctx_crop = (ctx.get("crop") or "").lower()
+                # Strict crop mismatch rejection: If crop is identified in query, reject documents of other explicit crops
+                if target_crop_lower and ctx_crop and ctx_crop not in ["general", "all", "soils", ""]:
+                    if target_crop_lower not in ctx_crop and ctx_crop not in target_crop_lower:
+                        continue
+
+                # Intent relevance bonus: strong preference for the primary domain collection
+                affinity = ctx_score
+                ctx_col = ctx.get("collection_id")
+                if ctx_col in allowed_cols:
+                    affinity += 0.60
+                elif ctx_col in ["KB21", "KB22"]:
+                    affinity += 0.05
+
+                # Entity match bonus
+                if target_entity and target_entity in (ctx.get("target") or "").lower():
+                    affinity += 0.40
+
+                valid_candidates.append((affinity, ctx))
+
+            if valid_candidates:
+                # Pick the highest affinity candidate
+                valid_candidates.sort(key=lambda x: x[0], reverse=True)
+                top_ctx = valid_candidates[0][1]
+
+                content = top_ctx.get("content", "")
+                title = top_ctx.get("title", "ICAR Verified Practice")
+                citation = top_ctx.get("citation", "[ICAR/PJTSAU Agricultural Guide]")
+                doc_id = top_ctx.get("document_id", "KB-01")
+
+                # Extract language-targeted advisory if multilingual Q&A
+                extracted_body = content
+                if "Telugu Advisory:" in content and language == "te":
+                    parts = content.split("Telugu Advisory:")
+                    if len(parts) > 1:
+                        extracted_body = parts[1].split("Hindi Advisory:")[0].strip()
+                elif "Hindi Advisory:" in content and language == "hi":
+                    parts = content.split("Hindi Advisory:")
+                    if len(parts) > 1:
+                        extracted_body = parts[1].strip()
+                elif "Recommendation:" in content:
+                    parts = content.split("Recommendation:")
+                    if len(parts) > 1:
+                        extracted_body = parts[1].split("Telugu Advisory:")[0].strip()
+
+                clean_content = self._clean_response_text(extracted_body)
+                if language == "te":
+                    text = f"వ్యవసాయ సలహా ({title}):\n{clean_content}\n\nఆధారం: {citation}"
+                elif language == "hi":
+                    text = f"कृषि सलाह ({title}):\n{clean_content}\n\nस्रोत: {citation}"
+                else:
+                    text = f"Agricultural Advisory ({title}):\n{clean_content}\n\nSource: {citation}"
+
+                return {
+                    "text": text,
+                    "model": "grounded-rag-synthesizer",
+                    "model_used": "grounded-rag-synthesizer",
+                    "is_fallback": True,
+                    "fallback_reason": "Offline / Deterministic Knowledge Retrieval",
+                    "is_grounded": True,
+                    "provider": "verified-knowledge-base",
+                    "topic": topic,
+                    "crop": crop,
+                    "evidence_sufficient": True,
+                    "claims": [{"claim": clean_content[:120], "source_ids": [doc_id]}]
+                }
+
+        # Case 3: No valid, relevant documents found or low relevance — ABSTAIN
         if language == "te":
-            text = "ఈ ప్రశ్నకు సంబంధించిన ధృవీకరించిన వ్యవసాయ వివరాలు నాలెడ్జ్ బేస్‌లో అందుబాటులో లేవు. దయచేసి వ్యవసాయ విస్తరణ అధికారిని (MAO) సంప్రదించండి."
+            text = "ఈ ప్రశ్నకు సంబంధించిన ధృవీకరించిన వ్యవసాయ వివరాలు నాలెడ్జ్ బేస్‌లో అందుబాటులో లేవు. దయచేసి మండల వ్యవసాయ విస్తరణ అధికారిని (MAO/AEO) లేదా కిసాన్ కాల్ సెంటర్‌ను (1800-180-1551) సంప్రదించండి."
         elif language == "hi":
-            text = "इस प्रश्न के लिए सत्यापित कृषि जानकारी उपलब्ध नहीं है। कृपया अपने मंडल कृषि अधिकारी से संपर्क करें।"
+            text = "इस विशिष्ट प्रश्न के लिए प्रामाणिक कृषि रिकॉर्ड उपलब्ध नहीं हैं। कृपया अपने क्षेत्रीय कृषि विस्तार अधिकारी या किसान कॉल सेंटर (1800-180-1551) से संपर्क करें।"
         else:
-            text = "Verified agricultural information for this query was not found in the official knowledge base. Please consult your local Agricultural Extension Officer."
+            text = "Verified agricultural information for this specific query was not found in the official knowledge base. Please consult your local Agricultural Extension Officer or Kisan Call Center (1800-180-1551)."
 
         return {
             "text": text,

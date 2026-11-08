@@ -1,0 +1,913 @@
+{
+  "metrics": {
+    "precision_at_1": 0.9889,
+    "recall_at_3": 0.9889,
+    "abstention_accuracy": 0.9,
+    "citation_correctness": 1.0,
+    "answer_relevance": 0.98,
+    "unwanted_repetitions": 0,
+    "repetition_rate": 0.0
+  },
+  "queries": [
+    {
+      "id": "Q01",
+      "query": "How much water does cotton require?",
+      "language": "en",
+      "retrieved_count": 3,
+      "top_doc": "Cotton Drip Irrigation and Alternate Furrow Scheduling",
+      "evidence_sufficient": true,
+      "answer_preview": "Agricultural Advisory (Cotton Drip Irrigation and Alternate Furrow Scheduling): "
+    },
+    {
+      "id": "Q02",
+      "query": "Which fertilizer is suitable for cotton crop?",
+      "language": "en",
+      "retrieved_count": 3,
+      "top_doc": "Cotton Fertilizer and Nutrient Management (NPK)",
+      "evidence_sufficient": true,
+      "answer_preview": "Agricultural Advisory (Cotton Fertilizer and Nutrient Management (NPK)): Recomme"
+    },
+    {
+      "id": "Q03",
+      "query": "How can I control pink bollworm in cotton?",
+      "language": "en",
+      "retrieved_count": 3,
+      "top_doc": "Pest: Pink Bollworm in Cotton",
+      "evidence_sufficient": true,
+      "answer_preview": "Agricultural Advisory (Pest: Pink Bollworm in Cotton): Pest: Pink Bollworm (\u0c17\u0c41\u0c32\u0c3e"
+    },
+    {
+      "id": "Q04",
+      "query": "What fungicide cures bacterial blight in cotton?",
+      "language": "en",
+      "retrieved_count": 3,
+      "top_doc": "Disease: Bacterial Blight / Angular Leaf Spot in Cotton",
+      "evidence_sufficient": true,
+      "answer_preview": "Agricultural Advisory (Disease: Bacterial Blight / Angular Leaf Spot in Cotton):"
+    },
+    {
+      "id": "Q05",
+      "query": "What herbicide controls weeds in cotton field?",
+      "language": "en",
+      "retrieved_count": 3,
+      "top_doc": "Weed Management and Herbicides in Cotton",
+      "evidence_sufficient": true,
+      "answer_preview": "Agricultural Advisory (Weed Management and Herbicides in Cotton): Weed Managemen"
+    },
+    {
+      "id": "Q06",
+      "query": "What is the recommended seed rate for Bt cotton?",
+      "language": "en",
+      "retrieved_count": 3,
+      "top_doc": "Agronomy: Cotton - What is the recommended seed rate and spacing for ",
+      "evidence_sufficient": true,
+      "answer_preview": "Agricultural Advisory (Cotton Agronomy and Spacing Standards): Cotton cultivatio"
+    },
+    {
+      "id": "Q07",
+      "query": "What is the current mandi market price for cotton?",
+      "language": "en",
+      "retrieved_count": 3,
+      "top_doc": "Mandi Price: Cotton in Rajkot APMC Market Yard",
+      "evidence_sufficient": true,
+      "answer_preview": "Agricultural Advisory (Mandi Price: Cotton in Rajkot APMC Market Yard): APMC Man"
+    },
+    {
+      "id": "Q08",
+      "query": "When is the optimal time for harvesting cotton?",
+      "language": "en",
+      "retrieved_count": 3,
+      "top_doc": "Harvesting Guidelines for Cotton",
+      "evidence_sufficient": true,
+      "answer_preview": "Agricultural Advisory (Harvesting Guidelines for Cotton): Harvesting Guidelines "
+    },
+    {
+      "id": "Q09",
+      "query": "What is the pre-harvest interval for emamectin in cotton?",
+      "language": "en",
+      "retrieved_count": 3,
+      "top_doc": "Statutory Chemical Safety: Cotton & Chilli - What is the pre-harvest interval (PHI) for Proclai",
+      "evidence_sufficient": true,
+      "answer_preview": "Agricultural Advisory (CIBRC Product Registry: Proclaim 5% SG): Pesticide Produc"
+    },
+    {
+      "id": "Q10",
+      "query": "Which crop is best for rotation after cotton?",
+      "language": "en",
+      "retrieved_count": 3,
+      "top_doc": "Sustainable Crop Rotation Systems for Cotton",
+      "evidence_sufficient": true,
+      "answer_preview": "Agricultural Advisory (Sustainable Crop Rotation Systems for Cotton): Continuous"
+    },
+    {
+      "id": "Q11",
+      "query": "What are symptoms and treatment for rice blast disease?",
+      "language": "en",
+      "retrieved_count": 3,
+      "top_doc": "Disease: Rice Blast in Rice / Paddy",
+      "evidence_sufficient": true,
+      "answer_preview": "Agricultural Advisory (Disease: Rice Blast in Rice / Paddy): Disease: Rice Blast"
+    },
+    {
+      "id": "Q12",
+      "query": "How to control brown plant hopper BPH in paddy?",
+      "language": "en",
+      "retrieved_count": 3,
+      "top_doc": "Pest: Brown Plant Hopper (BPH) in Rice / Paddy",
+      "evidence_sufficient": true,
+      "answer_preview": "Agricultural Advisory (Pest: Brown Plant Hopper (BPH) in Rice / Paddy): Pest: Br"
+    },
+    {
+      "id": "Q13",
+      "query": "What is the recommended NPK fertilizer split for rice?",
+      "language": "en",
+      "retrieved_count": 3,
+      "top_doc": "Fertilizer & NPK Nutrient Management: Rice / Paddy",
+      "evidence_sufficient": true,
+      "answer_preview": "Agricultural Advisory (Fertilizer & NPK Nutrient Management: Rice / Paddy): Fert"
+    },
+    {
+      "id": "Q14",
+      "query": "What is water management for SRI cultivation in paddy?",
+      "language": "en",
+      "retrieved_count": 3,
+      "top_doc": "Alternate Wetting and Drying (AWD) in Paddy",
+      "evidence_sufficient": true,
+      "answer_preview": "Agricultural Advisory (Alternate Wetting and Drying (AWD) in Paddy): AWD saves u"
+    },
+    {
+      "id": "Q15",
+      "query": "Which pre-emergence herbicide is safe for paddy nursery?",
+      "language": "en",
+      "retrieved_count": 3,
+      "top_doc": "Weed Management and Herbicides in Rice / Paddy",
+      "evidence_sufficient": true,
+      "answer_preview": "Agricultural Advisory (Weed Management and Herbicides in Rice / Paddy): Weed Man"
+    },
+    {
+      "id": "Q16",
+      "query": "What is optimum moisture percentage for paddy grain harvesting?",
+      "language": "en",
+      "retrieved_count": 3,
+      "top_doc": "Paddy Harvesting Moisture and Combine Operation",
+      "evidence_sufficient": true,
+      "answer_preview": "Agricultural Advisory (Paddy Harvesting Moisture and Combine Operation): Harvest"
+    },
+    {
+      "id": "Q17",
+      "query": "How to treat sheath blight in rice?",
+      "language": "en",
+      "retrieved_count": 3,
+      "top_doc": "Disease: Sheath Blight in Rice / Paddy",
+      "evidence_sufficient": true,
+      "answer_preview": "Agricultural Advisory (Disease: Sheath Blight in Rice / Paddy): Disease: Sheath "
+    },
+    {
+      "id": "Q18",
+      "query": "What is tricyclazole waiting period in paddy?",
+      "language": "en",
+      "retrieved_count": 3,
+      "top_doc": "CIBRC Label: Nativo 75% WG",
+      "evidence_sufficient": true,
+      "answer_preview": "Agricultural Advisory (CIBRC Label: Nativo 75% WG): CIBRC Approved Pesticide: Na"
+    },
+    {
+      "id": "Q19",
+      "query": "What is the mandi price for paddy common grade A?",
+      "language": "en",
+      "retrieved_count": 3,
+      "top_doc": "Mandi Price: Paddy / Rice in Khanna Grain Market (Asia's Largest Grain Market)",
+      "evidence_sufficient": true,
+      "answer_preview": "Agricultural Advisory (Mandi Price: Paddy / Rice in Khanna Grain Market (Asia's "
+    },
+    {
+      "id": "Q20",
+      "query": "What is the seed treatment method for paddy?",
+      "language": "en",
+      "retrieved_count": 3,
+      "top_doc": "Verified Document kb21-010",
+      "evidence_sufficient": true,
+      "answer_preview": "Agricultural Advisory (Verified Document kb21-010): crop_name: Rice / Paddy; tar"
+    },
+    {
+      "id": "Q21",
+      "query": "How to control black thrips in chilli crop?",
+      "language": "en",
+      "retrieved_count": 3,
+      "top_doc": "Pest: Chilli Thrips in Chilli",
+      "evidence_sufficient": true,
+      "answer_preview": "Agricultural Advisory (Pest: Chilli Thrips in Chilli): Pest: Chilli Thrips (\u0c2e\u0c3f\u0c30\u0c2a"
+    },
+    {
+      "id": "Q22",
+      "query": "What causes chilli leaves curling downwards like an inverted cup?",
+      "language": "en",
+      "retrieved_count": 3,
+      "top_doc": "Pest Management: Chilli - Chilli leaves are curling downwards like an invert",
+      "evidence_sufficient": true,
+      "answer_preview": "Agricultural Advisory (Disease: Chilli Leaf Curl Virus in Chilli): Disease: Chil"
+    },
+    {
+      "id": "Q23",
+      "query": "Remedy for powdery mildew in chilli?",
+      "language": "en",
+      "retrieved_count": 3,
+      "top_doc": "Disease: Powdery Mildew in Chilli",
+      "evidence_sufficient": true,
+      "answer_preview": "Agricultural Advisory (Disease: Powdery Mildew in Chilli): Disease: Powdery Mild"
+    },
+    {
+      "id": "Q24",
+      "query": "What is fertilizer recommendation for chilli?",
+      "language": "en",
+      "retrieved_count": 3,
+      "top_doc": "Fertilizer & NPK Nutrient Management: Chilli",
+      "evidence_sufficient": true,
+      "answer_preview": "Agricultural Advisory (Fertilizer & NPK Nutrient Management: Chilli): Fertilizer"
+    },
+    {
+      "id": "Q25",
+      "query": "How to manage early blight concentric rings in tomato?",
+      "language": "en",
+      "retrieved_count": 3,
+      "top_doc": "Disease: Early Blight in Tomato",
+      "evidence_sufficient": true,
+      "answer_preview": "Agricultural Advisory (Disease: Early Blight in Tomato): Disease: Early Blight ("
+    },
+    {
+      "id": "Q26",
+      "query": "How to control whitefly transmitting leaf curl in tomato?",
+      "language": "en",
+      "retrieved_count": 3,
+      "top_doc": "Disease: Tomato Leaf Curl Virus (ToLCV) in Tomato",
+      "evidence_sufficient": true,
+      "answer_preview": "Agricultural Advisory (Disease: Tomato Leaf Curl Virus (ToLCV) in Tomato): Disea"
+    },
+    {
+      "id": "Q27",
+      "query": "What is staking and spacing method for tomato cultivation?",
+      "language": "en",
+      "retrieved_count": 3,
+      "top_doc": "Tomato Spacing and Staking Practices",
+      "evidence_sufficient": true,
+      "answer_preview": "Agricultural Advisory (Tomato Spacing and Staking Practices): Tomato seedlings ("
+    },
+    {
+      "id": "Q28",
+      "query": "What is drip irrigation schedule for tomato?",
+      "language": "en",
+      "retrieved_count": 3,
+      "top_doc": "Irrigation Guidance and Water Requirement: Tomato",
+      "evidence_sufficient": true,
+      "answer_preview": "Agricultural Advisory (Irrigation Guidance and Water Requirement: Tomato): Irrig"
+    },
+    {
+      "id": "Q29",
+      "query": "What is current market price for red ripe tomato?",
+      "language": "en",
+      "retrieved_count": 3,
+      "top_doc": "Mandi Price: Tomato in Pimpalgaon Baswant APMC",
+      "evidence_sufficient": true,
+      "answer_preview": "Agricultural Advisory (Mandi Price: Tomato in Pimpalgaon Baswant APMC): APMC Man"
+    },
+    {
+      "id": "Q30",
+      "query": "How to control fruit borer in tomato?",
+      "language": "en",
+      "retrieved_count": 3,
+      "top_doc": "Verified Document p1000000-0000-0000-0000-000000000011",
+      "evidence_sufficient": true,
+      "answer_preview": "Agricultural Advisory (Verified Document p1000000-0000-0000-0000-000000000011): "
+    },
+    {
+      "id": "Q31",
+      "query": "\u0c2a\u0c24\u0c4d\u0c24\u0c3f \u0c2a\u0c02\u0c1f\u0c15\u0c41 \u0c0e\u0c28\u0c4d\u0c28\u0c3f \u0c30\u0c4b\u0c1c\u0c41\u0c32\u0c15\u0c41 \u0c28\u0c40\u0c30\u0c41 \u0c2a\u0c46\u0c1f\u0c4d\u0c1f\u0c3e\u0c32\u0c3f?",
+      "language": "te",
+      "retrieved_count": 3,
+      "top_doc": "Cotton Drip Irrigation and Alternate Furrow Scheduling",
+      "evidence_sufficient": true,
+      "answer_preview": "\u0c35\u0c4d\u0c2f\u0c35\u0c38\u0c3e\u0c2f \u0c38\u0c32\u0c39\u0c3e (Cotton Drip Irrigation and Alternate Furrow Scheduling): Cotton re"
+    },
+    {
+      "id": "Q32",
+      "query": "\u0c2a\u0c24\u0c4d\u0c24\u0c3f\u0c32\u0c4b \u0c35\u0c47\u0c2f\u0c35\u0c32\u0c38\u0c3f\u0c28 \u0c0e\u0c30\u0c41\u0c35\u0c41\u0c32 \u0c2e\u0c4b\u0c24\u0c3e\u0c26\u0c41 \u0c0f\u0c2e\u0c3f\u0c1f\u0c3f?",
+      "language": "te",
+      "retrieved_count": 3,
+      "top_doc": "Cotton Fertilizer and Nutrient Management (NPK)",
+      "evidence_sufficient": true,
+      "answer_preview": "\u0c35\u0c4d\u0c2f\u0c35\u0c38\u0c3e\u0c2f \u0c38\u0c32\u0c39\u0c3e (Cotton Fertilizer and Nutrient Management (NPK)): Recommended dose"
+    },
+    {
+      "id": "Q33",
+      "query": "\u0c2a\u0c24\u0c4d\u0c24\u0c3f\u0c32\u0c4b \u0c17\u0c41\u0c32\u0c3e\u0c2c\u0c40 \u0c30\u0c02\u0c17\u0c41 \u0c2a\u0c41\u0c30\u0c41\u0c17\u0c41 \u0c28\u0c3f\u0c35\u0c3e\u0c30\u0c23 \u0c0e\u0c32\u0c3e?",
+      "language": "te",
+      "retrieved_count": 3,
+      "top_doc": "Pest: Pink Bollworm in Cotton",
+      "evidence_sufficient": true,
+      "answer_preview": "\u0c35\u0c4d\u0c2f\u0c35\u0c38\u0c3e\u0c2f \u0c38\u0c32\u0c39\u0c3e (Pest: Pink Bollworm in Cotton): Pest: Pink Bollworm (\u0c17\u0c41\u0c32\u0c3e\u0c2c\u0c40 \u0c30\u0c02\u0c17\u0c41 \u0c15"
+    },
+    {
+      "id": "Q34",
+      "query": "\u0c2a\u0c24\u0c4d\u0c24\u0c3f\u0c32\u0c4b \u0c2c\u0c3e\u0c15\u0c4d\u0c1f\u0c40\u0c30\u0c3f\u0c2f\u0c3e \u0c06\u0c15\u0c41\u0c2e\u0c1a\u0c4d\u0c1a \u0c24\u0c46\u0c17\u0c41\u0c32\u0c41 \u0c28\u0c3f\u0c35\u0c3e\u0c30\u0c23 \u0c2e\u0c02\u0c26\u0c41 \u0c0f\u0c2e\u0c3f\u0c1f\u0c3f?",
+      "language": "te",
+      "retrieved_count": 3,
+      "top_doc": "Disease: Bacterial Blight / Angular Leaf Spot in Cotton",
+      "evidence_sufficient": true,
+      "answer_preview": "\u0c35\u0c4d\u0c2f\u0c35\u0c38\u0c3e\u0c2f \u0c38\u0c32\u0c39\u0c3e (Disease: Bacterial Blight / Angular Leaf Spot in Cotton): Disease:"
+    },
+    {
+      "id": "Q35",
+      "query": "\u0c2a\u0c24\u0c4d\u0c24\u0c3f \u0c2a\u0c02\u0c1f\u0c32\u0c4b \u0c15\u0c32\u0c41\u0c2a\u0c41 \u0c28\u0c3f\u0c35\u0c3e\u0c30\u0c23\u0c15\u0c41 \u0c0f \u0c2e\u0c02\u0c26\u0c41 \u0c15\u0c4a\u0c1f\u0c4d\u0c1f\u0c3e\u0c32\u0c3f?",
+      "language": "te",
+      "retrieved_count": 3,
+      "top_doc": "Integrated Weed Management in Cotton Fields",
+      "evidence_sufficient": true,
+      "answer_preview": "\u0c35\u0c4d\u0c2f\u0c35\u0c38\u0c3e\u0c2f \u0c38\u0c32\u0c39\u0c3e (Integrated Weed Management in Cotton Fields): Critical period of c"
+    },
+    {
+      "id": "Q36",
+      "query": "\u0c35\u0c30\u0c3f\u0c32\u0c4b \u0c05\u0c17\u0c4d\u0c17\u0c3f\u0c24\u0c46\u0c17\u0c41\u0c32\u0c41 \u0c32\u0c15\u0c4d\u0c37\u0c23\u0c3e\u0c32\u0c41 \u0c2e\u0c30\u0c3f\u0c2f\u0c41 \u0c28\u0c3f\u0c35\u0c3e\u0c30\u0c23 \u0c1a\u0c46\u0c2a\u0c4d\u0c2a\u0c02\u0c21\u0c3f",
+      "language": "te",
+      "retrieved_count": 3,
+      "top_doc": "Disease: Rice Blast in Rice / Paddy",
+      "evidence_sufficient": true,
+      "answer_preview": "\u0c35\u0c4d\u0c2f\u0c35\u0c38\u0c3e\u0c2f \u0c38\u0c32\u0c39\u0c3e (Disease: Rice Blast in Rice / Paddy): Disease: Rice Blast (\u0c35\u0c30\u0c3f \u0c05\u0c17\u0c4d"
+    },
+    {
+      "id": "Q37",
+      "query": "\u0c35\u0c30\u0c3f\u0c32\u0c4b \u0c38\u0c41\u0c21\u0c3f\u0c26\u0c4b\u0c2e \u0c06\u0c36\u0c3f\u0c02\u0c1a\u0c3f\u0c28\u0c2a\u0c4d\u0c2a\u0c41\u0c21\u0c41 \u0c0f\u0c2e\u0c3f \u0c2a\u0c3f\u0c1a\u0c3f\u0c15\u0c3e\u0c30\u0c40 \u0c1a\u0c47\u0c2f\u0c3e\u0c32\u0c3f?",
+      "language": "te",
+      "retrieved_count": 3,
+      "top_doc": "Pest: Brown Plant Hopper (BPH) in Rice / Paddy",
+      "evidence_sufficient": true,
+      "answer_preview": "\u0c35\u0c4d\u0c2f\u0c35\u0c38\u0c3e\u0c2f \u0c38\u0c32\u0c39\u0c3e (Pest: Brown Plant Hopper (BPH) in Rice / Paddy): Pest: Brown Plant"
+    },
+    {
+      "id": "Q38",
+      "query": "\u0c35\u0c30\u0c3f \u0c2a\u0c48\u0c30\u0c41\u0c15\u0c41 \u0c2f\u0c42\u0c30\u0c3f\u0c2f\u0c3e \u0c0e\u0c30\u0c41\u0c35\u0c41\u0c28\u0c41 \u0c0f\u0c2f\u0c47 \u0c38\u0c2e\u0c2f\u0c3e\u0c32\u0c4d\u0c32\u0c4b \u0c35\u0c47\u0c2f\u0c3e\u0c32\u0c3f?",
+      "language": "te",
+      "retrieved_count": 3,
+      "top_doc": "Paddy Nutrient Scheduling and Zinc Sulphate Application",
+      "evidence_sufficient": true,
+      "answer_preview": "\u0c35\u0c4d\u0c2f\u0c35\u0c38\u0c3e\u0c2f \u0c38\u0c32\u0c39\u0c3e (Paddy Nutrient Scheduling and Zinc Sulphate Application): Paddy RD"
+    },
+    {
+      "id": "Q39",
+      "query": "\u0c35\u0c30\u0c3f\u0c32\u0c4b \u0c15\u0c3e\u0c02\u0c21\u0c02 \u0c24\u0c4a\u0c32\u0c41\u0c1a\u0c41 \u0c2a\u0c41\u0c30\u0c41\u0c17\u0c41 \u0c28\u0c3f\u0c35\u0c3e\u0c30\u0c23 \u0c2a\u0c26\u0c4d\u0c27\u0c24\u0c41\u0c32\u0c41 \u0c0f\u0c2e\u0c3f\u0c1f\u0c3f?",
+      "language": "te",
+      "retrieved_count": 3,
+      "top_doc": "Pest: Yellow Stem Borer in Rice / Paddy",
+      "evidence_sufficient": true,
+      "answer_preview": "\u0c35\u0c4d\u0c2f\u0c35\u0c38\u0c3e\u0c2f \u0c38\u0c32\u0c39\u0c3e (Pest: Yellow Stem Borer in Rice / Paddy): Pest: Yellow Stem Borer "
+    },
+    {
+      "id": "Q40",
+      "query": "\u0c2e\u0c3f\u0c30\u0c2a\u0c32\u0c4b \u0c24\u0c3e\u0c2e\u0c30 \u0c2a\u0c41\u0c30\u0c41\u0c17\u0c41\u0c32 \u0c28\u0c3f\u0c35\u0c3e\u0c30\u0c23\u0c15\u0c41 \u0c0f \u0c2e\u0c02\u0c26\u0c41 \u0c35\u0c3e\u0c21\u0c3e\u0c32\u0c3f?",
+      "language": "te",
+      "retrieved_count": 3,
+      "top_doc": "Pest: Chilli Thrips in Chilli",
+      "evidence_sufficient": true,
+      "answer_preview": "\u0c35\u0c4d\u0c2f\u0c35\u0c38\u0c3e\u0c2f \u0c38\u0c32\u0c39\u0c3e (Pest: Chilli Thrips in Chilli): Pest: Chilli Thrips (\u0c2e\u0c3f\u0c30\u0c2a \u0c28\u0c32\u0c4d\u0c32\u0c3f (\u0c24"
+    },
+    {
+      "id": "Q41",
+      "query": "\u0c2e\u0c3f\u0c30\u0c2a \u0c06\u0c15\u0c41\u0c32\u0c41 \u0c15\u0c3f\u0c02\u0c26\u0c15\u0c41 \u0c2e\u0c41\u0c21\u0c41\u0c1a\u0c41\u0c15\u0c41\u0c02\u0c1f\u0c47 \u0c0f\u0c2e\u0c3f \u0c2a\u0c3f\u0c1a\u0c3f\u0c15\u0c3e\u0c30\u0c40 \u0c1a\u0c47\u0c2f\u0c3e\u0c32\u0c3f?",
+      "language": "te",
+      "retrieved_count": 3,
+      "top_doc": "Pest Management: Chilli - Chilli leaves are curling downwards like an invert",
+      "evidence_sufficient": true,
+      "answer_preview": "\u0c35\u0c4d\u0c2f\u0c35\u0c38\u0c3e\u0c2f \u0c38\u0c32\u0c39\u0c3e (Pest Management: Chilli - Chilli leaves are curling downwards like"
+    },
+    {
+      "id": "Q42",
+      "query": "\u0c2e\u0c4a\u0c15\u0c4d\u0c15\u0c1c\u0c4a\u0c28\u0c4d\u0c28\u0c32\u0c4b \u0c15\u0c24\u0c4d\u0c24\u0c46\u0c30 \u0c2a\u0c41\u0c30\u0c41\u0c17\u0c41 \u0c28\u0c3f\u0c35\u0c3e\u0c30\u0c23 \u0c1a\u0c30\u0c4d\u0c2f\u0c32\u0c41 \u0c1a\u0c46\u0c2a\u0c4d\u0c2a\u0c02\u0c21\u0c3f",
+      "language": "te",
+      "retrieved_count": 3,
+      "top_doc": "Pest: Fall Armyworm (FAW) in Maize",
+      "evidence_sufficient": true,
+      "answer_preview": "\u0c35\u0c4d\u0c2f\u0c35\u0c38\u0c3e\u0c2f \u0c38\u0c32\u0c39\u0c3e (Pest: Fall Armyworm (FAW) in Maize): Pest: Fall Armyworm (FAW) (\u0c15\u0c24"
+    },
+    {
+      "id": "Q43",
+      "query": "\u0c1f\u0c2e\u0c4b\u0c1f\u0c3e\u0c32\u0c4b \u0c06\u0c15\u0c41 \u0c2e\u0c41\u0c21\u0c24 \u0c24\u0c46\u0c17\u0c41\u0c32\u0c41 \u0c28\u0c3f\u0c35\u0c3e\u0c30\u0c23 \u0c0e\u0c32\u0c3e?",
+      "language": "te",
+      "retrieved_count": 3,
+      "top_doc": "Disease: Tomato Leaf Curl Virus (ToLCV) in Tomato",
+      "evidence_sufficient": true,
+      "answer_preview": "\u0c35\u0c4d\u0c2f\u0c35\u0c38\u0c3e\u0c2f \u0c38\u0c32\u0c39\u0c3e (Disease: Tomato Leaf Curl Virus (ToLCV) in Tomato): Disease: Tomat"
+    },
+    {
+      "id": "Q44",
+      "query": "\u0c1f\u0c2e\u0c4b\u0c1f\u0c3e\u0c32\u0c4b \u0c15\u0c3e\u0c2f \u0c24\u0c4a\u0c32\u0c41\u0c1a\u0c41 \u0c2a\u0c41\u0c30\u0c41\u0c17\u0c41 \u0c2e\u0c02\u0c26\u0c41 \u0c0f\u0c2e\u0c3f\u0c1f\u0c3f?",
+      "language": "te",
+      "retrieved_count": 3,
+      "top_doc": "Pest: Tomato Fruit Borer in Tomato",
+      "evidence_sufficient": true,
+      "answer_preview": "\u0c35\u0c4d\u0c2f\u0c35\u0c38\u0c3e\u0c2f \u0c38\u0c32\u0c39\u0c3e (Pest: Tomato Fruit Borer in Tomato): Pest: Tomato Fruit Borer (\u0c1f\u0c2e\u0c4b"
+    },
+    {
+      "id": "Q45",
+      "query": "\u0c35\u0c47\u0c30\u0c41\u0c36\u0c28\u0c17\u0c32\u0c4b \u0c24\u0c3f\u0c15\u0c4d\u0c15\u0c3e \u0c06\u0c15\u0c41\u0c2e\u0c1a\u0c4d\u0c1a \u0c24\u0c46\u0c17\u0c41\u0c32\u0c41 \u0c28\u0c3f\u0c35\u0c3e\u0c30\u0c23 \u0c0e\u0c32\u0c3e?",
+      "language": "te",
+      "retrieved_count": 3,
+      "top_doc": "Disease: Tikka Leaf Spot (Early & Late Leaf Spot) in Groundnut / Peanut",
+      "evidence_sufficient": true,
+      "answer_preview": "\u0c35\u0c4d\u0c2f\u0c35\u0c38\u0c3e\u0c2f \u0c38\u0c32\u0c39\u0c3e (Disease: Tikka Leaf Spot (Early & Late Leaf Spot) in Groundnut / P"
+    },
+    {
+      "id": "Q46",
+      "query": "\u0c35\u0c30\u0c02\u0c17\u0c32\u0c4d \u0c2e\u0c3e\u0c30\u0c4d\u0c15\u0c46\u0c1f\u0c4d\u0c32\u0c4b \u0c2a\u0c24\u0c4d\u0c24\u0c3f \u0c15\u0c4d\u0c35\u0c3f\u0c02\u0c1f\u0c3e\u0c32\u0c4d \u0c27\u0c30 \u0c0e\u0c02\u0c24 \u0c09\u0c02\u0c26\u0c3f?",
+      "language": "te",
+      "retrieved_count": 3,
+      "top_doc": "Mandi Price: Cotton in Akola Cotton & Tur APMC Yard",
+      "evidence_sufficient": true,
+      "answer_preview": "\u0c35\u0c4d\u0c2f\u0c35\u0c38\u0c3e\u0c2f \u0c38\u0c32\u0c39\u0c3e (Mandi Price: Cotton in Akola Cotton & Tur APMC Yard): APMC Mandi M"
+    },
+    {
+      "id": "Q47",
+      "query": "\u0c28\u0c32\u0c4d\u0c32\u0c30\u0c47\u0c17\u0c21\u0c3f \u0c28\u0c47\u0c32\u0c32\u0c4b \u0c38\u0c47\u0c02\u0c26\u0c4d\u0c30\u0c3f\u0c2f \u0c15\u0c30\u0c4d\u0c2c\u0c28\u0c02 \u0c0e\u0c32\u0c3e \u0c2a\u0c46\u0c02\u0c1a\u0c3e\u0c32\u0c3f?",
+      "language": "te",
+      "retrieved_count": 3,
+      "top_doc": "Black Cotton Soil Management and Salinity Remediation",
+      "evidence_sufficient": true,
+      "answer_preview": "\u0c35\u0c4d\u0c2f\u0c35\u0c38\u0c3e\u0c2f \u0c38\u0c32\u0c39\u0c3e (Black Cotton Soil Management and Salinity Remediation): Deep black"
+    },
+    {
+      "id": "Q48",
+      "query": "\u0c2a\u0c24\u0c4d\u0c24\u0c3f \u0c15\u0c4b\u0c24 \u0c24\u0c30\u0c4d\u0c35\u0c3e\u0c24 \u0c0f \u0c05\u0c02\u0c24\u0c30 \u0c2a\u0c02\u0c1f \u0c35\u0c47\u0c2f\u0c35\u0c1a\u0c4d\u0c1a\u0c41?",
+      "language": "te",
+      "retrieved_count": 3,
+      "top_doc": "Harvesting Guidelines for Cotton",
+      "evidence_sufficient": true,
+      "answer_preview": "\u0c35\u0c4d\u0c2f\u0c35\u0c38\u0c3e\u0c2f \u0c38\u0c32\u0c39\u0c3e (Harvesting Guidelines for Cotton): Harvesting Guidelines for Cotto"
+    },
+    {
+      "id": "Q49",
+      "query": "\u0c35\u0c30\u0c3f\u0c32\u0c4b \u0c35\u0c46\u0c28\u0c4d\u0c28\u0c41 \u0c35\u0c3f\u0c30\u0c41\u0c2a\u0c41 \u0c24\u0c46\u0c17\u0c41\u0c32\u0c41 \u0c2e\u0c02\u0c26\u0c41 \u0c0f\u0c2e\u0c3f\u0c1f\u0c3f?",
+      "language": "te",
+      "retrieved_count": 3,
+      "top_doc": "Disease: Rice Blast in Rice / Paddy",
+      "evidence_sufficient": true,
+      "answer_preview": "\u0c35\u0c4d\u0c2f\u0c35\u0c38\u0c3e\u0c2f \u0c38\u0c32\u0c39\u0c3e (Disease: Rice Blast in Rice / Paddy): Disease: Rice Blast (\u0c35\u0c30\u0c3f \u0c05\u0c17\u0c4d"
+    },
+    {
+      "id": "Q50",
+      "query": "\u0c2a\u0c41\u0c30\u0c41\u0c17\u0c41 \u0c2e\u0c02\u0c26\u0c41 \u0c2a\u0c3f\u0c1a\u0c3f\u0c15\u0c3e\u0c30\u0c40 \u0c1a\u0c47\u0c38\u0c47\u0c1f\u0c2a\u0c4d\u0c2a\u0c41\u0c21\u0c41 \u0c24\u0c40\u0c38\u0c41\u0c15\u0c4b\u0c35\u0c32\u0c38\u0c3f\u0c28 \u0c2d\u0c26\u0c4d\u0c30\u0c24\u0c3e \u0c1c\u0c3e\u0c17\u0c4d\u0c30\u0c24\u0c4d\u0c24\u0c32\u0c41 \u0c0f\u0c2e\u0c3f\u0c1f\u0c3f?",
+      "language": "te",
+      "retrieved_count": 3,
+      "top_doc": "Pest: Gram Pod Borer in Chickpea / Bengal Gram",
+      "evidence_sufficient": true,
+      "answer_preview": "\u0c35\u0c4d\u0c2f\u0c35\u0c38\u0c3e\u0c2f \u0c38\u0c32\u0c39\u0c3e (Pest: Gram Pod Borer in Chickpea / Bengal Gram): Pest: Gram Pod Bo"
+    },
+    {
+      "id": "Q51",
+      "query": "\u0915\u092a\u093e\u0938 \u092e\u0947\u0902 \u0917\u0941\u0932\u093e\u092c\u0940 \u0938\u0941\u0902\u0921\u0940 \u0915\u093e \u0928\u093f\u092f\u0902\u0924\u094d\u0930\u0923 \u0915\u0948\u0938\u0947 \u0915\u0930\u0947\u0902?",
+      "language": "hi",
+      "retrieved_count": 3,
+      "top_doc": "Pest: Pink Bollworm in Cotton",
+      "evidence_sufficient": true,
+      "answer_preview": "\u0915\u0943\u0937\u093f \u0938\u0932\u093e\u0939 (Pest: Pink Bollworm in Cotton): Pest: Pink Bollworm (\u0c17\u0c41\u0c32\u0c3e\u0c2c\u0c40 \u0c30\u0c02\u0c17\u0c41 \u0c15\u0c3e\u0c2f "
+    },
+    {
+      "id": "Q52",
+      "query": "\u0915\u092a\u093e\u0938 \u0915\u0940 \u092b\u0938\u0932 \u092e\u0947\u0902 \u0938\u093f\u0902\u091a\u093e\u0908 \u0915\u092c \u0914\u0930 \u0915\u093f\u0924\u0928\u0940 \u0915\u0930\u0928\u0940 \u091a\u093e\u0939\u093f\u090f?",
+      "language": "hi",
+      "retrieved_count": 3,
+      "top_doc": "Cotton Drip Irrigation and Alternate Furrow Scheduling",
+      "evidence_sufficient": true,
+      "answer_preview": "\u0915\u0943\u0937\u093f \u0938\u0932\u093e\u0939 (Cotton Drip Irrigation and Alternate Furrow Scheduling): Cotton requi"
+    },
+    {
+      "id": "Q53",
+      "query": "\u0915\u092a\u093e\u0938 \u092e\u0947\u0902 \u092f\u0942\u0930\u093f\u092f\u093e \u0914\u0930 \u0921\u0940\u090f\u092a\u0940 \u0916\u093e\u0926 \u0915\u0940 \u0938\u0939\u0940 \u092e\u093e\u0924\u094d\u0930\u093e \u0915\u094d\u092f\u093e \u0939\u0948?",
+      "language": "hi",
+      "retrieved_count": 3,
+      "top_doc": "Cotton Fertilizer and Nutrient Management (NPK)",
+      "evidence_sufficient": true,
+      "answer_preview": "\u0915\u0943\u0937\u093f \u0938\u0932\u093e\u0939 (Cotton Fertilizer and Nutrient Management (NPK)): Recommended dose of"
+    },
+    {
+      "id": "Q54",
+      "query": "\u0915\u092a\u093e\u0938 \u092e\u0947\u0902 \u0916\u0930\u092a\u0924\u0935\u093e\u0930 \u0928\u093f\u092f\u0902\u0924\u094d\u0930\u0923 \u0915\u0947 \u0932\u093f\u090f \u0915\u094c\u0928 \u0938\u0940 \u0926\u0935\u093e \u0921\u093e\u0932\u0947\u0902?",
+      "language": "hi",
+      "retrieved_count": 3,
+      "top_doc": "Integrated Weed Management in Cotton Fields",
+      "evidence_sufficient": true,
+      "answer_preview": "\u0915\u0943\u0937\u093f \u0938\u0932\u093e\u0939 (Integrated Weed Management in Cotton Fields): Critical period of crop"
+    },
+    {
+      "id": "Q55",
+      "query": "\u0915\u092a\u093e\u0938 \u092e\u0947\u0902 \u091c\u0940\u0935\u093e\u0923\u0941 \u092a\u0924\u094d\u0924\u0940 \u0927\u092c\u094d\u092c\u093e \u0930\u094b\u0917 \u0915\u0940 \u0930\u094b\u0915\u0925\u093e\u092e \u092c\u0924\u093e\u090f\u0902",
+      "language": "hi",
+      "retrieved_count": 3,
+      "top_doc": "Disease: Bacterial Blight / Angular Leaf Spot in Cotton",
+      "evidence_sufficient": true,
+      "answer_preview": "\u0915\u0943\u0937\u093f \u0938\u0932\u093e\u0939 (Disease: Bacterial Blight / Angular Leaf Spot in Cotton): Disease: Ba"
+    },
+    {
+      "id": "Q56",
+      "query": "\u0927\u093e\u0928 \u092e\u0947\u0902 \u091d\u0941\u0932\u0938\u093e \u0930\u094b\u0917 (\u092c\u094d\u0932\u093e\u0938\u094d\u091f) \u0915\u0947 \u0932\u0915\u094d\u0937\u0923 \u0914\u0930 \u0909\u092a\u091a\u093e\u0930 \u092c\u0924\u093e\u090f\u0902",
+      "language": "hi",
+      "retrieved_count": 3,
+      "top_doc": "Disease: Rice Blast in Rice / Paddy",
+      "evidence_sufficient": true,
+      "answer_preview": "\u0915\u0943\u0937\u093f \u0938\u0932\u093e\u0939 (Disease: Rice Blast in Rice / Paddy): Disease: Rice Blast (\u0c35\u0c30\u0c3f \u0c05\u0c17\u0c4d\u0c17\u0c3f\u0c24"
+    },
+    {
+      "id": "Q57",
+      "query": "\u0927\u093e\u0928 \u092e\u0947\u0902 \u092d\u0942\u0930\u093e \u092b\u0941\u0926\u0915\u093e \u0915\u0940\u091f \u0915\u0940 \u0930\u094b\u0915\u0925\u093e\u092e \u0915\u0947 \u0909\u092a\u093e\u092f \u0915\u094d\u092f\u093e \u0939\u0948\u0902?",
+      "language": "hi",
+      "retrieved_count": 3,
+      "top_doc": "Pest: Brown Plant Hopper (BPH) in Rice / Paddy",
+      "evidence_sufficient": true,
+      "answer_preview": "\u0915\u0943\u0937\u093f \u0938\u0932\u093e\u0939 (Pest: Brown Plant Hopper (BPH) in Rice / Paddy): Pest: Brown Plant Ho"
+    },
+    {
+      "id": "Q58",
+      "query": "\u0927\u093e\u0928 \u092e\u0947\u0902 \u0924\u0928\u093e \u091b\u0947\u0926\u0915 \u0915\u0940\u091f \u0915\u0940 \u0930\u094b\u0915\u0925\u093e\u092e \u0915\u0947 \u0932\u093f\u090f \u0915\u094d\u092f\u093e \u091b\u093f\u0921\u093c\u0915\u0947\u0902?",
+      "language": "hi",
+      "retrieved_count": 3,
+      "top_doc": "Pest: Yellow Stem Borer in Rice / Paddy",
+      "evidence_sufficient": true,
+      "answer_preview": "\u0915\u0943\u0937\u093f \u0938\u0932\u093e\u0939 (Pest: Yellow Stem Borer in Rice / Paddy): Pest: Yellow Stem Borer (\u0c35\u0c30"
+    },
+    {
+      "id": "Q59",
+      "query": "\u0927\u093e\u0928 \u092e\u0947\u0902 \u0916\u093e\u0926 \u090f\u0935\u0902 \u0909\u0930\u094d\u0935\u0930\u0915 \u092a\u094d\u0930\u092c\u0902\u0927\u0928 \u0915\u0940 \u092a\u0942\u0930\u0940 \u091c\u093e\u0928\u0915\u093e\u0930\u0940 \u0926\u0947\u0902",
+      "language": "hi",
+      "retrieved_count": 3,
+      "top_doc": "Paddy Nutrient Scheduling and Zinc Sulphate Application",
+      "evidence_sufficient": true,
+      "answer_preview": "\u0915\u0943\u0937\u093f \u0938\u0932\u093e\u0939 (Paddy Nutrient Scheduling and Zinc Sulphate Application): Paddy RDF: "
+    },
+    {
+      "id": "Q60",
+      "query": "\u092e\u093f\u0930\u094d\u091a \u092e\u0947\u0902 \u0925\u094d\u0930\u093f\u092a\u094d\u0938 \u0915\u0940\u091f \u0915\u0940 \u0930\u094b\u0915\u0925\u093e\u092e \u0915\u0947 \u0909\u092a\u093e\u092f \u0915\u094d\u092f\u093e \u0939\u0948\u0902?",
+      "language": "hi",
+      "retrieved_count": 3,
+      "top_doc": "Pest: Chilli Thrips in Chilli",
+      "evidence_sufficient": true,
+      "answer_preview": "\u0915\u0943\u0937\u093f \u0938\u0932\u093e\u0939 (Pest: Chilli Thrips in Chilli): Pest: Chilli Thrips (\u0c2e\u0c3f\u0c30\u0c2a \u0c28\u0c32\u0c4d\u0c32\u0c3f (\u0c24\u0c3e\u0c2e\u0c30"
+    },
+    {
+      "id": "Q61",
+      "query": "\u092e\u093f\u0930\u094d\u091a \u092e\u0947\u0902 \u092a\u0924\u094d\u0924\u0940 \u092e\u0930\u094b\u0921\u093c\u093f\u092f\u093e \u0930\u094b\u0917 \u0915\u093e \u0909\u092a\u091a\u093e\u0930 \u0915\u094d\u092f\u093e \u0939\u0948?",
+      "language": "hi",
+      "retrieved_count": 3,
+      "top_doc": "Disease: Chilli Leaf Curl Virus in Chilli",
+      "evidence_sufficient": true,
+      "answer_preview": "\u0915\u0943\u0937\u093f \u0938\u0932\u093e\u0939 (Disease: Chilli Leaf Curl Virus in Chilli): Disease: Chilli Leaf Curl"
+    },
+    {
+      "id": "Q62",
+      "query": "\u092e\u0915\u094d\u0915\u093e \u092e\u0947\u0902 \u092b\u0949\u0932 \u0906\u0930\u094d\u092e\u0940\u0935\u0930\u094d\u092e \u0915\u093e \u0930\u093e\u0938\u093e\u092f\u0928\u093f\u0915 \u0914\u0930 \u091c\u0948\u0935\u093f\u0915 \u0928\u093f\u092f\u0902\u0924\u094d\u0930\u0923",
+      "language": "hi",
+      "retrieved_count": 3,
+      "top_doc": "Verified Document p1000000-0000-0000-0000-000000000015",
+      "evidence_sufficient": true,
+      "answer_preview": "\u0915\u0943\u0937\u093f \u0938\u0932\u093e\u0939 (Verified Document p1000000-0000-0000-0000-000000000015): id: p1000000"
+    },
+    {
+      "id": "Q63",
+      "query": "\u091f\u092e\u093e\u091f\u0930 \u092e\u0947\u0902 \u092a\u0924\u094d\u0924\u0940 \u092e\u0941\u0921\u093c\u0928 \u0930\u094b\u0917 \u0915\u093e \u0909\u092a\u091a\u093e\u0930 \u0915\u094d\u092f\u093e \u0939\u0948?",
+      "language": "hi",
+      "retrieved_count": 3,
+      "top_doc": "Disease: Tomato Leaf Curl Virus (ToLCV) in Tomato",
+      "evidence_sufficient": true,
+      "answer_preview": "\u0915\u0943\u0937\u093f \u0938\u0932\u093e\u0939 (Disease: Tomato Leaf Curl Virus (ToLCV) in Tomato): Disease: Tomato L"
+    },
+    {
+      "id": "Q64",
+      "query": "\u091f\u092e\u093e\u091f\u0930 \u092e\u0947\u0902 \u0905\u0917\u0947\u0924\u0940 \u091d\u0941\u0932\u0938\u093e \u0930\u094b\u0917 \u0915\u0947 \u0932\u0915\u094d\u0937\u0923 \u0914\u0930 \u0926\u0935\u093e \u092c\u0924\u093e\u090f\u0902",
+      "language": "hi",
+      "retrieved_count": 3,
+      "top_doc": "Disease: Early Blight in Tomato",
+      "evidence_sufficient": true,
+      "answer_preview": "\u0915\u0943\u0937\u093f \u0938\u0932\u093e\u0939 (Disease: Early Blight in Tomato): Disease: Early Blight (\u0c2e\u0c41\u0c02\u0c26\u0c38\u0c4d\u0c24\u0c41 \u0c24\u0c46\u0c17"
+    },
+    {
+      "id": "Q65",
+      "query": "\u092e\u0942\u0902\u0917\u092b\u0932\u0940 \u092e\u0947\u0902 \u091f\u093f\u0915\u094d\u0915\u093e \u0930\u094b\u0917 \u0915\u0947 \u0928\u093f\u092f\u0902\u0924\u094d\u0930\u0923 \u0915\u0947 \u0909\u092a\u093e\u092f",
+      "language": "hi",
+      "retrieved_count": 3,
+      "top_doc": "Disease: Tikka Leaf Spot (Early & Late Leaf Spot) in Groundnut / Peanut",
+      "evidence_sufficient": true,
+      "answer_preview": "\u0915\u0943\u0937\u093f \u0938\u0932\u093e\u0939 (Disease: Tikka Leaf Spot (Early & Late Leaf Spot) in Groundnut / Pean"
+    },
+    {
+      "id": "Q66",
+      "query": "\u0907\u0902\u0926\u094c\u0930 \u092e\u0902\u0921\u0940 \u092e\u0947\u0902 \u0938\u094b\u092f\u093e\u092c\u0940\u0928 \u0915\u093e \u0906\u091c \u0915\u093e \u0924\u093e\u091c\u093e \u092d\u093e\u0935 \u0915\u094d\u092f\u093e \u0939\u0948?",
+      "language": "hi",
+      "retrieved_count": 3,
+      "top_doc": "Mandi Price: Soybean in Nagpur Cotton & Orange APMC",
+      "evidence_sufficient": true,
+      "answer_preview": "\u0915\u0943\u0937\u093f \u0938\u0932\u093e\u0939 (Mandi Price: Soybean in Nagpur Cotton & Orange APMC): APMC Mandi Mark"
+    },
+    {
+      "id": "Q67",
+      "query": "\u0915\u093e\u0932\u0940 \u092e\u093f\u091f\u094d\u091f\u0940 \u092e\u0947\u0902 \u091c\u0932 \u0928\u093f\u0915\u093e\u0938 \u0914\u0930 \u0938\u0941\u0927\u093e\u0930 \u0915\u0947 \u0909\u092a\u093e\u092f \u092c\u0924\u093e\u090f\u0902",
+      "language": "hi",
+      "retrieved_count": 3,
+      "top_doc": "Black Cotton Soil Management and Salinity Remediation",
+      "evidence_sufficient": true,
+      "answer_preview": "\u0915\u0943\u0937\u093f \u0938\u0932\u093e\u0939 (Black Cotton Soil Management and Salinity Remediation): Deep black so"
+    },
+    {
+      "id": "Q68",
+      "query": "\u0915\u0940\u091f\u0928\u093e\u0936\u0915 \u091b\u093f\u0921\u093c\u0915\u0924\u0947 \u0938\u092e\u092f \u0915\u094d\u092f\u093e \u0938\u093e\u0935\u0927\u093e\u0928\u093f\u092f\u093e\u0902 \u0930\u0916\u0928\u0940 \u091a\u093e\u0939\u093f\u090f?",
+      "language": "hi",
+      "retrieved_count": 3,
+      "top_doc": "Pest: Rice Gall Midge in Rice / Paddy",
+      "evidence_sufficient": true,
+      "answer_preview": "\u0915\u0943\u0937\u093f \u0938\u0932\u093e\u0939 (Pest: Rice Gall Midge in Rice / Paddy): Pest: Rice Gall Midge (\u0c35\u0c30\u0c3f \u0c09\u0c32"
+    },
+    {
+      "id": "Q69",
+      "query": "\u0915\u092a\u093e\u0938 \u0915\u0940 \u091a\u0941\u0928\u093e\u0908 \u0915\u093e \u0938\u0939\u0940 \u0938\u092e\u092f \u0914\u0930 \u0924\u0930\u0940\u0915\u093e \u0915\u094d\u092f\u093e \u0939\u0948?",
+      "language": "hi",
+      "retrieved_count": 3,
+      "top_doc": "Nutrient Deficiency: Cotton - Why are cotton leaves turning bronze-red and shedd",
+      "evidence_sufficient": true,
+      "answer_preview": "\u0915\u0943\u0937\u093f \u0938\u0932\u093e\u0939 (Nutrient Deficiency: Cotton - Why are cotton leaves turning bronze-re"
+    },
+    {
+      "id": "Q70",
+      "query": "\u0917\u0947\u0939\u0942\u0902 \u092e\u0947\u0902 \u0916\u0930\u092a\u0924\u0935\u093e\u0930 \u0928\u093f\u092f\u0902\u0924\u094d\u0930\u0923 \u0939\u0947\u0924\u0941 \u0915\u094c\u0928 \u0938\u0940 \u0926\u0935\u093e \u0909\u092a\u092f\u094b\u0917\u0940 \u0939\u0948?",
+      "language": "hi",
+      "retrieved_count": 3,
+      "top_doc": "Weed Management and Herbicides in Wheat",
+      "evidence_sufficient": true,
+      "answer_preview": "\u0915\u0943\u0937\u093f \u0938\u0932\u093e\u0939 (Weed Management and Herbicides in Wheat): Weed Management in Wheat. C"
+    },
+    {
+      "id": "Q71",
+      "query": "What pesticide kills pink bollworm worms in cotton bolls?",
+      "language": "en",
+      "retrieved_count": 3,
+      "top_doc": "Pest: Pink Bollworm in Cotton",
+      "evidence_sufficient": true,
+      "answer_preview": "Agricultural Advisory (Pest: Pink Bollworm in Cotton): Pest: Pink Bollworm (\u0c17\u0c41\u0c32\u0c3e"
+    },
+    {
+      "id": "Q72",
+      "query": "Tell me chemicals to eliminate pectinophora in cotton",
+      "language": "en",
+      "retrieved_count": 3,
+      "top_doc": "Verified Document kb21-001",
+      "evidence_sufficient": true,
+      "answer_preview": "Agricultural Advisory (Verified Document kb21-001): farmer_location: Narsampet M"
+    },
+    {
+      "id": "Q73",
+      "query": "How to eradicate cotton bollworm caterpillar?",
+      "language": "en",
+      "retrieved_count": 3,
+      "top_doc": "Pest: American Bollworm in Cotton",
+      "evidence_sufficient": true,
+      "answer_preview": "Agricultural Advisory (Pest: American Bollworm in Cotton): Pest: American Bollwo"
+    },
+    {
+      "id": "Q74",
+      "query": "\u0c35\u0c30\u0c3f\u0c32\u0c4b \u0c05\u0c17\u0c4d\u0c17\u0c3f \u0c24\u0c46\u0c17\u0c41\u0c32\u0c41 \u0c30\u0c3e\u0c15\u0c41\u0c02\u0c21\u0c3e \u0c0f \u0c2e\u0c02\u0c26\u0c41 \u0c2a\u0c3f\u0c1a\u0c3f\u0c15\u0c3e\u0c30\u0c40 \u0c1a\u0c47\u0c2f\u0c3e\u0c32\u0c3f?",
+      "language": "te",
+      "retrieved_count": 3,
+      "top_doc": "Disease: Rice Blast in Rice / Paddy",
+      "evidence_sufficient": true,
+      "answer_preview": "\u0c35\u0c4d\u0c2f\u0c35\u0c38\u0c3e\u0c2f \u0c38\u0c32\u0c39\u0c3e (Disease: Rice Blast in Rice / Paddy): Disease: Rice Blast (\u0c35\u0c30\u0c3f \u0c05\u0c17\u0c4d"
+    },
+    {
+      "id": "Q75",
+      "query": "\u0c35\u0c30\u0c3f \u0c2a\u0c02\u0c1f\u0c32\u0c4b \u0c2c\u0c4d\u0c32\u0c3e\u0c38\u0c4d\u0c1f\u0c4d \u0c35\u0c4d\u0c2f\u0c3e\u0c27\u0c3f \u0c28\u0c3f\u0c35\u0c3e\u0c30\u0c23 \u0c1a\u0c30\u0c4d\u0c2f\u0c32\u0c41 \u0c0f\u0c2e\u0c3f\u0c1f\u0c3f?",
+      "language": "te",
+      "retrieved_count": 3,
+      "top_doc": "Disease: Rice Blast in Rice / Paddy",
+      "evidence_sufficient": true,
+      "answer_preview": "\u0c35\u0c4d\u0c2f\u0c35\u0c38\u0c3e\u0c2f \u0c38\u0c32\u0c39\u0c3e (Disease: Rice Blast in Rice / Paddy): Disease: Rice Blast (\u0c35\u0c30\u0c3f \u0c05\u0c17\u0c4d"
+    },
+    {
+      "id": "Q76",
+      "query": "\u0927\u093e\u0928 \u092e\u0947\u0902 \u092c\u094d\u0932\u093e\u0938\u094d\u091f \u092c\u0940\u092e\u093e\u0930\u0940 \u0915\u0940 \u0930\u094b\u0915\u0925\u093e\u092e \u0915\u0947 \u0932\u093f\u090f \u092b\u092b\u0942\u0902\u0926\u0928\u093e\u0936\u0915",
+      "language": "hi",
+      "retrieved_count": 3,
+      "top_doc": "Disease: Rice Blast in Rice / Paddy",
+      "evidence_sufficient": true,
+      "answer_preview": "\u0915\u0943\u0937\u093f \u0938\u0932\u093e\u0939 (Disease: Rice Blast in Rice / Paddy): Disease: Rice Blast (\u0c35\u0c30\u0c3f \u0c05\u0c17\u0c4d\u0c17\u0c3f\u0c24"
+    },
+    {
+      "id": "Q77",
+      "query": "\u0927\u093e\u0928 \u0915\u0947 \u092a\u0924\u094d\u0924\u094b\u0902 \u092a\u0930 \u0928\u093e\u0935 \u091c\u0948\u0938\u0947 \u0927\u092c\u094d\u092c\u0947 \u0939\u0948\u0902, \u0915\u094d\u092f\u093e \u0926\u0935\u093e \u091b\u093f\u0921\u093c\u0915\u0947\u0902?",
+      "language": "hi",
+      "retrieved_count": 3,
+      "top_doc": "Disease Management: Rice / Paddy - Rice leaves have spindle-shaped spots with grey ce",
+      "evidence_sufficient": true,
+      "answer_preview": "\u0915\u0943\u0937\u093f \u0938\u0932\u093e\u0939 (CIBRC Label: Nativo 75% WG): CIBRC Approved Pesticide: Nativo 75% WG "
+    },
+    {
+      "id": "Q78",
+      "query": "How many liters of water per acre does cotton crop consume?",
+      "language": "en",
+      "retrieved_count": 3,
+      "top_doc": "Cotton Drip Irrigation and Alternate Furrow Scheduling",
+      "evidence_sufficient": true,
+      "answer_preview": "Agricultural Advisory (Cotton Drip Irrigation and Alternate Furrow Scheduling): "
+    },
+    {
+      "id": "Q79",
+      "query": "Drip watering schedule for cotton field",
+      "language": "en",
+      "retrieved_count": 3,
+      "top_doc": "Cotton Drip Irrigation and Alternate Furrow Scheduling",
+      "evidence_sufficient": true,
+      "answer_preview": "Agricultural Advisory (Cotton Drip Irrigation and Alternate Furrow Scheduling): "
+    },
+    {
+      "id": "Q80",
+      "query": "Best herbicide for weed clearance in maize",
+      "language": "en",
+      "retrieved_count": 3,
+      "top_doc": "Weed Management and Herbicides in Maize",
+      "evidence_sufficient": true,
+      "answer_preview": "Agricultural Advisory (Weed Management and Herbicides in Maize): Weed Management"
+    },
+    {
+      "id": "Q81",
+      "query": "How to repair a faulty smartphone screen battery?",
+      "language": "en",
+      "retrieved_count": 0,
+      "top_doc": null,
+      "evidence_sufficient": false,
+      "answer_preview": "Verified agricultural information for this specific query was not found in the o"
+    },
+    {
+      "id": "Q82",
+      "query": "Who won the cricket world cup in 2023?",
+      "language": "en",
+      "retrieved_count": 0,
+      "top_doc": null,
+      "evidence_sufficient": false,
+      "answer_preview": "Verified agricultural information for this specific query was not found in the o"
+    },
+    {
+      "id": "Q83",
+      "query": "\u0c30\u0c3e\u0c1c\u0c15\u0c40\u0c2f \u0c35\u0c3e\u0c30\u0c4d\u0c24\u0c32\u0c41 \u0c2e\u0c30\u0c3f\u0c2f\u0c41 \u0c0e\u0c28\u0c4d\u0c28\u0c3f\u0c15\u0c32 \u0c2b\u0c32\u0c3f\u0c24\u0c3e\u0c32\u0c41 \u0c1a\u0c46\u0c2a\u0c4d\u0c2a\u0c02\u0c21\u0c3f",
+      "language": "te",
+      "retrieved_count": 0,
+      "top_doc": null,
+      "evidence_sufficient": false,
+      "answer_preview": "\u0c08 \u0c2a\u0c4d\u0c30\u0c36\u0c4d\u0c28\u0c15\u0c41 \u0c38\u0c02\u0c2c\u0c02\u0c27\u0c3f\u0c02\u0c1a\u0c3f\u0c28 \u0c27\u0c43\u0c35\u0c40\u0c15\u0c30\u0c3f\u0c02\u0c1a\u0c3f\u0c28 \u0c35\u0c4d\u0c2f\u0c35\u0c38\u0c3e\u0c2f \u0c35\u0c3f\u0c35\u0c30\u0c3e\u0c32\u0c41 \u0c28\u0c3e\u0c32\u0c46\u0c21\u0c4d\u0c1c\u0c4d \u0c2c\u0c47\u0c38\u0c4d\u200c\u0c32\u0c4b \u0c05\u0c02\u0c26\u0c41\u0c2c\u0c3e\u0c1f\u0c41\u0c32\u0c4b \u0c32\u0c47"
+    },
+    {
+      "id": "Q84",
+      "query": "\u0c38\u0c3f\u0c28\u0c3f\u0c2e\u0c3e \u0c1f\u0c3f\u0c15\u0c46\u0c1f\u0c4d\u0c32\u0c41 \u0c2c\u0c41\u0c15\u0c4d \u0c1a\u0c47\u0c38\u0c41\u0c15\u0c4b\u0c35\u0c21\u0c02 \u0c0e\u0c32\u0c3e?",
+      "language": "te",
+      "retrieved_count": 0,
+      "top_doc": null,
+      "evidence_sufficient": false,
+      "answer_preview": "\u0c08 \u0c2a\u0c4d\u0c30\u0c36\u0c4d\u0c28\u0c15\u0c41 \u0c38\u0c02\u0c2c\u0c02\u0c27\u0c3f\u0c02\u0c1a\u0c3f\u0c28 \u0c27\u0c43\u0c35\u0c40\u0c15\u0c30\u0c3f\u0c02\u0c1a\u0c3f\u0c28 \u0c35\u0c4d\u0c2f\u0c35\u0c38\u0c3e\u0c2f \u0c35\u0c3f\u0c35\u0c30\u0c3e\u0c32\u0c41 \u0c28\u0c3e\u0c32\u0c46\u0c21\u0c4d\u0c1c\u0c4d \u0c2c\u0c47\u0c38\u0c4d\u200c\u0c32\u0c4b \u0c05\u0c02\u0c26\u0c41\u0c2c\u0c3e\u0c1f\u0c41\u0c32\u0c4b \u0c32\u0c47"
+    },
+    {
+      "id": "Q85",
+      "query": "\u0936\u0947\u092f\u0930 \u092c\u093e\u091c\u093e\u0930 \u092e\u0947\u0902 \u0906\u091c \u0915\u094c\u0928 \u0938\u093e \u0936\u0947\u092f\u0930 \u0916\u0930\u0940\u0926\u0947\u0902?",
+      "language": "hi",
+      "retrieved_count": 3,
+      "top_doc": "Mandi Price: Onion in Pimpalgaon Baswant APMC",
+      "evidence_sufficient": true,
+      "answer_preview": "\u0915\u0943\u0937\u093f \u0938\u0932\u093e\u0939 (Mandi Price: Onion in Pimpalgaon Baswant APMC): APMC Mandi Market Pri"
+    },
+    {
+      "id": "Q86",
+      "query": "\u0939\u0935\u093e\u0908 \u091c\u0939\u093e\u091c \u0915\u093e \u091f\u093f\u0915\u091f \u0915\u0948\u0938\u0947 \u092c\u0941\u0915 \u0915\u0930\u0947\u0902?",
+      "language": "hi",
+      "retrieved_count": 0,
+      "top_doc": null,
+      "evidence_sufficient": false,
+      "answer_preview": "\u0907\u0938 \u0935\u093f\u0936\u093f\u0937\u094d\u091f \u092a\u094d\u0930\u0936\u094d\u0928 \u0915\u0947 \u0932\u093f\u090f \u092a\u094d\u0930\u093e\u092e\u093e\u0923\u093f\u0915 \u0915\u0943\u0937\u093f \u0930\u093f\u0915\u0949\u0930\u094d\u0921 \u0909\u092a\u0932\u092c\u094d\u0927 \u0928\u0939\u0940\u0902 \u0939\u0948\u0902\u0964 \u0915\u0943\u092a\u092f\u093e \u0905\u092a\u0928\u0947 \u0915\u094d\u0937\u0947"
+    },
+    {
+      "id": "Q87",
+      "query": "How to grow dragon fruit in Antarctica snow?",
+      "language": "en",
+      "retrieved_count": 0,
+      "top_doc": null,
+      "evidence_sufficient": false,
+      "answer_preview": "Verified agricultural information for this specific query was not found in the o"
+    },
+    {
+      "id": "Q88",
+      "query": "What is the nuclear fission reaction in stars?",
+      "language": "en",
+      "retrieved_count": 0,
+      "top_doc": null,
+      "evidence_sufficient": false,
+      "answer_preview": "Verified agricultural information for this specific query was not found in the o"
+    },
+    {
+      "id": "Q89",
+      "query": "\u0c15\u0c02\u0c2a\u0c4d\u0c2f\u0c42\u0c1f\u0c30\u0c4d \u0c2a\u0c4d\u0c30\u0c4b\u0c17\u0c4d\u0c30\u0c3e\u0c2e\u0c3f\u0c02\u0c17\u0c4d \u0c28\u0c47\u0c30\u0c4d\u0c1a\u0c41\u0c15\u0c4b\u0c35\u0c21\u0c02 \u0c0e\u0c32\u0c3e?",
+      "language": "te",
+      "retrieved_count": 0,
+      "top_doc": null,
+      "evidence_sufficient": false,
+      "answer_preview": "\u0c08 \u0c2a\u0c4d\u0c30\u0c36\u0c4d\u0c28\u0c15\u0c41 \u0c38\u0c02\u0c2c\u0c02\u0c27\u0c3f\u0c02\u0c1a\u0c3f\u0c28 \u0c27\u0c43\u0c35\u0c40\u0c15\u0c30\u0c3f\u0c02\u0c1a\u0c3f\u0c28 \u0c35\u0c4d\u0c2f\u0c35\u0c38\u0c3e\u0c2f \u0c35\u0c3f\u0c35\u0c30\u0c3e\u0c32\u0c41 \u0c28\u0c3e\u0c32\u0c46\u0c21\u0c4d\u0c1c\u0c4d \u0c2c\u0c47\u0c38\u0c4d\u200c\u0c32\u0c4b \u0c05\u0c02\u0c26\u0c41\u0c2c\u0c3e\u0c1f\u0c41\u0c32\u0c4b \u0c32\u0c47"
+    },
+    {
+      "id": "Q90",
+      "query": "\u0915\u093e\u0930 \u0915\u093e \u0907\u0902\u091c\u0928 \u0915\u0948\u0938\u0947 \u0920\u0940\u0915 \u0915\u0930\u0947\u0902?",
+      "language": "hi",
+      "retrieved_count": 0,
+      "top_doc": null,
+      "evidence_sufficient": false,
+      "answer_preview": "\u0907\u0938 \u0935\u093f\u0936\u093f\u0937\u094d\u091f \u092a\u094d\u0930\u0936\u094d\u0928 \u0915\u0947 \u0932\u093f\u090f \u092a\u094d\u0930\u093e\u092e\u093e\u0923\u093f\u0915 \u0915\u0943\u0937\u093f \u0930\u093f\u0915\u0949\u0930\u094d\u0921 \u0909\u092a\u0932\u092c\u094d\u0927 \u0928\u0939\u0940\u0902 \u0939\u0948\u0902\u0964 \u0915\u0943\u092a\u092f\u093e \u0905\u092a\u0928\u0947 \u0915\u094d\u0937\u0947"
+    },
+    {
+      "id": "Q91",
+      "query": "Cotton",
+      "language": "en",
+      "retrieved_count": 3,
+      "top_doc": "Verified Document kb21-001",
+      "evidence_sufficient": true,
+      "answer_preview": "Agricultural Advisory (Verified Document kb21-001): crop_name: Cotton  Source: ["
+    },
+    {
+      "id": "Q92",
+      "query": "\u0c35\u0c30\u0c3f",
+      "language": "te",
+      "retrieved_count": 3,
+      "top_doc": "Crop Master: Rice / Paddy",
+      "evidence_sufficient": true,
+      "answer_preview": "\u0c35\u0c4d\u0c2f\u0c35\u0c38\u0c3e\u0c2f \u0c38\u0c32\u0c39\u0c3e (Crop Master: Rice / Paddy): Crop: Rice / Paddy (\u0c35\u0c30\u0c3f, \u0927\u093e\u0928 / \u091a\u093e\u0935\u0932). "
+    },
+    {
+      "id": "Q93",
+      "query": "\u0915\u0940\u091f",
+      "language": "hi",
+      "retrieved_count": 3,
+      "top_doc": "Pest: Rhizome Scale in Turmeric",
+      "evidence_sufficient": true,
+      "answer_preview": "\u0915\u0943\u0937\u093f \u0938\u0932\u093e\u0939 (Pest: Rhizome Scale in Turmeric): Pest: Rhizome Scale (\u0c2a\u0c38\u0c41\u0c2a\u0c41 \u0c2a\u0c4a\u0c32\u0c41\u0c38\u0c41 \u0c2a"
+    },
+    {
+      "id": "Q94",
+      "query": "\u0c35\u0c3e\u0c1f\u0c30\u0c3f\u0c02\u0c17\u0c4d",
+      "language": "te",
+      "retrieved_count": 0,
+      "top_doc": null,
+      "evidence_sufficient": false,
+      "answer_preview": "\u0c08 \u0c2a\u0c4d\u0c30\u0c36\u0c4d\u0c28\u0c15\u0c41 \u0c38\u0c02\u0c2c\u0c02\u0c27\u0c3f\u0c02\u0c1a\u0c3f\u0c28 \u0c27\u0c43\u0c35\u0c40\u0c15\u0c30\u0c3f\u0c02\u0c1a\u0c3f\u0c28 \u0c35\u0c4d\u0c2f\u0c35\u0c38\u0c3e\u0c2f \u0c35\u0c3f\u0c35\u0c30\u0c3e\u0c32\u0c41 \u0c28\u0c3e\u0c32\u0c46\u0c21\u0c4d\u0c1c\u0c4d \u0c2c\u0c47\u0c38\u0c4d\u200c\u0c32\u0c4b \u0c05\u0c02\u0c26\u0c41\u0c2c\u0c3e\u0c1f\u0c41\u0c32\u0c4b \u0c32\u0c47"
+    },
+    {
+      "id": "Q95",
+      "query": "\u0916\u093e\u0926",
+      "language": "hi",
+      "retrieved_count": 3,
+      "top_doc": "Chilli Fertigation and Split Nutrient Protocol",
+      "evidence_sufficient": true,
+      "answer_preview": "\u0915\u0943\u0937\u093f \u0938\u0932\u093e\u0939 (Chilli Fertigation and Split Nutrient Protocol): Chilli RDF: 150:60:1"
+    },
+    {
+      "id": "Q96",
+      "query": "Pesticide recommendation for fall armyworm in maize with dosage",
+      "language": "en",
+      "retrieved_count": 3,
+      "top_doc": "Pest: Fall Armyworm (FAW) in Maize",
+      "evidence_sufficient": true,
+      "answer_preview": "Agricultural Advisory (Pest: Fall Armyworm (FAW) in Maize): Pest: Fall Armyworm "
+    },
+    {
+      "id": "Q97",
+      "query": "\u0c2e\u0c3f\u0c30\u0c2a\u0c32\u0c4b \u0c24\u0c3e\u0c2e\u0c30 \u0c2a\u0c41\u0c30\u0c41\u0c17\u0c41 \u0c2e\u0c02\u0c26\u0c41 \u0c2e\u0c4b\u0c24\u0c3e\u0c26\u0c41 \u0c0e\u0c15\u0c30\u0c3e\u0c15\u0c41 \u0c0e\u0c02\u0c24?",
+      "language": "te",
+      "retrieved_count": 3,
+      "top_doc": "Pest: Chilli Thrips in Chilli",
+      "evidence_sufficient": true,
+      "answer_preview": "\u0c35\u0c4d\u0c2f\u0c35\u0c38\u0c3e\u0c2f \u0c38\u0c32\u0c39\u0c3e (Pest: Chilli Thrips in Chilli): Pest: Chilli Thrips (\u0c2e\u0c3f\u0c30\u0c2a \u0c28\u0c32\u0c4d\u0c32\u0c3f (\u0c24"
+    },
+    {
+      "id": "Q98",
+      "query": "\u0915\u092a\u093e\u0938 \u092e\u0947\u0902 \u0917\u0941\u0932\u093e\u092c\u0940 \u0938\u0941\u0902\u0921\u0940 \u0915\u0947 \u0932\u093f\u090f \u0915\u094b\u0930\u093e\u091c\u0928 \u0915\u0940 \u092e\u093e\u0924\u094d\u0930\u093e \u0915\u093f\u0924\u0928\u0940 \u0939\u0948?",
+      "language": "hi",
+      "retrieved_count": 3,
+      "top_doc": "Pest: Pink Bollworm in Cotton",
+      "evidence_sufficient": true,
+      "answer_preview": "\u0915\u0943\u0937\u093f \u0938\u0932\u093e\u0939 (Pest: Pink Bollworm in Cotton): Pest: Pink Bollworm (\u0c17\u0c41\u0c32\u0c3e\u0c2c\u0c40 \u0c30\u0c02\u0c17\u0c41 \u0c15\u0c3e\u0c2f "
+    },
+    {
+      "id": "Q99",
+      "query": "How to prepare soil health card for agricultural land?",
+      "language": "en",
+      "retrieved_count": 3,
+      "top_doc": "Soil Health & Management: Alluvial Soils (Entisols / Inceptisols)",
+      "evidence_sufficient": true,
+      "answer_preview": "Agricultural Advisory (Soil Health & Management: Alluvial Soils (Entisols / Ince"
+    },
+    {
+      "id": "Q100",
+      "query": "\u0c35\u0c30\u0c3f \u0c15\u0c4b\u0c24 \u0c24\u0c30\u0c4d\u0c35\u0c3e\u0c24 \u0c27\u0c3e\u0c28\u0c4d\u0c2f\u0c02 \u0c24\u0c47\u0c2e \u0c36\u0c3e\u0c24\u0c02 \u0c0e\u0c02\u0c24 \u0c09\u0c02\u0c21\u0c3e\u0c32\u0c3f?",
+      "language": "te",
+      "retrieved_count": 3,
+      "top_doc": "Harvesting Guidelines for Rice / Paddy",
+      "evidence_sufficient": true,
+      "answer_preview": "\u0c35\u0c4d\u0c2f\u0c35\u0c38\u0c3e\u0c2f \u0c38\u0c32\u0c39\u0c3e (Harvesting Guidelines for Rice / Paddy): Harvesting Guidelines for"
+    }
+  ]
+}

@@ -1,0 +1,132 @@
+{
+  "BM25": {
+    "te": {
+      "precision@1": 0.3,
+      "recall@3": 0.7,
+      "mrr": 0.4333,
+      "count": 10
+    },
+    "hi": {
+      "precision@1": 0.2,
+      "recall@3": 0.5,
+      "mrr": 0.3333,
+      "count": 10
+    },
+    "en": {
+      "precision@1": 0.8,
+      "recall@3": 0.9,
+      "mrr": 0.85,
+      "count": 10
+    },
+    "overall": {
+      "precision@1": 0.4333,
+      "recall@3": 0.7,
+      "mrr": 0.5389,
+      "total_queries": 30
+    }
+  },
+  "Custom_DenseMultilingual384": {
+    "te": {
+      "precision@1": 0.2,
+      "recall@3": 0.4,
+      "mrr": 0.3,
+      "count": 10
+    },
+    "hi": {
+      "precision@1": 0.2,
+      "recall@3": 0.4,
+      "mrr": 0.3,
+      "count": 10
+    },
+    "en": {
+      "precision@1": 0.7,
+      "recall@3": 0.7,
+      "mrr": 0.7,
+      "count": 10
+    },
+    "overall": {
+      "precision@1": 0.3667,
+      "recall@3": 0.5,
+      "mrr": 0.4333,
+      "total_queries": 30
+    }
+  },
+  "Trained_MiniLM": {
+    "te": {
+      "precision@1": 0.0,
+      "recall@3": 0.0,
+      "mrr": 0.0,
+      "count": 10
+    },
+    "hi": {
+      "precision@1": 0.3,
+      "recall@3": 0.4,
+      "mrr": 0.35,
+      "count": 10
+    },
+    "en": {
+      "precision@1": 0.9,
+      "recall@3": 1.0,
+      "mrr": 0.95,
+      "count": 10
+    },
+    "overall": {
+      "precision@1": 0.4,
+      "recall@3": 0.4667,
+      "mrr": 0.4333,
+      "total_queries": 30
+    }
+  },
+  "Existing_Uncalibrated_Hybrid": {
+    "te": {
+      "precision@1": 0.7,
+      "recall@3": 0.8,
+      "mrr": 0.7333,
+      "count": 10
+    },
+    "hi": {
+      "precision@1": 0.6,
+      "recall@3": 0.6,
+      "mrr": 0.6,
+      "count": 10
+    },
+    "en": {
+      "precision@1": 0.8,
+      "recall@3": 0.8,
+      "mrr": 0.8,
+      "count": 10
+    },
+    "overall": {
+      "precision@1": 0.7,
+      "recall@3": 0.7333,
+      "mrr": 0.7111,
+      "total_queries": 30
+    }
+  },
+  "Calibrated_Multilingual_Hybrid": {
+    "te": {
+      "precision@1": 0.7,
+      "recall@3": 0.8,
+      "mrr": 0.75,
+      "count": 10
+    },
+    "hi": {
+      "precision@1": 0.6,
+      "recall@3": 0.7,
+      "mrr": 0.65,
+      "count": 10
+    },
+    "en": {
+      "precision@1": 0.9,
+      "recall@3": 1.0,
+      "mrr": 0.95,
+      "count": 10
+    },
+    "overall": {
+      "precision@1": 0.7333,
+      "recall@3": 0.8333,
+      "mrr": 0.7833,
+      "total_queries": 30
+    }
+  }
+}

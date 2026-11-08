@@ -26,7 +26,8 @@ MULTILINGUAL_DICTIONARY = {
     "సుడిదోమ": ["brown plant hopper", "bph", "nilaparvata lugens", "సుడిదోమ"],
     "తామర పురుగులు": ["thrips", "scirtothrips dorsalis", "తామర పురుగులు"],
     "నల్లి": ["mites", "thrips", "spider mites", "నల్లి"],
-    "అగ్గితెగులు": ["rice blast", "magnaporthe oryzae", "blast", "అగ్గితెగులు"],
+    "అగ్గితెగులు": ["rice blast", "magnaporthe oryzae", "blast", "అగ్గితెగులు", "బ్లాస్ట్"],
+    "బ్లాస్ట్": ["rice blast", "blast", "magnaporthe", "అగ్గితెగులు"],
     "ఆకుమచ్చ": ["leaf spot", "angular leaf spot", "bacterial blight", "xanthomonas", "ఆకుమచ్చ"],
     "ముందస్తు తెగులు": ["early blight", "alternaria solani", "ముందస్తు తెగులు"],
     "ఆకు ముడత": ["leaf curl", "begomovirus", "geminivirus", "ముడత"],
@@ -41,13 +42,23 @@ MULTILINGUAL_DICTIONARY = {
     "सिंचाई": ["irrigation", "सिंचाई"],
     
     # Agronomic practices
+    "కోత": ["harvest", "harvesting", "maturity", "కోత"],
+    "తేమ": ["moisture", "తేమ"],
     "పిచికారీ": ["spray", "application", "పిచికారీ"],
     "ఎరువు": ["fertilizer", "npk", "urea", "dap", "ఎరువు"],
+    "నీరు": ["water", "irrigation", "drip", "నీరు", "నీటిపారుదల"],
     "నీటిపారుదల": ["irrigation", "water", "drip", "నీరు", "నీటిపారుదల"],
+    "నేల": ["soil", "black soil", "soil health", "vertisol", "నేల", "భూమి"],
+    "నల్లరేగడి": ["black cotton soil", "vertisol", "black soil", "నల్లరేగడి"],
+    "భూసారం": ["soil fertility", "soil health", "organic carbon", "భూసారం"],
     "కలుపు": ["weed", "herbicide", "కలుపు"],
     "ధర": ["price", "market", "mandi", "msp", "ధర"],
     "తెగులు": ["disease", "pathogen", "fungus", "bacteria", "తెగులు"],
-    "పురుగు": ["pest", "insect", "larva", "పురుగు"]
+    "పురుగు": ["pest", "insect", "larva", "పురుగు"],
+    "पानी": ["water", "irrigation", "पानी", "सिंचाई"],
+    "मिट्टी": ["soil", "black soil", "मिट्टी", "मृदा"],
+    "काली मिट्टी": ["black cotton soil", "vertisol", "काली मिट्टी"],
+    "खरपतवार": ["weed", "herbicide", "खरपतवार"]
 }
 
 
@@ -226,6 +237,20 @@ class RAGService:
             except Exception as e:
                 logger.error(f"Error loading kb_registry.json: {e}")
 
+    STOP_WORDS = {
+        # English
+        "what", "which", "how", "when", "where", "why", "who", "is", "are", "was", "were",
+        "the", "a", "an", "and", "or", "in", "on", "at", "to", "for", "with", "by",
+        "about", "can", "should", "does", "do", "did", "tell", "me", "give", "much", "many", "per", "crop",
+        # Hindi
+        "की", "के", "का", "में", "से", "पर", "और", "है", "हैं", "था", "थी", "थे", "होता", "होती", "होते",
+        "करनी", "करना", "करें", "चाहिए", "बताएं", "बताइए", "क्या", "कैसे", "कब", "कितनी", "कितना",
+        "कौन", "सा", "सी", "लिए", "फसल", "दें", "सकते", "सकता", "सकती",
+        # Telugu
+        "మరియు", "యొక్క", "లో", "నుండి", "తో", "కొరకు", "వలన", "ఎలా", "ఏమిటి", "ఎప్పుడు", "ఎంత",
+        "చెప్పండి", "చేయాలి", "చేయవచ్చు", "ఉంది", "ఉన్నాయి", "ఉంటుంది", "అవుతుంది", "గలదు", "పంట", "కూడా"
+    }
+
     def _tokenize(self, text: str) -> List[str]:
         """
         Multilingual tokenizer supporting Telugu, Hindi (Devanagari), and Latin alphabets.
@@ -237,10 +262,11 @@ class RAGService:
 
     def _expand_multilingual_query(self, query: str) -> Tuple[List[str], Set[str]]:
         """
-        Expands Telugu and Hindi queries with cross-lingual synonyms and agricultural concepts.
+        Expands Telugu and Hindi queries with cross-lingual synonyms and agricultural concepts,
+        filtering out common non-content stopwords that distort lexical rankings.
         """
         query_lower = query.lower()
-        extracted_tokens = self._tokenize(query)
+        extracted_tokens = [t for t in self._tokenize(query) if t not in self.STOP_WORDS]
         expanded_tokens = list(extracted_tokens)
         detected_entities: Set[str] = set()
 
@@ -249,7 +275,7 @@ class RAGService:
                 detected_entities.add(term)
                 for syn in synonyms:
                     for t in self._tokenize(syn):
-                        if t not in expanded_tokens:
+                        if t not in self.STOP_WORDS and t not in expanded_tokens:
                             expanded_tokens.append(t)
 
         return expanded_tokens, detected_entities
@@ -267,8 +293,12 @@ class RAGService:
         json_files = list(self.kb_dir.glob("**/*.json"))
         logger.info(f"RAG Service scanning {len(json_files)} knowledge base files in {self.kb_dir}...")
 
+        EXCLUDED_DIRS = {"evaluation", "eval-audio", "manifests", "metadata", "raw-documents", "processed-documents", "crop-vision-dataset"}
+
         for file_path in json_files:
-            # Skip metadata registry itself from indexing as chunks
+            # Skip non-KB directories and metadata
+            if any(part in EXCLUDED_DIRS for part in file_path.parts):
+                continue
             if file_path.name == "kb_registry.json":
                 continue
 
@@ -279,11 +309,53 @@ class RAGService:
             except Exception as e:
                 logger.error(f"Error loading knowledge base file {file_path.name}: {e}")
 
+        # Multilingual topic expansion for collections
+        COL_TOPIC_SYNONYMS = {
+            "KB04": "disease తెగులు అగ్గితెగులు ఆకుమచ్చ ముడత రోగ झुलसा फफूंद fungus blast blight",
+            "KB05": "pest insect పురుగు కత్తెర గులాబీ సుడిదోమ తామర దోమ कीट सुंडी फुदका इल्ली bollworm bph thrips",
+            "KB06": "ipm biological control సమగ్ర నివారణ जैविक नियंत्रण",
+            "KB07": "pesticide product insecticide fungicide మందు పిచికారీ दवा कीटनाशक",
+            "KB08": "pesticide safety dosage phi label మోతాదు జాగ్రత్తలు వేచి ఉండే కాలం खुराक सुरक्षा",
+            "KB09": "fertilizer nutrient ఎరువు యూరియా డిఎపి खाद उर्वरक npk",
+            "KB10": "soil health నేల నల్లరేగడి భూసారం मिट्टी काली जैविक vertisol",
+            "KB11": "irrigation water నీరు నీటిపారుదల తడులు सिंचाई पानी ड्रिप drip furrow",
+            "KB12": "intercropping rotation అంతర పంటల మార్పిడి फसल चक्र",
+            "KB13": "weed herbicide కలుపు గడ్డి కలుపుమందు खरपतवार निराई",
+            "KB14": "harvest harvesting maturity కోత నూర్పిడి కళ్ళం कटाई तुड़ाई",
+            "KB15": "storage postharvest నిల్వ గిడ్డంగి भंडारण",
+            "KB16": "weather climate agromet వాతావరణం వర్షం मौसम बारिश forecast",
+            "KB18": "mandi market price రేటు ధర మార్కెట్ మండి भाव बाजार quintal msp"
+        }
+
+        CROP_SYNONYMS = {
+            "cotton": "పత్తి ప్రత్తి कपास",
+            "rice": "వరి ధాన్యం ధాన్ धान चावल paddy",
+            "chilli": "మిరప మిర్చి मिर्च",
+            "tomato": "టమోటా టమాటా टमाटर",
+            "maize": "మొక్కజొన్న మక్క मक्का",
+            "wheat": "గోధుమ गेहूं",
+            "groundnut": "వేరుశనగ పల్లీ मूंगफली peanut",
+            "soybean": "సోయాబీన్ सोयाबीन",
+            "red gram": "కంది तुअर अरहर pigeonpea",
+            "bengal gram": "శనగ चना chickpea",
+            "sugarcane": "చెరకు गन्ना"
+        }
+
         # Build BM25 and Vector indices
         self.doc_tokens = []
         self.doc_vectors = []
         for doc in self.documents:
-            full_text = f"{doc.get('title', '')} {doc.get('crop', '')} {doc.get('target', '')} {doc.get('content', '')}"
+            col_id = doc.get("collection_id", "")
+            doc_crop = (doc.get("crop") or "").lower()
+            topic_syns = COL_TOPIC_SYNONYMS.get(col_id, "")
+
+            crop_syns = ""
+            for c_key, c_val in CROP_SYNONYMS.items():
+                if c_key in doc_crop:
+                    crop_syns = c_val
+                    break
+
+            full_text = f"{doc.get('title', '')} {doc.get('crop', '')} {crop_syns} {topic_syns} {doc.get('target', '')} {doc.get('content', '')}"
             tokens = self._tokenize(full_text)
             self.doc_tokens.append(tokens)
             self.doc_vectors.append(self.vector_embedder.embed_tokens(tokens))
@@ -414,6 +486,193 @@ class RAGService:
                     })
             return
 
+        # Case 3B: fertilizers_nutrients_kb09.json
+        if file_path.name.startswith("fertilizers_nutrients_kb09") and isinstance(data, list):
+            c_id = "KB09"
+            source_org = self.registry.get(c_id, {}).get("source_org", "Department of Fertilizers & PJTSAU")
+            for f in data:
+                crop = f.get("crop_name", "Crop")
+                content = (
+                    f"Fertilizer and Nutrient Management for {crop}. "
+                    f"Recommended NPK Dose: {f.get('recommended_dose_fertilizer_npk_kg_per_acre')} per acre. "
+                    f"Basal Dose: {f.get('basal_dose_kg_per_acre')}. "
+                    f"Top Dressing Schedule: {f.get('top_dressing_schedule')}. "
+                    f"Micronutrient Deficiency Correction: {str(f.get('micronutrient_deficiencies_and_correction', ''))}. "
+                    f"Biofertilizers: {f.get('biofertilizers_recommended')}."
+                )
+                self.documents.append({
+                    "document_id": f"fert-{crop.lower().replace(' ', '-')}",
+                    "collection_id": c_id,
+                    "source_org": source_org,
+                    "title": f"Fertilizer & NPK Nutrient Management: {crop}",
+                    "crop": crop,
+                    "target": "Fertilizer",
+                    "content": content,
+                    "citation": f.get("citation") or f"[{c_id} - {source_org}] Fertilizer Guide: {crop}"
+                })
+            return
+
+        # Case 3C: soil_health_amendments_kb10.json
+        if file_path.name.startswith("soil_health_amendments_kb10") and isinstance(data, list):
+            c_id = "KB10"
+            source_org = self.registry.get(c_id, {}).get("source_org", "ICAR-IISS Bhopal & Soil Health Card Scheme")
+            for s in data:
+                stype = s.get("soil_type", "Soil")
+                content = (
+                    f"Soil Health & Management for {stype}. Dominant Regions: {s.get('dominant_regions')}. "
+                    f"Characteristics: {s.get('characteristics_and_texture')}. pH: {s.get('ph_range')}. "
+                    f"Organic Carbon: {s.get('organic_carbon_status')}. Major Deficiencies: {s.get('major_nutrient_deficiencies')}. "
+                    f"Amendments & Reclamation: {s.get('soil_amendments_and_reclamation')}. "
+                    f"Green Manuring & Organic Practices: {s.get('green_manuring_and_organic_practices')}."
+                )
+                self.documents.append({
+                    "document_id": f"soil-{stype.lower().replace(' ', '-')[:25]}",
+                    "collection_id": c_id,
+                    "source_org": source_org,
+                    "title": f"Soil Health & Management: {stype}",
+                    "crop": "All Soils",
+                    "target": stype,
+                    "content": content,
+                    "citation": s.get("citation") or f"[{c_id} - {source_org}] Soil Guide: {stype}"
+                })
+            return
+
+        # Case 3D: irrigation_guidance_kb11.json
+        if file_path.name.startswith("irrigation_guidance_kb11") and isinstance(data, list):
+            c_id = "KB11"
+            source_org = self.registry.get(c_id, {}).get("source_org", "PMKSY & ICAR-WCM")
+            for ir in data:
+                crop = ir.get("crop_name", "Crop")
+                crit_stages = "; ".join(f"{st.get('stage_name')} ({st.get('days_range')}): {st.get('importance')}" for st in ir.get("critical_growth_stages", []))
+                methods = "; ".join(f"{k}: {v}" for k, v in ir.get("irrigation_methods", {}).items())
+                content = (
+                    f"Irrigation Guidance for {crop}. Total Water Requirement: {ir.get('total_water_requirement_mm')}. "
+                    f"Critical Growth Stages: {crit_stages}. Irrigation Methods: {methods}. "
+                    f"Water Stress Remedies: {ir.get('water_stress_remedy')}."
+                )
+                self.documents.append({
+                    "document_id": f"irrig-{crop.lower().replace(' ', '-')}",
+                    "collection_id": c_id,
+                    "source_org": source_org,
+                    "title": f"Irrigation Guidance and Water Requirement: {crop}",
+                    "crop": crop,
+                    "target": "Irrigation",
+                    "content": content,
+                    "citation": ir.get("citation") or f"[{c_id} - {source_org}] Irrigation Guide: {crop}"
+                })
+            return
+
+        # Case 3E: crop_rotation_intercropping_kb12.json
+        if file_path.name.startswith("crop_rotation_intercropping_kb12") and isinstance(data, list):
+            c_id = "KB12"
+            source_org = self.registry.get(c_id, {}).get("source_org", "ICAR-IIFSR Modipuram")
+            for rot in data:
+                sname = rot.get("cropping_system_name", "Cropping System")
+                content = (
+                    f"Cropping System: {sname}. Spatial Row Ratio: {rot.get('spatial_row_ratio')}. "
+                    f"Suitable Zones: {rot.get('suitable_agro_climatic_zones')}. "
+                    f"Agronomic Synergy & Benefits: {rot.get('agronomic_synergy_and_benefits')}. "
+                    f"LER: {rot.get('economic_land_equivalent_ratio_ler')}. "
+                    f"Pest Management Benefits: {rot.get('pest_management_benefit')}."
+                )
+                self.documents.append({
+                    "document_id": f"rot-{sname.lower().replace(' ', '-')[:25]}",
+                    "collection_id": c_id,
+                    "source_org": source_org,
+                    "title": f"Crop Rotation & Intercropping: {sname}",
+                    "crop": sname.split("+")[0].strip() if "+" in sname else sname,
+                    "target": sname,
+                    "content": content,
+                    "citation": rot.get("citation") or f"[{c_id} - {source_org}] Crop Rotation: {sname}"
+                })
+            return
+
+        # Case 3F: weed_management_kb13.json
+        if file_path.name.startswith("weed_management_kb13") and isinstance(data, list):
+            c_id = "KB13"
+            source_org = self.registry.get(c_id, {}).get("source_org", "Directorate of Weed Research (ICAR-DWR)")
+            for w in data:
+                crop = w.get("crop_name", "Crop")
+                pre = w.get("pre_emergence_herbicide", {})
+                post = w.get("post_emergence_herbicide", {})
+                content = (
+                    f"Weed Management in {crop}. Critical competition period: {w.get('critical_period_crop_weed_competition')}. "
+                    f"Major Weed Flora: {w.get('major_weed_flora')}. "
+                    f"Pre-emergence Herbicide: {pre.get('chemical_name')} @ {pre.get('cibrc_approved_dose_per_acre')}. "
+                    f"Pre-emergence Application Timing: {pre.get('application_timing')}. Dilution: {pre.get('dilution_per_15l_pump')}. "
+                    f"Post-emergence Herbicide: {post.get('chemical_name')} @ {post.get('cibrc_approved_dose_per_acre')}. "
+                    f"Post-emergence Application Timing: {post.get('application_timing')}. Dilution: {post.get('dilution_per_15l_pump')}. "
+                    f"Cultural and Mechanical Practices: {w.get('cultural_mechanical_practices')}."
+                )
+                self.documents.append({
+                    "document_id": f"weed-{crop.lower().replace(' ', '-')}",
+                    "collection_id": c_id,
+                    "source_org": source_org,
+                    "title": f"Weed Management and Herbicides in {crop}",
+                    "crop": crop,
+                    "target": "Weed Management",
+                    "content": content,
+                    "citation": w.get("citation") or f"[{c_id} - {source_org}] Weed Management: {crop}"
+                })
+            return
+
+        # Case 3G: harvesting_guidelines_kb14.json
+        if file_path.name.startswith("harvesting_guidelines_kb14") and isinstance(data, list):
+            c_id = "KB14"
+            source_org = self.registry.get(c_id, {}).get("source_org", "CIPHET Ludhiana")
+            for h in data:
+                crop = h.get("crop_name", "Crop")
+                content = (
+                    f"Harvesting Guidelines for {crop}. Maturity Indices: {h.get('physiological_maturity_indices')}. "
+                    f"Optimum Harvesting Moisture: {h.get('optimum_harvesting_moisture_percent')}%. "
+                    f"Harvesting Method: {h.get('harvesting_method')}. "
+                    f"Precautions During Harvest: {h.get('precautions_during_harvest')}."
+                )
+                self.documents.append({
+                    "document_id": f"harvest-{crop.lower().replace(' ', '-')}",
+                    "collection_id": c_id,
+                    "source_org": source_org,
+                    "title": f"Harvesting Guidelines for {crop}",
+                    "crop": crop,
+                    "target": "Harvesting",
+                    "content": content,
+                    "citation": h.get("citation") or f"[{c_id} - {source_org}] Harvesting Guide: {crop}"
+                })
+            return
+
+        # Case 3H: mandi_market_prices_kb18.json
+        if file_path.name.startswith("mandi_market_prices_kb18") and isinstance(data, list):
+            c_id = "KB18"
+            source_org = self.registry.get(c_id, {}).get("source_org", "Agmarknet & APMC")
+            for m in data:
+                mandi_name = m.get("mandi_name", "APMC Mandi")
+                dist = m.get("district", "")
+                st = m.get("state", "")
+                for comm in m.get("major_commodities", []):
+                    cname = comm.get("commodity", "Commodity")
+                    # Clean crop name
+                    crop_key = cname.split("(")[0].strip()
+                    content = (
+                        f"APMC Mandi Market Price: {cname} at {mandi_name} ({dist}, {st}). "
+                        f"Variety/Grade: {comm.get('variety_grade')}. "
+                        f"Modal Price Range: Rs. {comm.get('modal_price_range_inr_per_quintal')} per quintal. "
+                        f"MSP Benchmark: Rs. {comm.get('msp_benchmark_inr_per_quintal')} per quintal. "
+                        f"Quality Specifications: {comm.get('faq_specifications')}. "
+                        f"Peak Arrival Months: {comm.get('peak_arrival_months')}. "
+                        f"Moisture Deduction Rule: {comm.get('moisture_deduction_rule')}."
+                    )
+                    self.documents.append({
+                        "document_id": f"mandi-{crop_key.lower().replace(' ', '-')}-{dist.lower()}",
+                        "collection_id": c_id,
+                        "source_org": source_org,
+                        "title": f"Mandi Price: {cname} in {mandi_name}",
+                        "crop": crop_key,
+                        "target": cname,
+                        "content": content,
+                        "citation": f"[{c_id} - {source_org}] Agmarknet Mandi Price: {cname} ({mandi_name})"
+                    })
+            return
+
         # Case 4: Generic structured dictionary mapping collection keys (e.g., "KB02", "KB03", ...)
         if isinstance(data, dict):
             for key, items in data.items():
@@ -423,12 +682,42 @@ class RAGService:
                     source_org = reg_meta.get("source_org", f"National Agricultural Registry ({c_id})")
 
                     for idx, item in enumerate(items):
-                        doc_id = item.get("id", f"{c_id.lower()}-{idx+1:03d}")
-                        title = item.get("title", f"{reg_meta.get('name', 'Knowledge Chunk')} - {doc_id}")
+                        doc_id = item.get("id") or item.get("term_id") or item.get("faq_id") or f"{c_id.lower()}-{idx+1:03d}"
                         crop = item.get("crop_name") or item.get("crop")
                         target = item.get("target") or item.get("pest") or item.get("disease")
-                        content = item.get("content", "")
-                        citation = item.get("citation") or f"[{c_id} - {source_org}] {title}"
+                        
+                        # Cleanly extract content depending on schema
+                        if "scientific_solution" in item or "answer_en" in item or "answer" in item:
+                            q_en = item.get("question_en") or item.get("farmer_query_en") or ""
+                            q_te = item.get("question_te") or item.get("farmer_query_te") or ""
+                            q_hi = item.get("question_hi") or item.get("farmer_query_hi") or ""
+                            ans_en = item.get("answer_en") or item.get("scientific_solution") or item.get("answer") or ""
+                            ans_te = item.get("answer_te") or ""
+                            ans_hi = item.get("answer_hi") or ""
+                            
+                            content = (
+                                f"Question (EN): {q_en}\nQuestion (TE): {q_te}\nQuestion (HI): {q_hi}\n"
+                                f"Recommendation: {ans_en}\nTelugu Advisory: {ans_te}\nHindi Advisory: {ans_hi}"
+                            )
+                            title = f"{item.get('category', 'FAQ')}: {crop or 'Agri'} - {q_en[:50]}"
+                            citation = item.get("source") or item.get("authoritative_source") or f"[{c_id} - {source_org}] {title}"
+                        elif "definition" in item:
+                            term_en = item.get("english", "")
+                            term_te = item.get("telugu", "")
+                            term_hi = item.get("hindi", "")
+                            defn = item.get("definition", "")
+                            cat = item.get("category", "Glossary")
+                            sci = item.get("scientific_name", "")
+                            content = f"Agricultural Term: {term_en} ({term_te}, {term_hi}). Category: {cat}. Scientific: {sci}. Definition: {defn}"
+                            title = f"Agri Term: {term_en}"
+                            citation = f"[{c_id} - {source_org}] Agricultural Glossary: {term_en}"
+                        else:
+                            title = item.get("title", f"{reg_meta.get('name', 'Knowledge Chunk')} - {doc_id}")
+                            content = item.get("content") or item.get("description") or ""
+                            if not content:
+                                # Clean key-value pairs avoiding raw dict repr
+                                content = "; ".join(f"{k}: {v}" for k, v in item.items() if not k.endswith("_id") and isinstance(v, (str, int, float)))
+                            citation = item.get("citation") or f"[{c_id} - {source_org}] {title}"
 
                         self.documents.append({
                             "document_id": doc_id,
@@ -448,12 +737,39 @@ class RAGService:
                 c_id = item.get("collection_id", "KB21")
                 reg_meta = self.registry.get(c_id, {})
                 source_org = item.get("source_org") or reg_meta.get("source_org", "ICAR Verified Repository")
-                doc_id = item.get("id") or item.get("document_id") or f"{c_id.lower()}-{idx+1:03d}"
-                title = item.get("title", f"Verified Document {doc_id}")
+                doc_id = item.get("id") or item.get("document_id") or item.get("faq_id") or f"{c_id.lower()}-{idx+1:03d}"
                 crop = item.get("crop_name") or item.get("crop")
                 target = item.get("target")
-                content = item.get("content", str(item))
-                citation = item.get("citation") or f"[{c_id} - {source_org}] {title}"
+
+                if "scientific_solution" in item or "answer_en" in item or "answer" in item:
+                    q_en = item.get("question_en") or item.get("farmer_query_en") or ""
+                    q_te = item.get("question_te") or item.get("farmer_query_te") or ""
+                    q_hi = item.get("question_hi") or item.get("farmer_query_hi") or ""
+                    ans_en = item.get("answer_en") or item.get("scientific_solution") or item.get("answer") or ""
+                    ans_te = item.get("answer_te") or ""
+                    ans_hi = item.get("answer_hi") or ""
+                    
+                    content = (
+                        f"Question (EN): {q_en}\nQuestion (TE): {q_te}\nQuestion (HI): {q_hi}\n"
+                        f"Recommendation: {ans_en}\nTelugu Advisory: {ans_te}\nHindi Advisory: {ans_hi}"
+                    )
+                    title = f"{item.get('category', 'FAQ')}: {crop or 'Agri'} - {q_en[:50]}"
+                    citation = item.get("source") or item.get("authoritative_source") or f"[{c_id} - {source_org}] {title}"
+                elif "definition" in item:
+                    term_en = item.get("english", "")
+                    term_te = item.get("telugu", "")
+                    term_hi = item.get("hindi", "")
+                    defn = item.get("definition", "")
+                    cat = item.get("category", "Glossary")
+                    content = f"Agricultural Term: {term_en} ({term_te}, {term_hi}). Category: {cat}. Definition: {defn}"
+                    title = f"Agri Term: {term_en}"
+                    citation = f"[{c_id} - {source_org}] Agricultural Glossary: {term_en}"
+                else:
+                    title = item.get("title", f"Verified Document {doc_id}")
+                    content = item.get("content") or item.get("description") or ""
+                    if not content:
+                        content = "; ".join(f"{k}: {v}" for k, v in item.items() if not k.endswith("_id") and isinstance(v, (str, int, float)))
+                    citation = item.get("citation") or f"[{c_id} - {source_org}] {title}"
 
                 self.documents.append({
                     "document_id": doc_id,
@@ -471,11 +787,14 @@ class RAGService:
         query: str,
         crop: Optional[str] = None,
         top_k: int = 3,
-        collection_filter: Optional[List[str]] = None
+        collection_filter: Optional[List[str]] = None,
+        min_relevance_threshold: float = 0.28
     ) -> List[Dict[str, Any]]:
         """
-        Hybrid retrieval combining BM25 lexical relevance and semantic vector similarity.
-        Also applies multilingual expansion (Telugu, Hindi, English) and crop priority boosting.
+        Calibrated Hybrid Retrieval combining BM25 lexical relevance and semantic vector similarity.
+        Applies multilingual query expansion (Telugu, Hindi, English), intent routing,
+        and bounded multipliers to eliminate false positive dominance.
+        Filters out low-scoring documents below min_relevance_threshold.
         """
         if not self.documents:
             return []
@@ -483,6 +802,10 @@ class RAGService:
         # 1. Expand multilingual query tokens
         from app.ai.query_understanding import QueryUnderstanding
         analysis = QueryUnderstanding.analyze_query(query, context_crop=crop)
+        if not analysis.get("is_agricultural", True) and not crop:
+            # Out-of-domain query (e.g., cricket, smartphones, entertainment) -> abstain
+            return []
+
         effective_crop = analysis.get("crop")
         recommended_cols = set(analysis.get("recommended_collections", []))
 
@@ -503,9 +826,8 @@ class RAGService:
         if max_bm25 <= 0.0:
             max_bm25 = 1.0
 
-        # 4. Calculate Hybrid Score for each document
+        # 4. Calculate Calibrated Hybrid Score for each document
         scored_candidates: List[Tuple[float, Dict[str, Any]]] = []
-
         crop_clean = effective_crop.lower().strip() if effective_crop else None
 
         for idx, doc in enumerate(self.documents):
@@ -515,39 +837,61 @@ class RAGService:
                 continue
 
             bm25_norm = raw_bm25_scores[idx] / max_bm25
-            vec_sim = self.vector_embedder.cosine_similarity(query_vec, self.doc_vectors[idx])
+            vec_sim = max(0.0, self.vector_embedder.cosine_similarity(query_vec, self.doc_vectors[idx]))
 
-            # Hybrid linear combination (55% BM25, 45% Vector Sim)
-            hybrid_score = (0.55 * bm25_norm) + (0.45 * vec_sim)
+            # Base semantic score (0.0 to 1.0)
+            base_score = (0.55 * bm25_norm) + (0.45 * vec_sim)
 
-            # Collection recommendation boost
-            if doc_col in recommended_cols:
-                hybrid_score += 0.8
+            # Skip documents with negligible lexical and semantic relevance
+            if bm25_norm < 0.04 and vec_sim < 0.65:
+                continue
+            if base_score < 0.06:
+                continue
 
-            # Crop filter boost (only when crop is explicitly identified)
+            # Bounded gentle multipliers instead of massive overpowering additions
+            multiplier = 1.0
             doc_crop = (doc.get("crop") or "").lower()
-            if crop_clean and doc_crop:
-                if crop_clean in doc_crop or doc_crop in crop_clean:
-                    hybrid_score += 1.8
-                else:
-                    # Penalize documents of another explicitly different crop
-                    hybrid_score -= 0.6
 
-            # Target or Title boost
+            # Crop matching / filtering
+            if crop_clean:
+                if doc_crop:
+                    if crop_clean in doc_crop or doc_crop in crop_clean:
+                        multiplier *= 1.30
+                    elif doc_crop not in ["general", "all", "soils", ""]:
+                        # Severe penalty for a completely different crop
+                        multiplier *= 0.15
+            
+            # Collection intent alignment: prioritize primary specialized collection
+            rec_list = analysis.get("recommended_collections", [])
+            primary_col = rec_list[0] if rec_list else None
+            if doc_col == primary_col:
+                multiplier *= 1.45
+            elif doc_col in recommended_cols:
+                multiplier *= 1.15
+
+            # Target entity bonus (e.g. pink bollworm, blast, thrips)
+            doc_target = (doc.get("target") or "").lower()
+            if analysis.get("target_entity"):
+                target_entity = analysis["target_entity"].lower()
+                if target_entity in doc_target or target_entity in doc.get("title", "").lower():
+                    multiplier *= 1.45
+
+            # Title entity bonus
             title_lower = doc.get("title", "").lower()
-            target_lower = (doc.get("target") or "").lower()
             for entity in detected_entities:
-                if entity.lower() in title_lower or entity.lower() in target_lower:
-                    hybrid_score += 1.0
+                if entity.lower() in title_lower:
+                    multiplier *= 1.15
+                    break
 
-            if analysis.get("target_entity") and analysis["target_entity"].lower() in target_lower:
-                hybrid_score += 1.5
+            final_score = base_score * multiplier
 
-            if hybrid_score > 0.05:
+            # Filter against minimum relevance threshold
+            if final_score >= min_relevance_threshold:
                 doc_copy = dict(doc)
-                doc_copy["score"] = round(hybrid_score, 4)
+                doc_copy["score"] = round(final_score, 4)
+                doc_copy["base_score"] = round(base_score, 4)
                 doc_copy["query_analysis"] = analysis
-                scored_candidates.append((hybrid_score, doc_copy))
+                scored_candidates.append((final_score, doc_copy))
 
         # 5. Sort by descending score and take top_k
         scored_candidates.sort(key=lambda x: x[0], reverse=True)

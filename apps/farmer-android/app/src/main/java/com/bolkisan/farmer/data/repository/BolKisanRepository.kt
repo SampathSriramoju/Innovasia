@@ -228,36 +228,64 @@ class BolKisanRepository(private val context: Context) {
             }
         }
 
-        // Offline Fallback Engine: Intelligently match against local Room SQLite Knowledge Cards
-        val localMatches = dao.searchLocalKnowledge(queryText, currentLanguage)
-        val finalMatch = if (localMatches.isNotEmpty()) {
-            localMatches.first()
-        } else {
-            // Tokenize query words to score against all knowledge cards for this crop
-            val queryTokens = queryText.lowercase()
-                .split(" ", "?", "!", ".", ",", "।", "-", "/")
-                .map { it.trim() }
-                .filter { it.length > 2 && it !in listOf("what", "how", "pesticide", "spray", "dose", "chemical", "control", "నివారణ", "మందు", "ఎంత", "మరియు", "గురించి", "రసాయన", "ఎలా") }
+        // Offline Fallback Engine: Multi-factor scoring against local Room SQLite Knowledge Cards
+        val queryTokens = queryText.lowercase()
+            .split(" ", "?", "!", ".", ",", "।", "-", "/", "(", ")", "\n", "\t")
+            .map { it.trim() }
+            .filter { it.length >= 2 && it !in listOf("what", "how", "the", "for", "and", "can", "with", "నివారణ", "మందు", "ఎంత", "మరియు", "గురించి", "రసాయన", "ఎలా", "ఏమిటి", "చెప్పండి", "क्या", "कैसे", "करें", "बताएं", "की", "का", "में") }
 
-            val cropCards = dao.getKnowledgeByCropSync(selectedCrop, currentLanguage)
-            var bestCard: OfflineKnowledgeEntity? = null
-            var highestScore = 0
+        // Infer intent category from keywords
+        val lowerQ = queryText.lowercase()
+        val inferredCategory = when {
+            lowerQ.contains("పురుగు") || lowerQ.contains("కీటకం") || lowerQ.contains("कीट") || lowerQ.contains("सुंडी") || lowerQ.contains("pest") || lowerQ.contains("bollworm") || lowerQ.contains("thrips") -> "pesticide"
+            lowerQ.contains("తెగులు") || lowerQ.contains("మచ్చ") || lowerQ.contains("ముడత") || lowerQ.contains("రోగ") || lowerQ.contains("झुलसा") || lowerQ.contains("disease") || lowerQ.contains("blight") || lowerQ.contains("blast") -> "disease"
+            lowerQ.contains("ఎరువు") || lowerQ.contains("యూరియా") || lowerQ.contains("డిఎపి") || lowerQ.contains("खाद") || lowerQ.contains("उर्वरक") || lowerQ.contains("fertilizer") || lowerQ.contains("npk") -> "fertilizer"
+            lowerQ.contains("నీరు") || lowerQ.contains("నీటిపారుదల") || lowerQ.contains("తడులు") || lowerQ.contains("पानी") || lowerQ.contains("सिंचाई") || lowerQ.contains("irrigation") || lowerQ.contains("water") -> "irrigation"
+            lowerQ.contains("కలుపు") || lowerQ.contains("గడ్డి") || lowerQ.contains("खरपतवार") || lowerQ.contains("weed") || lowerQ.contains("herbicide") -> "cultivation"
+            lowerQ.contains("ధర") || lowerQ.contains("మార్కెట్") || lowerQ.contains("మండి") || lowerQ.contains("भाव") || lowerQ.contains("मंडी") || lowerQ.contains("price") || lowerQ.contains("mandi") -> "market"
+            lowerQ.contains("నేల") || lowerQ.contains("భూసారం") || lowerQ.contains("నల్లరేగడి") || lowerQ.contains("मिट्टी") || lowerQ.contains("soil") -> "soil"
+            else -> null
+        }
 
-            for (card in cropCards) {
-                val cardCorpus = "${card.title} ${card.content}".lowercase()
-                var matchCount = 0
-                for (token in queryTokens) {
-                    if (cardCorpus.contains(token)) {
-                        matchCount++
-                    }
-                }
-                if (matchCount > highestScore) {
-                    highestScore = matchCount
-                    bestCard = card
+        val cropCards = dao.getKnowledgeByCropSync(selectedCrop, currentLanguage)
+        val allCards = if (cropCards.isNotEmpty()) cropCards else dao.getKnowledgeByCropSync(selectedCrop, "en")
+
+        var bestCard: OfflineKnowledgeEntity? = null
+        var highestScore = 0
+
+        for (card in allCards) {
+            val titleLower = card.title.lowercase()
+            val contentLower = card.content.lowercase()
+            val cardCategory = card.category.lowercase()
+            var score = 0
+
+            // Language match weight
+            if (card.language == currentLanguage) score += 2
+
+            // Category/intent affinity weight
+            if (inferredCategory != null && (cardCategory.contains(inferredCategory) || card.title.lowercase().contains(inferredCategory))) {
+                score += 5
+            }
+
+            // Keyword token matching
+            for (token in queryTokens) {
+                if (titleLower.contains(token)) {
+                    score += 4
+                } else if (contentLower.contains(token)) {
+                    score += 1
                 }
             }
-            bestCard ?: cropCards.firstOrNull()
+
+            if (score > highestScore) {
+                highestScore = score
+                bestCard = card
+            }
         }
+
+        // Defensible minimum relevance threshold:
+        // Score must be at least 6 (requires category match + token match, or multiple title token matches)
+        // Strictly eliminate arbitrary first-card fallback (cropCards.firstOrNull())
+        val finalMatch = if (highestScore >= 6) bestCard else null
 
         if (finalMatch != null) {
             val fallbackAnswer = VoiceAnswerDto(

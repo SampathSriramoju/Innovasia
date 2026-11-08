@@ -56,4 +56,5 @@ apps/farmer-android/local.properties
 bluestacks_screenshot.png
 current_user_prompt.txt
 test_res.json
+backend/app/api/static/uploads/
 live_test_result.txt

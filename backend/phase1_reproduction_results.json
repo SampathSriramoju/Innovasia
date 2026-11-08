@@ -1,0 +1,1351 @@
+[
+  {
+    "id": "Q01",
+    "query": "How much water does cotton require and what are critical irrigation stages?",
+    "lang": "en",
+    "expected_crop": "Cotton",
+    "detected_crop": "Cotton",
+    "expected_intent": "irrigation",
+    "detected_intent": "irrigation",
+    "recommended_cols": [
+      "KB11",
+      "KB21"
+    ],
+    "top_doc": {
+      "id": "doc-kb11-001",
+      "col": "KB11",
+      "title": "Cotton Drip Irrigation and Alternate Furrow Scheduling",
+      "score": 3.5217
+    },
+    "retrieved_summary": [
+      {
+        "id": "doc-kb11-001",
+        "col": "KB11",
+        "title": "Cotton Drip Irrigation and Alternate Furrow Schedu",
+        "score": 3.5217
+      },
+      {
+        "id": "Q-CAT-E-07",
+        "col": "KB21",
+        "title": "Verified Document Q-CAT-E-07",
+        "score": 3.4237
+      },
+      {
+        "id": "Q-CAT-F-10",
+        "col": "KB21",
+        "title": "Verified Document Q-CAT-F-10",
+        "score": 3.4197
+      }
+    ],
+    "fallback_answer": "Agricultural Advisory (Cotton Drip Irrigation and Alternate Furrow Scheduling):\nCotton requires 600-800 mm of water throughout its cycle. Under water-scarce conditions, alternate furrow irrigation saves 30-35% water without yield reduction. Drip irrigation with inline drippers (2 LPH at 40 cm spacing) achieves 90% water use efficiency. Critical irrigation stages: Square initiation, flowering, and boll formation.",
+    "fallback_model": "grounded-rag-synthesizer",
+    "online_answer": "Namaste Kisan! Here is the guidance for cotton irrigation based on expert agricultural guidelines:\n\n• Total Water Requirement: Cotton requires 600-800 mm of water throughout its crop cycle.\n• Critical Irrigation Stages: Ensure adequate watering during square initiation, flowering, and boll formation stages.\n• Water Saving Tips: Under water-scarce conditions, alternate furrow irrigation can save 30-35% water without reducing yield. Alternatively, drip irrigation using inline drippers (2 LPH at 40 cm spacing) provides high water use efficiency of 90%.",
+    "online_model": "gemini-3.5-flash-lite",
+    "online_is_fallback": false
+  },
+  {
+    "id": "Q02",
+    "query": "Which fertilizer schedule and NPK dose is suitable for cotton?",
+    "lang": "en",
+    "expected_crop": "Cotton",
+    "detected_crop": "Cotton",
+    "expected_intent": "fertilizer_soil",
+    "detected_intent": "fertilizer_soil",
+    "recommended_cols": [
+      "KB09",
+      "KB10",
+      "KB21"
+    ],
+    "top_doc": {
+      "id": "doc-kb09-001",
+      "col": "KB09",
+      "title": "Cotton Fertilizer and Nutrient Management (NPK)",
+      "score": 3.4934
+    },
+    "retrieved_summary": [
+      {
+        "id": "doc-kb09-001",
+        "col": "KB09",
+        "title": "Cotton Fertilizer and Nutrient Management (NPK)",
+        "score": 3.4934
+      },
+      {
+        "id": "kb09-209",
+        "col": "KB09",
+        "title": "Fertilizer Schedule: Cotton",
+        "score": 3.1941
+      },
+      {
+        "id": "kb21-067",
+        "col": "KB21",
+        "title": "Verified Document kb21-067",
+        "score": 3.1845
+      }
+    ],
+    "fallback_answer": "Agricultural Advisory (Cotton Fertilizer and Nutrient Management (NPK)):\nRecommended dose of fertilizer (RDF) for hybrid Bt cotton is 120:60:60 kg N:P2O5:K2O per hectare (approx 48:24:24 kg per acre). Full dose of phosphorus (DAP/SSP) and 25% potash as basal dose. Apply nitrogen in 3 split doses: 25% at 20 DAS, 50% at square formation (45-50 DAS), and 25% at peak flowering (70-75 DAS). Spray 1% Magnesium Sulphate (MgSO4) + 1% 19:19:19 to prevent leaf reddening.",
+    "fallback_model": "grounded-rag-synthesizer",
+    "online_answer": "Namaste! Here is the recommended fertilizer schedule and NPK dose for cotton:\n\n- Recommended Dose of Fertilizer (RDF): \n - For Bt Cotton under irrigation: 60:30:30 kg NPK per acre (150:75:75 kg per hectare).\n - For Rainfed Bt cotton: 48:24:24 kg NPK per acre (120:60:60 kg per hectare).\n\n- Basal Application (at sowing):\n - Apply the full dose of Phosphorus (such as 65 kg DAP or 188 kg SSP).\n - Apply 1/4th of Nitrogen (25 kg Urea) and 1/3rd of Potash (17 kg MOP) in the furrow.\n\n- Top Dressing (Nitrogen and Potash in splits):\n - 1st split: At 20-25 days after sowing (squaring initiation).\n - 2nd split: At 45-50 days after sowing (peak squaring).\n - 3rd split: At 70-75 days after sowing (boll formation).\n\n- Biofertilizers:\n - Apply Azotobacter or Azospirillum @ 500 g per acre along with Phosphate Solubilizing Bacteria @ 500 g per acre, mixed with 100 kg Farm Yard Manure near the root zone.",
+    "online_model": "gemini-3.5-flash-lite",
+    "online_is_fallback": false
+  },
+  {
+    "id": "Q03",
+    "query": "How can I control pink bollworm in cotton?",
+    "lang": "en",
+    "expected_crop": "Cotton",
+    "detected_crop": "Cotton",
+    "expected_intent": "pest_management",
+    "detected_intent": "pest_management",
+    "recommended_cols": [
+      "KB05",
+      "KB21",
+      "KB06"
+    ],
+    "top_doc": {
+      "id": "p1000000-0000-0000-0000-000000000001",
+      "col": "KB05",
+      "title": "Pest: Pink Bollworm in Cotton",
+      "score": 4.9549
+    },
+    "retrieved_summary": [
+      {
+        "id": "p1000000-0000-0000-0000-000000000001",
+        "col": "KB05",
+        "title": "Pest: Pink Bollworm in Cotton",
+        "score": 4.9549
+      },
+      {
+        "id": "doc-kb06-001",
+        "col": "KB06",
+        "title": "Integrated Pest Management (IPM) for Cotton",
+        "score": 4.74
+      },
+      {
+        "id": "prod-CIR-11425/2014-Emamectin Benzoate(SG)(345)-412",
+        "col": "KB07",
+        "title": "CIBRC Product Registry: Proclaim 5% SG",
+        "score": 4.013
+      }
+    ],
+    "fallback_answer": "Agronomic Expert Recommendation:\n• Crop: Cotton\n• Target Pest/Disease: Pink Bollworm\n• Product: Proclaim 5% SG (Emamectin Benzoate 5% SG)\n• Dosage: 88 g (approx 6.6 g per 15L backpack pump) per acre in 200 liters/acre (500 liters/ha) water\n• Per Hectare: 220 g\n• Precautions: Wear rubber gloves, face mask and protective glasses. Do not spray against wind direction. Toxic to honeybees; avoid spraying during active foraging hours.\n• Pre-Harvest Interval: 14 days.",
+    "fallback_model": "deterministic-cibrc-engine",
+    "online_answer": "Namaste! To control Pink Bollworm in cotton, follow these steps:\n- Install pheromone traps at 5 per acre for monitoring or 8 to 10 per acre for mass trapping.\n- Use Neem Seed Kernel Extract (NSKE) 5% or Neem oil 1500 ppm at 5 ml per liter as the first line of defense.\n- For chemical control, use the CIBRC approved product Proclaim 5% SG (Emamectin Benzoate 5% SG).\n- Dosage: Apply 88 g (approx 6.6 g per 15L backpack pump) per acre in 200 liters of water.\n- Maintain a Pre-Harvest Interval (PHI) of 14 days.\n- Safety: Wear rubber gloves, a face mask, and protective glasses. Do not spray against the wind direction, and avoid spraying during active foraging hours as it is toxic to honeybees.",
+    "online_model": "gemini-3.5-flash-lite",
+    "online_is_fallback": false
+  },
+  {
+    "id": "Q04",
+    "query": "What diseases commonly affect cotton crop and how to identify bacterial blight?",
+    "lang": "en",
+    "expected_crop": "Cotton",
+    "detected_crop": "Cotton",
+    "expected_intent": "crop_disease",
+    "detected_intent": "crop_disease",
+    "recommended_cols": [
+      "KB04",
+      "KB21",
+      "KB06"
+    ],
+    "top_doc": {
+      "id": "d1000000-0000-0000-0000-000000000002",
+      "col": "KB04",
+      "title": "Disease: Bacterial Blight / Angular Leaf Spot in Cotton",
+      "score": 4.9584
+    },
+    "retrieved_summary": [
+      {
+        "id": "d1000000-0000-0000-0000-000000000002",
+        "col": "KB04",
+        "title": "Disease: Bacterial Blight / Angular Leaf Spot in C",
+        "score": 4.9584
+      },
+      {
+        "id": "kb04-050",
+        "col": "KB04",
+        "title": "Disease: Bacterial Blight / Angular Leaf Spot in C",
+        "score": 3.4225
+      },
+      {
+        "id": "Q-CAT-L-09",
+        "col": "KB21",
+        "title": "Verified Document Q-CAT-L-09",
+        "score": 3.2536
+      }
+    ],
+    "fallback_answer": "Agricultural Advisory (Disease: Bacterial Blight / Angular Leaf Spot in Cotton):\nDisease: Bacterial Blight / Angular Leaf Spot (బాక్టీరియా ఆకుమచ్చ తెగులు, जीवाणु झुलसा रोग) in Cotton. Pathogen: Bacterial (Xanthomonas citri pv. malvacearum). Symptoms: Small, water-soaked, angular spots on leaves delimited by veins. Lesions coalesce turning reddish-brown to black. Progresses along veins to petioles and stems causing 'black arm', and rotting of young bolls.. Favorable Weather: Warm temperature (28-32°C), high humidity (>85%), wind-driven rain showers..",
+    "fallback_model": "grounded-rag-synthesizer",
+    "online_answer": "Namaste Kisan! Here is how you can identify Bacterial Blight, also known as Angular Leaf Spot, in your cotton crop:\n• Look for small, water-soaked, angular spots on the leaves that are strictly bounded by the veins.\n• These lesions can join together and turn reddish-brown to black in color.\n• The infection can progress along the veins to the petioles and stems, causing a condition known as 'black arm'.\n• It can also lead to the rotting of young bolls.\n• This disease spreads rapidly in warm temperatures between 28 to 32°C, high humidity above 85%, and during wind-driven rain showers.",
+    "online_model": "gemini-3.5-flash-lite",
+    "online_is_fallback": false
+  },
+  {
+    "id": "Q05",
+    "query": "How can I improve black soil for cotton cultivation?",
+    "lang": "en",
+    "expected_crop": "Cotton",
+    "detected_crop": "Cotton",
+    "expected_intent": "fertilizer_soil",
+    "detected_intent": "fertilizer_soil",
+    "recommended_cols": [
+      "KB09",
+      "KB10",
+      "KB21"
+    ],
+    "top_doc": {
+      "id": "Q-CAT-E-07",
+      "col": "KB21",
+      "title": "Verified Document Q-CAT-E-07",
+      "score": 3.3424
+    },
+    "retrieved_summary": [
+      {
+        "id": "Q-CAT-E-07",
+        "col": "KB21",
+        "title": "Verified Document Q-CAT-E-07",
+        "score": 3.3424
+      },
+      {
+        "id": "Q-CAT-A-03",
+        "col": "KB21",
+        "title": "Verified Document Q-CAT-A-03",
+        "score": 3.2748
+      },
+      {
+        "id": "kb21-490",
+        "col": "KB21",
+        "title": "KCC FAQ: kcc-faq-018 (Cotton)",
+        "score": 3.2551
+      }
+    ],
+    "fallback_answer": "Agricultural Advisory (Verified Document Q-CAT-E-07):\n{'id': 'Q-CAT-E-07', 'category': 'E - Fertilizer & Soil Health', 'crop': 'Cotton', 'language': 'en', 'query': 'How does potassium deficiency appear on cotton leaves during the boll development phase?', 'intent': 'fertilizer_soil', 'ground_truth_source': 'KB09', 'key_facts': }",
+    "fallback_model": "grounded-rag-synthesizer",
+    "online_answer": "Namaste farmer friend! Here is the guidance for cotton cultivation in black soil based on verified agricultural recommendations:\n- Seed Rate: Bt cotton requires 2 packets (900 grams total) per acre.\n- Spacing: Maintain a spacing of 90 cm row-to-row and 60 cm plant-to-plant in normal black soils, which accommodates about 7,400 plants per acre.\n- Refuge Border: Plant non-Bt refuge border rows around your field.",
+    "online_model": "gemini-3.5-flash-lite",
+    "online_is_fallback": false
+  },
+  {
+    "id": "Q06",
+    "query": "పత్తి పంటలో నీటి యాజమాన్యం మరియు నీరు పెట్టే కీలక దశలు ఏమిటి?",
+    "lang": "te",
+    "expected_crop": "Cotton",
+    "detected_crop": "Cotton",
+    "expected_intent": "irrigation",
+    "detected_intent": "irrigation",
+    "recommended_cols": [
+      "KB11",
+      "KB21"
+    ],
+    "top_doc": {
+      "id": "Q-CAT-J-01",
+      "col": "KB21",
+      "title": "Verified Document Q-CAT-J-01",
+      "score": 3.169
+    },
+    "retrieved_summary": [
+      {
+        "id": "Q-CAT-J-01",
+        "col": "KB21",
+        "title": "Verified Document Q-CAT-J-01",
+        "score": 3.169
+      },
+      {
+        "id": "Q-CAT-H-01",
+        "col": "KB21",
+        "title": "Verified Document Q-CAT-H-01",
+        "score": 3.1568
+      },
+      {
+        "id": "Q-CAT-K-01",
+        "col": "KB21",
+        "title": "Verified Document Q-CAT-K-01",
+        "score": 3.1378
+      }
+    ],
+    "fallback_answer": "వ్యవసాయ సమాచారం (Verified Document Q-CAT-J-01):\n{'id': 'Q-CAT-J-01', 'category': 'J - Mandi Prices & Market Dynamics', 'crop': 'Cotton', 'language': 'te', 'query': 'వరంగల్ ఏనుమాముల వ్యవసాయ మార్కెట్లో పత్తి క్వింటాల్ కనీస మద్దతు ధర (MSP) మరియు మోడల్ ధర ఎంత?', 'intent': 'mandi_market', 'ground_truth_source': 'KB16', 'key_facts': }",
+    "fallback_model": "grounded-rag-synthesizer",
+    "online_answer": "రైతు అన్న, పత్తి పంటలో నీటి యాజమాన్యం మరియు నీరు పెట్టాల్సిన కీలక దశల గురించి నా దగ్గర ఉన్న సమాచారంలో పూర్తి వివరాలు లేవు. అయితే, ఎడతెరిపి లేకుండా వర్షాలు కురిసినప్పుడు పత్తి చేనులో నీరు నిలవకుండా కాలువల ద్వారా అదనపు నీటిని బయటకు వెళ్లేలా చూసుకోవాలని మరియు నీరు తీశాక లీటరు నీటికి 1% యూరియా మరియు 1% పొటాషియం నైట్రేట్ కలిపి పిచికారీ చేయాలని మాత్రం ఉంది. ఇతర నీటి యాజమాన్య వివరాల కోసం దయచేసి స్థానిక వ్యవసాయ అధికారిని సంప్రదించండి.",
+    "online_model": "gemini-3.5-flash-lite",
+    "online_is_fallback": false
+  },
+  {
+    "id": "Q07",
+    "query": "పత్తిలో యూరియా, డిఎపి ఎరువులు ఏ మోతాదులో ఎప్పుడు వేయాలి?",
+    "lang": "te",
+    "expected_crop": "Cotton",
+    "detected_crop": "Cotton",
+    "expected_intent": "fertilizer_soil",
+    "detected_intent": "fertilizer_soil",
+    "recommended_cols": [
+      "KB09",
+      "KB10",
+      "KB21"
+    ],
+    "top_doc": {
+      "id": "Q-CAT-E-01",
+      "col": "KB21",
+      "title": "Verified Document Q-CAT-E-01",
+      "score": 3.2892
+    },
+    "retrieved_summary": [
+      {
+        "id": "Q-CAT-E-01",
+        "col": "KB21",
+        "title": "Verified Document Q-CAT-E-01",
+        "score": 3.2892
+      },
+      {
+        "id": "Q-CAT-H-01",
+        "col": "KB21",
+        "title": "Verified Document Q-CAT-H-01",
+        "score": 3.1241
+      },
+      {
+        "id": "doc-kb09-001",
+        "col": "KB09",
+        "title": "Cotton Fertilizer and Nutrient Management (NPK)",
+        "score": 3.1001
+      }
+    ],
+    "fallback_answer": "వ్యవసాయ సమాచారం (Verified Document Q-CAT-E-01):\n{'id': 'Q-CAT-E-01', 'category': 'E - Fertilizer & Soil Health', 'crop': 'Cotton', 'language': 'te', 'query': 'పత్తి పంటకు ఎకరాకు నత్రజని, భాస్వరం మరియు పొటాష్ ఎరువులను ఎన్ని దఫాలుగా వేయాలి?', 'intent': 'fertilizer_soil', 'ground_truth_source': 'KB09', 'key_facts': }",
+    "fallback_model": "grounded-rag-synthesizer",
+    "online_answer": "నమస్కారం రైతు అన్న, పత్తి పంటకు ఎకరాకు సుమారుగా 48:24:24 కిలోల నత్రజని, భాస్వరం మరియు పొటాష్ (N:P2O5:K2O) ఎరువులను సిఫారసు చేయడం జరుగుతుంది. పూర్తి భాస్వరం (DAP లేదా SSP రూపంలో) మరియు 25 శాతం పొటాష్ ఎరువును ఆఖరి దుక్కిలో లేదా తొలితాగుగా వేయాలి. నత్రజని ఎరువును 3 విడతలుగా వేయాలి: 25 శాతం విత్తిన 20 రోజులకు, 50 శాతం మొగ్గ తొడుగు దశలో (45-50 రోజులకు), మరియు మిగతా 25 శాతం పూత దశలో (70-75 రోజులకు) వేసుకోవాలి.",
+    "online_model": "gemini-3.5-flash-lite",
+    "online_is_fallback": false
+  },
+  {
+    "id": "Q08",
+    "query": "ప్రత్తిలో గులాబీ రంగు పురుగు నివారణకు ఏ మందు వాడాలి?",
+    "lang": "te",
+    "expected_crop": "Cotton",
+    "detected_crop": "Cotton",
+    "expected_intent": "pest_management",
+    "detected_intent": "pest_management",
+    "recommended_cols": [
+      "KB05",
+      "KB21",
+      "KB06"
+    ],
+    "top_doc": {
+      "id": "p1000000-0000-0000-0000-000000000001",
+      "col": "KB05",
+      "title": "Pest: Pink Bollworm in Cotton",
+      "score": 4.7321
+    },
+    "retrieved_summary": [
+      {
+        "id": "p1000000-0000-0000-0000-000000000001",
+        "col": "KB05",
+        "title": "Pest: Pink Bollworm in Cotton",
+        "score": 4.7321
+      },
+      {
+        "id": "doc-kb06-001",
+        "col": "KB06",
+        "title": "Integrated Pest Management (IPM) for Cotton",
+        "score": 4.3959
+      },
+      {
+        "id": "prod-CIR-11425/2014-Emamectin Benzoate(SG)(345)-412",
+        "col": "KB07",
+        "title": "CIBRC Product Registry: Proclaim 5% SG",
+        "score": 3.5346
+      }
+    ],
+    "fallback_answer": "వ్యవసాయ నిపుణుల సిఫార్సు:\n• పంట: Cotton\n• నివారించే పురుగు/తెగులు: Pink Bollworm\n• మందు పేరు: Proclaim 5% SG (Emamectin Benzoate 5% SG)\n• మోతాదు: ఎకరాకు 88 g (approx 6.6 g per 15L backpack pump) (200 liters/acre (500 liters/ha) నీటిలో కలపాలి)\n• హెక్టారుకు: 220 g\n• జాగ్రత్తలు: Wear rubber gloves, face mask and protective glasses. Do not spray against wind direction. Toxic to honeybees; avoid spraying during active foraging hours.\n• వేచి ఉండే కాలం (PHI): కోతకు 14 రోజుల ముందు వాడాలి.",
+    "fallback_model": "deterministic-cibrc-engine",
+    "online_answer": "నమస్కారం రైతన్న! ప్రత్తిలో గులాబీ రంగు కాయ తొలుచు పురుగు నివారణకు సిఐబిఆర్సి ఆమోదిత 'ప్రొక్లెయిమ్ 5% ఎస్.జి' (Emamectin Benzoate 5% SG) మందును వాడాలి. దీనిని ఎకరానికి 88 గ్రాములు (అంటే 15 లీటర్ల పంపుకు సుమారు 6.6 గ్రాములు) చొప్పున 200 లీటర్ల నీటిలో కలిపి పిచికారీ చేయాలి. పిచికారీ చేసేటప్పుడు రబ్బరు గ్లౌవులు, ముఖానికి మాస్క్ మరియు రక్షణ అద్దాలు ధరించండి. గాలికి ఎదురుగా పిచికారీ చేయవద్దు. ఇది తేనెటీగలకు హానికరం కాబట్టి, తేనెటీగలు తిరిగే సమయాల్లో పిచికారీ చేయడం మానుకోండి. అలాగే పంట కోతకు ముందస్తు వ్యవధి (PHI) 14 రోజులు పాటించాలి.",
+    "online_model": "gemini-3.5-flash-lite",
+    "online_is_fallback": false
+  },
+  {
+    "id": "Q09",
+    "query": "పత్తిలో ఆకుమచ్చ తెగులు నివారణ పద్ధతులు తెలపండి.",
+    "lang": "te",
+    "expected_crop": "Cotton",
+    "detected_crop": "Cotton",
+    "expected_intent": "crop_disease",
+    "detected_intent": "crop_disease",
+    "recommended_cols": [
+      "KB04",
+      "KB21",
+      "KB06"
+    ],
+    "top_doc": {
+      "id": "d1000000-0000-0000-0000-000000000002",
+      "col": "KB04",
+      "title": "Disease: Bacterial Blight / Angular Leaf Spot in Cotton",
+      "score": 3.4389
+    },
+    "retrieved_summary": [
+      {
+        "id": "d1000000-0000-0000-0000-000000000002",
+        "col": "KB04",
+        "title": "Disease: Bacterial Blight / Angular Leaf Spot in C",
+        "score": 3.4389
+      },
+      {
+        "id": "kb04-050",
+        "col": "KB04",
+        "title": "Disease: Bacterial Blight / Angular Leaf Spot in C",
+        "score": 3.405
+      },
+      {
+        "id": "d1000000-0000-0000-0000-000000000002",
+        "col": "KB21",
+        "title": "Verified Document d1000000-0000-0000-0000-00000000",
+        "score": 3.1797
+      }
+    ],
+    "fallback_answer": "వ్యవసాయ సమాచారం (Disease: Bacterial Blight / Angular Leaf Spot in Cotton):\nDisease: Bacterial Blight / Angular Leaf Spot (బాక్టీరియా ఆకుమచ్చ తెగులు, जीवाणु झुलसा रोग) in Cotton. Pathogen: Bacterial (Xanthomonas citri pv. malvacearum). Symptoms: Small, water-soaked, angular spots on leaves delimited by veins. Lesions coalesce turning reddish-brown to black. Progresses along veins to petioles and stems causing 'black arm', and rotting of young bolls.. Favorable Weather: Warm temperature (28-32°C), high humidity (>85%), wind-driven rain showers..",
+    "fallback_model": "grounded-rag-synthesizer",
+    "online_answer": "నమస్కారం రైತ అన్నగారూ. పత్తి పంటలో బాక్టీరియా ఆకుమచ్చ తెగులు (ఆంగులర్ లీఫ్ స్పాట్) లక్షణాలు మరియు అనుకూల వాతావరణం గురించి ఇక్కడ తెలుపబడింది. ఆకులపై చిన్న నీటితో తడిసినట్లుండే కోణీయ మచ్చలు ఏర్పడి, నరాల ద్వారా వ్యాపించి ఎరుపు-గోధుమ లేదా నలుపు రంగులోకి మారుతాయి. ఇవి కాడలకు పాకి 'బ్లాక్ ఆర్మ్' అనబడే కాడ నలుపు తెగులుకు దారితీస్తాయి మరియు పిందెలు కుళ్ళిపోతాయి. 28-32 డిగ్రీల సెల్సియస్ వెచ్చని ఉష్ణోగ్రత, 85 శాతం కంటే ఎక్కువ తేమ మరియు గాలితో కూడిన వర్షాలు ఈ తెగులు అభివృద్ధి చెందడానికి అనుకూలమైన వాతావరణం.",
+    "online_model": "gemini-3.5-flash-lite",
+    "online_is_fallback": false
+  },
+  {
+    "id": "Q10",
+    "query": "పత్తి పంటలో కలుపు నివారణకు ఏ మందు కొట్టాలి?",
+    "lang": "te",
+    "expected_crop": "Cotton",
+    "detected_crop": "Cotton",
+    "expected_intent": "weed_management",
+    "detected_intent": "sowing_cultivation",
+    "recommended_cols": [
+      "KB01",
+      "KB02",
+      "KB03",
+      "KB21"
+    ],
+    "top_doc": {
+      "id": "c1000000-0000-0000-0000-000000000001",
+      "col": "KB01",
+      "title": "Crop Master: Cotton",
+      "score": 3.5342
+    },
+    "retrieved_summary": [
+      {
+        "id": "c1000000-0000-0000-0000-000000000001",
+        "col": "KB01",
+        "title": "Crop Master: Cotton",
+        "score": 3.5342
+      },
+      {
+        "id": "kb01-001",
+        "col": "KB01",
+        "title": "Crop Master: Cotton",
+        "score": 3.5186
+      },
+      {
+        "id": "Q-CAT-D-01",
+        "col": "KB21",
+        "title": "Verified Document Q-CAT-D-01",
+        "score": 3.1487
+      }
+    ],
+    "fallback_answer": "వ్యవసాయ సమాచారం (Crop Master: Cotton):\nCrop: Cotton (ప్రత్తి (పత్తి), कपास). Scientific name: Gossypium hirsutum. Season: Kharif. Duration: 160 days. Soil: Deep black soils (Vertisols) or well-drained alluvial soils, pH 6.0 - 8.0. Water: 700 - 1200 mm mm.",
+    "fallback_model": "grounded-rag-synthesizer",
+    "online_answer": "అందించిన సమాచారంలో ప్రత్తి పంటలో కలుపు నివారణకు వాడే మందుల వివరాలు లేవు. దయచేసి మరింత సమాచారం కోసం స్థానిక వ్యవసాయ అధికారిని సంప్రదించండి.",
+    "online_model": "gemini-3.5-flash-lite",
+    "online_is_fallback": false
+  },
+  {
+    "id": "Q11",
+    "query": "వరిలో అగ్గితెగులు (బ్లాస్ట్) వస్తే ఏ మందు స్ప్రే చేయాలి?",
+    "lang": "te",
+    "expected_crop": "Rice",
+    "detected_crop": "Rice",
+    "expected_intent": "crop_disease",
+    "detected_intent": "crop_disease",
+    "recommended_cols": [
+      "KB04",
+      "KB21",
+      "KB06"
+    ],
+    "top_doc": {
+      "id": "d1000000-0000-0000-0000-000000000001",
+      "col": "KB04",
+      "title": "Disease: Rice Blast in Rice / Paddy",
+      "score": 5.0502
+    },
+    "retrieved_summary": [
+      {
+        "id": "d1000000-0000-0000-0000-000000000001",
+        "col": "KB04",
+        "title": "Disease: Rice Blast in Rice / Paddy",
+        "score": 5.0502
+      },
+      {
+        "id": "doc-kb06-002",
+        "col": "KB06",
+        "title": "Integrated Disease and Pest Management in Rice",
+        "score": 4.5899
+      },
+      {
+        "id": "prod-CIR-24380/2017-Trifloxystrobin+Tebuconazole(WG)(370)-98",
+        "col": "KB07",
+        "title": "CIBRC Product Registry: Nativo 75% WG",
+        "score": 3.8069
+      }
+    ],
+    "fallback_answer": "వ్యవసాయ నిపుణుల సిఫార్సు:\n• పంట: Rice\n• నివారించే పురుగు/తెగులు: Rice Blast\n• మందు పేరు: Amistar Top (Azoxystrobin 18.2% + Difenoconazole 11.4% SC)\n• మోతాదు: ఎకరాకు 200 ml (approx 15 ml per 15L backpack pump) (200 liters/acre (500 liters/ha) నీటిలో కలపాలి)\n• హెక్టారుకు: 500 ml\n• జాగ్రత్తలు: Avoid inhalation of spray mist. Do not apply during high heat midday hours. Wear protective equipment.\n• వేచి ఉండే కాలం (PHI): కోతకు 15 రోజుల ముందు వాడాలి.",
+    "fallback_model": "deterministic-cibrc-engine",
+    "online_answer": "నమస్కారం రైతు అన్నదాత! వరిలో అగ్గితెగులు (బ్లాస్ట్) నివారణకు సిబిఆర్‌సి (CIBRC) ఆమోదించిన మందులు అందుబాటులో ఉన్నాయి. అమిస్టార్ టాప్ (అజోక్సిస్ట్రోబిన్ 18.2% + డైఫెనోకోనజోల్ 11.4% ఎస్సీ) మందును ఎకరాకు 200 మి.లీ (15 లీటర్ల పంపుకు సుమారు 15 మి.లీ) చొప్పున 200 లీటర్ల నీటిలో కలిపి పిచికారీ చేయాలి. లేదా నాటివో 75% డబ్ల్యుజి మందును కూడా వాడవచ్చు. పిచికారీ చేసేటప్పుడు ఎండ తీవ్రత ఎక్కువగా ఉన్న సమయాల్లో కాకుండా, తగిన రక్షణ పరికరాలు ధరించి జాగ్రత్తగా పిచికారీ చేయాలి.",
+    "online_model": "gemini-3.5-flash-lite",
+    "online_is_fallback": false
+  },
+  {
+    "id": "Q12",
+    "query": "వరి పంటలో సుడిదోమ (BPH) నివారణకు సిఫార్సు చేసిన మందు ఏది?",
+    "lang": "te",
+    "expected_crop": "Rice",
+    "detected_crop": "Rice",
+    "expected_intent": "pest_management",
+    "detected_intent": "pest_management",
+    "recommended_cols": [
+      "KB05",
+      "KB21",
+      "KB06"
+    ],
+    "top_doc": {
+      "id": "p1000000-0000-0000-0000-000000000002",
+      "col": "KB05",
+      "title": "Pest: Brown Plant Hopper (BPH) in Rice / Paddy",
+      "score": 4.9995
+    },
+    "retrieved_summary": [
+      {
+        "id": "p1000000-0000-0000-0000-000000000002",
+        "col": "KB05",
+        "title": "Pest: Brown Plant Hopper (BPH) in Rice / Paddy",
+        "score": 4.9995
+      },
+      {
+        "id": "doc-kb06-002",
+        "col": "KB06",
+        "title": "Integrated Disease and Pest Management in Rice",
+        "score": 4.6467
+      },
+      {
+        "id": "prod-CIR-28941/2018-Dinotefuran(SG)(385)-112",
+        "col": "KB07",
+        "title": "CIBRC Product Registry: Token 20% SG",
+        "score": 3.8195
+      }
+    ],
+    "fallback_answer": "వ్యవసాయ నిపుణుల సిఫార్సు:\n• పంట: Rice / Paddy\n• నివారించే పురుగు/తెగులు: Brown Plant Hopper\n• మందు పేరు: Chess 50% WG (Pymetrozine 50% WG)\n• మోతాదు: ఎకరాకు 120 g (approx 9.0 g per 15L backpack pump) (200 liters/acre (500 liters/ha) నీటిలో కలపాలి)\n• హెక్టారుకు: 300 g\n• జాగ్రత్తలు: Drain field water slightly before application. Ensure spray reaches the base of rice stems where hoppers feed. Wash hands thoroughly with soap after handling. Wear PPE.\n• వేచి ఉండే కాలం (PHI): కోతకు 19 రోజుల ముందు వాడాలి.",
+    "fallback_model": "deterministic-cibrc-engine",
+    "online_answer": "వరి పంటలో ఆశించే గోధుమ రంగు సుడిదోమ (BPH) నివారణకు సిఫార్సు చేసిన మందులు చెస్ 50% డబ్ల్యూజీ (పైమెట్రోజిన్ 50% డబ్ల్యూజీ) మరియు టోకెన్ 20% ఎస్జీ (డినోటెఫురాన్ 20% ఎస్జీ). చెస్ 50% డబ్ల్యూజీ మందును ఎకరానికి 120 గ్రాముల చొప్పున (లీటరు నీటిలో సుమారు 9.0 గ్రాములు 15 లీటర్ల బ్యాక్‌ప్యాక్ పంపుకు) 200 లీటర్ల నీటిలో కలిపి పిచికారీ చేయాలి. పిచికారీ చేసేటప్పుడు పొలంలోని నీటిని కొద్దిగా తగ్గించి, పురుగులు ఆశించే వరి కాండం అడుగుభాగానికి మందు అందేలా చూడాలి.",
+    "online_model": "gemini-3.5-flash-lite",
+    "online_is_fallback": false
+  },
+  {
+    "id": "Q13",
+    "query": "వరి పంటకు ప్రత్యామ్నాయ తడి మరియు పొడి (AWD) నీటి పద్ధతి ఎలా చేయాలి?",
+    "lang": "te",
+    "expected_crop": "Rice",
+    "detected_crop": "Rice",
+    "expected_intent": "irrigation",
+    "detected_intent": "irrigation",
+    "recommended_cols": [
+      "KB11",
+      "KB21"
+    ],
+    "top_doc": {
+      "id": "Q-CAT-B-01",
+      "col": "KB21",
+      "title": "Verified Document Q-CAT-B-01",
+      "score": 3.232
+    },
+    "retrieved_summary": [
+      {
+        "id": "Q-CAT-B-01",
+        "col": "KB21",
+        "title": "Verified Document Q-CAT-B-01",
+        "score": 3.232
+      },
+      {
+        "id": "kb21-478",
+        "col": "KB21",
+        "title": "KCC FAQ: kcc-faq-006 (Rice / Paddy)",
+        "score": 3.2148
+      },
+      {
+        "id": "kb21-498",
+        "col": "KB21",
+        "title": "KCC FAQ: kcc-faq-026 (Rice / Paddy)",
+        "score": 3.2011
+      }
+    ],
+    "fallback_answer": "వ్యవసాయ సమాచారం (Verified Document Q-CAT-B-01):\n{'id': 'Q-CAT-B-01', 'category': 'B - Crop Disease Diagnosis', 'crop': 'Rice', 'language': 'te', 'query': 'వరిలో అగ్గితెగులు లక్షణాలు ఏమిటి మరియు నివారణ ఎలా చేయాలి?', 'intent': 'crop_disease', 'ground_truth_source': 'KB04', 'key_facts': }",
+    "fallback_model": "grounded-rag-synthesizer",
+    "online_answer": "నమస్కారం రైతు అన్నలారా. మీరు అడిగిన వరి పంటకు ప్రత్యామ్నాయ తడి మరియు పొడి (AWD) నీటి పద్ధతి గురించిన సరైన సమాచారం మా దగ్గర ఉన్న పత్రాలలో అందుబాటులో లేదు. దయచేసి ఈ విషయంపై మరింత ఖచ్చితమైన సమాచారం కొరకు స్థానిక వ్యవసాయ అధికారులను సంప్రదించండి.",
+    "online_model": "gemini-3.5-flash-lite",
+    "online_is_fallback": false
+  },
+  {
+    "id": "Q14",
+    "query": "What is the recommended zinc and urea dose for paddy?",
+    "lang": "en",
+    "expected_crop": "Rice",
+    "detected_crop": "Rice",
+    "expected_intent": "fertilizer_soil",
+    "detected_intent": "fertilizer_soil",
+    "recommended_cols": [
+      "KB09",
+      "KB10",
+      "KB21"
+    ],
+    "top_doc": {
+      "id": "kb09-210",
+      "col": "KB09",
+      "title": "Fertilizer Schedule: Rice / Paddy",
+      "score": 3.3643
+    },
+    "retrieved_summary": [
+      {
+        "id": "kb09-210",
+        "col": "KB09",
+        "title": "Fertilizer Schedule: Rice / Paddy",
+        "score": 3.3643
+      },
+      {
+        "id": "kb21-002",
+        "col": "KB21",
+        "title": "Verified Document kb21-002",
+        "score": 3.3252
+      },
+      {
+        "id": "kb21-002",
+        "col": "KB21",
+        "title": "Verified Document kb21-002",
+        "score": 3.3252
+      }
+    ],
+    "fallback_answer": "Agricultural Advisory (Fertilizer Schedule: Rice / Paddy):\nNutrient Management for Rice / Paddy: RDF: 48 : 24 : 24 kg (Kharif) / 60 : 30 : 30 kg (Rabi) NPK/acre (120 : 60 : 60 kg (Kharif) / 150 : 75 : 75 kg (Rabi) NPK/ha). Basal: Full dose of Phosphorus (DAP 52 kg) + 1/3rd Nitrogen (Urea 26 kg) + 1/2 dose of Potash (MOP 20 kg) incorporated into puddle soil before final leveling.. Top dressing: Remaining Nitrogen applied in 2 splits: 1st split (Urea 35 kg) at active tillering (20-25 DAT), 2nd split (Urea 35 kg) + remaining Potash (MOP 20 kg) at panicle initiation (45-50 DAT).. Micronutrients: {'zinc_deficiency_khaira_disease': 'Rusty-brown irregular pigmentation appearing on 3rd and 4th leaves 2-3 weeks after transplanting, stunted plant growth with brittle leaves. Correction: Basal soil application of Zinc Sulphate (21%) @ 20 kg/acre or foliar spray of Zinc Sulphate @ 2 g/L + 1 g/L slaked lime (twice at 5-day interval).', 'iron_deficiency': 'Interveinal chlorosis turning into bleached ivory-white leaves in light calcareous soils or dry direct-seeded rice (DSR). Correction: Foliar spray of Ferrous Sulphate (FeSO4) @ 10 g/L (1%) + 1 g/L citric acid.'}. Biofertilizers: Azospirillum @ 1 kg/acre + PSB @ 1 kg/acre + Blue Green Algae (BGA) @ 4 kg/acre or Azolla dual cropping (incorporated at 30 DAT)..",
+    "fallback_model": "grounded-rag-synthesizer",
+    "online_answer": "Here is the recommended dose for urea and zinc in paddy:\n\n• Urea (Nitrogen) Schedule:\n - Basal Dose: Urea 26 kg per acre incorporated into puddle soil before final leveling.\n - Top Dressing 1st Split: Urea 35 kg per acre at active tillering (20-25 days after transplanting).\n - Top Dressing 2nd Split: Urea 35 kg per acre at panicle initiation (45-50 days after transplanting).\n\n• Zinc Deficiency Correction (Khaira Disease):\n - Basal soil application: Zinc Sulphate (21%) at 20 kg per acre, OR\n - Foliar spray: Zinc Sulphate at 2 g per liter plus 1 g per liter slaked lime, applied twice at a 5-day interval.",
+    "online_model": "gemini-3.5-flash-lite",
+    "online_is_fallback": false
+  },
+  {
+    "id": "Q15",
+    "query": "How to control broadleaf weeds and grasses in transplanted rice?",
+    "lang": "en",
+    "expected_crop": "Rice",
+    "detected_crop": "Rice",
+    "expected_intent": "weed_management",
+    "detected_intent": "sowing_cultivation",
+    "recommended_cols": [
+      "KB01",
+      "KB02",
+      "KB03",
+      "KB21"
+    ],
+    "top_doc": {
+      "id": "doc-kb02-002",
+      "col": "KB02",
+      "title": "Direct Seeded and Transplanted Rice Agronomy",
+      "score": 3.3592
+    },
+    "retrieved_summary": [
+      {
+        "id": "doc-kb02-002",
+        "col": "KB02",
+        "title": "Direct Seeded and Transplanted Rice Agronomy",
+        "score": 3.3592
+      },
+      {
+        "id": "kb21-478",
+        "col": "KB21",
+        "title": "KCC FAQ: kcc-faq-006 (Rice / Paddy)",
+        "score": 3.2786
+      },
+      {
+        "id": "Q-CAT-C-06",
+        "col": "KB21",
+        "title": "Verified Document Q-CAT-C-06",
+        "score": 3.2681
+      }
+    ],
+    "fallback_answer": "Agricultural Advisory (Direct Seeded and Transplanted Rice Agronomy):\nFor transplanted rice, 20-25 days old seedlings should be transplanted at 2-3 seedlings per hill with spacing of 20x15 cm. For Direct Seeded Rice (DSR), use seed drill with 20 cm row spacing and seed rate of 10-12 kg/acre.",
+    "fallback_model": "grounded-rag-synthesizer",
+    "online_answer": "The retrieved context does not contain specific information regarding the control of broadleaf weeds and grasses in transplanted rice. Please consult a local Agricultural Officer for safe and recommended weed management practices.",
+    "online_model": "gemini-3.5-flash-lite",
+    "online_is_fallback": false
+  },
+  {
+    "id": "Q16",
+    "query": "మిరపలో తామర పురుగులు (థ్రిప్స్) నివారణకు ఏ మందు వాడాలి?",
+    "lang": "te",
+    "expected_crop": "Chilli",
+    "detected_crop": "Chilli",
+    "expected_intent": "pest_management",
+    "detected_intent": "pest_management",
+    "recommended_cols": [
+      "KB05",
+      "KB21",
+      "KB06"
+    ],
+    "top_doc": {
+      "id": "p1000000-0000-0000-0000-000000000003",
+      "col": "KB05",
+      "title": "Pest: Chilli Thrips in Chilli",
+      "score": 5.0513
+    },
+    "retrieved_summary": [
+      {
+        "id": "p1000000-0000-0000-0000-000000000003",
+        "col": "KB05",
+        "title": "Pest: Chilli Thrips in Chilli",
+        "score": 5.0513
+      },
+      {
+        "id": "doc-kb06-003",
+        "col": "KB06",
+        "title": "IPM Cultural and Biological Remedies for Chilli",
+        "score": 4.5161
+      },
+      {
+        "id": "prod-CIR-18234/2015-Diafenthiuron(WP)(350)-510",
+        "col": "KB07",
+        "title": "CIBRC Product Registry: Pegasus 50% WP",
+        "score": 3.7369
+      }
+    ],
+    "fallback_answer": "వ్యవసాయ నిపుణుల సిఫార్సు:\n• పంట: Chilli\n• నివారించే పురుగు/తెగులు: Chilli Thrips\n• మందు పేరు: Pegasus 50% WP (Diafenthiuron 50% WP)\n• మోతాదు: ఎకరాకు 240 g (approx 18.0 g per 15L backpack pump) (200 liters/acre (500 liters/ha) నీటిలో కలపాలి)\n• హెక్టారుకు: 600 g\n• జాగ్రత్తలు: Hazardous to aquatic life. Wear protective rubber gloves, mask and apron. Keep livestock away for 48 hours.\n• వేచి ఉండే కాలం (PHI): కోతకు 7 రోజుల ముందు వాడాలి.",
+    "fallback_model": "deterministic-cibrc-engine",
+    "online_answer": "నమస్కారం రైతన్న! మిరపలో తామర పురుగుల (థ్రిప్స్) నివారణకు సిబిఆర్సి (CIBRC) ఆమోదించిన పెగాసస్ 50% డబ్ల్యూపి (డయాఫెంథియురాన్ 50% డబ్ల్యూపి) మందును వాడవచ్చు. దీనిని ఎకరానికి 240 గ్రాములు (అంటే 15 లీటర్ల పంపుకు సుమారు 18.0 గ్రాములు) చొప్పున, ఎకరానికి 200 లీటర్ల నీటిలో కలిపి పిచికారీ చేయాలి. ఈ మందు పిచికారీ చేసిన తర్వాత 7 రోజుల వరకు పంటను కోయకూడదు (PHI - 7 రోజులు). ఇది జలచరాలకు హానికరం కాబట్టి, పిచికారీ చేసేటప్పుడు చేతికి రబ్బరు గ్లౌజులు, మాస్క్ మరియు ఏప్రాన్ ధరించాలి. పశువులను 48 గంటల పాటు దూరంగా ఉంచాలి.\n\nఅలాగే, నివారణ కోసం కొన్ని యాజమాద పద్ధతులు పాటించవచ్చు:\n- మొక్కజొన్న లేదా జొన్న పంటను 2-3 వరుసలలో సరిహద్దు పంటగా వేయాలి.\n- ప్రతి 15 మిరప వరుసలకు 1 బంతిపూల వరుసను రక్షక పంటగా నాటాలి.\n- ఎకరానికి 10 నుండి 15 నీలి రంగు జిగురు అట్టలను ఏర్పాటు చేయాలి.\n- లీటరు నీటికి 3 మి.లీ. వేప నూనె (3000 పిపిఎం) లేదా 4 మి.లీ. కానుగ నూనెను పిచికారీ చేయాలి.",
+    "online_model": "gemini-3.5-flash-lite",
+    "online_is_fallback": false
+  },
+  {
+    "id": "Q17",
+    "query": "మిరపలో ఆకు ముడత తెగులు నివారణ మార్గాలు ఏమిటి?",
+    "lang": "te",
+    "expected_crop": "Chilli",
+    "detected_crop": "Chilli",
+    "expected_intent": "crop_disease",
+    "detected_intent": "crop_disease",
+    "recommended_cols": [
+      "KB04",
+      "KB21",
+      "KB06"
+    ],
+    "top_doc": {
+      "id": "d1000000-0000-0000-0000-000000000010",
+      "col": "KB04",
+      "title": "Disease: Chilli Leaf Curl Virus in Chilli",
+      "score": 5.007
+    },
+    "retrieved_summary": [
+      {
+        "id": "d1000000-0000-0000-0000-000000000010",
+        "col": "KB04",
+        "title": "Disease: Chilli Leaf Curl Virus in Chilli",
+        "score": 5.007
+      },
+      {
+        "id": "doc-kb06-003",
+        "col": "KB06",
+        "title": "IPM Cultural and Biological Remedies for Chilli",
+        "score": 4.6
+      },
+      {
+        "id": "kb04-058",
+        "col": "KB04",
+        "title": "Disease: Chilli Leaf Curl Virus in Chilli",
+        "score": 3.4787
+      }
+    ],
+    "fallback_answer": "వ్యవసాయ సమాచారం (Disease: Chilli Leaf Curl Virus in Chilli):\nDisease: Chilli Leaf Curl Virus (బొబ్బర తెగులు (ఆకుముడుత), पत्ती मरोड़ विषाणु (लीफ कर्ल)) in Chilli. Pathogen: Viral (Chilli leaf curl virus - Begomovirus transmitted by Whitefly Bemisia tabaci). Symptoms: Upward curling and puckering of leaves, thickening of veins, shortened internodes resulting in extreme plant stunting (witches' broom effect). Drastic reduction in flowering and fruit size.. Favorable Weather: Dry, hot weather favoring explosive population growth of whitefly vectors..",
+    "fallback_model": "grounded-rag-synthesizer",
+    "online_answer": "నమస్కారం రైతు అన్న, మిరపలో ఆకు ముడత (బొబ్బర తెగులు) నివారణకు ఈ క్రింది సస్యరక్షణ చర్యలు పాటించండి: గాలి నిరోధకంగా మరియు తెల్లదోమ, తామర పురుగుల నివారణకు మిరప చుట్టూ 2-3 వరసలలో మొక్కజొన్న లేదా జొన్న పంటను సరిహద్దు పంటగా వేయండి. ప్రతి 15 మిరప వరసలకు 1 వరస చొప్పున బంతి పూలను ఆకర్షక పంటగా నాటండి. ఎకరాకు 10 నుండి 15 నీలం రంగు అతుక్కునే ఏర్పాట్లను (బ్లూ స్టికీ ట్రాప్స్) ఏర్పాటు చేయండి. లీటరు నీటికి 3 మి.లీ. చొప్పున వేప నూనె (3000 పిపిఎం) లేదా లీటరు నీటికి 4 మి.లీ. కంగాయ నూనె కలిపి పిచికారీ చేయండి. మరియు లేడీబर्ड వంటి మిత్ర పురుగులను ఆకర్షించడానికి కొత్తిమీర లేదా అలసందలను అంతర పంటగా సాగు చేయండి.",
+    "online_model": "gemini-3.5-flash-lite",
+    "online_is_fallback": false
+  },
+  {
+    "id": "Q18",
+    "query": "टमाटर में अगेती झुलसा (Early Blight) रोग की रोकथाम कैसे करें?",
+    "lang": "hi",
+    "expected_crop": "Tomato",
+    "detected_crop": "Tomato",
+    "expected_intent": "crop_disease",
+    "detected_intent": "crop_disease",
+    "recommended_cols": [
+      "KB04",
+      "KB21",
+      "KB06"
+    ],
+    "top_doc": {
+      "id": "Q-CAT-B-07",
+      "col": "KB21",
+      "title": "Verified Document Q-CAT-B-07",
+      "score": 3.4129
+    },
+    "retrieved_summary": [
+      {
+        "id": "Q-CAT-B-07",
+        "col": "KB21",
+        "title": "Verified Document Q-CAT-B-07",
+        "score": 3.4129
+      },
+      {
+        "id": "d1000000-0000-0000-0000-000000000003",
+        "col": "KB04",
+        "title": "Disease: Early Blight in Tomato",
+        "score": 3.2172
+      },
+      {
+        "id": "kb04-051",
+        "col": "KB04",
+        "title": "Disease: Early Blight in Tomato",
+        "score": 3.1873
+      }
+    ],
+    "fallback_answer": "कृषि जानकारी (Verified Document Q-CAT-B-07):\n{'id': 'Q-CAT-B-07', 'category': 'B - Crop Disease Diagnosis', 'crop': 'Tomato', 'language': 'hi', 'query': 'टमाटर में अगेती और पछेती झुलसा रोग में क्या अंतर है?', 'intent': 'crop_disease', 'ground_truth_source': 'KB04', 'key_facts': }",
+    "fallback_model": "grounded-rag-synthesizer",
+    "online_answer": "टमाटर में अगेती झुलसा रोग फंगस (ऑल्टरनेरिया सोलेनी) के कारण होता है। इसके लक्षणों में नीचे की पत्तियों पर गहरे भूरे से काले रंग के नेक्रोटिक धब्बे बनते हैं, जिन पर गोल घेरे या 'टारगेट बोर्ड' जैसी आकृति दिखाई देती है। तने पर धब्बे होने से कॉलर रॉट हो सकता है और फलों के डंठल के पास धंसे हुए, चमड़े जैसे गहरे धब्बे बन जाते हैं। यह बीमारी 24 से 29 डिग्री सेल्सियस गर्म तापमान, गीले और सूखे मौसम के बदलने तथा भारी ओस के कारण तेजी से फैलती है।",
+    "online_model": "gemini-3.5-flash-lite",
+    "online_is_fallback": false
+  },
+  {
+    "id": "Q19",
+    "query": "टमाटर की नर्सरी तैयार करने और बीज दर क्या होनी चाहिए?",
+    "lang": "hi",
+    "expected_crop": "Tomato",
+    "detected_crop": "Tomato",
+    "expected_intent": "sowing_cultivation",
+    "detected_intent": "sowing_cultivation",
+    "recommended_cols": [
+      "KB01",
+      "KB02",
+      "KB03",
+      "KB21"
+    ],
+    "top_doc": {
+      "id": "Q-CAT-I-08",
+      "col": "KB21",
+      "title": "Verified Document Q-CAT-I-08",
+      "score": 3.2364
+    },
+    "retrieved_summary": [
+      {
+        "id": "Q-CAT-I-08",
+        "col": "KB21",
+        "title": "Verified Document Q-CAT-I-08",
+        "score": 3.2364
+      },
+      {
+        "id": "Q-CAT-G-08",
+        "col": "KB21",
+        "title": "Verified Document Q-CAT-G-08",
+        "score": 3.2078
+      },
+      {
+        "id": "Q-CAT-J-08",
+        "col": "KB21",
+        "title": "Verified Document Q-CAT-J-08",
+        "score": 3.1755
+      }
+    ],
+    "fallback_answer": "कृषि जानकारी (Verified Document Q-CAT-I-08):\n{'id': 'Q-CAT-I-08', 'category': 'I - Harvesting & Post-Harvest', 'crop': 'Tomato', 'language': 'hi', 'query': 'दूर के बाजारों में भेजने के लिए टमाटर की तुड़ाई किस रंग की अवस्था (ब्रेकर स्टेज) पर करनी चाहिए?', 'intent': 'harvesting', 'ground_truth_source': 'KB14', 'key_facts': }",
+    "fallback_model": "grounded-rag-synthesizer",
+    "online_answer": "नमस्ते किसान भाई, हमारे पास टमाटर की नर्सरी तैयार करने और उसकी बीज दर से संबंधित सटीक जानकारी उपलब्ध नहीं है। कृपया इस विषय में अधिक जानकारी के लिए नजदीकी कृषि अधिकारी से संपर्क करें।",
+    "online_model": "gemini-3.5-flash-lite",
+    "online_is_fallback": false
+  },
+  {
+    "id": "Q20",
+    "query": "What is the modal mandi price for dry chilli in Warangal market?",
+    "lang": "en",
+    "expected_crop": "Chilli",
+    "detected_crop": "Chilli",
+    "expected_intent": "mandi_market",
+    "detected_intent": "mandi_market",
+    "recommended_cols": [
+      "KB16"
+    ],
+    "top_doc": {
+      "id": "kb21-534",
+      "col": "KB21",
+      "title": "Verified Document kb21-534",
+      "score": 2.5166
+    },
+    "retrieved_summary": [
+      {
+        "id": "kb21-534",
+        "col": "KB21",
+        "title": "Verified Document kb21-534",
+        "score": 2.5166
+      },
+      {
+        "id": "kb21-537",
+        "col": "KB21",
+        "title": "Verified Document kb21-537",
+        "score": 2.5101
+      },
+      {
+        "id": "kb21-540",
+        "col": "KB21",
+        "title": "Verified Document kb21-540",
+        "score": 2.5101
+      }
+    ],
+    "fallback_answer": "Agricultural Advisory (Verified Document kb21-534):\n{'test_id': 'BK-EVAL-00534', 'question': 'What is the official agronomic advisory for Chilli regarding APMC modal price? (Test #6)', 'crop': 'Chilli', 'category': 'mandi_prices', 'language': 'en'}",
+    "fallback_model": "grounded-rag-synthesizer",
+    "online_answer": "The retrieved context does not contain the specific modal mandi price for dry chilli in the Warangal market. Please consult your local Agricultural Officer or check the latest APMC market board for current pricing.",
+    "online_model": "gemini-3.5-flash-lite",
+    "online_is_fallback": false
+  },
+  {
+    "id": "Q21",
+    "query": "Why is gypsum application critical for groundnut pod development?",
+    "lang": "en",
+    "expected_crop": "Groundnut",
+    "detected_crop": "Groundnut",
+    "expected_intent": "fertilizer_soil",
+    "detected_intent": "sowing_cultivation",
+    "recommended_cols": [
+      "KB01",
+      "KB02",
+      "KB03",
+      "KB21"
+    ],
+    "top_doc": {
+      "id": "kb21-485",
+      "col": "KB21",
+      "title": "KCC FAQ: kcc-faq-013 (Groundnut / Peanut)",
+      "score": 3.4893
+    },
+    "retrieved_summary": [
+      {
+        "id": "kb21-485",
+        "col": "KB21",
+        "title": "KCC FAQ: kcc-faq-013 (Groundnut / Peanut)",
+        "score": 3.4893
+      },
+      {
+        "id": "Q-CAT-E-05",
+        "col": "KB21",
+        "title": "Verified Document Q-CAT-E-05",
+        "score": 3.4666
+      },
+      {
+        "id": "kb21-013",
+        "col": "KB21",
+        "title": "Verified Document kb21-013",
+        "score": 3.4419
+      }
+    ],
+    "fallback_answer": "Agricultural Advisory (KCC FAQ: kcc-faq-013 (Groundnut / Peanut)):\nFarmer Query: How much Gypsum should I apply in groundnut and when? (Telugu: వేరుశనగలో జిప్సం ఎంత మోతాదులో, ఎప్పుడు వేయాలి?, Hindi: मूंगफली में जिप्सम कब और कितनी मात्रा में डालना चाहिए?). Crop: Groundnut / Peanut. Category: Nutrient Management. Scientific Solution: Apply Gypsum @ 200 kg/acre at 40-45 DAS (pegging stage). Place 5 cm away from plant rows and incorporate lightly. Supplies Calcium and Sulphur essential for pod shell hardening and bold kernel filling..",
+    "fallback_model": "grounded-rag-synthesizer",
+    "online_answer": "Gypsum application is critical for groundnut pod development because it supplies essential Calcium and Sulphur, which are necessary for pod shell hardening and bold kernel filling. Apply Gypsum at the rate of 200 kg per acre during the 40-45 Days After Sowing (DAS) pegging stage. Place it 5 cm away from the plant rows and incorporate it lightly into the soil.",
+    "online_model": "gemini-3.5-flash-lite",
+    "online_is_fallback": false
+  },
+  {
+    "id": "Q22",
+    "query": "How to properly harvest and dry groundnut pods to prevent aflatoxin contamination?",
+    "lang": "en",
+    "expected_crop": "Groundnut",
+    "detected_crop": "Groundnut",
+    "expected_intent": "harvesting",
+    "detected_intent": "harvesting",
+    "recommended_cols": [
+      "KB14",
+      "KB17",
+      "KB21"
+    ],
+    "top_doc": {
+      "id": "kb14-287",
+      "col": "KB14",
+      "title": "Harvest Guide: Groundnut / Peanut",
+      "score": 3.3876
+    },
+    "retrieved_summary": [
+      {
+        "id": "kb14-287",
+        "col": "KB14",
+        "title": "Harvest Guide: Groundnut / Peanut",
+        "score": 3.3876
+      },
+      {
+        "id": "kb21-007",
+        "col": "KB21",
+        "title": "Verified Document kb21-007",
+        "score": 3.3178
+      },
+      {
+        "id": "kb21-007",
+        "col": "KB21",
+        "title": "Verified Document kb21-007",
+        "score": 3.3178
+      }
+    ],
+    "fallback_answer": "Agricultural Advisory (Harvest Guide: Groundnut / Peanut):\nHarvesting Groundnut / Peanut: Maturity signs: Foliage turns yellowish with shedding of lower leaves; inner surface of pod shell develops dark brownish-black vascular netting when scraped with fingernail; kernels show characteristic variety seed coat color.. Moisture at harvest: Pod moisture at digging: 30% - 35%; must be dried down to 8% - 9% for safe storage.. Method: Tractor-drawn groundnut digger-shaker-inverter or manual bullock blade puller. Invert plants so pods face upward exposed to sun.. Field handling: Field curing in inverted windrows for 3-5 days until pods rattle; strip pods using mechanical groundnut pod stripper; sun dry on tarpaulin to <9% moisture to prevent Aspergillus aflatoxin..",
+    "fallback_model": "grounded-rag-synthesizer",
+    "online_answer": "Namaste! Here are the recommended steps to properly harvest and dry groundnut pods to prevent aflatoxin contamination:\n\n* **Maturity Signs:** Look for foliage turning yellowish with shedding of lower leaves, dark brownish-black vascular netting on the inner surface of the pod shell when scraped, and kernels showing their characteristic variety seed coat color.\n* **Harvesting Method:** Use a tractor-drawn groundnut digger-shaker-inverter or a manual bullock blade puller. Invert the plants immediately so the pods face upward and are exposed to the sun.\n* **Pod Moisture:** Pod moisture at digging should be 30% to 35%.\n* **Field Curing:** Cure the crop in the field in inverted windrows for 3 to 5 days until the pods rattle.\n* **Stripping and Drying:** Strip the pods using a mechanical groundnut pod stripper, then sun dry them on a tarpaulin to below 9% moisture to prevent Aspergillus aflatoxin.",
+    "online_model": "gemini-3.5-flash-lite",
+    "online_is_fallback": false
+  },
+  {
+    "id": "Q23",
+    "query": "मक्का में फॉल आर्मीवर्म (कतरनी सुंडी) का नियंत्रण कैसे करें?",
+    "lang": "hi",
+    "expected_crop": "Maize",
+    "detected_crop": "Maize",
+    "expected_intent": "pest_management",
+    "detected_intent": "pest_management",
+    "recommended_cols": [
+      "KB05",
+      "KB21",
+      "KB06"
+    ],
+    "top_doc": {
+      "id": "Q-CAT-L-05",
+      "col": "KB21",
+      "title": "Verified Document Q-CAT-L-05",
+      "score": 3.3976
+    },
+    "retrieved_summary": [
+      {
+        "id": "Q-CAT-L-05",
+        "col": "KB21",
+        "title": "Verified Document Q-CAT-L-05",
+        "score": 3.3976
+      },
+      {
+        "id": "Q-CAT-H-05",
+        "col": "KB21",
+        "title": "Verified Document Q-CAT-H-05",
+        "score": 2.9912
+      },
+      {
+        "id": "Q-CAT-E-03",
+        "col": "KB21",
+        "title": "Verified Document Q-CAT-E-03",
+        "score": 2.976
+      }
+    ],
+    "fallback_answer": "कृषि जानकारी (Verified Document Q-CAT-L-05):\n{'id': 'Q-CAT-L-05', 'category': 'L - Multilingual Parity', 'crop': 'Maize', 'language': 'hi', 'query': 'मक्का में फॉल आर्मीवर्म (सैनिक कीट) के रासायनिक नियंत्रण के लिए प्रति एकड़ क्या खुराक है?', 'intent': 'pest_management', 'ground_truth_source': 'KB05', 'key_facts': }",
+    "fallback_model": "grounded-rag-synthesizer",
+    "online_answer": "नमस्कार किसान भाई! मक्का की फसल में फॉल आर्मीवर्म (सैनिक कीट/कतरनी सुंडी) के रासायनिक नियंत्रण के लिए इमामेक्टिन बेंजोएट 5% एसजी (Emamectin benzoate 5% SG) की 80 ग्राम मात्रा प्रति एकड़ की दर से उपयोग करनी चाहिए।",
+    "online_model": "gemini-3.5-flash-lite",
+    "online_is_fallback": false
+  },
+  {
+    "id": "Q24",
+    "query": "गेहूं में पीला रतुआ (Yellow Rust) की पहचान और उपचार क्या है?",
+    "lang": "hi",
+    "expected_crop": "Wheat",
+    "detected_crop": "Wheat",
+    "expected_intent": "crop_disease",
+    "detected_intent": "crop_disease",
+    "recommended_cols": [
+      "KB04",
+      "KB21",
+      "KB06"
+    ],
+    "top_doc": {
+      "id": "d1000000-0000-0000-0000-000000000013",
+      "col": "KB04",
+      "title": "Disease: Yellow / Stripe Rust in Wheat",
+      "score": 3.2013
+    },
+    "retrieved_summary": [
+      {
+        "id": "d1000000-0000-0000-0000-000000000013",
+        "col": "KB04",
+        "title": "Disease: Yellow / Stripe Rust in Wheat",
+        "score": 3.2013
+      },
+      {
+        "id": "kb21-009",
+        "col": "KB21",
+        "title": "Verified Document kb21-009",
+        "score": 3.196
+      },
+      {
+        "id": "kb21-009",
+        "col": "KB21",
+        "title": "Verified Document kb21-009",
+        "score": 3.196
+      }
+    ],
+    "fallback_answer": "कृषि जानकारी (Disease: Yellow / Stripe Rust in Wheat):\nDisease: Yellow / Stripe Rust (పసుపు కుంకుమ తెగులు, पीला रतुआ / धारीदार गेरुआ) in Wheat. Pathogen: Fungal (Puccinia striiformis f. sp. tritici). Symptoms: Bright yellow pustules (uredinia) arranged in narrow, parallel linear stripes along leaf veins. Upon rubbing, yellow powder adheres to fingers. Chlorosis and leaf drying follow rapidly.. Favorable Weather: Cool humid weather (temperature 10-15°C), intermittent rains, morning dew in North-Western plain zone..",
+    "fallback_model": "grounded-rag-synthesizer",
+    "online_answer": "गेहूं में पीला रतुआ (Yellow / Stripe Rust) रोग की पहचान यह है कि पत्तियों पर चमकीले पीले रंग के फफोले (पुस्ट्यूल) संकीर्ण और समानांतर सीधी धारियों में बनते हैं। छूने पर हल्दी जैसा पीला पाउडर उंगलियों पर चिपक जाता है। इसके नियंत्रण के लिए, रोग के पहले लक्षण दिखते ही तुरंत टिल्ट 25% ईसी (प्रोपिकोनाजोल) का छिड़काव करें। इसकी मात्रा 200 मिलीलीटर प्रति एकड़ (15 लीटर वाले पंप के लिए 15 मिलीलीटर) है, जिसे 200 लीटर पानी में मिलाकर छिड़काव करना चाहिए।",
+    "online_model": "gemini-3.5-flash-lite",
+    "online_is_fallback": false
+  },
+  {
+    "id": "Q25",
+    "query": "गेहूं की फसल में सी.आर.आई (CRI) अवस्था में सिंचाई का क्या महत्व है?",
+    "lang": "hi",
+    "expected_crop": "Wheat",
+    "detected_crop": "Wheat",
+    "expected_intent": "irrigation",
+    "detected_intent": "irrigation",
+    "recommended_cols": [
+      "KB11",
+      "KB21"
+    ],
+    "top_doc": {
+      "id": "kb21-493",
+      "col": "KB21",
+      "title": "KCC FAQ: kcc-faq-021 (Wheat)",
+      "score": 3.4154
+    },
+    "retrieved_summary": [
+      {
+        "id": "kb21-493",
+        "col": "KB21",
+        "title": "KCC FAQ: kcc-faq-021 (Wheat)",
+        "score": 3.4154
+      },
+      {
+        "id": "kb21-021",
+        "col": "KB21",
+        "title": "Verified Document kb21-021",
+        "score": 3.3866
+      },
+      {
+        "id": "kb21-021",
+        "col": "KB21",
+        "title": "Verified Document kb21-021",
+        "score": 3.3866
+      }
+    ],
+    "fallback_answer": "कृषि जानकारी (KCC FAQ: kcc-faq-021 (Wheat)):\nFarmer Query: What is the critical stage of irrigation in wheat where water should never be missed? (Telugu: గోధుమ పంటలో ఎట్టి పరిస్థితుల్లోనూ తప్పనిసరిగా నీరు ఇవ్వాల్సిన దశ ఏది?, Hindi: गेहूं में सिंचाई की सबसे महत्वपूर्ण क्रांतिक अवस्था कौन सी है?). Crop: Wheat. Category: Irrigation. Scientific Solution: Crown Root Initiation (CRI at 20-25 DAS) is the most critical stage. Skipping irrigation at CRI reduces wheat yield by up to 35-40% permanently..",
+    "fallback_model": "grounded-rag-synthesizer",
+    "online_answer": "नमस्ते, बोल किसान में आपका स्वागत है। गेहूं की फसल में क्राउन रूट इनिशिएशन यानी सी.आर.आई (CRI - बुवाई के 20 से 25 दिन बाद) सिंचाई की सबसे महत्वपूर्ण क्रांतिक अवस्था है। इस अवस्था में पानी देना कभी नहीं भूलना चाहिए। यदि आप सी.आर.आई अवस्था में सिंचाई छोड़ देते हैं, तो गेहूं की पैदावार में 35 से 40 प्रतिशत तक की स्थायी कमी आ सकती है।",
+    "online_model": "gemini-flash-lite-latest",
+    "online_is_fallback": false
+  },
+  {
+    "id": "Q26",
+    "query": "పత్తిలో వేపనూనె లేదా పంచగవ్య తయారీ విధానం ఏమిటి?",
+    "lang": "te",
+    "expected_crop": "Cotton",
+    "detected_crop": "Cotton",
+    "expected_intent": "organic_farming",
+    "detected_intent": "sowing_cultivation",
+    "recommended_cols": [
+      "KB01",
+      "KB02",
+      "KB03",
+      "KB21"
+    ],
+    "top_doc": {
+      "id": "c1000000-0000-0000-0000-000000000001",
+      "col": "KB01",
+      "title": "Crop Master: Cotton",
+      "score": 3.5171
+    },
+    "retrieved_summary": [
+      {
+        "id": "c1000000-0000-0000-0000-000000000001",
+        "col": "KB01",
+        "title": "Crop Master: Cotton",
+        "score": 3.5171
+      },
+      {
+        "id": "kb01-001",
+        "col": "KB01",
+        "title": "Crop Master: Cotton",
+        "score": 3.4959
+      },
+      {
+        "id": "Q-CAT-G-01",
+        "col": "KB21",
+        "title": "Verified Document Q-CAT-G-01",
+        "score": 3.2051
+      }
+    ],
+    "fallback_answer": "వ్యవసాయ సమాచారం (Crop Master: Cotton):\nCrop: Cotton (ప్రత్తి (పత్తి), कपास). Scientific name: Gossypium hirsutum. Season: Kharif. Duration: 160 days. Soil: Deep black soils (Vertisols) or well-drained alluvial soils, pH 6.0 - 8.0. Water: 700 - 1200 mm mm.",
+    "fallback_model": "grounded-rag-synthesizer",
+    "online_answer": "నమస్కారం రైతు సోదరుడా. మీరు అడిగిన పత్తి పంటలో వేపనూనె లేదా పంచగవ్య తయారీ విధానానికి సంబంధించిన సమాచారం మా దగ్గర అందుబాటులో లేదు. సరైన తయారీ పద్ధతులు మరియు మోతాదుల కోసం మీరు మీ సమీపంలోని వ్యవసాయ అధికారిని లేదా రైతు సేవా కేంద్రాన్ని సంప్రదించవలసిందిగా కోరుతున్నాము.",
+    "online_model": "gemini-3.1-flash-lite",
+    "online_is_fallback": false
+  },
+  {
+    "id": "Q27",
+    "query": "How do I test soil pH and electrical conductivity?",
+    "lang": "en",
+    "expected_crop": null,
+    "detected_crop": null,
+    "expected_intent": "fertilizer_soil",
+    "detected_intent": "fertilizer_soil",
+    "recommended_cols": [
+      "KB09",
+      "KB10",
+      "KB21"
+    ],
+    "top_doc": {
+      "id": "kb10-231",
+      "col": "KB10",
+      "title": "Soil Profile: Coastal Saline Soils",
+      "score": 1.6478
+    },
+    "retrieved_summary": [
+      {
+        "id": "kb10-231",
+        "col": "KB10",
+        "title": "Soil Profile: Coastal Saline Soils",
+        "score": 1.6478
+      },
+      {
+        "id": "kb21-028",
+        "col": "KB21",
+        "title": "Verified Document kb21-028",
+        "score": 1.5287
+      },
+      {
+        "id": "kb21-028",
+        "col": "KB21",
+        "title": "Verified Document kb21-028",
+        "score": 1.5287
+      }
+    ],
+    "fallback_answer": "Agricultural Advisory (Soil Profile: Coastal Saline Soils):\nSoil Type: Coastal Saline Soils. Regions: Sundarbans (West Bengal), Coastal Odisha, Andhra Pradesh (Krishna-Godavari delta coastal fringe), Tamil Nadu, Gujarat (Rann of Kutch).. Texture: Periodic sea water inundation and high shallow saline groundwater table; high electrical conductivity (EC > 8.0 dS/m); heavy clay to silty loam texture with poor aeration.. pH: 6.8 - 8.2. Organic Carbon: Medium (0.50 - 0.80%). Deficiencies: High in Sodium and Chlorides; low in Nitrogen and Zinc.. Reclamation/Amendments: Construct perimeter bunds with one-way flap sluice gates to prevent tidal ingress. Raised-bed and sunken-furrow system (grow paddy in furrows and vegetables on raised beds). Leaching with fresh rainwater during monsoon.. Green Manure: Cultivate salt-tolerant halophytic green manures; incorporate organic paddy straw mulch to suppress capillary salt ascent during dry summer months..",
+    "fallback_model": "grounded-rag-synthesizer",
+    "online_answer": "The provided information details the characteristics of coastal saline and sodic soils, but it does not contain the specific step-by-step procedures or equipment required for farmers to conduct soil pH and electrical conductivity testing in the field. Please contact your local Agricultural Officer or visit the nearest Krishi Vigyan Kendra (KVK) to have your soil samples professionally tested.",
+    "online_model": "gemini-3.1-flash-lite",
+    "online_is_fallback": false
+  },
+  {
+    "id": "Q28",
+    "query": "ఈ వారం వర్ష సూచన మరియు వాతావరణ హెచ్చరికలు ఏమిటి?",
+    "lang": "te",
+    "expected_crop": null,
+    "detected_crop": null,
+    "expected_intent": "weather_advisory",
+    "detected_intent": "sowing_cultivation",
+    "recommended_cols": [
+      "KB01",
+      "KB02",
+      "KB03",
+      "KB21"
+    ],
+    "top_doc": {
+      "id": "Q-CAT-H-02",
+      "col": "KB21",
+      "title": "Verified Document Q-CAT-H-02",
+      "score": 1.4776
+    },
+    "retrieved_summary": [
+      {
+        "id": "Q-CAT-H-02",
+        "col": "KB21",
+        "title": "Verified Document Q-CAT-H-02",
+        "score": 1.4776
+      },
+      {
+        "id": "Q-CAT-B-06",
+        "col": "KB21",
+        "title": "Verified Document Q-CAT-B-06",
+        "score": 1.1534
+      },
+      {
+        "id": "Q-CAT-B-01",
+        "col": "KB21",
+        "title": "Verified Document Q-CAT-B-01",
+        "score": 1.1509
+      }
+    ],
+    "fallback_answer": "వ్యవసాయ సమాచారం (Verified Document Q-CAT-H-02):\n{'id': 'Q-CAT-H-02', 'category': 'H - Weather Advisory & Agro-Meteorology', 'crop': 'Rice', 'language': 'te', 'query': 'తుఫాను లేదా భారీ వర్ష సూచన ఉన్నప్పుడు వరి కోత దశలో ఎలాంటి ముందస్తు జాగ్రత్తలు పాటించాలి?', 'intent': 'weather_advisory', 'ground_truth_source': 'KB15', 'key_facts': }",
+    "fallback_model": "grounded-rag-synthesizer",
+    "online_answer": "నమస్కారం రైతు అన్నదమ్ములకు. వరి పంట కోత దశలో తుఫాను లేదా భారీ వర్ష సూచన ఉన్నప్పుడు తీసుకోవాల్సిన ముందస్తు జాగ్రత్తలు: పంట కోతను కొద్దిగా వాయిదా వేయాలి. ఇప్పటికే కోసిన కంకుల కట్టలను ఎత్తైన గట్ల మీద నిల్వ చేసి టార్పాలిన్లతో కప్పి ఉంచాలి. అలాగే పొలంలో నీరు నిలవకుండా నీటి పారుదల కాలువలను ఎప్పటికప్పుడు శుభ్రం చేసుకోవాలి.",
+    "online_model": "gemini-3.5-flash-lite",
+    "online_is_fallback": false
+  },
+  {
+    "id": "Q29",
+    "query": "What is the price of Bitcoin and how does blockchain work?",
+    "lang": "en",
+    "expected_crop": null,
+    "detected_crop": null,
+    "expected_intent": "unrelated",
+    "detected_intent": "mandi_market",
+    "recommended_cols": [
+      "KB16"
+    ],
+    "top_doc": {
+      "id": "kb16-313",
+      "col": "KB16",
+      "title": "Agromet Bulletin: imd-agro-005",
+      "score": 1.2631
+    },
+    "retrieved_summary": [
+      {
+        "id": "kb16-313",
+        "col": "KB16",
+        "title": "Agromet Bulletin: imd-agro-005",
+        "score": 1.2631
+      },
+      {
+        "id": "kb16-309",
+        "col": "KB16",
+        "title": "Agromet Bulletin: imd-agro-001",
+        "score": 1.2292
+      },
+      {
+        "id": "kb16-315",
+        "col": "KB16",
+        "title": "Agromet Bulletin: imd-agro-007",
+        "score": 1.2162
+      }
+    ],
+    "fallback_answer": "Agricultural Advisory (Agromet Bulletin: imd-agro-005):\nIMD Agromet Advisory for Guntur & Krishna, Krishna-Godavari Delta Zone, AP. Scenario: Bay of Bengal Depressions / Cyclone Warning with Heavy Rainfall (150-250 mm in 48 hours). Affected Crops: . Impact: Water stagnation, field submergence, lodging of ripe paddy panicles, viviparous grain germination, and rotting of mature cotton bolls.. Advisories: Harvest mature standing paddy immediately if crop is at 80-85% maturity and store sheaves in safe elevated sheds. Open drainage channels and clear field bund outlets immediately to drain standing storm runoff. For logged ripe paddy fields, spray 5% common salt solution (NaCl @ 50 g/L) on standing panicles to suppress in-situ viviparous sprouting. Do not apply any fertilizer or chemical sprays until water recedes completely..",
+    "fallback_model": "grounded-rag-synthesizer",
+    "online_answer": "I am BOL KISAN, an agricultural assistant, and I can only provide information related to crop management, weather advisories, and farming practices based on official advisories. The retrieved context does not contain any information about Bitcoin or blockchain technology. Please consult an appropriate financial expert or resource for cryptocurrency queries, and consult your local Agricultural Officer for any farming-related guidance.",
+    "online_model": "gemini-3.5-flash-lite",
+    "online_is_fallback": false
+  },
+  {
+    "id": "Q30",
+    "query": "ఈ రోజు హైదరాబాద్ లో సినిమా టిక్కెట్లు ఎలా బుక్ చేసుకోవాలి?",
+    "lang": "te",
+    "expected_crop": null,
+    "detected_crop": null,
+    "expected_intent": "unrelated",
+    "detected_intent": "sowing_cultivation",
+    "recommended_cols": [
+      "KB01",
+      "KB02",
+      "KB03",
+      "KB21"
+    ],
+    "top_doc": {
+      "id": "Q-CAT-I-01",
+      "col": "KB21",
+      "title": "Verified Document Q-CAT-I-01",
+      "score": 1.4706
+    },
+    "retrieved_summary": [
+      {
+        "id": "Q-CAT-I-01",
+        "col": "KB21",
+        "title": "Verified Document Q-CAT-I-01",
+        "score": 1.4706
+      },
+      {
+        "id": "Q-CAT-J-09",
+        "col": "KB21",
+        "title": "Verified Document Q-CAT-J-09",
+        "score": 1.4648
+      },
+      {
+        "id": "Q-CAT-B-01",
+        "col": "KB21",
+        "title": "Verified Document Q-CAT-B-01",
+        "score": 1.4607
+      }
+    ],
+    "fallback_answer": "వ్యవసాయ సమాచారం (Verified Document Q-CAT-I-01):\n{'id': 'Q-CAT-I-01', 'category': 'I - Harvesting & Post-Harvest', 'crop': 'Maize', 'language': 'te', 'query': 'మొక్కజొన్న కంకులు కోతకు వచ్చాయని ఎలా గుర్తించాలి మరియు నిల్వకు గింజలో ఎంత తేమ ఉండాలి?', 'intent': 'harvesting', 'ground_truth_source': 'KB14', 'key_facts': }",
+    "fallback_model": "grounded-rag-synthesizer",
+    "online_answer": "నమస్కారం రైతు అన్నదాత, సినిమా టిక్కెట్లు ఎలా బుక్ చేసుకోవాలనే సమాచారం మా దగ్గర అందుబాటులో లేదు. ఇది వ్యవసాయానికి సంబంధించిన అంశం కాదు. దయచేసి వ్యవసాయానికి సంబంధించిన సందేహాలను అడగండి.",
+    "online_model": "gemini-3.5-flash-lite",
+    "online_is_fallback": false
+  }
+]

@@ -66,18 +66,21 @@ class QueryUnderstanding:
     }
 
     INTENT_COLLECTIONS = {
-        "crop_disease": ["KB04", "KB21", "KB06"],
-        "pest_management": ["KB05", "KB21", "KB06"],
-        "fertilizer_soil": ["KB09", "KB10", "KB21"],
-        "irrigation": ["KB11", "KB21"],
-        "sowing_cultivation": ["KB01", "KB02", "KB03", "KB21"],
+        "crop_disease": ["KB04", "KB06", "KB21"],
+        "pest_management": ["KB05", "KB06", "KB21"],
+        "fertilizer_soil": ["KB09", "KB10"],
+        "soil_health": ["KB10"],
+        "irrigation": ["KB11"],
+        "weed_management": ["KB13"],
+        "sowing_cultivation": ["KB01", "KB02", "KB03"],
         "pesticide_safety": ["KB08", "KB07", "KB06"],
-        "mandi_market": ["KB16"],
-        "weather_advisory": ["KB15"],
-        "harvesting": ["KB14", "KB17", "KB21"],
-        "crop_rotation": ["KB12", "KB21"],
-        "organic_farming": ["KB18", "KB21"],
-        "government_scheme": ["KB19", "KB22"]
+        "mandi_market": ["KB18"],
+        "weather_advisory": ["KB16"],
+        "harvesting": ["KB14", "KB15"],
+        "crop_rotation": ["KB12"],
+        "organic_farming": ["KB17"],
+        "government_scheme": ["KB20", "KB22"],
+        "general_agri": ["KB21", "KB22", "KB01"]
     }
 
     INTENT_KEYWORDS = {
@@ -91,10 +94,20 @@ class QueryUnderstanding:
             "పురుగు", "కత్తెర పురుగు", "గులాబీ పురుగు", "సుడిదోమ", "తామర పురుగు", "తెల్లదోమ", "కాండం తొలుచు పురుగు", "పిండి పురుగు", "దోమ", "నల్లి", "కీటకం",
             "कीट", "सुंडी", "फुदका", "तना छेदक", "इल्ली", "माहू", "सफेद मक्खी", "कीड़ा"
         ],
+        "weed_management": [
+            "weed", "herbicide", "weeds", "post-emergence", "pre-emergence", "pendimethalin", "glyphosate", "de-weeding",
+            "కలుపు", "కలుపు మందు", "గడ్డి", "కలుపు నివారణ", "గులకలు",
+            "खरपतवार", "खरपतवार नाशक", "घास", "निंदाई", "गुड़ाई"
+        ],
+        "soil_health": [
+            "soil", "black soil", "red soil", "saline", "alkaline", "organic carbon", "soil test", "gypsum", "drainage", "fertility",
+            "నేల", "భూసారం", "నల్లరేగడి", "ఎర్ర నేలలు", "సేంద్రియ కర్బనం", "సారవంతం", "సౌడు నేలలు",
+            "मिट्टी", "काली मिट्टी", "लाल मिट्टी", "मृदा", "जैविक कार्बन", "जिप्सम", "भूमि सुधार"
+        ],
         "fertilizer_soil": [
-            "fertilizer", "urea", "dap", "npk", "potash", "zinc", "nitrogen", "phosphorus", "nutrient", "deficiency", "soil", "fertility", "manure", "compost",
-            "ఎరువు", "యూరియా", "డిఎపి", "పోషకాలు", "జింక్", "నత్రజని", "భాస్వరం", "పొటాష్", "నేల", "భూసారం", "పోషక లోపం", "పశువుల ఎరువు",
-            "खाद", "उर्वरक", "यूरिया", "डीएपी", "पोटाश", "जिंक", "पोषक तत्व", "मिट्टी", "कमी"
+            "fertilizer", "urea", "dap", "npk", "potash", "zinc", "nitrogen", "phosphorus", "nutrient", "deficiency", "manure", "compost",
+            "ఎరువు", "యూరియా", "డిఎపి", "పోషకాలు", "జింక్", "నత్రజని", "భాస్వరం", "పొటాష్", "పోషక లోపం", "పశువుల ఎరువు",
+            "खाद", "उर्वरक", "यूरिया", "डीएपी", "पोटाश", "जिंक", "पोषक तत्व", "कमी"
         ],
         "irrigation": [
             "irrigation", "irrigate", "water", "watering", "flooding", "drip", "sprinkler", "critical stage", "moisture",
@@ -107,7 +120,7 @@ class QueryUnderstanding:
             "बुवाई", "बीज", "बीज उपचार", "बीज दर", "खेत की तैयारी", "किस्में", "खेती"
         ],
         "pesticide_safety": [
-            "pesticide", "waiting period", "dosage", "dose", "phi", "safety", "precaution", "antidote", "toxicity", "label", "mixing",
+            "pesticide", "waiting period", "dosage", "dose", "phi", "pre-harvest interval", "pre-harvest", "pre harvest", "safety", "precaution", "antidote", "toxicity", "label", "mixing", "emamectin", "coragen",
             "రసాయనం", "పురుగు మందు", "మోతాదు", "వేచి ఉండే కాలం", "భద్రత", "జాగ్రత్తలు", "విరుగుడు", "విషపూరితం", "లేబుల్",
             "कीटनाशक", "दवा", "खुराक", "प्रतीक्षा अवधि", "सुरक्षा", "सावधानी", "विषाक्तता", "लेबल"
         ],
@@ -135,7 +148,7 @@ class QueryUnderstanding:
 
     TARGET_ENTITIES = {
         # Diseases
-        "rice blast": ["rice blast", "blast", "అగ్గితెగులు", "झुलसा"],
+        "rice blast": ["rice blast", "blast", "అగ్గితెగులు", "झुलसा", "బ్లాస్ట్"],
         "bacterial blight": ["bacterial blight", "బాక్టీరియా ఆకుమచ్చ", "జీవాణు ఆకుమచ్చ"],
         "sheath blight": ["sheath blight", "మట్ట తెగులు"],
         "leaf curl": ["leaf curl", "ఆకు ముడత", "పెంకి ముడత", "मरोड़िया"],
@@ -200,12 +213,13 @@ class QueryUnderstanding:
             count = 0
             for kw in keywords:
                 if kw.lower() in query_lower:
+                    if intent == "harvesting" and kw in ["harvest", "harvesting"] and ("pre-harvest" in query_lower or "pre harvest" in query_lower):
+                        continue
                     count += 1
             if count > 0:
                 matched_intents.append((intent, count))
 
         matched_intents.sort(key=lambda x: x[1], reverse=True)
-        primary_intent = matched_intents[0][0] if matched_intents else "sowing_cultivation"
 
         # 3. Extract Target Entity (Pest/Disease)
         target_entity = None
@@ -217,8 +231,14 @@ class QueryUnderstanding:
             if target_entity:
                 break
 
-        # 4. Map to Recommended Collections
-        recommended_collections = cls.INTENT_COLLECTIONS.get(primary_intent, ["KB21"])
+        # Check domain relevance
+        has_agri_evidence = bool(extracted_crop or target_entity or matched_intents)
+        if has_agri_evidence:
+            primary_intent = matched_intents[0][0] if matched_intents else "general_agri"
+            recommended_collections = cls.INTENT_COLLECTIONS.get(primary_intent, ["KB21"])
+        else:
+            primary_intent = "out_of_domain"
+            recommended_collections = []
 
         return {
             "language": lang,
@@ -226,5 +246,6 @@ class QueryUnderstanding:
             "extracted_crop": extracted_crop,
             "intent": primary_intent,
             "target_entity": target_entity,
+            "is_agricultural": has_agri_evidence,
             "recommended_collections": recommended_collections
         }
