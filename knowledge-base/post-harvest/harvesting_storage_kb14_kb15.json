@@ -1,0 +1,34 @@
+{
+  "KB14": [
+    {
+      "id": "doc-kb14-001",
+      "crop_name": "Cotton",
+      "title": "Clean Cotton Picking and Moisture Standards",
+      "content": "Pick seed cotton only when bolls are fully opened and dried after morning dew evaporates (after 9:30 AM). Keep stained, insect-damaged bolls (kawadi cotton) separate from clean first-quality cotton. Do not use plastic/fertilizer polypropylene bags for picking; use clean cotton cloth bags to prevent polypropylene fiber contamination.",
+      "citation": "Central Institute for Research on Cotton Technology (CIRCOT) 2025"
+    },
+    {
+      "id": "doc-kb14-002",
+      "crop_name": "Rice / Paddy",
+      "title": "Paddy Harvesting Moisture and Combine Operation",
+      "content": "Harvest paddy when 80-85% grains in panicles turn straw golden yellow and grain moisture is between 20-22%. Delayed harvesting causes grain shattering and sun cracking, leading to high broken rice percentage during milling.",
+      "citation": "CIPHET Grain Harvesting Protocol 2025"
+    }
+  ],
+  "KB15": [
+    {
+      "id": "doc-kb15-001",
+      "crop_name": "Rice / Paddy",
+      "title": "Grain Drying and Safe Storage Moisture Levels",
+      "content": "Dry harvested paddy down to 14% moisture content for short-term commercial storage and 12-13% for long-term seed storage. Use Hermetic PICS (Purdue Improved Crop Storage) bags or metallic silos to prevent rice weevil (Sitophilus oryzae) and Angoumois grain moth infestation without chemicals.",
+      "citation": "WDRA & CIPHET Storage Guidelines 2025"
+    },
+    {
+      "id": "doc-kb15-002",
+      "crop_name": "Chilli",
+      "title": "Chilli Sun-Drying, Aflatoxin Prevention and Cold Storage",
+      "content": "Dry harvested red ripe chillies on clean polythene sheets or cement drying floors (kalams), never on bare soil. Moisture must be reduced to 10% or below to inhibit Aspergillus flavus growth and aflatoxin contamination. Cold storage at 4-6°C with 65-70% relative humidity preserves bright red color and capsaicin content for up to 10 months.",
+      "citation": "Spices Board of India Post-Harvest Quality Manual 2025"
+    }
+  ]
+}

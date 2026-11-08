@@ -1,0 +1,302 @@
+[
+  {
+    "faq_id": "kcc-faq-001",
+    "farmer_query_en": "My cotton leaves are turning red between veins and dropping. What is the cause and remedy?",
+    "farmer_query_te": "నా పత్తి చేనులో ఆకులు ఈనెల మధ్య ఎర్రగా మారి రాలిపోతున్నాయి. కారణం మరియు నివారణ ఏమిటి?",
+    "farmer_query_hi": "मेरे कपास के खेत में पत्तियां नसों के बीच लाल होकर गिर रही हैं। इसका क्या कारण और उपाय है?",
+    "crop": "Cotton",
+    "category": "Nutrient Deficiency",
+    "scientific_solution": "This is Magnesium deficiency (leaf reddening). Spray Magnesium Sulphate (MgSO4) @ 10 g/L (1%) + Urea @ 10 g/L twice at 15-day intervals. Ensure soil is moist during spraying.",
+    "authoritative_source": "Kisan Call Center (KCC) Query Resolution Corpus & PJTSAU 2025"
+  },
+  {
+    "faq_id": "kcc-faq-002",
+    "farmer_query_en": "Circular dried burnt patches are appearing in my paddy field, and plants are turning golden yellow at base. What should I spray?",
+    "farmer_query_te": "వరి చేనులో అక్కడక్కడ గుండ్రంగా ఎండిపోయిన మచ్చలు (సుడులు) ఏర్పడుతున్నాయి, మొదళ్లలో పురుగులు ఉన్నాయి. ఏమి పిచికారీ చేయాలి?",
+    "farmer_query_hi": "धान के खेत में जगह-जगह गोल सूखे जले हुए धब्बे बन रहे हैं और पौधे नीचे से सूख रहे हैं। क्या छिड़काव करें?",
+    "crop": "Rice / Paddy",
+    "category": "Pest Management",
+    "scientific_solution": "This is Brown Plant Hopper (BPH) 'hopper burn'. Drain field water immediately for 3-4 days. Form walking alleys. Spray Chess 50% WG (Pymetrozine) @ 120 g/acre (9 g per 15L pump) or Token 20% SG (Dinotefuran) @ 100 g/acre directed strictly at plant bases. Never spray synthetic pyrethroids.",
+    "authoritative_source": "KCC & ICAR-IIRR Hyderabad BPH Advisory 2025"
+  },
+  {
+    "faq_id": "kcc-faq-003",
+    "farmer_query_en": "My chilli plant top leaves are curling upwards into boat shapes and turning bronzed. What is the problem?",
+    "farmer_query_te": "మిరప పై ఆకులు పైకి ముడుచుకుని పడవ ఆకారంలో మారుతున్నాయి. నివారణ ఏమిటి?",
+    "farmer_query_hi": "मिर्च के ऊपरी पत्ते ऊपर की ओर नाव की तरह मुड़ रहे हैं। क्या उपाय करें?",
+    "crop": "Chilli",
+    "category": "Pest Management",
+    "scientific_solution": "This is Chilli Thrips (Scirtothrips dorsalis) infestation. Install blue sticky traps @ 15-20 traps/acre. Spray Pegasus 50% WP (Diafenthiuron) @ 240 g/acre (18 g per 15L pump) or Delegate 11.7% SC (Spinetoram) @ 180 ml/acre (13.5 ml per 15L pump).",
+    "authoritative_source": "PJTSAU Spices Advisory & KCC 2025"
+  },
+  {
+    "faq_id": "kcc-faq-004",
+    "farmer_query_en": "Chilli leaves are curling downwards like an inverted cup with thickened texture. What spray is needed?",
+    "farmer_query_te": "మిరప ఆకులు కిందకు ముడుచుకుని ముదురు ఆకుపచ్చగా మొద్దుబారుతున్నాయి. ఏమి కొట్టాలి?",
+    "farmer_query_hi": "मिर्च के पत्ते नीचे की ओर उल्टे कप की तरह मुड़ रहे हैं। क्या छिड़काव करें?",
+    "crop": "Chilli",
+    "category": "Pest Management",
+    "scientific_solution": "Downwards curling indicates Yellow Mites (Polyphagotarsonemus latus). Spray Oberon 22.9% SC (Spiromesifen) @ 200 ml/acre (15 ml per 15L pump) or Wettable Sulphur 80% WDG @ 3 g/L covering underside of leaves.",
+    "authoritative_source": "KCC Query Repository & ICAR-IIHR 2025"
+  },
+  {
+    "faq_id": "kcc-faq-005",
+    "farmer_query_en": "Tomato fruits show large black sunken rot at bottom blossom end. Is this disease?",
+    "farmer_query_te": "టమోటా కాయల అడుగుభాగంలో నల్లటి మచ్చ ఏర్పడి కుళ్ళిపోతున్నాయి. ఇది తెగులా?",
+    "farmer_query_hi": "टमाटर के फलों के नीचे काला धब्बा पड़कर फल सड़ रहे हैं। क्या यह कोई बीमारी है?",
+    "crop": "Tomato",
+    "category": "Physiological Disorder",
+    "scientific_solution": "This is Blossom End Rot (BER), a physiological calcium deficiency caused by irregular irrigation. Maintain uniform soil moisture. Foliar spray of Calcium Nitrate @ 5 g/L weekly during fruit enlargement.",
+    "authoritative_source": "ICAR-IIHR Bengaluru & KCC 2025"
+  },
+  {
+    "faq_id": "kcc-faq-006",
+    "farmer_query_en": "Rice leaves have spindle-shaped spots with grey center and brown border. How to control?",
+    "farmer_query_te": "వరి ఆకులపై కంటి ఆకారపు మచ్చలు వచ్చాయి, అంచులు ఎర్రగా మధ్యలో బూడిద రంగులో ఉన్నాయి. ఎలా నివారించాలి?",
+    "farmer_query_hi": "धान के पत्तों पर नाव या आँख के आकार के धब्बे बने हैं। कैसे रोकें?",
+    "crop": "Rice / Paddy",
+    "category": "Disease Management",
+    "scientific_solution": "This is Rice Blast (Magnaporthe oryzae). Avoid excessive urea. Spray Amistar Top (Azoxystrobin + Difenoconazole) @ 200 ml/acre (15 ml per 15L pump) or Nativo 75% WG @ 80 g/acre in 200 L water.",
+    "authoritative_source": "ICAR-IIRR Hyderabad & KCC 2025"
+  },
+  {
+    "faq_id": "kcc-faq-007",
+    "farmer_query_en": "Maize central leaf whorls are full of sawdust-like frass and large holes. What to do?",
+    "farmer_query_te": "మొక్కజొన్న సుడులలో రంధ్రాలు పడి రంపపు పొట్టు లాంటి మలంతో నిండిపోయాయి. పురుగు కనిపిస్తోంది.",
+    "farmer_query_hi": "मक्का के गोभ में बड़े छेद हो गए हैं और लकड़ी के बुरादे जैसा मल भरा है।",
+    "crop": "Maize",
+    "category": "Pest Management",
+    "scientific_solution": "This is Fall Armyworm (Spodoptera frugiperda). Apply dry sand or wood ash into whorls immediately. Spray Coragen 18.5% SC @ 80 ml/acre (6 ml per 15L pump) directed straight into leaf whorls.",
+    "authoritative_source": "DPPQS National FAW Advisory & KCC 2025"
+  },
+  {
+    "faq_id": "kcc-faq-008",
+    "farmer_query_en": "Groundnut lower leaves have circular dark brown spots with bright yellow halo. Leaves are falling.",
+    "farmer_query_te": "వేరుశనగ ఆకులపై గుండ్రటి నల్లటి మచ్చలు పసుపు రంగు వలయంతో ఉన్నాయి, ఆకులు రాలిపోతున్నాయి.",
+    "farmer_query_hi": "मूंगफली की पत्तियों पर पीले घेरे वाले काले धब्बे बन रहे हैं और पत्ते झड़ रहे हैं।",
+    "crop": "Groundnut / Peanut",
+    "category": "Disease Management",
+    "scientific_solution": "This is Tikka Leaf Spot (Cercospora). Spray Saaf 75% WP (Carbendazim + Mancozeb) @ 400 g/acre (30 g per 15L pump) or Custodia @ 300 ml/acre in 200 L water.",
+    "authoritative_source": "ICAR-DGR Junagadh & KCC 2025"
+  },
+  {
+    "faq_id": "kcc-faq-009",
+    "farmer_query_en": "Wheat leaves have yellow parallel stripes like turmeric powder adhering to fingers when touched. What is it?",
+    "farmer_query_te": "గోధుమ ఆకులపై పసుపు రంగు చారలు ఉన్నాయి, తాకితే పసుపు పొడి అంటుకుంటోంది.",
+    "farmer_query_hi": "गेहूं के पत्तों पर हल्दी जैसा पीला पाउडर धारियों में दिख रहा है, छूने पर हाथ पर लगता है।",
+    "crop": "Wheat",
+    "category": "Disease Management",
+    "scientific_solution": "This is Yellow / Stripe Rust (Puccinia striiformis). Immediately spray Tilt 25% EC (Propiconazole) @ 200 ml/acre (15 ml per 15L pump) in 200 L water upon first detection.",
+    "authoritative_source": "ICAR-IIWBR Karnal Wheat Rust Alert & KCC 2025"
+  },
+  {
+    "faq_id": "kcc-faq-010",
+    "farmer_query_en": "Can I spray Monocrotophos on tomato or brinjal for fruit borer?",
+    "farmer_query_te": "టమోటా లేదా వంగ పంటలో పురుగుల కోసం మోనోక్రోటోఫాస్ పిచికారీ చేయవచ్చా?",
+    "farmer_query_hi": "क्या मैं टमाटर या बैंगन पर मोनोक्रोटोफॉस का छिड़काव कर सकता हूँ?",
+    "crop": "Tomato",
+    "category": "Chemical Safety Alert",
+    "scientific_solution": "STRICTLY PROHIBITED: Monocrotophos is BANNED for use on all vegetables by CIBRC and Government of India due to extreme neurotoxicity and fatal dietary residues. Spray Coragen 18.5% SC @ 60 ml/acre or Fame @ 60 ml/acre instead.",
+    "authoritative_source": "CIBRC Statutory Ban Notification & KCC Critical Protocol 2025"
+  },
+  {
+    "faq_id": "kcc-faq-011",
+    "farmer_query_en": "My paddy rice grains are turning empty and chaffy, and neck node is blackened.",
+    "farmer_query_te": "వరి కంకి మెడ నల్లబడి విరిగిపోతోంది, గింజలు తాలుగా మారుతున్నాయి.",
+    "farmer_query_hi": "धान की बाली की गर्दन काली होकर टूट रही है और दाने थोथे (खाली) हो रहे हैं।",
+    "crop": "Rice / Paddy",
+    "category": "Disease Management",
+    "scientific_solution": "This is Neck Blast (Magnaporthe oryzae). Spray Nativo 75% WG @ 80 g/acre or Amistar Top @ 200 ml/acre at 50% heading stage to protect panicle necks.",
+    "authoritative_source": "ICAR-IIRR Hyderabad & KCC 2025"
+  },
+  {
+    "faq_id": "kcc-faq-012",
+    "farmer_query_en": "Cotton squares are dropping heavily in 60-day crop. What is the remedy?",
+    "farmer_query_te": "60 రోజుల పత్తి చేనులో పూత, పిందె (కాయలు) విపరీతంగా రాలిపోతున్నాయి. ఏమి చేయాలి?",
+    "farmer_query_hi": "कपास में कलियां और फूल बहुत ज्यादा झड़ रहे हैं। क्या उपाय करें?",
+    "crop": "Cotton",
+    "category": "Agronomy & Protection",
+    "scientific_solution": "Check for Pink Bollworm (rosette flowers). If no larvae, square drop is due to moisture stress or boron deficiency. Spray Planofix (NAA 4.5% SL) @ 4 ml per 15L pump + Solubor (Boron 20%) @ 1.5 g/L.",
+    "authoritative_source": "PJTSAU Cotton Advisory & KCC 2025"
+  },
+  {
+    "faq_id": "kcc-faq-013",
+    "farmer_query_en": "How much Gypsum should I apply in groundnut and when?",
+    "farmer_query_te": "వేరుశనగలో జిప్సం ఎంత మోతాదులో, ఎప్పుడు వేయాలి?",
+    "farmer_query_hi": "मूंगफली में जिप्सम कब और कितनी मात्रा में डालना चाहिए?",
+    "crop": "Groundnut / Peanut",
+    "category": "Nutrient Management",
+    "scientific_solution": "Apply Gypsum @ 200 kg/acre at 40-45 DAS (pegging stage). Place 5 cm away from plant rows and incorporate lightly. Supplies Calcium and Sulphur essential for pod shell hardening and bold kernel filling.",
+    "authoritative_source": "ICAR-DGR Junagadh & KCC 2025"
+  },
+  {
+    "faq_id": "kcc-faq-014",
+    "farmer_query_en": "My rice seedlings show rusty brown spots on leaves 20 days after transplanting, and growth is stunted.",
+    "farmer_query_te": "వరి నాట్లు వేసిన 20 రోజులకు ఆకులపై తుప్పు మచ్చలు వచ్చి ఎదగడం లేదు.",
+    "farmer_query_hi": "धान की रोपाई के 20 दिन बाद पत्तियों पर कत्थई/भूरे रंग के धब्बे दिख रहे हैं और पौधे छोटे रह गए हैं।",
+    "crop": "Rice / Paddy",
+    "category": "Nutrient Deficiency",
+    "scientific_solution": "This is Zinc deficiency (Khaira disease). Spray Zinc Sulphate (21%) @ 2 g/L + Slaked lime @ 1 g/L twice at 5-day intervals. For future crops, apply 20 kg/acre Zinc Sulphate basal.",
+    "authoritative_source": "ICAR-IIRR Hyderabad & KCC 2025"
+  },
+  {
+    "faq_id": "kcc-faq-015",
+    "farmer_query_en": "What herbicide to spray in standing soybean crop for grass and broadleaf weeds?",
+    "farmer_query_te": "సోయాబీన్ చేనులో మొలక వచ్చిన తర్వాత గడ్డి మరియు వెడల్పాకు కలుపు నివారణకు ఏమి కొట్టాలి?",
+    "farmer_query_hi": "सोयाबीन की खड़ी फसल में घास और चौड़ी पत्ती वाले खरपतवार के लिए कौन सी दवा डालें?",
+    "crop": "Soybean",
+    "category": "Weed Management",
+    "scientific_solution": "Spray Pursuit (Imazethapyr 10% SL) @ 350 ml/acre (25 ml per 15L pump) at 15-20 DAS when weeds are at 2-3 leaf stage into moist soil.",
+    "authoritative_source": "ICAR-IISR Indore & KCC 2025"
+  },
+  {
+    "faq_id": "kcc-faq-016",
+    "farmer_query_en": "Sugarcane young shoots are drying up with foul smell and dead heart. What is the pest?",
+    "farmer_query_te": "చెరకు మొవ్వు ఎండిపోయి వాసన వస్తోంది, లాగితే తేలికగా వచ్చేస్తోంది.",
+    "farmer_query_hi": "गन्ने की नई गोभ सूखकर बदबू मार रही है और खींचने पर आसानी से निकल आती है।",
+    "crop": "Sugarcane",
+    "category": "Pest Management",
+    "scientific_solution": "This is Early Shoot Borer (Chilo infuscatellus). Trash mulching across rows. Direct soil drenching of Coragen 18.5% SC @ 150 ml/acre along cane rows at 35 DAP followed by irrigation.",
+    "authoritative_source": "ICAR-SBI Coimbatore & KCC 2025"
+  },
+  {
+    "faq_id": "kcc-faq-017",
+    "farmer_query_en": "Onion leaves are drying from tips and developing white silvery streaks with small insects in neck.",
+    "farmer_query_te": "ఉల్లి ఆకులు చివర్ల నుండి ఎండిపోతూ వెండి రంగు చారలు వస్తున్నాయి.",
+    "farmer_query_hi": "प्याज के पत्ते ऊपर से सूख रहे हैं और सफेद चांदी जैसी धारियां दिख रही हैं।",
+    "crop": "Onion",
+    "category": "Pest Management",
+    "scientific_solution": "This is Onion Thrips. Erect blue sticky traps @ 20/acre. Spray Pegasus 50% WP (Diafenthiuron) @ 240 g/acre (18 g per 15L pump) with sticker targeting leaf sheath bases.",
+    "authoritative_source": "ICAR-DOGR Pune & KCC 2025"
+  },
+  {
+    "faq_id": "kcc-faq-018",
+    "farmer_query_en": "What is the recommended seed rate and spacing for Bt Cotton in black soil?",
+    "farmer_query_te": "నల్లరేగడి నేలలో బిటి పత్తికి విత్తన మోతాదు మరియు ఎడం ఎంత ఉండాలి?",
+    "farmer_query_hi": "काली मिट्टी में बीटी कपास की बीज दर और कतार से कतार की दूरी कितनी होनी चाहिए?",
+    "crop": "Cotton",
+    "category": "Agronomy",
+    "scientific_solution": "Bt cotton requires 2 packets (900 g total) per acre. Spacing in normal black soils is 90 cm row-to-row and 60 cm plant-to-plant (7,400 plants/acre). Plant non-Bt refuge border rows around field.",
+    "authoritative_source": "PJTSAU Vyavasaya Panchangam & KCC 2025"
+  },
+  {
+    "faq_id": "kcc-faq-019",
+    "farmer_query_en": "Can I mix Coragen and Tilt together in the same tank for wheat spray?",
+    "farmer_query_te": "గోధుమలో పురుగు మరియు తెగులు నివారణకు ఒకే పంపులో కొరాజెన్ మరియు టిల్ట్ మందులను కలిపి కొట్టవచ్చా?",
+    "farmer_query_hi": "क्या मैं गेहूं में कोराजन और टिल्ट को एक ही स्प्रे पंप में मिलाकर छिड़क सकता हूँ?",
+    "crop": "Wheat",
+    "category": "Chemical Safety Alert",
+    "scientific_solution": "UNAPPROVED TANK MIX: Do NOT combine separate commercial pesticides in the same spray tank without CIBRC statutory co-formulation registration. Tank cocktails cause chemical antagonism, nozzle clogging, and leaf scorching.",
+    "authoritative_source": "CIBRC Safety Directive & KCC Tank Mix Alert 2025"
+  },
+  {
+    "faq_id": "kcc-faq-020",
+    "farmer_query_en": "Potato leaves are turning black water-soaked overnight during cold cloudy days.",
+    "farmer_query_te": "చలి, మబ్బుల వాతావరణంలో బంగాళాదుంప ఆకులు రాత్రికి రాత్రే నల్లబడి కుళ్ళిపోతున్నాయి.",
+    "farmer_query_hi": "कोहरे और बादलों वाले मौसम में आलू के पत्ते रातों-रात काले पड़कर सड़ रहे हैं।",
+    "crop": "Potato",
+    "category": "Disease Management",
+    "scientific_solution": "This is Late Blight (Phytophthora infestans) epidemic. Immediately spray Ridomil Gold (Metalaxyl-M + Mancozeb) @ 500 g/acre (37.5 g per 15L pump) in 200 L water.",
+    "authoritative_source": "ICAR-CPRI Shimla & KCC 2025"
+  },
+  {
+    "faq_id": "kcc-faq-021",
+    "farmer_query_en": "What is the critical stage of irrigation in wheat where water should never be missed?",
+    "farmer_query_te": "గోధుమ పంటలో ఎట్టి పరిస్థితుల్లోనూ తప్పనిసరిగా నీరు ఇవ్వాల్సిన దశ ఏది?",
+    "farmer_query_hi": "गेहूं में सिंचाई की सबसे महत्वपूर्ण क्रांतिक अवस्था कौन सी है?",
+    "crop": "Wheat",
+    "category": "Irrigation",
+    "scientific_solution": "Crown Root Initiation (CRI at 20-25 DAS) is the most critical stage. Skipping irrigation at CRI reduces wheat yield by up to 35-40% permanently.",
+    "authoritative_source": "ICAR-IIWBR Karnal & KCC 2025"
+  },
+  {
+    "faq_id": "kcc-faq-022",
+    "farmer_query_en": "Turmeric pseudostem collar is rotting and leaves are turning yellow from margin inward.",
+    "farmer_query_te": "పసుపు మొదలు కుళ్ళిపోతోంది, మొక్క లాగితే ఊడివస్తోంది, ఆకులు పసుపు రంగులోకి మారాయి.",
+    "farmer_query_hi": "हल्दी के तने का निचला हिस्सा सड़ रहा है और पत्ते पीले पड़ रहे हैं।",
+    "crop": "Turmeric",
+    "category": "Disease Management",
+    "scientific_solution": "This is Rhizome Rot / Soft Rot (Pythium). Provide immediate drainage. Drench collar root zone with Ridomil Gold @ 2.5 g/L or Copper Oxychloride 50% WP @ 3 g/L.",
+    "authoritative_source": "ICAR-IISR Calicut & PJTSAU 2025"
+  },
+  {
+    "faq_id": "kcc-faq-023",
+    "farmer_query_en": "Pigeonpea plants are wilting suddenly on one side with purple-black streak inside stem.",
+    "farmer_query_te": "కంది చెట్లు ఒకవైపు ఎండిపోతున్నాయి, కాండం చీల్చి చూస్తే లోపల నల్లటి చార కనిపిస్తోంది.",
+    "farmer_query_hi": "अरहर के पौधे एक तरफ से मुरझा रहे हैं और तना चीरने पर अंदर काली धारी दिखती है।",
+    "crop": "Red Gram / Pigeonpea",
+    "category": "Disease Management",
+    "scientific_solution": "This is Fusarium Wilt. No chemical cure exists once vascular wilt establishes. Drench healthy surrounding plants with Carbendazim @ 1 g/L. In future, grow resistant varieties like Asha (ICPL 87119) and treat seed with Trichoderma viride.",
+    "authoritative_source": "ICAR-IIPR Kanpur & KCC 2025"
+  },
+  {
+    "faq_id": "kcc-faq-024",
+    "farmer_query_en": "Mustard floral shoots are covered with dense green aphids. How to spray without harming honeybees?",
+    "farmer_query_te": "ఆవాల పూతపై నల్లటి పేనుబంక ఉంది. తేనెటీగలకు హాని కలగకుండా ఎలా మందు కొట్టాలి?",
+    "farmer_query_hi": "सरसों के फूलों पर माहू लगा है। मधुमक्खियों को नुकसान पहुँचाए बिना कैसे दवा छिड़कें?",
+    "crop": "Mustard / Rapeseed",
+    "category": "Pest & Bee Safety",
+    "scientific_solution": "Spray during late afternoon (after 4:30 PM) when honeybees have returned to hives. Apply Actara 25% WG (Thiamethoxam) @ 40 g/acre or Dimethoate 30% EC @ 260 ml/acre.",
+    "authoritative_source": "ICAR-DRMR Bharatpur & KCC 2025"
+  },
+  {
+    "faq_id": "kcc-faq-025",
+    "farmer_query_en": "How to prevent pulse beetles from destroying stored red gram and chickpea seeds?",
+    "farmer_query_te": "నిల్వ చేసిన కందులు మరియు శనగలను ముక్కుపురుగు (కాయ తొలుచు పురుగు) తినకుండా ఎలా కాపాడుకోవాలి?",
+    "farmer_query_hi": "भंडारण में दालों और चने को घुन/सूंड़ी से कैसे बचाएं?",
+    "crop": "Pulses",
+    "category": "Post-Harvest Storage",
+    "scientific_solution": "Dry seeds below 9% moisture. Store in 3-layer PICS hermetic bags which starve insects of oxygen. Alternatively, coat seeds with neem oil or edible castor oil @ 5 ml per kg seed.",
+    "authoritative_source": "ICAR-CIPHET Ludhiana & KCC 2025"
+  },
+  {
+    "faq_id": "kcc-faq-026",
+    "farmer_query_en": "My paddy crop was caught in cyclone rain and grains are soaked. How to stop grains from sprouting?",
+    "farmer_query_te": "తుఫాను వర్షానికి వరి చేను నీటమునిగింది, కంకులపైనే గింజలు మొలకెత్తకుండా ఏమి చేయాలి?",
+    "farmer_query_hi": "बारिश से धान की बालियां भीग गई हैं, बालियों में ही दाने उगने से कैसे रोकें?",
+    "crop": "Rice / Paddy",
+    "category": "Contingency Rescue",
+    "scientific_solution": "Spray 5% common salt solution (50 g cooking salt per liter water) directly on standing panicles. The high salt osmotic pressure prevents viviparous grain germination for 5-7 days.",
+    "authoritative_source": "ANGRAU & PJTSAU Post-Cyclone Advisory 2025"
+  },
+  {
+    "faq_id": "kcc-faq-027",
+    "farmer_query_en": "What is the pre-harvest interval (PHI) for Proclaim on Cotton and Tracer on Chilli?",
+    "farmer_query_te": "పత్తిలో ప్రొక్లెయిమ్ మరియు మిరపలో ట్రేసర్ పిచికారీ చేసిన ఎన్ని రోజులకు పంట కోయాలి?",
+    "farmer_query_hi": "कपास में प्रोक्लेम और मिर्च में ट्रेसर डालने के कितने दिन बाद तुड़ाई करनी चाहिए?",
+    "crop": "Cotton & Chilli",
+    "category": "Statutory Chemical Safety",
+    "scientific_solution": "CIBRC Mandatory Waiting Periods (PHI): Proclaim 5% SG on Cotton requires a 14-day PHI; Tracer 45% SC on Chilli requires a 3-day PHI. Do not harvest crop before these statutory periods expire.",
+    "authoritative_source": "CIBRC Statutory Label Database 2025"
+  },
+  {
+    "faq_id": "kcc-faq-028",
+    "farmer_query_en": "My black soil has pH 8.8 and water stagnates on surface. What amendment should I apply?",
+    "farmer_query_te": "నా నేల క్షార గుణం (pH 8.8) కలిగి ఉంది, నీరు ఇంకడం లేదు. ఏ మట్టి దిద్దుబాటు వేయాలి?",
+    "farmer_query_hi": "मेरी जमीन क्षारीय (pH 8.8) है और पानी सोखती नहीं है। क्या सुधार करें?",
+    "crop": "All Crops",
+    "category": "Soil Reclamation",
+    "scientific_solution": "This is sodic/alkaline soil. Apply agricultural grade Gypsum @ 2-3 tonnes/acre based on Gypsum Requirement test, broadcast, mix in top 10 cm, and pond water to leach displaced sodium. Incorporate green manure Dhaincha.",
+    "authoritative_source": "ICAR-CSSRI Karnal Sodic Soil SOP 2025"
+  },
+  {
+    "faq_id": "kcc-faq-029",
+    "farmer_query_en": "White porcelain blisters appeared on mustard leaf undersides. What is this?",
+    "farmer_query_te": "ఆవాల ఆకుల అడుగున తెల్లటి పొక్కులు వచ్చాయి. పూత విచిత్రంగా మారిపోయింది.",
+    "farmer_query_hi": "सरसों के पत्तों के नीचे सफेद रंग के छाले (फफोले) बन गए हैं और फूल विकृत हो गए हैं।",
+    "crop": "Mustard / Rapeseed",
+    "category": "Disease Management",
+    "scientific_solution": "This is White Rust (Albugo candida) and staghead malformation. Spray Ridomil Gold @ 2.5 g/L or Dithane M-45 @ 2 g/L upon first detection.",
+    "authoritative_source": "ICAR-DRMR Bharatpur 2025"
+  },
+  {
+    "faq_id": "kcc-faq-030",
+    "farmer_query_en": "How can I contact my Mandal Agricultural Officer (MAO) in Telangana for seed subsidy and soil testing?",
+    "farmer_query_te": "తెలంగాణలో విత్తనాల సబ్సిడీ మరియు సాయిల్ టెస్ట్ కోసం మండల వ్యవసాయ అధికారి (MAO) ని ఎలా సంప్రదించాలి?",
+    "farmer_query_hi": "बीज सब्सिडी और मिट्टी परीक्षण के लिए कृषि अधिकारी से कैसे संपर्क करें?",
+    "crop": "General Agriculture",
+    "category": "Extension Directory",
+    "scientific_solution": "Visit your local Rythu Vedika or Mandal Agriculture Office during working hours (10:30 AM to 5:00 PM). Alternatively, dial the National Kisan Call Center toll-free helpline at 1800-180-1551.",
+    "authoritative_source": "Department of Agriculture Govt of Telangana 2025"
+  }
+]

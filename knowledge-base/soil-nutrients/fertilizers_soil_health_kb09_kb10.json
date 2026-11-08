@@ -1,0 +1,39 @@
+{
+  "KB09": [
+    {
+      "id": "doc-kb09-001",
+      "crop_name": "Cotton",
+      "title": "Cotton Fertilizer and Nutrient Management (NPK)",
+      "content": "Recommended dose of fertilizer (RDF) for hybrid Bt cotton is 120:60:60 kg N:P2O5:K2O per hectare (approx 48:24:24 kg per acre). Full dose of phosphorus (DAP/SSP) and 25% potash as basal dose. Apply nitrogen in 3 split doses: 25% at 20 DAS, 50% at square formation (45-50 DAS), and 25% at peak flowering (70-75 DAS). Spray 1% Magnesium Sulphate (MgSO4) + 1% 19:19:19 to prevent leaf reddening.",
+      "citation": "Department of Fertilizers & PJTSAU Fertilizer Guidelines 2025"
+    },
+    {
+      "id": "doc-kb09-002",
+      "crop_name": "Rice / Paddy",
+      "title": "Paddy Nutrient Scheduling and Zinc Sulphate Application",
+      "content": "Paddy RDF: 120:60:40 kg N:P2O5:K2O per hectare. Apply full phosphorus and 50% potash at last puddling. Nitrogen in three equal splits: basal, active tillering (20-25 DAT), and panicle initiation (45 DAT). Apply 25 kg Zinc Sulphate (ZnSO4 21%) or 15 kg Chelated Zinc (Zn 33%) per hectare at puddling. Never mix zinc sulphate directly with DAP/phosphatic fertilizers.",
+      "citation": "Fertiliser Association of India (FAI) Rice Guide 2025"
+    },
+    {
+      "id": "doc-kb09-003",
+      "crop_name": "Chilli",
+      "title": "Chilli Fertigation and Split Nutrient Protocol",
+      "content": "Chilli RDF: 150:60:120 kg N:P2O5:K2O per hectare. Under fertigation, supply water-soluble fertilizers (19:19:19, 13:0:45, Calcium Nitrate, and Micronutrient mixture) in weekly split schedules. Foliar spray of Boron (Solubor 0.1%) at flowering to prevent fruit drop and enhance fruit set.",
+      "citation": "Indian Council of Agricultural Research Fertilizer Protocol 2025"
+    }
+  ],
+  "KB10": [
+    {
+      "id": "doc-kb10-001",
+      "title": "Black Cotton Soil Management and Salinity Remediation",
+      "content": "Deep black soils (Vertisols) have high clay content (40-60%), high swelling-shrinking properties, and high cation exchange capacity. For alkaline or sodic black soils with pH > 8.5, apply Agricultural Gypsum @ 2-3 tons per hectare based on gypsum requirement test. Incorporate farm yard manure (FYM) @ 5 tons/acre or pressmud to improve drainage and prevent waterlogging.",
+      "citation": "Soil Health Card Scheme National Guidelines 2025"
+    },
+    {
+      "id": "doc-kb10-002",
+      "title": "Red Chalka Soil Health and Organic Carbon Rejuvenation",
+      "content": "Red sandy loam (Alfisol) chalka soils suffer from low organic carbon (<0.4%), acidic to neutral pH (5.5-6.8), and rapid nutrient leaching. Grow green manure crops like Sunhemp (Crotalaria juncea) or Daincha (Sesbania aculeata) and incorporate into soil at 45-50 days before flowering. Apply biofertilizers (Azotobacter, PSB, and mycorrhiza) @ 2 kg/acre to boost microbial biomass.",
+      "citation": "ICAR-Indian Institute of Soil Science (IISS) Bhopal 2025"
+    }
+  ]
+}

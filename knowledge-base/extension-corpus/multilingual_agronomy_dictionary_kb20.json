@@ -1,0 +1,137 @@
+[
+  {
+    "term_id": "term-001",
+    "category": "Crops",
+    "english": "Cotton",
+    "telugu": "ప్రత్తి (పత్తి)",
+    "hindi": "कपास",
+    "scientific_name": "Gossypium hirsutum",
+    "definition": "Major commercial fiber cash crop grown primarily under kharif season in black cotton soils."
+  },
+  {
+    "term_id": "term-002",
+    "category": "Crops",
+    "english": "Rice / Paddy",
+    "telugu": "వరి",
+    "hindi": "धान / चावल",
+    "scientific_name": "Oryza sativa",
+    "definition": "Primary staple cereal food grain requiring high standing water and submerged conditions."
+  },
+  {
+    "term_id": "term-003",
+    "category": "Crops",
+    "english": "Chilli",
+    "telugu": "మిరప",
+    "hindi": "मिर्च",
+    "scientific_name": "Capsicum annuum",
+    "definition": "High-value spice cash crop susceptible to sucking pests like thrips and mites."
+  },
+  {
+    "term_id": "term-004",
+    "category": "Crops",
+    "english": "Tomato",
+    "telugu": "టమోటా",
+    "hindi": "टमाटर",
+    "scientific_name": "Solanum lycopersicum",
+    "definition": "Important solanaceous vegetable crop cultivated year-round with staking."
+  },
+  {
+    "term_id": "term-005",
+    "category": "Pests",
+    "english": "Pink Bollworm",
+    "telugu": "గులాబీ రంగు కాయ తొలుచు పురుగు",
+    "hindi": "गुलाबी सुंडी",
+    "scientific_name": "Pectinophora gossypiella",
+    "definition": "Destructive lepidopteran pest of cotton causing rosette flowers and damaged locules."
+  },
+  {
+    "term_id": "term-006",
+    "category": "Pests",
+    "english": "Brown Plant Hopper (BPH)",
+    "telugu": "గోధుమ రంగు సుడిదోమ",
+    "hindi": "भूरा फुदका",
+    "scientific_name": "Nilaparvata lugens",
+    "definition": "Severe sucking pest of rice congregating at stem base causing 'hopper burn'."
+  },
+  {
+    "term_id": "term-007",
+    "category": "Pests",
+    "english": "Chilli Thrips",
+    "telugu": "మిరప తామర పురుగులు",
+    "hindi": "मिर्च के थ्रिप्स",
+    "scientific_name": "Scirtothrips dorsalis",
+    "definition": "Minute sucking insects lacerating leaf surfaces causing upward curling (boat shape)."
+  },
+  {
+    "term_id": "term-008",
+    "category": "Diseases",
+    "english": "Rice Blast",
+    "telugu": "వరి అగ్గితెగులు",
+    "hindi": "धान का झुलसा रोग",
+    "scientific_name": "Magnaporthe oryzae",
+    "definition": "Fungal disease producing spindle-shaped diamond lesions on leaves and black collar rot at neck node."
+  },
+  {
+    "term_id": "term-009",
+    "category": "Diseases",
+    "english": "Bacterial Blight / Angular Leaf Spot",
+    "telugu": "బాక్టీరియా ఆకుమచ్చ తెగులు",
+    "hindi": "जीवाणु झुलसा रोग",
+    "scientific_name": "Xanthomonas citri pv. malvacearum",
+    "definition": "Bacterial disease in cotton causing vein-delimited angular spots and blackarm stem lesions."
+  },
+  {
+    "term_id": "term-010",
+    "category": "Diseases",
+    "english": "Early Blight",
+    "telugu": "ముందస్తు తెగులు",
+    "hindi": "अगेती झुलसा",
+    "scientific_name": "Alternaria solani",
+    "definition": "Fungal disease in solanaceous crops characterized by concentric rings ('target board' symptom)."
+  },
+  {
+    "term_id": "term-011",
+    "category": "Agronomy",
+    "english": "Foliar Spray",
+    "telugu": "పిచికారీ (ఆకులపై స్ప్రే)",
+    "hindi": "पर्णीय छिड़काव",
+    "scientific_name": "-",
+    "definition": "Application of liquid nutrients or pesticides directly to plant leaves using sprayers."
+  },
+  {
+    "term_id": "term-012",
+    "category": "Agronomy",
+    "english": "Fertilizer / Manure",
+    "telugu": "ఎరువు",
+    "hindi": "खाद / उर्वरक",
+    "scientific_name": "-",
+    "definition": "Organic or inorganic soil amendments providing macro (N, P, K) and micro nutrients."
+  },
+  {
+    "term_id": "term-013",
+    "category": "Agronomy",
+    "english": "Irrigation",
+    "telugu": "నీటిపారుదల",
+    "hindi": "सिंचाई",
+    "scientific_name": "-",
+    "definition": "Artificial application of water to land or soil to assist in crop production."
+  },
+  {
+    "term_id": "term-014",
+    "category": "Agronomy",
+    "english": "Weed / Weeding",
+    "telugu": "కలుపు / కలుపు తీత",
+    "hindi": "खरपतवार / निराई",
+    "scientific_name": "-",
+    "definition": "Unwanted plants competing with main crops for sunlight, water, and nutrients."
+  },
+  {
+    "term_id": "term-015",
+    "category": "Market",
+    "english": "Modal Price / Minimum Support Price (MSP)",
+    "telugu": "మార్కెట్ మోడల్ ధర / కనీస మద్దతు ధర (MSP)",
+    "hindi": "मंडी भाव / न्यूनतम समर्थन मूल्य (एमएसपी)",
+    "scientific_name": "-",
+    "definition": "Most frequently occurring transaction price in an APMC mandi and statutory government safety floor price."
+  }
+]

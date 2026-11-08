@@ -1,0 +1,137 @@
+[
+  {
+    "code": "ICAR",
+    "name": "Indian Council of Agricultural Research",
+    "organization_type": "National Apex Research Council",
+    "official_url": "https://icar.gov.in/",
+    "authority_level": 2,
+    "state": "National",
+    "description": "National apex organization for coordinating, guiding and managing agriculture and allied sectors research and education."
+  },
+  {
+    "code": "CIBRC",
+    "name": "Central Insecticides Board & Registration Committee (DPPQS)",
+    "organization_type": "National Regulatory Body",
+    "official_url": "https://ppqs.gov.in/",
+    "authority_level": 1,
+    "state": "National",
+    "description": "Statutory body constituted under the Insecticides Act, 1968 to regulate the import, manufacture, sale, and safe use of insecticides."
+  },
+  {
+    "code": "PJTSAU",
+    "name": "Professor Jayashankar Telangana State Agricultural University",
+    "organization_type": "State Agricultural University",
+    "official_url": "https://pjtau.edu.in/",
+    "authority_level": 2,
+    "state": "Telangana",
+    "description": "State agricultural university publishing Vyavasaya Panchangam, package of practices, and agro-advisories for Telangana."
+  },
+  {
+    "code": "ANGRAU",
+    "name": "Acharya N.G. Ranga Agricultural University",
+    "organization_type": "State Agricultural University",
+    "official_url": "https://angrau.ac.in/",
+    "authority_level": 2,
+    "state": "Andhra Pradesh",
+    "description": "State agricultural university catering to coastal Andhra, Rayalaseema, and southern agro-climatic zones."
+  },
+  {
+    "code": "NIPHM",
+    "name": "National Institute of Plant Health Management",
+    "organization_type": "National Autonomous Institute",
+    "official_url": "https://niphm.gov.in/",
+    "authority_level": 2,
+    "state": "National (Hyderabad)",
+    "description": "Premier institute under Ministry of Agriculture promoting Integrated Pest Management (IPM), biosecurity, and ecological farming."
+  },
+  {
+    "code": "IMD",
+    "name": "India Meteorological Department - Agromet Advisory Service",
+    "organization_type": "National Meteorological Agency",
+    "official_url": "https://mausam.imd.gov.in/",
+    "authority_level": 1,
+    "state": "National",
+    "description": "National meteorological agency providing district-level weather forecasts, rainfall indices, and agro-met advisories."
+  },
+  {
+    "code": "AGMARKNET",
+    "name": "Directorate of Marketing & Inspection (DMI) - Agmarknet",
+    "organization_type": "National Agricultural Marketing Portal",
+    "official_url": "https://agmarknet.gov.in/",
+    "authority_level": 1,
+    "state": "National",
+    "description": "Official portal tracking daily arrivals, wholesale prices, minimum/maximum/modal prices across APMC mandis in India."
+  },
+  {
+    "code": "CRIDA",
+    "name": "Central Research Institute for Dryland Agriculture (ICAR-CRIDA)",
+    "organization_type": "National Research Institute",
+    "official_url": "http://www.crida.in/",
+    "authority_level": 2,
+    "state": "National (Hyderabad)",
+    "description": "Pioneering research institute for rainfed farming, district agricultural contingency plans, and climate-resilient agriculture."
+  },
+  {
+    "code": "CIPHET",
+    "name": "Central Institute of Post-Harvest Engineering & Technology (ICAR-CIPHET)",
+    "organization_type": "National Research Institute",
+    "official_url": "https://ciphet.icar.gov.in/",
+    "authority_level": 2,
+    "state": "National (Ludhiana)",
+    "description": "Apex institute for harvest technologies, safe grain drying, post-harvest losses reduction, and value addition."
+  },
+  {
+    "code": "IIFSR",
+    "name": "ICAR-Indian Institute of Farming Systems Research",
+    "organization_type": "National Research Institute",
+    "official_url": "https://iifsr.icar.gov.in/",
+    "authority_level": 2,
+    "state": "National (Modipuram)",
+    "description": "Coordinates national research on crop rotation, intercropping, multi-tier cropping systems, and organic farming."
+  },
+  {
+    "code": "DWR",
+    "name": "ICAR-Directorate of Weed Research",
+    "organization_type": "National Research Institute",
+    "official_url": "https://dwr.icar.gov.in/",
+    "authority_level": 2,
+    "state": "National (Jabalpur)",
+    "description": "National authority for herbicide recommendations, critical weed competition periods, and integrated weed management."
+  },
+  {
+    "code": "IISS",
+    "name": "ICAR-Indian Institute of Soil Science",
+    "organization_type": "National Research Institute",
+    "official_url": "https://iiss.icar.gov.in/",
+    "authority_level": 2,
+    "state": "National (Bhopal)",
+    "description": "Leading research institute for soil testing, soil health management, carbon sequestration, and fertilizer use efficiency."
+  },
+  {
+    "code": "SOILHEALTH",
+    "name": "Soil Health Card Portal (Dept of Agriculture & Farmers Welfare)",
+    "organization_type": "National Statutory Scheme",
+    "official_url": "https://soilhealth.dac.gov.in/",
+    "authority_level": 1,
+    "state": "National",
+    "description": "National government scheme tracking 12 soil parameters (N, P, K, S, Zn, Fe, Cu, Mn, Bo, pH, EC, OC) and custom fertilizer prescriptions."
+  },
+  {
+    "code": "CIIL",
+    "name": "Central Institute of Indian Languages (Mysore)",
+    "organization_type": "National Linguistic Authority",
+    "official_url": "https://www.ciil.org/",
+    "authority_level": 2,
+    "state": "National",
+    "description": "Government authority establishing technical glossaries and standardized terminology across Indian languages."
+  },
+  {
+    "code": "KCC",
+    "name": "Kisan Call Centers (Ministry of Agriculture & Farmers Welfare)",
+    "organization_type": "National Extension Network",
+    "official_url": "https://doddagowda.gov.in/",
+    "authority_level": 1,
+    "state": "National",
+    "description": "Nationwide toll-free farmer query resolution system (1800-180-1551) addressing farmer queries in 22 official languages."
+  }
+]

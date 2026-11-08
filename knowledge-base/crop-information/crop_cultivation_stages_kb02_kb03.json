@@ -1,0 +1,48 @@
+{
+  "KB02": [
+    {
+      "id": "doc-kb02-001",
+      "crop_name": "Cotton",
+      "title": "Cotton Agronomy and Spacing Standards",
+      "content": "Cotton cultivation under rainfed conditions requires spacing of 90x60 cm or 90x45 cm. Seed rate is 1.5 to 2.0 kg per acre for Bt hybrids. Sowing should be undertaken after receipt of 50-60 mm monsoon rainfall. Deep summer ploughing followed by 2-3 harrowings prepares optimal seedbed.",
+      "citation": "PJTSAU Cotton Production Technology Package 2025"
+    },
+    {
+      "id": "doc-kb02-002",
+      "crop_name": "Rice / Paddy",
+      "title": "Direct Seeded and Transplanted Rice Agronomy",
+      "content": "For transplanted rice, 20-25 days old seedlings should be transplanted at 2-3 seedlings per hill with spacing of 20x15 cm. For Direct Seeded Rice (DSR), use seed drill with 20 cm row spacing and seed rate of 10-12 kg/acre.",
+      "citation": "ICAR-Indian Institute of Rice Research (IIRR) Manual 2025"
+    },
+    {
+      "id": "doc-kb02-003",
+      "crop_name": "Chilli",
+      "title": "Chilli Nursery and Field Transplanting",
+      "content": "Chilli nursery raised beds (1m width, 15cm height) require 200-250 g seed per acre. 35-40 day old seedlings should be transplanted at spacing of 60x60 cm or 90x45 cm under paired row ridge-and-furrow system.",
+      "citation": "Horticultural University Dr. YSRHU Chilli Package 2025"
+    },
+    {
+      "id": "doc-kb02-004",
+      "crop_name": "Tomato",
+      "title": "Tomato Spacing and Staking Practices",
+      "content": "Tomato seedlings (25-30 days old) require 100-150 g seed per acre for hybrids. Spacing is 90x45 cm or 120x60 cm. Staking with bamboo sticks or trellis wire improves fruit quality and prevents ground rotting.",
+      "citation": "ICAR-IIHR Tomato Cultivation Guidelines 2025"
+    }
+  ],
+  "KB03": [
+    {
+      "id": "doc-kb03-001",
+      "crop_name": "Cotton",
+      "title": "Cotton BBCH Growth Stages and Critical Days",
+      "content": "Cotton phenological stages: Germination & Emergence (0-15 DAS), Square Formation (35-45 DAS), Flowering & Boll Initiation (55-75 DAS), Peak Boll Development (75-110 DAS), Boll Bursting and Maturity (110-150 DAS). Critical moisture stages: Square formation and boll development.",
+      "citation": "ICAR-CICR Cotton Growth Stages Standard 2025"
+    },
+    {
+      "id": "doc-kb03-002",
+      "crop_name": "Rice / Paddy",
+      "title": "Rice BBCH Growth Stages and Management",
+      "content": "Paddy growth stages: Seedling (0-20 DAS), Active Tillering (20-45 DAT), Panicle Initiation (45-65 DAT), Booting & Heading (65-80 DAT), Milk and Dough stage (80-105 DAT), Physiological Maturity (105-125 DAT). Critical water periods: Tillering and flowering.",
+      "citation": "ICAR-IIRR Rice Phenology Handbook 2025"
+    }
+  ]
+}

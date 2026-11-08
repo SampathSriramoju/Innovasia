@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">బోల్ కిసాన్</string>
+    <string name="tagline">రైతు వ్యవసాయ వాయిస్ అసిస్టెంట్</string>
+    <string name="ask_question_prompt">మీ ప్రశ్నను అడగడానికి బటన్ నొక్కి మాట్లాడండి</string>
+    <string name="listening">వింటున్నాను… మాట్లాడండి</string>
+    <string name="processing">సమాచారం ధృవీకరిస్తున్నాము…</string>
+    <string name="safety_alert_title">భద్రతా హెచ్చరిక</string>
+    <string name="escalated_to_officer">వ్యవసాయ విస్తరణ అధికారికి పంపబడింది</string>
+    <string name="btn_select_crop">పంట ఎంపిక</string>
+    <string name="btn_disease_camera">ఆకు ఫోటో తీయండి</string>
+    <string name="btn_mandi_prices">మార్కెట్ ధరలు</string>
+    <string name="btn_weather">వాతావరణ సమాచారం</string>
+    <string name="btn_officer_help">అధికారి సహాయం</string>
+    <string name="btn_offline_knowledge">ఆఫ్‌లైన్ సమాచారం</string>
+</resources>

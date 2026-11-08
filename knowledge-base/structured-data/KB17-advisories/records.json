@@ -1,0 +1,184 @@
+[
+  {
+    "advisory_id": "cont-001",
+    "contingency_situation": "Delayed Monsoon Onset by 2-3 Weeks (Sowing Window Shifted to Mid-July)",
+    "target_region_and_crops": "Telangana & Andhra Pradesh: Cotton, Maize, Groundnut",
+    "contingency_action_plan": [
+      "Continue with normal cotton hybrids until July 15. If sowing delayed beyond July 15, switch to short-duration cotton or alternate crops like Maize (DHM 117), Soybean, or Red Gram.",
+      "Adopt Broad Bed and Furrow (BBF) or ridge-furrow planting to conserve rainwater.",
+      "Seed treatment with biofertilizers (Azotobacter and PSB) to accelerate early root establishment."
+    ],
+    "scientific_rationale": "Late-sown cotton experiences terminal drought and bollworm flare-up during flowering; switching to maize or soybean maintains farm profitability.",
+    "authoritative_source": "PJTSAU Vyavasaya Panchangam & ICAR-CRIDA Hyderabad 2025"
+  },
+  {
+    "advisory_id": "cont-002",
+    "contingency_situation": "Severe Monsoon Delay by 4-6 Weeks (No Sowing Till August 1st Week)",
+    "target_region_and_crops": "Deccan Plateau & Central India Drylands: Rainfed Tracts",
+    "contingency_action_plan": [
+      "Completely abandon Cotton, Groundnut, and Soybean for rainfed tracts.",
+      "Switch to ultra-short duration contingency crops: Sunflower (DRSF 108), Castor (DCH 519), Pearl Millet (Bajra ICTP 8203), Green Gram (Mung WGG 42), Horse Gram (Ulavalu), or Fodder Sorghum.",
+      "Reduce seed rate by 15-20% and increase inter-row spacing to minimize canopy water competition."
+    ],
+    "scientific_rationale": "Short-duration oilseeds and pulses mature within 65-80 days using remaining post-monsoon soil moisture.",
+    "authoritative_source": "ICAR-CRIDA National Contingency Plan for Agricultural Drought 2025"
+  },
+  {
+    "advisory_id": "cont-003",
+    "contingency_situation": "Mid-Season Drought / Dry Spell of 20-25 Days During Vegetative Stage (August)",
+    "target_region_and_crops": "All Rainfed Crops (Cotton, Soybean, Red Gram, Groundnut)",
+    "contingency_action_plan": [
+      "Perform shallow intercultural harrowing (dust mulching) to break surface capillary pores and arrest evaporation.",
+      "Spray anti-transpirants: Foliar spray of 2% Potassium Nitrate (KNO3 @ 20 g/L) or 1% Urea to maintain leaf cell turgor.",
+      "Remove alternate rows of crop for fodder if extreme drought threatens total crop desiccation.",
+      "Apply life-saving supplemental irrigation through micro-sprinklers from farm ponds (Krishi Honda)."
+    ],
+    "scientific_rationale": "KNO3 spray induces partial stomatal closure, reducing transpiration while supplying vital potassium for osmotic adjustment.",
+    "authoritative_source": "ICAR-CRIDA & PJTSAU Drought Management SOP 2025"
+  },
+  {
+    "advisory_id": "cont-004",
+    "contingency_situation": "Terminal Drought / Early Monsoon Withdrawal During Reproductive Stage (September-October)",
+    "target_region_and_crops": "Kharif Rainfed Crops: Cotton, Red Gram, Maize",
+    "contingency_action_plan": [
+      "Give single life-saving irrigation at flowering/pod set from harvested farm pond water.",
+      "Foliar spray of 2% DAP (20 g/L) + 1% Potassium Chloride (MOP 10 g/L) in evening hours.",
+      "Harvest maize for green fodder or cob silage if grain formation is severely impaired."
+    ],
+    "scientific_rationale": "Direct nutrient feeding through leaf stomata bypasses dried-up root zone where nutrient uptake has halted.",
+    "authoritative_source": "PJTSAU Vyavasaya Panchangam 2025"
+  },
+  {
+    "advisory_id": "cont-005",
+    "contingency_situation": "Flash Floods & Waterlogging in Standing Kharif Crops (August-September)",
+    "target_region_and_crops": "River basins & canal command areas: Rice, Cotton, Maize",
+    "contingency_action_plan": [
+      "Drain standing flood water from fields within 24-48 hours by opening drain cuts.",
+      "Once water drains, apply a booster foliar spray of 19:19:19 @ 10 g/L + Urea @ 10 g/L to revive root respiration and nitrogen assimilation.",
+      "Drench collar region with Copper Oxychloride 50% WP @ 3 g/L to prevent secondary fungal collar rots in cotton/vegetables.",
+      "Top dress 25 kg Urea + 15 kg MOP per acre after 4-5 days of drainage."
+    ],
+    "scientific_rationale": "Waterlogged roots suffer acute oxygen starvation (hypoxia); foliar nutrients supply immediate sustenance until roots resume aeration.",
+    "authoritative_source": "PJTSAU & ICAR-IIRR Flood Contingency Guide 2025"
+  },
+  {
+    "advisory_id": "cont-006",
+    "contingency_situation": "Unseasonal Rainfall at Paddy Harvest Time (November-December)",
+    "target_region_and_crops": "Coastal Andhra, Telangana, Odisha: Rice / Paddy",
+    "contingency_action_plan": [
+      "Spray 5% common salt solution (NaCl @ 50 g/L) on mature standing panicles or harvested sheaves to prevent grain germination.",
+      "Stack harvested sheaves with panicles pointing inwards and covered with tarpaulin.",
+      "Shift harvested produce to community solar poly-dryers or WDRA warehouse drying floors."
+    ],
+    "scientific_rationale": "Common salt solution dehydrates grain husk surface, creating osmotic barrier that inhibits viviparous embryo germination.",
+    "authoritative_source": "ANGRAU & PJTSAU Post-Cyclone Rice Advisory 2025"
+  },
+  {
+    "advisory_id": "cont-007",
+    "contingency_situation": "Severe Heatwave during Rabi Wheat Flowering & Grain Filling (March)",
+    "target_region_and_crops": "Punjab, Haryana, Rajasthan, MP: Wheat",
+    "contingency_action_plan": [
+      "Provide light evening irrigations through sprinklers to maintain micro-environment canopy humidity.",
+      "Spray 0.2% Potassium Nitrate (2 g/L) or 0.2% Salicylic acid (200 ppm) at boot and anthesis stages.",
+      "Avoid full flood irrigation during afternoon winds to prevent massive lodging."
+    ],
+    "scientific_rationale": "Exogenous salicylic acid and potassium stimulate antioxidant enzyme activity, detoxifying reactive oxygen species (ROS).",
+    "authoritative_source": "ICAR-IIWBR Karnal Terminal Heat Mitigation Protocol 2025"
+  },
+  {
+    "advisory_id": "cont-008",
+    "contingency_situation": "Sudden Fall Armyworm (FAW) Surge in Maize Whorls",
+    "target_region_and_crops": "Telangana, Karnataka, Bihar, MP: Kharif & Rabi Maize",
+    "contingency_action_plan": [
+      "Apply neem cake powder or dry soil/sand mixed with ash (9:1 ratio) directly into central leaf whorls.",
+      "Release egg parasitoid Telenomus remus @ 40,000/acre.",
+      "If whorl damage exceeds 10%, spray Coragen 18.5% SC (Chlorantraniliprole) @ 80 ml/acre (6 ml per 15L pump) directed into whorl funnel using single nozzle."
+    ],
+    "scientific_rationale": "Physical abrasive action of sand/ash disrupts caterpillar cuticle, while targeted chemical drenching reaches hidden larvae.",
+    "authoritative_source": "DPPQS & ICAR-IIMR Fall Armyworm Action Advisory 2025"
+  },
+  {
+    "advisory_id": "cont-009",
+    "contingency_situation": "Pink Bollworm Flare-up in Bt Cotton (Exceeding 8 moths/trap/night)",
+    "target_region_and_crops": "Telangana, Maharashtra, Gujarat, Haryana: Cotton",
+    "contingency_action_plan": [
+      "Pluck and destroy rosette flowers containing larvae manually twice a week.",
+      "Install 8-10 pheromone traps/acre for mass annihilation.",
+      "Foliar spray of Proclaim 5% SG (Emamectin Benzoate) @ 88 g/acre (6.6 g per 15L pump) or Delegate 11.7% SC (Spinetoram) @ 170 ml/acre in evening.",
+      "Strictly terminate crop by December 31; DO NOT extend crop into ratoon or fourth picking."
+    ],
+    "scientific_rationale": "Terminating crop by December starves the overwintering diapause larvae, breaking pest cycle for succeeding season.",
+    "authoritative_source": "ICAR-CICR Pink Bollworm National SOP 2025"
+  },
+  {
+    "advisory_id": "cont-010",
+    "contingency_situation": "Ground Frost / Cold Wave Threat in Rabi Potato & Mustard (January)",
+    "target_region_and_crops": "Northern India Plains: UP, Haryana, Punjab, Rajasthan",
+    "contingency_action_plan": [
+      "Give light evening irrigation to raise soil heat content.",
+      "Smudging (smoke generation) around field borders on north-west windward side.",
+      "Spray 0.1% Thiourea (1 g/L) or 0.1% Sulphuric acid on foliage."
+    ],
+    "scientific_rationale": "Warm smoke cloud acts as thermal blanket reflecting radiant infrared terrestrial heat back to crop canopy.",
+    "authoritative_source": "ICAR-CPRI & ICAR-DRMR Cold Wave Advisory 2025"
+  },
+  {
+    "advisory_id": "cont-011",
+    "contingency_situation": "High Canal Water Deficit in Rabi Season (Tail-End Canal Command)",
+    "target_region_and_crops": "Canal commands: Telangana, AP, Karnataka",
+    "contingency_action_plan": [
+      "Replace high water-requiring Rabi Paddy (1200 mm) with dryland Irrigated Dry (ID) crops: Groundnut (450 mm), Chickpea (250 mm), Maize (500 mm), or Black Gram (300 mm).",
+      "Adopt Alternate Wetting and Drying (AWD) if paddy has already been transplanted."
+    ],
+    "scientific_rationale": "ID crops require 60-75% less water than flooded paddy and generate higher net return per unit water consumed.",
+    "authoritative_source": "PJTSAU Water Management Advisory 2025"
+  },
+  {
+    "advisory_id": "cont-012",
+    "contingency_situation": "Acute Fertilizer Shortage / High Urea Price Shock",
+    "target_region_and_crops": "All Agricultural Zones",
+    "contingency_action_plan": [
+      "Replace 25% chemical urea with Nano Urea (liquid) foliar spray @ 4 ml/L at active tillering and panicle initiation.",
+      "Use Neem Coated Urea (NCU) with split application (3 splits) to minimize leaching and volatilization loss.",
+      "Incorporate biofertilizers (Azotobacter, Azospirillum, PSB) @ 1 kg/acre mixed in FYM."
+    ],
+    "scientific_rationale": "Nano Urea has >80% nitrogen use efficiency compared to 30-40% for conventional granular urea.",
+    "authoritative_source": "Ministry of Agriculture & IFFCO Nano Urea Guidelines 2025"
+  },
+  {
+    "advisory_id": "cont-013",
+    "contingency_situation": "Hailstorm Damage in Fruiting Vegetables & Onions (February-March)",
+    "target_region_and_crops": "Maharashtra, MP, Telangana: Tomato, Chilli, Onion",
+    "contingency_action_plan": [
+      "Remove broken, smashed branches and rotting fruits immediately.",
+      "Spray Copper Oxychloride @ 2.5 g/L + Streptocycline @ 0.1 g/L within 24 hours to prevent wound pathogens.",
+      "Apply foliar spray of micronutrients + 1% Urea to stimulate new lateral branching."
+    ],
+    "scientific_rationale": "Hail cuts create open infection courts for Alternaria and bacterial rots; copper bactericide seals torn margins.",
+    "authoritative_source": "ICAR-IIHR Vegetable Post-Hailstorm SOP 2025"
+  },
+  {
+    "advisory_id": "cont-014",
+    "contingency_situation": "Sudden Brown Plant Hopper (BPH) Outbreak in Booting Paddy",
+    "target_region_and_crops": "Telangana, AP, Punjab, Haryana: Rice / Paddy",
+    "contingency_action_plan": [
+      "Drain standing water completely from field for 3-4 days to expose base of hills to sunlight and air.",
+      "Form alleys (walking pathways) by parting plant hills every 8-10 rows.",
+      "Spray Chess 50% WG (Pymetrozine) @ 120 g/acre (9 g per 15L pump) or Token 20% SG (Dinotefuran) @ 100 g/acre directed strictly at plant bases."
+    ],
+    "scientific_rationale": "Drying field breaks humid microclimate required for hopper nymph development.",
+    "authoritative_source": "ICAR-IIRR Hyderabad BPH Contingency 2025"
+  },
+  {
+    "advisory_id": "cont-015",
+    "contingency_situation": "Terminal Heat & Rust Surge in Late Sown Wheat",
+    "target_region_and_crops": "North-Western Plains: Wheat",
+    "contingency_action_plan": [
+      "Spray Tilt 25% EC (Propiconazole) @ 200 ml/acre (15 ml per 15L pump) at first appearance of stripe rust pustules.",
+      "Spray 0.2% Potassium Nitrate at milking stage.",
+      "Maintain light soil moisture with frequent shallow irrigations."
+    ],
+    "scientific_rationale": "Propiconazole halts urediniospore germination, while potassium strengthens cell wall thickness against drought/heat.",
+    "authoritative_source": "ICAR-IIWBR Karnal Wheat Rust & Heat SOP 2025"
+  }
+]

@@ -1,0 +1,110 @@
+[
+  {
+    "commodity_name": "Paddy / Rice",
+    "safe_storage_moisture_percent": "13.0% - 14.0% (Milled rice: 12.0% - 13.0%)",
+    "storage_structures_and_technology": "Baggage warehouse storage: Stack jute/B-twill bags on wooden dunnage crates (15 cm above floor, 60 cm away from walls) in 1-2-1 interlocking stack pattern up to 16 bags high. For hermetic farm storage: 3-layer Purdue Improved Crop Storage (PICS) hermetic bags eliminate oxygen and kill all insects within 21 days.",
+    "major_storage_pests": "Rice Weevil (Sitophilus oryzae), Lesser Grain Borer (Rhyzopertha dominica), Angoumois Grain Moth (Sitotroga cerealella).",
+    "pest_prevention_and_fumigation_norms": "WDRA Standard: Warehouse prophylactic spray of Deltamethrin 2.5% WP (40 g/100 sq.m surface) or Malathion 50% EC (1:100 dilution). Curative fumigation: Aluminium Phosphide (Celphos 56%) @ 3 tablets (9 g) per tonne under airtight gas-proof cover for 7 days exposure period strictly by certified pest control operator.",
+    "permissible_storage_duration": "12 to 24 months under scientific WDRA warehouse norms.",
+    "citation": "WDRA Warehousing Standards & FCI Quality Control Manual 2025"
+  },
+  {
+    "commodity_name": "Wheat",
+    "safe_storage_moisture_percent": "10.0% - 12.0%",
+    "storage_structures_and_technology": "Metal silos with aeration blowers; Cover and Plinth (CAP) storage with 250 micron LDPE black covers; or HDPE woven sacks in masonry warehouses.",
+    "major_storage_pests": "Khapra Beetle (Trogoderma granarium), Rust-red Flour Beetle (Tribolium castaneum), Lesser Grain Borer (Rhyzopertha dominica).",
+    "pest_prevention_and_fumigation_norms": "Clean warehouses thoroughly; white-wash walls; fill wall crevices. Prophylactic spray of Malathion 50% EC on walls and alleyways. Fumigation with Aluminium Phosphide @ 3 tablets/tonne under gas-proof tarpaulin for 7-10 days.",
+    "permissible_storage_duration": "12 to 36 months in airtight silos or WDRA accredited warehouses.",
+    "citation": "ICAR-CIPHET Ludhiana Wheat Storage Protocol 2025"
+  },
+  {
+    "commodity_name": "Pulses (Red Gram, Chickpea, Black Gram, Green Gram)",
+    "safe_storage_moisture_percent": "9.0% - 10.0%",
+    "storage_structures_and_technology": "PICS Hermetic bags (100% effective without chemicals for smallholder farmers); or clean, dry HDPE bags in well-ventilated dry stores.",
+    "major_storage_pests": "Pulse Beetle / Bruchids (Callosobruchus maculatus & Callosobruchus chinensis).",
+    "pest_prevention_and_fumigation_norms": "Farm level: Coat clean seed with edible oil (Castor oil or Neem oil @ 5 ml per kg seed) or mix activated neem leaf powder (10 g/kg). Commercial warehouse: Fumigation with Aluminium Phosphide @ 2 tablets/tonne under airtight rubberized sheets.",
+    "permissible_storage_duration": "9 to 12 months.",
+    "citation": "ICAR-IIPR Kanpur Pulse Storage Factsheet 2025"
+  },
+  {
+    "commodity_name": "Groundnut Pods",
+    "safe_storage_moisture_percent": "7.0% - 8.0%",
+    "storage_structures_and_technology": "Store in pod form rather than shelled kernels; store in gunny bags stacked up to 10 bags high on wooden crates in dry, well-aerated godowns.",
+    "major_storage_pests": "Groundnut Bruchid (Caryedon serratus), Red Flour Beetle (Tribolium castaneum), Aspergillus flavus (aflatoxin mould).",
+    "pest_prevention_and_fumigation_norms": "Maintain relative humidity <65% in godown to prevent aflatoxin contamination. Prophylactic dusting of outer bag stacks with Malathion 5% dust. Do not store pods directly on cement floor.",
+    "permissible_storage_duration": "6 to 9 months.",
+    "citation": "ICAR-DGR Junagadh Oilseeds Storage Standard 2025"
+  },
+  {
+    "commodity_name": "Soybean",
+    "safe_storage_moisture_percent": "9.0% - 10.0%",
+    "storage_structures_and_technology": "Store in breathable multiwall paper or jute bags; do not stack >8 bags high to prevent crushing of lower seeds (which raises free fatty acids FFA).",
+    "major_storage_pests": "Almond Moth (Cadra cautella), Red Flour Beetle.",
+    "pest_prevention_and_fumigation_norms": "Keep store temperature below 25°C. High moisture (>12%) triggers rapid oil rancidity and fungal heating.",
+    "permissible_storage_duration": "6 to 10 months for seed germination viability.",
+    "citation": "ICAR-IISR Indore Soybean Storage Manual 2025"
+  },
+  {
+    "commodity_name": "Mustard / Rapeseed",
+    "safe_storage_moisture_percent": "7.0% - 8.0%",
+    "storage_structures_and_technology": "Gunny bags or bulk metal bins in dry moisture-proof godowns.",
+    "major_storage_pests": "Sawtoothed Grain Beetle (Oryzaephilus surinamensis), Cadra cautella.",
+    "pest_prevention_and_fumigation_norms": "Moisture above 8% causes rapid oil quality degradation, mould, and heating. Prophylactic warehouse hygiene.",
+    "permissible_storage_duration": "12 months.",
+    "citation": "ICAR-DRMR Bharatpur Mustard Storage Guide 2025"
+  },
+  {
+    "commodity_name": "Cotton Seed & Cotton Bales (Lint)",
+    "safe_storage_moisture_percent": "Cotton seed: 8.0% - 9.0%; Pressed Lint Bales: 7.5% - 8.5%",
+    "storage_structures_and_technology": "Lint bales (170 kg standard Indian bale) stored in covered, fire-protected ginning godowns on wooden planks. Spacing of 1 meter between bale lots with overhead fire hydrants.",
+    "major_storage_pests": "Dampness staining, Aspergillus fungi, fire hazard.",
+    "pest_prevention_and_fumigation_norms": "Strict adherence to No Smoking / No Naked Flame rule. Keep godowns well-ventilated and dry.",
+    "permissible_storage_duration": "12 to 24 months.",
+    "citation": "Cotton Corporation of India (CCI) & CIRCOT 2025"
+  },
+  {
+    "commodity_name": "Dry Red Chilli",
+    "safe_storage_moisture_percent": "10.0% - 11.0%",
+    "storage_structures_and_technology": "Cold storage at 4°C - 5°C with 60% - 65% relative humidity preserves vibrant red color, capsanthin pigment, and pungency (capsaicin). Traditional storage: Gunny bags in dark, cool, dry godowns.",
+    "major_storage_pests": "Cigarette Beetle (Lasioderma serricorne), Drugstore Beetle (Stegobium paniceum).",
+    "pest_prevention_and_fumigation_norms": "Cold storage prevents color fading (browning) and beetle infestation without chemical fumigation.",
+    "permissible_storage_duration": "12 to 18 months in commercial cold stores.",
+    "citation": "Spices Board India & Guntur APMC Cold Storage Manual 2025"
+  },
+  {
+    "commodity_name": "Onion Bulbs",
+    "safe_storage_moisture_percent": "Cured bulbs: 65% - 70% equilibrium relative humidity",
+    "storage_structures_and_technology": "Naturally ventilated bottom-and-side ventilated modified onion storage structures (Kanda Chawl / DOGR model) with raised bamboo/wire mesh floor (60 cm above ground) and asbestos/thatched roof. Cold storage: 0°C - 2°C with 65% - 70% RH.",
+    "major_storage_pests": "Black Mold (Aspergillus niger), Bacterial Soft Rot (Erwinia carotovora), Sprouting and Desiccation shrinkage.",
+    "pest_prevention_and_fumigation_norms": "Spray Maleic Hydrazide (MH) @ 2500 ppm at 15 days before harvest to inhibit post-harvest sprouting in storage. Store only well-cured Rabi onions with thin dry necks; Kharif onions not suitable for long storage.",
+    "permissible_storage_duration": "4 to 6 months in DOGR improved ventilated structures; 8 months in cold stores.",
+    "citation": "ICAR-DOGR Pune Onion Storage Engineering Guide 2025"
+  },
+  {
+    "commodity_name": "Potato Tubers",
+    "safe_storage_moisture_percent": "Fresh cured tubers: 90% - 95% relative humidity",
+    "storage_structures_and_technology": "Seed potatoes: Cold storage at 2°C - 4°C with 90-95% RH. Processing potatoes (for chips/french fries): Store at 8°C - 10°C treated with CIPC sprout inhibitor (prevents cold-induced sweetening / reducing sugar build-up that turns chips black).",
+    "major_storage_pests": "Potato Tuber Moth (Phthorimaea operculella), Dry Rot (Fusarium spp.), Soft Rot.",
+    "pest_prevention_and_fumigation_norms": "Farm storage: Cover cured tubers with 2-3 cm dry sand layer to block PTM oviposition. In cold store: Fogging with CIPC (Isopropyl N-(3-chlorophenyl)carbamate) @ 40 ml/tonne.",
+    "permissible_storage_duration": "7 to 9 months in modern cold storage.",
+    "citation": "ICAR-CPRI Shimla Potato Cold Storage Protocol 2025"
+  },
+  {
+    "commodity_name": "Turmeric Dried Rhizomes",
+    "safe_storage_moisture_percent": "8.0% - 10.0%",
+    "storage_structures_and_technology": "Polished cured finger rhizomes packed in double gunny bags lined with polythene; or traditional underground pit storage (Khani) plastered with cow dung and clay.",
+    "major_storage_pests": "Cigarette Beetle (Lasioderma serricorne), Coffee Bean Weevil (Araecerus fasciculatus).",
+    "pest_prevention_and_fumigation_norms": "Fumigation with Aluminium Phosphide @ 2 tablets/tonne under airtight cover. Store in cool, dark room to avoid curcumin photo-degradation.",
+    "permissible_storage_duration": "12 to 24 months.",
+    "citation": "ICAR-IISR Calicut Turmeric Storage Bulletin 2025"
+  },
+  {
+    "commodity_name": "Maize Grain",
+    "safe_storage_moisture_percent": "12.0%",
+    "storage_structures_and_technology": "Metal silos or polypropylene woven bags stacked on dunnage in rodent-proof godowns.",
+    "major_storage_pests": "Maize Weevil (Sitophilus zeamais), Angoumois Grain Moth, Aspergillus flavus.",
+    "pest_prevention_and_fumigation_norms": "Moisture must be strictly below 12% to prevent deadly aflatoxin B1 accumulation. Prophylactic Deltamethrin spray; Celphos fumigation as per WDRA standards.",
+    "permissible_storage_duration": "12 months.",
+    "citation": "ICAR-IIMR Ludhiana Maize Storage Guidelines 2025"
+  }
+]

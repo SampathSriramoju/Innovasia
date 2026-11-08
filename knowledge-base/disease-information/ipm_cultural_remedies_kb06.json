@@ -1,0 +1,76 @@
+{
+  "KB06": [
+    {
+      "id": "doc-kb06-001",
+      "crop_name": "Cotton",
+      "target": "Pink Bollworm & Sucking Pests",
+      "title": "Integrated Pest Management (IPM) for Cotton",
+      "content": "Cotton IPM: Install pheromone traps @ 5 per acre for monitoring pink bollworm and 8-10 per acre for mass trapping. Fix sticky yellow traps @ 10/acre for whitefly and aphids, and blue sticky traps for thrips. Plant castor as trap crop on field borders for Spodoptera. Erect 10 bird perches per acre. Spray 5% Neem Seed Kernel Extract (NSKE) or Neem oil 1500 ppm @ 5 ml/liter as first line of defense before any chemical spray.",
+      "cultural_remedies": [
+        "Prompt destruction and burning of crop stalks after final picking to prevent carryover of diapausing pink bollworm larvae.",
+        "Deep summer ploughing to expose pupae to predatory birds and solar heat.",
+        "Maintain non-Bt cotton refuge lines or refuge-in-bag (RIB) as mandated to delay resistance.",
+        "Avoid indiscriminate synthetic pyrethroid sprays early in the season to preserve natural predators like Chrysoperla and ladybird beetles."
+      ],
+      "biological_remedies": [
+        "Release Trichogramma bactrae egg parasitoids @ 60,000 per acre at weekly intervals starting 45 DAS.",
+        "Spray Bacillus thuringiensis (Bt) formulation @ 1.5-2.0 g/L or Beauveria bassiana @ 5 g/L."
+      ],
+      "citation": "ICAR-NCIPM National Cotton IPM Protocol 2025"
+    },
+    {
+      "id": "doc-kb06-002",
+      "crop_name": "Rice / Paddy",
+      "target": "Rice Blast and Brown Plant Hopper (BPH)",
+      "title": "Integrated Disease and Pest Management in Rice",
+      "content": "Rice IPM: Provide alleyways of 30 cm width after every 2 meters (alleyways/skip rows) to allow sunlight and aeration, severely suppressing BPH multiplication. Avoid excess split doses of nitrogenous fertilizers which trigger rice blast epidemics. Seed treatment with Trichoderma viride or Pseudomonas fluorescens @ 10g/kg seed. Maintain alternate wetting and drying (AWD) irrigation.",
+      "cultural_remedies": [
+        "Formation of 30 cm alleys every 2-3 meters in transplanted paddy fields.",
+        "Drain standing water from field for 3-4 days upon first notice of BPH hopper burn patches.",
+        "Balanced use of potash (MOP) to strengthen stem culms against blast penetration.",
+        "Removal of grassy weeds from bunds (Echinochloa, Leersia) which act as secondary hosts for blast and hoppers."
+      ],
+      "biological_remedies": [
+        "Foliar spray of Pseudomonas fluorescens @ 5g/L water at tillering and boot leaf stages.",
+        "Conserve predatory mirid bugs (Cyrtorhinus lividipennis) and spiders by avoiding broad-spectrum organophosphate sprays."
+      ],
+      "citation": "ICAR-NCIPM Rice IPM Guidelines 2025"
+    },
+    {
+      "id": "doc-kb06-003",
+      "crop_name": "Chilli",
+      "target": "Chilli Thrips and Leaf Curl Virus",
+      "title": "IPM Cultural and Biological Remedies for Chilli",
+      "content": "Chilli IPM: Grow 2-3 border rows of maize or jowar as windbreak and whitefly/thrips barrier. Plant marigold as trap crop (1 marigold row per 15 chilli rows). Install blue sticky traps @ 10-15 per acre. Spray Neem oil (3000 ppm) @ 3 ml/L or Pongamia oil @ 4 ml/L. Intercrop with coriander or cowpea to foster ladybird and syrphid predators.",
+      "cultural_remedies": [
+        "Erect barrier crops of sorghum/maize 1 month prior to chilli transplantation.",
+        "Roguing and deep burial of virus-infected plants showing severe leaf curl within first 45 days.",
+        "Use silver-black reflective mulch (25 micron) to repel winged thrips and whiteflies.",
+        "Maintain optimal soil moisture; dry stress accelerates thrips and mite multiplication."
+      ],
+      "biological_remedies": [
+        "Seed treatment with Trichoderma harzianum @ 10 g/kg seed.",
+        "Application of Lecanicillium lecanii @ 5 g/L water for sucking pest suppression."
+      ],
+      "citation": "ICAR-IIHR Chilli IPM Manual 2025"
+    },
+    {
+      "id": "doc-kb06-004",
+      "crop_name": "Tomato",
+      "target": "Early Blight and Fruit Borer",
+      "title": "IPM for Tomato Early Blight and Borer Management",
+      "content": "Tomato IPM: Stake plants securely on trellises to keep foliage away from soil splash. Prune lower 2-3 suckers and senescent leaves to improve air circulation and mitigate Alternaria blight spores. Install pheromone traps for Helicoverpa borer @ 5 per acre. Spray Trichoderma viride @ 5g/L preventive on foliage.",
+      "cultural_remedies": [
+        "Clean sanitation of fallen leaf debris and rotted fruit mummies.",
+        "Crop rotation with non-solanaceous crops (pulses, cereals, green manure).",
+        "Drip irrigation instead of overhead sprinklers to minimize leaf wetness duration.",
+        "Apply neem cake @ 100 kg/acre to soil during land preparation to suppress nematodes and soil fungi."
+      ],
+      "biological_remedies": [
+        "Foliar spray with Bacillus subtilis @ 5g/L at 10-day intervals during cloudy humid weather.",
+        "Release Trichogramma pretiosum @ 50,000 per acre against tomato fruit borer eggs."
+      ],
+      "citation": "ICAR-NCIPM Tomato Health Protocol 2025"
+    }
+  ]
+}

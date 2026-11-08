@@ -1,0 +1,367 @@
+[
+  {
+    "case_id": "case-res-001",
+    "farmer_location": "Narsampet Mandal, Warangal District, Telangana",
+    "crop": "Cotton",
+    "crop_age_growth_stage": "110 DAS (Boll Development Stage)",
+    "reported_issue": "Bolls dropping prematurely, and green bolls have small dark pinholes with lint inside turning brownish-pink.",
+    "field_officer_diagnosis": "Pink Bollworm (Pectinophora gossypiella) internal locule damage. Green boll destructive sampling showed 14% damaged bolls with 3rd instar pink larvae feeding inside seeds.",
+    "certified_remediation_plan": [
+      "Install 8 Pectino-lure pheromone traps per acre immediately to monitor and mass-trap male moths.",
+      "Manual collection and burning of rosette flowers and shed bolls.",
+      "Foliar spray of CIBRC registered Proclaim 5% SG (Emamectin Benzoate 5% SG) @ 88 g/acre (6.6 g per 15L backpack pump in 200 L water/acre).",
+      "Maintain statutory pre-harvest interval of 14 days before cotton picking.",
+      "Terminate standing crop by end of December; avoid ratooning."
+    ],
+    "verifying_officer_name": "Dr. K. Srinivas Rao",
+    "officer_designation": "Mandal Agricultural Officer (MAO), Narsampet",
+    "officer_code": "TS-AGRI-MAO-0412",
+    "verification_date": "2025-10-18",
+    "citation": "Bol Kisan Field Resolution Corpus 2025"
+  },
+  {
+    "case_id": "case-res-002",
+    "farmer_location": "Banswada Mandal, Kamareddy District, Telangana",
+    "crop": "Rice / Paddy",
+    "crop_age_growth_stage": "65 DAT (Booting / Panicle Initiation Stage)",
+    "reported_issue": "Circular patches of crop turning dry and yellow; base of rice hills completely covered with thousands of small brown insects.",
+    "field_officer_diagnosis": "Brown Plant Hopper (Nilaparvata lugens) hopper burn outbreak at critical booting stage. Hopper count averaged 45 insects per hill (severe economic damage threshold).",
+    "certified_remediation_plan": [
+      "Immediately drain standing canal water from field for 4 consecutive days.",
+      "Create walking alleys (skipping/parting 1 row after every 8 rows) to admit sunlight and ventilation to the plant bases.",
+      "Apply Chess 50% WG (Pymetrozine 50% WG) @ 120 g/acre (9 g per 15L knapsack pump) with flat-fan nozzle directed strictly onto stem bases.",
+      "Strictly avoid synthetic pyrethroid sprays to prevent secondary resurgence."
+    ],
+    "verifying_officer_name": "M. Anjaneyulu",
+    "officer_designation": "Assistant Director of Agriculture (ADA), Banswada",
+    "officer_code": "TS-AGRI-ADA-0198",
+    "verification_date": "2025-10-24",
+    "citation": "Bol Kisan Field Resolution Corpus 2025"
+  },
+  {
+    "case_id": "case-res-003",
+    "farmer_location": "Tadikonda Mandal, Guntur District, Andhra Pradesh",
+    "crop": "Chilli",
+    "crop_age_growth_stage": "45 DAT (Active Vegetative & Early Flowering)",
+    "reported_issue": "Top tender leaves curling upwards like boat hulls, leaf margins bronzed and brittle, flower bud abortion.",
+    "field_officer_diagnosis": "Severe Chilli Thrips (Scirtothrips dorsalis) infestation. Lacerations visible on undersides of apical leaves. Average count 6 thrips per leaf.",
+    "certified_remediation_plan": [
+      "Erect 20 blue sticky traps per acre at crop canopy height.",
+      "Foliar spray of Pegasus 50% WP (Diafenthiuron 50% WP) @ 240 g/acre (18 g per 15L backpack pump in 200 L water/acre).",
+      "Maintain 7-day pre-harvest interval.",
+      "Follow up with Neem oil 1500 ppm @ 2 ml/L after 10 days."
+    ],
+    "verifying_officer_name": "Smt. P. Lakshmi Devi",
+    "officer_designation": "Mandal Agricultural Officer (MAO), Tadikonda",
+    "officer_code": "AP-AGRI-MAO-0824",
+    "verification_date": "2025-09-12",
+    "citation": "Bol Kisan Field Resolution Corpus 2025"
+  },
+  {
+    "case_id": "case-res-004",
+    "farmer_location": "Armoor Mandal, Nizamabad District, Telangana",
+    "crop": "Turmeric",
+    "crop_age_growth_stage": "110 DAP (Grand Growth & Rhizome Initiation)",
+    "reported_issue": "Central leaves drying from tip down, pseudostem base soft and rotten, emits foul smell, rhizomes rotting in waterlogged patches.",
+    "field_officer_diagnosis": "Rhizome Rot / Soft Rot (Pythium aphanidermatum) compounded by severe surface drainage congestion during heavy August downpour.",
+    "certified_remediation_plan": [
+      "Open deep drainage channels at 5-meter intervals to evacuate stagnant water immediately.",
+      "Remove and destroy severely rotted clumps outside field.",
+      "Drench pseudostem collars with Ridomil Gold (Metalaxyl 4% + Mancozeb 64% WP) @ 2.5 g/L (37.5 g per 15L pump) using 300 ml solution per clump.",
+      "Incorporate neem cake @ 150 kg/acre along with Trichoderma viride around remaining healthy beds."
+    ],
+    "verifying_officer_name": "V. Rajeshwar",
+    "officer_designation": "Agricultural Extension Officer (AEO), Armoor",
+    "officer_code": "TS-AGRI-AEO-1156",
+    "verification_date": "2025-08-28",
+    "citation": "Bol Kisan Field Resolution Corpus 2025"
+  },
+  {
+    "case_id": "case-res-005",
+    "farmer_location": "Sanwer Tehsil, Indore District, Madhya Pradesh",
+    "crop": "Soybean",
+    "crop_age_growth_stage": "40 DAS (Flowering Stage)",
+    "reported_issue": "Leaves showing extensive windowpanes, larvae cutting leaf edges and looping, heavy defoliation.",
+    "field_officer_diagnosis": "Semilooper (Chrysodeixis acuta) outbreak. Caterpillar count: 6 larvae per meter row length (above economic threshold level of 3-4 larvae/meter).",
+    "certified_remediation_plan": [
+      "Foliar spray of Fame 39.35% SC (Flubendiamide 39.35% SC) @ 60 ml/acre (4.5 ml per 15L backpack pump).",
+      "Observe 30-day statutory PHI.",
+      "Erect 15 T-shaped bird perches per acre."
+    ],
+    "verifying_officer_name": "R. K. Sharma",
+    "officer_designation": "Senior Agriculture Development Officer (SADO), Sanwer",
+    "officer_code": "MP-AGRI-SADO-0331",
+    "verification_date": "2025-08-14",
+    "citation": "Bol Kisan Field Resolution Corpus 2025"
+  },
+  {
+    "case_id": "case-res-006",
+    "farmer_location": "Jagraon Block, Ludhiana District, Punjab",
+    "crop": "Wheat",
+    "crop_age_growth_stage": "65 DAS (Late Jointing / Flag Leaf Emergence)",
+    "reported_issue": "Linear bright yellow powdery stripes appearing on flag leaves across 2 acres.",
+    "field_officer_diagnosis": "Yellow / Stripe Rust (Puccinia striiformis f. sp. tritici) initial foci under cool foggy conditions.",
+    "certified_remediation_plan": [
+      "Immediately spray Tilt 25% EC (Propiconazole 25% EC) @ 200 ml/acre (15 ml per 15L backpack pump) in 200 L water/acre.",
+      "Ensure 30-day PHI.",
+      "Survey adjacent wheat fields for community containment."
+    ],
+    "verifying_officer_name": "Dr. Gurpreet Singh",
+    "officer_designation": "Agriculture Development Officer (ADO), Jagraon",
+    "officer_code": "PB-AGRI-ADO-0544",
+    "verification_date": "2025-01-20",
+    "citation": "Bol Kisan Field Resolution Corpus 2025"
+  },
+  {
+    "case_id": "case-res-007",
+    "farmer_location": "Niphad Taluka, Nashik District, Maharashtra",
+    "crop": "Tomato",
+    "crop_age_growth_stage": "55 DAT (Fruit Setting & Sizing)",
+    "reported_issue": "Round holes in developing fruits with caterpillar head feeding inside; circular concentric ring spots on lower leaves.",
+    "field_officer_diagnosis": "Tomato Fruit Borer (Helicoverpa armigera) combined with Early Blight (Alternaria solani).",
+    "certified_remediation_plan": [
+      "Coragen 18.5% SC (Chlorantraniliprole) @ 60 ml/acre (4.5 ml per 15L pump) for Fruit Borer (PHI 3 days).",
+      "Dithane M-45 (Mancozeb 75% WP) @ 600 g/acre (45 g per 15L pump) for Early Blight (PHI 5 days).",
+      "Apply in separate sequential sprays or verify statutory label approvals."
+    ],
+    "verifying_officer_name": "Suresh B. Patil",
+    "officer_designation": "Mandal Krishi Adhikari (MKA), Niphad",
+    "officer_code": "MH-AGRI-MKA-0719",
+    "verification_date": "2025-10-05",
+    "citation": "Bol Kisan Field Resolution Corpus 2025"
+  },
+  {
+    "case_id": "case-res-008",
+    "farmer_location": "Nandyal Mandal, Nandyal District, Andhra Pradesh",
+    "crop": "Bengal Gram / Chickpea",
+    "crop_age_growth_stage": "70 DAS (Pod Development Stage)",
+    "reported_issue": "Larvae chewing green chickpea pods, boreholes with caterpillar head thrust inside.",
+    "field_officer_diagnosis": "Gram Pod Borer (Helicoverpa armigera). Larval population: 2 larvae per meter row.",
+    "certified_remediation_plan": [
+      "Foliar spray of Proclaim 5% SG (Emamectin Benzoate 5% SG) @ 88 g/acre (6.6 g per 15L backpack pump).",
+      "Observe 14-day pre-harvest interval.",
+      "Install 4 Helilure pheromone traps per acre."
+    ],
+    "verifying_officer_name": "K. Venkateswarlu",
+    "officer_designation": "Mandal Agricultural Officer (MAO), Nandyal",
+    "officer_code": "AP-AGRI-MAO-0912",
+    "verification_date": "2025-12-19",
+    "citation": "Bol Kisan Field Resolution Corpus 2025"
+  },
+  {
+    "case_id": "case-res-009",
+    "farmer_location": "Kumher Tehsil, Bharatpur District, Rajasthan",
+    "crop": "Mustard / Rapeseed",
+    "crop_age_growth_stage": "75 DAS (Siliquae / Pod Formation)",
+    "reported_issue": "Inflorescence and pods encrusted with green aphids, honeydew mold coating upper twigs.",
+    "field_officer_diagnosis": "Mustard Aphid (Lipaphis erysimi) heavy infestation (>35% plants infested).",
+    "certified_remediation_plan": [
+      "Spray Rogor 30% EC (Dimethoate 30% EC) @ 264 ml/acre (20 ml per 15L backpack pump) in late afternoon.",
+      "Ensure 15-day PHI.",
+      "Avoid spraying while honeybees are actively pollinating."
+    ],
+    "verifying_officer_name": "Manohar Lal Meena",
+    "officer_designation": "Assistant Agriculture Officer (AAO), Kumher",
+    "officer_code": "RJ-AGRI-AAO-0215",
+    "verification_date": "2025-01-28",
+    "citation": "Bol Kisan Field Resolution Corpus 2025"
+  },
+  {
+    "case_id": "case-res-010",
+    "farmer_location": "Miryalaguda Mandal, Nalgonda District, Telangana",
+    "crop": "Rice / Paddy",
+    "crop_age_growth_stage": "50 DAT (Panicle Initiation)",
+    "reported_issue": "Snake-skin shaped greenish-grey lesions with dark brown borders on lower leaf sheaths at waterline.",
+    "field_officer_diagnosis": "Sheath Blight (Rhizoctonia solani). Lesions ascending from water line to 3rd leaf sheath.",
+    "certified_remediation_plan": [
+      "Drain field water slightly to expose lower stems to air.",
+      "Spray Contaf 5% SC (Hexaconazole 5% SC) @ 400 ml/acre (30 ml per 15L backpack pump) directed at stem bases.",
+      "Observe 30-day PHI."
+    ],
+    "verifying_officer_name": "G. Madhusudhan Reddy",
+    "officer_designation": "Mandal Agricultural Officer (MAO), Miryalaguda",
+    "officer_code": "TS-AGRI-MAO-0651",
+    "verification_date": "2025-09-30",
+    "citation": "Bol Kisan Field Resolution Corpus 2025"
+  },
+  {
+    "case_id": "case-res-011",
+    "farmer_location": "Kopargaon Taluka, Ahmednagar District, Maharashtra",
+    "crop": "Sugarcane",
+    "crop_age_growth_stage": "60 DAP (Tillering / Formative Stage)",
+    "reported_issue": "Dead hearts in young shoots, central spindle dried and pulling out with rotting odor.",
+    "field_officer_diagnosis": "Early Shoot Borer (Chilo infuscatellus). Dead heart percentage: 18% (above 15% threshold).",
+    "certified_remediation_plan": [
+      "Soil directed drench of Coragen 18.5% SC (Chlorantraniliprole) @ 150 ml/acre along cane rows followed by light irrigation.",
+      "Trash mulching in alternate furrows.",
+      "Observe 45-day PHI."
+    ],
+    "verifying_officer_name": "D. N. Gholap",
+    "officer_designation": "Taluka Agriculture Officer (TAO), Kopargaon",
+    "officer_code": "MH-AGRI-TAO-0482",
+    "verification_date": "2025-04-12",
+    "citation": "Bol Kisan Field Resolution Corpus 2025"
+  },
+  {
+    "case_id": "case-res-012",
+    "farmer_location": "Sadar Tehsil, Agra District, Uttar Pradesh",
+    "crop": "Potato",
+    "crop_age_growth_stage": "50 DAP (Tuber Bulking Stage)",
+    "reported_issue": "Dark water-soaked necrotic blighting on leaf tips; white delicate downy mold on underside in early morning.",
+    "field_officer_diagnosis": "Late Blight (Phytophthora infestans) triggered by 3 days of dense fog and low temperatures (14°C).",
+    "certified_remediation_plan": [
+      "Foliar spray of Ridomil Gold (Metalaxyl-M 4% + Mancozeb 64% WP) @ 500 g/acre (37.5 g per 15L backpack pump).",
+      "Observe 14-day PHI.",
+      "High earthing up to protect tubers."
+    ],
+    "verifying_officer_name": "Anil Kumar Yadav",
+    "officer_designation": "District Horticulture Officer (DHO), Agra",
+    "officer_code": "UP-HORT-DHO-0112",
+    "verification_date": "2025-12-22",
+    "citation": "Bol Kisan Field Resolution Corpus 2025"
+  },
+  {
+    "case_id": "case-res-013",
+    "farmer_location": "Yellandu Mandal, Bhadradri Kothagudem District, Telangana",
+    "crop": "Maize",
+    "crop_age_growth_stage": "25 DAS (Knee-high Stage)",
+    "reported_issue": "Shot holes and large irregular papery windowpanes on leaves with larvae inside whorl.",
+    "field_officer_diagnosis": "Fall Armyworm (Spodoptera frugiperda) early whorl damage (12% infested plants).",
+    "certified_remediation_plan": [
+      "Directed spray of Delegate 11.7% SC (Spinetoram 11.7% SC) @ 180 ml/acre (13.5 ml per 15L pump) into whorl funnel.",
+      "Observe 14-day PHI.",
+      "Erect T-shaped bird perches."
+    ],
+    "verifying_officer_name": "B. Thirupathi",
+    "officer_designation": "Agricultural Extension Officer (AEO), Yellandu",
+    "officer_code": "TS-AGRI-AEO-1402",
+    "verification_date": "2025-07-28",
+    "citation": "Bol Kisan Field Resolution Corpus 2025"
+  },
+  {
+    "case_id": "case-res-014",
+    "farmer_location": "Dhone Mandal, Nandyal District, Andhra Pradesh",
+    "crop": "Onion",
+    "crop_age_growth_stage": "70 DAT (Bulb Enlargement Stage)",
+    "reported_issue": "Purple-centered elliptical spots with yellow halos on leaves, leaves drying from tip down.",
+    "field_officer_diagnosis": "Purple Blotch (Alternaria porri) exacerbated by thrips lacerations.",
+    "certified_remediation_plan": [
+      "Spray Custodia (Azoxystrobin + Tebuconazole) @ 300 ml/acre (22.5 ml per 15L pump) + Pegasus 50% WP @ 240 g/acre with sticker.",
+      "Observe 5-day PHI.",
+      "Avoid overhead sprinkler irrigation."
+    ],
+    "verifying_officer_name": "T. Ramanjaneyulu",
+    "officer_designation": "Mandal Agricultural Officer (MAO), Dhone",
+    "officer_code": "AP-AGRI-MAO-0985",
+    "verification_date": "2025-02-16",
+    "citation": "Bol Kisan Field Resolution Corpus 2025"
+  },
+  {
+    "case_id": "case-res-015",
+    "farmer_location": "Ghatkesar Mandal, Medchal-Malkajgiri District, Telangana",
+    "crop": "Tomato",
+    "crop_age_growth_stage": "35 DAT (Flowering & First Fruit Set)",
+    "reported_issue": "Severe upward leaf curling, extreme puckering, stunted bush appearance with no flower set.",
+    "field_officer_diagnosis": "Tomato Leaf Curl Virus (ToLCV) transmitted by Whitefly (Bemisia tabaci).",
+    "certified_remediation_plan": [
+      "Rogue out and bury severely infected stunted plants immediately.",
+      "Spray Token 20% SG (Dinotefuran 20% SG) @ 80 g/acre or Actara 25% WG @ 40 g/acre to control whitefly vector.",
+      "Install yellow sticky traps @ 20 traps/acre."
+    ],
+    "verifying_officer_name": "K. Sravanthi",
+    "officer_designation": "Mandal Agricultural Officer (MAO), Ghatkesar",
+    "officer_code": "TS-AGRI-MAO-0314",
+    "verification_date": "2025-08-09",
+    "citation": "Bol Kisan Field Resolution Corpus 2025"
+  },
+  {
+    "case_id": "case-res-016",
+    "farmer_location": "Dharampuri Tehsil, Dhar District, Madhya Pradesh",
+    "crop": "Cotton",
+    "crop_age_growth_stage": "50 DAS (Early Squaring)",
+    "reported_issue": "Leaf edges curling downward, turning yellow then reddish-brown, sideways walking nymphs on leaf undersides.",
+    "field_officer_diagnosis": "Cotton Jassids / Leafhopper (Amrasca biguttula biguttula) hopper burn.",
+    "certified_remediation_plan": [
+      "Foliar spray of Ulala 50% WG (Flonicamid 50% WG) @ 80 g/acre (6.0 g per 15L backpack pump).",
+      "Observe 20-day PHI.",
+      "Install yellow sticky traps."
+    ],
+    "verifying_officer_name": "M. P. Patidar",
+    "officer_designation": "Sub-Divisional Agriculture Officer (SDAO), Dhar",
+    "officer_code": "MP-AGRI-SDAO-0177",
+    "verification_date": "2025-08-02",
+    "citation": "Bol Kisan Field Resolution Corpus 2025"
+  },
+  {
+    "case_id": "case-res-017",
+    "farmer_location": "Samrala Block, Ludhiana District, Punjab",
+    "crop": "Paddy / Rice",
+    "crop_age_growth_stage": "40 DAT (Tillering)",
+    "reported_issue": "Central shoots turning straw-colored and drying (dead hearts), easily detached upon slight pull.",
+    "field_officer_diagnosis": "Yellow Stem Borer (Scirpophaga incertulas). Dead heart incidence: 7% (above 5% ETL).",
+    "certified_remediation_plan": [
+      "Foliar spray of Caldan 50% SP (Cartap Hydrochloride 50% SP) @ 400 g/acre (30 g per 15L pump).",
+      "Observe 21-day PHI.",
+      "Clip seedling tips in future nurseries."
+    ],
+    "verifying_officer_name": "Harpal Singh",
+    "officer_designation": "Agriculture Development Officer (ADO), Samrala",
+    "officer_code": "PB-AGRI-ADO-0628",
+    "verification_date": "2025-08-20",
+    "citation": "Bol Kisan Field Resolution Corpus 2025"
+  },
+  {
+    "case_id": "case-res-018",
+    "farmer_location": "Jagtial Mandal, Jagtial District, Telangana",
+    "crop": "Rice / Paddy",
+    "crop_age_growth_stage": "75 DAT (Panicle Heading)",
+    "reported_issue": "Water-soaked translucent streaks on leaf margins turning wavy yellowish-white with bacterial ooze beads.",
+    "field_officer_diagnosis": "Bacterial Leaf Blight (Xanthomonas oryzae pv. oryzae).",
+    "certified_remediation_plan": [
+      "Drain standing water and stop top-dressing urea immediately.",
+      "Spray Streptocycline @ 24 g/acre + Copper Oxychloride 50% WP @ 500 g/acre in 200 L water.",
+      "Observe 15-day PHI."
+    ],
+    "verifying_officer_name": "Ch. Narender Reddy",
+    "officer_designation": "Mandal Agricultural Officer (MAO), Jagtial",
+    "officer_code": "TS-AGRI-MAO-0205",
+    "verification_date": "2025-09-18",
+    "citation": "Bol Kisan Field Resolution Corpus 2025"
+  },
+  {
+    "case_id": "case-res-019",
+    "farmer_location": "Madira Mandal, Khammam District, Telangana",
+    "crop": "Black Gram / Urad",
+    "crop_age_growth_stage": "35 DAS (Flowering)",
+    "reported_issue": "Leaves showing bright yellow mosaic patches interspersed with dark green blistered areas; flowers dropping.",
+    "field_officer_diagnosis": "Mungbean Yellow Mosaic Virus (MYMV) vectored by Whitefly (Bemisia tabaci).",
+    "certified_remediation_plan": [
+      "Rogue out initial infected yellow plants.",
+      "Spray Actara 25% WG (Thiamethoxam 25% WG) @ 40 g/acre (3 g per 15L pump) to knock down whitefly vector.",
+      "Install yellow sticky traps @ 20/acre."
+    ],
+    "verifying_officer_name": "N. Venkata Rao",
+    "officer_designation": "Mandal Agricultural Officer (MAO), Madira",
+    "officer_code": "TS-AGRI-MAO-0590",
+    "verification_date": "2025-08-11",
+    "citation": "Bol Kisan Field Resolution Corpus 2025"
+  },
+  {
+    "case_id": "case-res-020",
+    "farmer_location": "Kupwara / Jammu District, Jammu & Kashmir",
+    "crop": "Mustard",
+    "crop_age_growth_stage": "60 DAS (Flowering)",
+    "reported_issue": "White blister-like pustules on lower leaves; floral heads swollen and distorted into stagheads.",
+    "field_officer_diagnosis": "White Rust (Albugo candida) systemic staghead infection.",
+    "certified_remediation_plan": [
+      "Clip and destroy staghead malformations.",
+      "Foliar spray of Ridomil Gold (Metalaxyl 4% + Mancozeb 64% WP) @ 500 g/acre (37.5 g per 15L pump).",
+      "Observe 14-day PHI."
+    ],
+    "verifying_officer_name": "Bashir Ahmad Lone",
+    "officer_designation": "Sub-Divisional Agriculture Officer (SDAO), Kupwara",
+    "officer_code": "JK-AGRI-SDAO-0082",
+    "verification_date": "2025-03-04",
+    "citation": "Bol Kisan Field Resolution Corpus 2025"
+  }
+]

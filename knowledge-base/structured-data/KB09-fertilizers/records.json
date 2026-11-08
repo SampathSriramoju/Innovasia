@@ -1,0 +1,204 @@
+[
+  {
+    "crop_name": "Cotton",
+    "recommended_dose_fertilizer_npk_kg_per_acre": "60 : 30 : 30 kg (Bt Cotton under irrigation) / 48 : 24 : 24 kg (Rainfed)",
+    "recommended_dose_fertilizer_npk_kg_per_ha": "150 : 75 : 75 kg (Irrigated) / 120 : 60 : 60 kg (Rainfed)",
+    "basal_dose_kg_per_acre": "Full dose of Phosphorus (DAP 65 kg or SSP 188 kg) + 1/4th Nitrogen (Urea 25 kg) + 1/3rd Potash (MOP 17 kg) applied in furrow at sowing.",
+    "top_dressing_schedule": "Apply Nitrogen and Potash in 3 equal splits: 1st split at 20-25 DAS (squaring initiation), 2nd split at 45-50 DAS (peak squaring), 3rd split at 70-75 DAS (boll formation).",
+    "micronutrient_deficiencies_and_correction": {
+      "magnesium_deficiency": "Reddening of lower leaves (leaf reddening) between veins while veins remain green. Correction: Foliar spray of Magnesium Sulphate (MgSO4) @ 10 g/L (1%) + Urea @ 10 g/L at 45 and 65 DAS.",
+      "boron_deficiency": "Square dropping, deformed bolls, petiole ring formation. Correction: Soil application of Borax @ 4 kg/acre or foliar spray of Solubor (Boron 20%) @ 1.0 - 1.5 g/L at flowering.",
+      "zinc_deficiency": "Interveinal chlorosis in young leaves, shortened internodes (little leaf). Correction: Zinc Sulphate (ZnSO4 21%) @ 10 kg/acre basal or foliar spray of 2 g/L Chelated Zinc (EDTA-Zn 12%)."
+    },
+    "biofertilizers_recommended": "Azotobacter / Azospirillum @ 500 g/acre + Phosphate Solubilizing Bacteria (PSB) @ 500 g/acre mixed with 100 kg FYM applied near root zone.",
+    "citation": "PJTSAU Cotton Nutrient Management Package & ICAR-CICR Nagpur 2025"
+  },
+  {
+    "crop_name": "Rice / Paddy",
+    "recommended_dose_fertilizer_npk_kg_per_acre": "48 : 24 : 24 kg (Kharif) / 60 : 30 : 30 kg (Rabi)",
+    "recommended_dose_fertilizer_npk_kg_per_ha": "120 : 60 : 60 kg (Kharif) / 150 : 75 : 75 kg (Rabi)",
+    "basal_dose_kg_per_acre": "Full dose of Phosphorus (DAP 52 kg) + 1/3rd Nitrogen (Urea 26 kg) + 1/2 dose of Potash (MOP 20 kg) incorporated into puddle soil before final leveling.",
+    "top_dressing_schedule": "Remaining Nitrogen applied in 2 splits: 1st split (Urea 35 kg) at active tillering (20-25 DAT), 2nd split (Urea 35 kg) + remaining Potash (MOP 20 kg) at panicle initiation (45-50 DAT).",
+    "micronutrient_deficiencies_and_correction": {
+      "zinc_deficiency_khaira_disease": "Rusty-brown irregular pigmentation appearing on 3rd and 4th leaves 2-3 weeks after transplanting, stunted plant growth with brittle leaves. Correction: Basal soil application of Zinc Sulphate (21%) @ 20 kg/acre or foliar spray of Zinc Sulphate @ 2 g/L + 1 g/L slaked lime (twice at 5-day interval).",
+      "iron_deficiency": "Interveinal chlorosis turning into bleached ivory-white leaves in light calcareous soils or dry direct-seeded rice (DSR). Correction: Foliar spray of Ferrous Sulphate (FeSO4) @ 10 g/L (1%) + 1 g/L citric acid."
+    },
+    "biofertilizers_recommended": "Azospirillum @ 1 kg/acre + PSB @ 1 kg/acre + Blue Green Algae (BGA) @ 4 kg/acre or Azolla dual cropping (incorporated at 30 DAT).",
+    "citation": "ICAR-IIRR Hyderabad Nutrient Bulletin & PJTSAU Vyavasaya Panchangam 2025"
+  },
+  {
+    "crop_name": "Chilli",
+    "recommended_dose_fertilizer_npk_kg_per_acre": "60 : 32 : 32 kg (Rainfed) / 120 : 48 : 48 kg (Irrigated hybrid chilli)",
+    "recommended_dose_fertilizer_npk_kg_per_ha": "150 : 80 : 80 kg (Rainfed) / 300 : 120 : 120 kg (Irrigated)",
+    "basal_dose_kg_per_acre": "Full Phosphorus (SSP 200 kg or DAP 70 kg) + 1/5th Nitrogen (Urea 30 kg) + 1/3rd Potash (MOP 27 kg) applied in furrows along with 10 tonnes FYM.",
+    "top_dressing_schedule": "Apply remaining Nitrogen in 4 equal splits at 30, 60, 90, and 120 DAT. Apply remaining Potash in 2 splits at 60 and 90 DAT.",
+    "micronutrient_deficiencies_and_correction": {
+      "calcium_boron_deficiency": "Blossom end rot in fruits and terminal bud necrosis. Correction: Foliar spray of Calcium Nitrate @ 5 g/L + Boron (Solubor) @ 1 g/L at fruit setting.",
+      "magnesium_deficiency": "Interveinal yellowing of mature lower leaves. Correction: Foliar spray of Magnesium Sulphate @ 5 g/L."
+    },
+    "biofertilizers_recommended": "VAM (Vesicular Arbuscular Mycorrhiza) @ 2 kg/acre in nursery + Azotobacter @ 1 kg/acre mixed with compost.",
+    "citation": "PJTSAU Spices Agronomy Guide & ICAR-IIHR Bengaluru 2025"
+  },
+  {
+    "crop_name": "Tomato",
+    "recommended_dose_fertilizer_npk_kg_per_acre": "72 : 48 : 48 kg (Determinate) / 100 : 60 : 60 kg (Indeterminate staked hybrid)",
+    "recommended_dose_fertilizer_npk_kg_per_ha": "180 : 120 : 120 kg (Determinate) / 250 : 150 : 150 kg (Staked)",
+    "basal_dose_kg_per_acre": "Full Phosphorus (DAP 100 kg) + 1/3rd Nitrogen (Urea 45 kg) + 1/2 Potash (MOP 40 kg) placed 10 cm deep in planting bed.",
+    "top_dressing_schedule": "Top dress Nitrogen in 2 equal splits at 30 and 45 DAT. Apply remaining Potash at early fruit bulking (45 DAT). In fertigation: 19:19:19 @ 3 kg/acre weekly.",
+    "micronutrient_deficiencies_and_correction": {
+      "blossom_end_rot_calcium": "Dark, sunken, water-soaked, leathery black spots on blossom end of green fruits caused by localized calcium deficiency under fluctuating soil moisture. Correction: Foliar spray of Calcium Chloride @ 3 g/L or Calcium Nitrate @ 5 g/L weekly during fruit enlargement.",
+      "boron_deficiency": "Fruit cracking, cat-facing, brittle petioles. Correction: Foliar spray of Solubor @ 1 g/L."
+    },
+    "biofertilizers_recommended": "Azotobacter @ 1 kg/acre + PSB @ 1 kg/acre + Trichoderma harzianum @ 1 kg/acre in nursery potting media.",
+    "citation": "ICAR-IIHR Vegetable Production Manual 2025"
+  },
+  {
+    "crop_name": "Wheat",
+    "recommended_dose_fertilizer_npk_kg_per_acre": "48 : 24 : 16 kg (Timely sown irrigated) / 32 : 16 : 12 kg (Late sown)",
+    "recommended_dose_fertilizer_npk_kg_per_ha": "120 : 60 : 40 kg (Timely) / 80 : 40 : 30 kg (Late)",
+    "basal_dose_kg_per_acre": "Full Phosphorus (DAP 52 kg) + Full Potash (MOP 27 kg) + 1/2 Nitrogen (Urea 45 kg) drilled through ferti-seed drill at sowing.",
+    "top_dressing_schedule": "Remaining 1/2 Nitrogen (Urea 45 kg) top dressed in 2 equal splits: 1st split (22.5 kg) at Crown Root Initiation (CRI at 21 DAS) just before 1st irrigation; 2nd split (22.5 kg) at maximum tillering / first node stage (40-45 DAS).",
+    "micronutrient_deficiencies_and_correction": {
+      "manganese_deficiency": "Greyish-pink spots and interveinal chlorosis on middle leaves in light sandy soils under rice-wheat rotation. Correction: Foliar spray of 0.5% Manganese Sulphate (MnSO4 5 g/L) at 30 and 45 DAS.",
+      "zinc_deficiency": "Brown necrotic spots on middle leaves. Correction: Basal application of Zinc Sulphate (21%) @ 10 kg/acre."
+    },
+    "biofertilizers_recommended": "Azotobacter chroococcum @ 500 g/acre + PSB @ 500 g/acre seed inoculation.",
+    "citation": "ICAR-IIWBR Karnal Wheat Nutrient Management Guide 2025"
+  },
+  {
+    "crop_name": "Maize",
+    "recommended_dose_fertilizer_npk_kg_per_acre": "48 : 24 : 20 kg (Kharif) / 80 : 32 : 32 kg (Rabi / Winter hybrid maize)",
+    "recommended_dose_fertilizer_npk_kg_per_ha": "120 : 60 : 50 kg (Kharif) / 200 : 80 : 80 kg (Rabi)",
+    "basal_dose_kg_per_acre": "Full Phosphorus (DAP 52 kg) + Full Potash (MOP 33 kg) + 1/3rd Nitrogen (Urea 30 kg) placed 5 cm away and below seed.",
+    "top_dressing_schedule": "Apply remaining Nitrogen in 2 equal splits: 1st split (Urea 35 kg) at knee-high stage (30-35 DAS) followed by earthing up; 2nd split (Urea 35 kg) at tasseling / silking stage (55-60 DAS).",
+    "micronutrient_deficiencies_and_correction": {
+      "zinc_deficiency_white_bud": "Bleaching or whitening of upper young leaves ('white bud of maize') starting from base of leaf. Correction: Soil application of 10 kg Zinc Sulphate (21%)/acre basal or foliar spray of Chelated Zinc @ 1 g/L."
+    },
+    "biofertilizers_recommended": "Azospirillum @ 1 kg/acre + PSB @ 1 kg/acre mixed with FYM.",
+    "citation": "ICAR-IIMR Ludhiana Maize Agronomy & PJTSAU 2025"
+  },
+  {
+    "crop_name": "Groundnut / Peanut",
+    "recommended_dose_fertilizer_npk_kg_per_acre": "12 : 24 : 20 kg (Kharif) / 16 : 32 : 24 kg (Rabi / Summer)",
+    "recommended_dose_fertilizer_npk_kg_per_ha": "30 : 60 : 50 kg (Kharif) / 40 : 80 : 60 kg (Rabi)",
+    "basal_dose_kg_per_acre": "Entire dose of N, P, and K applied as basal at sowing (SSP 150 kg + Urea 20 kg + MOP 33 kg). SSP is mandatory as it provides 16% P2O5 and 12% Sulphur.",
+    "top_dressing_schedule": "Gypsum application @ 200 kg/acre at pegging stage (40-45 DAS) placed 5-7 cm away from plant rows and incorporated into soil. Gypsum supplies essential Calcium and Sulphur for pod filling and prevents 'pops' (empty pods).",
+    "micronutrient_deficiencies_and_correction": {
+      "iron_chlorosis": "Complete yellowing to bleaching of young terminal leaves in high pH calcareous black soils. Correction: Foliar spray of Ferrous Sulphate (FeSO4) @ 5 g/L + Citric acid @ 1 g/L twice at 7-day interval.",
+      "boron_deficiency_hollow_heart": "Internal hollow cavity with dark discoloration inside kernel (hollow heart). Correction: Soil application of Borax @ 4 kg/acre or foliar spray of Solubor @ 1 g/L at 35 DAS."
+    },
+    "biofertilizers_recommended": "Rhizobium (Bradyrhizobium sp.) @ 250 g / 10 kg seed + PSB @ 250 g/10 kg seed.",
+    "citation": "ICAR-DGR Junagadh & PJTSAU Oilseeds Panchangam 2025"
+  },
+  {
+    "crop_name": "Soybean",
+    "recommended_dose_fertilizer_npk_kg_per_acre": "12 : 32 : 16 kg (Basal application)",
+    "recommended_dose_fertilizer_npk_kg_per_ha": "30 : 80 : 40 kg",
+    "basal_dose_kg_per_acre": "Full dose of N, P, K applied basal at sowing. Use SSP (Single Super Phosphate) @ 200 kg/acre to meet both Phosphorus and Sulphur requirements + MOP @ 27 kg + Urea @ 15 kg as starter N.",
+    "top_dressing_schedule": "Soybean fixes its own atmospheric nitrogen through Bradyrhizobium nodulation; no top dressing of urea is needed. Top dress Sulphur through elemental sulphur (10 kg/acre) if SSP was not used.",
+    "micronutrient_deficiencies_and_correction": {
+      "zinc_deficiency": "Yellowing between veins of upper leaves, bronze discoloration. Correction: Basal Zinc Sulphate @ 10 kg/acre or foliar spray of 0.5% ZnSO4.",
+      "molybdenum_deficiency": "Poor nodulation and N-deficiency symptoms. Correction: Seed treatment with Sodium Molybdate @ 1 g/kg seed."
+    },
+    "biofertilizers_recommended": "Bradyrhizobium japonicum @ 5 g/kg seed + PSB @ 5 g/kg seed mandatory.",
+    "citation": "ICAR-IISR Indore Soybean Production Guide 2025"
+  },
+  {
+    "crop_name": "Red Gram / Pigeonpea",
+    "recommended_dose_fertilizer_npk_kg_per_acre": "8 : 20 : 8 kg",
+    "recommended_dose_fertilizer_npk_kg_per_ha": "20 : 50 : 20 kg",
+    "basal_dose_kg_per_acre": "Entire fertilizer dose applied as basal placement below seed at sowing: DAP @ 45 kg + MOP @ 13 kg per acre.",
+    "top_dressing_schedule": "Foliar spray of 2% Urea (20 g/L) or 2% DAP at flower bud initiation (70-80 DAS) and repeat 15 days later at peak flowering to reduce flower dropping and boost pod set.",
+    "micronutrient_deficiencies_and_correction": {
+      "zinc_deficiency": "Interveinal chlorosis of middle leaves. Correction: Foliar spray of Zinc Sulphate @ 2 g/L + lime 1 g/L."
+    },
+    "biofertilizers_recommended": "Rhizobium culture @ 200 g / 8 kg seed + PSB culture @ 200 g/8 kg seed.",
+    "citation": "ICAR-IIPR Kanpur Pulses Agronomy & PJTSAU 2025"
+  },
+  {
+    "crop_name": "Chickpea / Bengal Gram",
+    "recommended_dose_fertilizer_npk_kg_per_acre": "8 : 20 : 8 kg",
+    "recommended_dose_fertilizer_npk_kg_per_ha": "20 : 50 : 20 kg",
+    "basal_dose_kg_per_acre": "Full dose placed 5-7 cm below seed at sowing using ferti-seed drill: DAP @ 45 kg + MOP @ 13 kg/acre.",
+    "top_dressing_schedule": "No soil top dressing of nitrogen. Foliar spray of 2% Urea (20 g/L) or 1% Potassium Nitrate (KNO3 @ 10 g/L) at pod initiation (65-70 DAS) to enhance seed weight under receding residual moisture.",
+    "micronutrient_deficiencies_and_correction": {
+      "iron_deficiency": "Yellowing of terminal leaflets in high pH calcareous soils. Correction: Foliar spray of Ferrous Sulphate (FeSO4) @ 5 g/L + Citric acid @ 1 g/L."
+    },
+    "biofertilizers_recommended": "Mesorhizobium ciceri @ 250 g / 10 kg seed + PSB @ 250 g/10 kg seed.",
+    "citation": "ICAR-IIPR Kanpur Chickpea Agronomy 2025"
+  },
+  {
+    "crop_name": "Mustard / Rapeseed",
+    "recommended_dose_fertilizer_npk_kg_per_acre": "32 : 16 : 16 kg (Irrigated) / 20 : 12 : 10 kg (Rainfed)",
+    "recommended_dose_fertilizer_npk_kg_per_ha": "80 : 40 : 40 kg (Irrigated) / 50 : 30 : 25 kg (Rainfed)",
+    "basal_dose_kg_per_acre": "Full Phosphorus (SSP 100 kg) + Full Potash (MOP 27 kg) + 1/2 Nitrogen (Urea 30 kg) + Sulphur @ 16 kg/acre (through SSP or elemental sulphur).",
+    "top_dressing_schedule": "Remaining 1/2 Nitrogen (Urea 30 kg) top dressed after 1st irrigation at 30-35 DAS (before flowering).",
+    "micronutrient_deficiencies_and_correction": {
+      "sulphur_deficiency": "Cupping of young leaves, reddish-purple underside pigmentation, reduced pod siliquae formation and lower oil content. Correction: Basal application of Gypsum @ 100 kg/acre or Bentonite Sulphur (90%) @ 10 kg/acre.",
+      "boron_deficiency": "Poor pod set, empty siliquae. Correction: Borax @ 4 kg/acre basal."
+    },
+    "biofertilizers_recommended": "Azotobacter @ 500 g/acre + PSB @ 500 g/acre seed treatment.",
+    "citation": "ICAR-DRMR Bharatpur Mustard Nutrient Guide 2025"
+  },
+  {
+    "crop_name": "Sugarcane",
+    "recommended_dose_fertilizer_npk_kg_per_acre": "100 : 40 : 48 kg (Adsali/Pre-seasonal) / 80 : 32 : 40 kg (Suru / Spring cane)",
+    "recommended_dose_fertilizer_npk_kg_per_ha": "250 : 100 : 120 kg",
+    "basal_dose_kg_per_acre": "Apply 10% Nitrogen (Urea 18 kg) + Full Phosphorus (SSP 200 kg or DAP 70 kg) + 25% Potash (MOP 17 kg) in planting furrow along with 10 tonnes FYM/press mud.",
+    "top_dressing_schedule": "Apply remaining Nitrogen and Potash in 3 splits: 1st split (20% N + 25% K) at tillering (45 DAP); 2nd split (30% N) at 90 DAP; 3rd split (40% N + 50% K) at final earthing-up (120-150 DAP). Stop all N application after 150 days.",
+    "micronutrient_deficiencies_and_correction": {
+      "iron_chlorosis": "Interveinal yellow striping of young cane leaves in alkaline soils. Correction: Foliar spray of Ferrous Sulphate @ 10 g/L + Citric acid @ 1 g/L twice at 15-day intervals.",
+      "zinc_deficiency": "Midrib bleaching and stunted internodes. Correction: Basal Zinc Sulphate @ 15 kg/acre."
+    },
+    "biofertilizers_recommended": "Gluconacetobacter diazotrophicus (endophytic N-fixer) @ 2 kg/acre + PSB @ 2 kg/acre.",
+    "citation": "ICAR-SBI Coimbatore & ICAR-IISR Lucknow 2025"
+  },
+  {
+    "crop_name": "Onion",
+    "recommended_dose_fertilizer_npk_kg_per_acre": "40 : 20 : 32 kg + 20 kg Sulphur",
+    "recommended_dose_fertilizer_npk_kg_per_ha": "100 : 50 : 80 kg + 50 kg Sulphur",
+    "basal_dose_kg_per_acre": "Full Phosphorus (SSP 125 kg) + 1/2 Potash (MOP 27 kg) + 1/3rd Nitrogen (Urea 25 kg) + Sulphur (Bentonite-S 10 kg) applied before transplanting.",
+    "top_dressing_schedule": "Remaining Nitrogen top dressed in 2 equal splits: 1st split (Urea 30 kg) at 30 DAT; 2nd split (Urea 30 kg) + remaining Potash (MOP 27 kg) at 45-50 DAT (bulb initiation). Stop N application after 60 DAT to avoid thick necks.",
+    "micronutrient_deficiencies_and_correction": {
+      "zinc_deficiency": "Twisting, bending, and inward curling of leaves. Correction: Foliar spray of Zinc Sulphate @ 2 g/L at 30 and 45 DAT."
+    },
+    "biofertilizers_recommended": "Azospirillum @ 1 kg/acre + PSB @ 1 kg/acre seedling root dip for 30 minutes.",
+    "citation": "ICAR-DOGR Pune Onion Nutrient Management 2025"
+  },
+  {
+    "crop_name": "Potato",
+    "recommended_dose_fertilizer_npk_kg_per_acre": "60 : 32 : 40 kg",
+    "recommended_dose_fertilizer_npk_kg_per_ha": "150 : 80 : 100 kg",
+    "basal_dose_kg_per_acre": "Full Phosphorus (DAP 70 kg) + Full Potash (MOP 67 kg or SOP Potassium Sulphate 80 kg for superior chip processing quality) + 1/2 Nitrogen (Urea 50 kg) placed in furrows 5 cm away from seed tubers.",
+    "top_dressing_schedule": "Remaining 1/2 Nitrogen (Urea 50 kg) top dressed at earthing up (30-35 DAP) when plants are 15-20 cm high.",
+    "micronutrient_deficiencies_and_correction": {
+      "magnesium_deficiency": "Interveinal chlorosis and necrotic brown spotting of lower leaves. Correction: Foliar spray of Magnesium Sulphate @ 5 g/L."
+    },
+    "biofertilizers_recommended": "Azotobacter @ 1 kg/acre + PSB @ 1 kg/acre tuber slurry treatment.",
+    "citation": "ICAR-CPRI Shimla Potato Agronomy 2025"
+  },
+  {
+    "crop_name": "Turmeric",
+    "recommended_dose_fertilizer_npk_kg_per_acre": "48 : 24 : 36 kg",
+    "recommended_dose_fertilizer_npk_kg_per_ha": "120 : 60 : 90 kg",
+    "basal_dose_kg_per_acre": "Full Phosphorus (SSP 150 kg) + 1/4th Nitrogen (Urea 25 kg) + 1/3rd Potash (MOP 20 kg) incorporated into beds along with 10 tonnes FYM + 200 kg neem cake.",
+    "top_dressing_schedule": "Apply remaining Nitrogen and Potash in 3 equal splits at 40 DAP (1st tillering), 80 DAP (rhizome initiation), and 120 DAP (rhizome development) followed by earthing up and mulching.",
+    "micronutrient_deficiencies_and_correction": {
+      "iron_zinc_deficiency": "Chlorosis and pale yellow leaves. Correction: Foliar spray of Micronutrient mixture (Formula 4 / IISR Turmeric special) @ 5 g/L at 60 and 90 DAP."
+    },
+    "biofertilizers_recommended": "IISR Bio-capsule (Trichoderma + PGPR) @ 1 capsule/100 L water rhizome dip.",
+    "citation": "ICAR-IISR Calicut & PJTSAU Turmeric Management 2025"
+  },
+  {
+    "crop_name": "Black Gram / Urad",
+    "recommended_dose_fertilizer_npk_kg_per_acre": "8 : 16 : 8 kg",
+    "recommended_dose_fertilizer_npk_kg_per_ha": "20 : 40 : 20 kg",
+    "basal_dose_kg_per_acre": "Entire fertilizer dose applied as basal placement at sowing: DAP @ 35 kg + MOP @ 13 kg/acre.",
+    "top_dressing_schedule": "Foliar spray of 2% DAP (20 g/L) or 19:19:19 (5 g/L) at flowering (30-35 DAS) and pod setting (45 DAS).",
+    "micronutrient_deficiencies_and_correction": {
+      "iron_chlorosis": "Terminal leaf yellowing. Correction: Foliar spray of 0.5% Ferrous Sulphate + 0.1% citric acid."
+    },
+    "biofertilizers_recommended": "Rhizobium + PSB @ 250 g/10 kg seed inoculation.",
+    "citation": "PJTSAU Vyavasaya Panchangam 2025"
+  }
+]

@@ -1,0 +1,233 @@
+[
+  {
+    "protocol_id": "ipm-001",
+    "crop_name": "Cotton",
+    "target_pest_disease": "Pink Bollworm (Pectinophora gossypiella)",
+    "cultural_controls": "Strict adherence to sowing window (June 15 - July 15); avoid long duration varieties; terminate crop by December to prevent off-season host carryover; deep summer ploughing.",
+    "mechanical_physical_controls": "Install delta/funnel pheromone traps @ 4-5 traps/acre for monitoring; 8-10 traps/acre for mass trapping; manual plucking and destroying of rosette flowers.",
+    "biological_controls": "Release Trichogramma bactrae egg parasitoid @ 60,000 eggs/acre (3 tricho-cards) at 45 and 60 DAS; spray Neem oil 1500 ppm @ 1 liter/acre (5 ml/L) at early square stage.",
+    "monitoring_etl": "8 moths/trap/night for 3 consecutive nights OR 10% rosette flowers.",
+    "chemical_last_resort_cibrc": "Proclaim 5% SG (Emamectin Benzoate 5% SG) @ 88 g/acre (6.6 g per 15L pump) or Delegate 11.7% SC (Spinetoram) @ 170 ml/acre (13 ml per 15L pump).",
+    "niphm_citation": "NIPHM Hyderabad & ICAR-CICR Cotton IPM Strategy 2025"
+  },
+  {
+    "protocol_id": "ipm-002",
+    "crop_name": "Rice / Paddy",
+    "target_pest_disease": "Brown Plant Hopper (BPH)",
+    "cultural_controls": "Adopt 'alley formation' (skipping 1 row after every 8-10 rows) for aeration and sunlight; alternate wetting and drying (AWD) water management; avoid excessive nitrogen fertilizer.",
+    "mechanical_physical_controls": "Drain water completely for 3-4 days when initial hopper colonies are observed; install light traps to monitor hopper flights.",
+    "biological_controls": "Conserve predatory wolf spiders (Lycosa pseudoannulata) and mirid bugs (Cyrtorhinus lividipennis); avoid broad-spectrum pyrethroid sprays which cause BPH resurgence.",
+    "monitoring_etl": "5-10 insects per hill at tillering; 15-20 insects per hill at panicle initiation.",
+    "chemical_last_resort_cibrc": "Chess 50% WG (Pymetrozine 50% WG) @ 120 g/acre (9 g per 15L pump) or Token/Osheen 20% SG (Dinotefuran) @ 80-100 g/acre (6-7.5 g per 15L pump) directed at plant base.",
+    "niphm_citation": "NIPHM Rice IPM Protocol & ICAR-IIRR 2025"
+  },
+  {
+    "protocol_id": "ipm-003",
+    "crop_name": "Rice / Paddy",
+    "target_pest_disease": "Yellow Stem Borer (Scirpophaga incertulas)",
+    "cultural_controls": "Clip seedling leaf tips before transplanting to eliminate egg masses; synchronise planting; harvest crop close to ground level to eliminate overwintering larvae.",
+    "mechanical_physical_controls": "Install Scirpo-lure pheromone traps @ 4-5 traps/acre; collect and destroy egg masses during field inspection.",
+    "biological_controls": "Release Trichogramma japonicum @ 40,000 eggs/acre (2 cards) twice at weekly intervals starting 30 DAT.",
+    "monitoring_etl": "1 egg mass/sq.m or 5% dead hearts at vegetative stage; 2% white ears at flowering.",
+    "chemical_last_resort_cibrc": "Coragen 18.5% SC (Chlorantraniliprole) @ 60 ml/acre (4.5 ml per 15L pump) or Caldan 50% SP (Cartap Hydrochloride) @ 400 g/acre (30 g per 15L pump).",
+    "niphm_citation": "NCIPM Rice Pest Package 2025"
+  },
+  {
+    "protocol_id": "ipm-004",
+    "crop_name": "Chilli",
+    "target_pest_disease": "Chilli Thrips & Yellow Mites",
+    "cultural_controls": "Grow 3-4 border rows of maize, sorghum or bajra as barrier crop; intercrop with coriander; maintain field sanitation free from solanaceous weeds.",
+    "mechanical_physical_controls": "Erect blue sticky traps @ 15-20 traps/acre for thrips and yellow sticky traps for whiteflies at crop canopy height.",
+    "biological_controls": "Spray Neem Seed Kernel Extract (NSKE 5%) or Azadirachtin 10000 ppm @ 1.5 ml/L; release predatory mites Amblyseius swirskii @ 10 mites/sq.m.",
+    "monitoring_etl": "1-2 thrips per leaf or upward curling on 10% seedlings.",
+    "chemical_last_resort_cibrc": "Pegasus 50% WP (Diafenthiuron 50% WP) @ 240 g/acre (18 g per 15L pump) for thrips; Oberon 22.9% SC (Spiromesifen) @ 200 ml/acre (15 ml per 15L pump) for mites.",
+    "niphm_citation": "NIPHM Chilli IPM Module 2025"
+  },
+  {
+    "protocol_id": "ipm-005",
+    "crop_name": "Chilli",
+    "target_pest_disease": "Anthracnose & Fruit Rot (Colletotrichum capsici)",
+    "cultural_controls": "Use certified disease-free seeds; avoid overhead sprinkler irrigation; collect and burn fallen infected fruits.",
+    "mechanical_physical_controls": "Raise plants on raised beds covered with silver-on-black polyethylene mulch to prevent soil splashing.",
+    "biological_controls": "Seed treatment with Trichoderma viride @ 4 g/kg seed + Pseudomonas fluorescens @ 10 g/kg seed; foliar spray of Trichoderma harzianum @ 5 g/L.",
+    "monitoring_etl": "First appearance of circular sunken spots on developing or ripening fruits.",
+    "chemical_last_resort_cibrc": "Folicur 25.9% EC (Tebuconazole) @ 250 ml/acre (18 ml per 15L pump) or Amistar Top (Azoxystrobin + Difenoconazole) @ 200 ml/acre (15 ml per 15L pump).",
+    "niphm_citation": "ICAR-IIHR Chilli Disease IPM 2025"
+  },
+  {
+    "protocol_id": "ipm-006",
+    "crop_name": "Tomato",
+    "target_pest_disease": "Tomato Fruit Borer (Helicoverpa armigera)",
+    "cultural_controls": "Plant African tall marigold (Tagetes erecta) as trap crop (1 row of marigold for every 16 rows of tomato).",
+    "mechanical_physical_controls": "Install Helilure pheromone traps @ 5 traps/acre; hand-pick and destroy initial bored fruits with caterpillars.",
+    "biological_controls": "Release Trichogramma pretiosum @ 50,000 eggs/acre; spray HaNPV @ 250 LE/acre (1.5 ml/L) with 0.1% jaggery sticker in evening hours.",
+    "monitoring_etl": "1 larva per plant or 5% fruit damage.",
+    "chemical_last_resort_cibrc": "Fame 39.35% SC (Flubendiamide) @ 60 ml/acre (4.5 ml per 15L pump) or Coragen 18.5% SC @ 60 ml/acre (4.5 ml per 15L pump).",
+    "niphm_citation": "ICAR-IIHR Tomato IPM Package 2025"
+  },
+  {
+    "protocol_id": "ipm-007",
+    "crop_name": "Tomato",
+    "target_pest_disease": "Tomato Pinworm (Tuta absoluta)",
+    "cultural_controls": "Use pest-free seedlings raised under 40-mesh nylon insect net nurseries; destroy crop residues immediately after final harvest.",
+    "mechanical_physical_controls": "Install Tuta pheromone water traps or delta traps @ 12-15 traps/acre; seal greenhouse vents with insect-proof netting.",
+    "biological_controls": "Release mirid predator Nesidiocoris tenuis; foliar spray of Bacillus thuringiensis kurstaki (Btk) @ 2 g/L.",
+    "monitoring_etl": "20-30 moths/trap/week or 1 active mine per leaf.",
+    "chemical_last_resort_cibrc": "Delegate 11.7% SC (Spinetoram) @ 180 ml/acre (13.5 ml per 15L pump) or Coragen 18.5% SC @ 60 ml/acre (4.5 ml per 15L pump).",
+    "niphm_citation": "ICAR-NBAIR Tuta IPM Standard 2025"
+  },
+  {
+    "protocol_id": "ipm-008",
+    "crop_name": "Maize",
+    "target_pest_disease": "Fall Armyworm (Spodoptera frugiperda)",
+    "cultural_controls": "Synchronised community planting within 2-week window; intercrop with cowpea or pigeonpea; avoid staggered sowing.",
+    "mechanical_physical_controls": "Hand-picking and crushing of egg masses and young larvae; apply dry fine sand or wood ash into whorls of attacked plants to damage larval cuticle.",
+    "biological_controls": "Erect T-shaped bird perches @ 15-20 per acre; spray Beauveria bassiana 1x10^8 CFU/g @ 1 kg/acre (5 g/L) or Metarhizium rileyi at early whorl stage.",
+    "monitoring_etl": "5% damaged plants with larvae at seedling/early whorl stage.",
+    "chemical_last_resort_cibrc": "Coragen 18.5% SC (Chlorantraniliprole) @ 80 ml/acre (6 ml per 15L pump) or Delegate 11.7% SC @ 170 ml/acre directed into leaf whorls.",
+    "niphm_citation": "ICAR-IIMR & DPPQS Fall Armyworm SOP 2025"
+  },
+  {
+    "protocol_id": "ipm-009",
+    "crop_name": "Cotton",
+    "target_pest_disease": "Sucking Pests (Whitefly, Jassids, Thrips)",
+    "cultural_controls": "Grow border rows of sorghum/bajra (3 rows) as barrier; avoid excessive chemical urea application which triggers vegetative succulence.",
+    "mechanical_physical_controls": "Install yellow sticky traps (for whiteflies/jassids) and blue sticky traps (for thrips) @ 15-20 traps/acre.",
+    "biological_controls": "Release green lacewing Chrysoperla zastrowi @ 4,000 larvae/acre; foliar spray of Verticillium lecanii @ 1 kg/acre.",
+    "monitoring_etl": "6-8 whiteflies/leaf; 2 jassids/leaf; 5 thrips/leaf.",
+    "chemical_last_resort_cibrc": "Token/Osheen 20% SG (Dinotefuran) @ 60-80 g/acre (4.5-6 g per 15L pump) or Actara 25% WG (Thiamethoxam) @ 40 g/acre (3 g per 15L pump).",
+    "niphm_citation": "ICAR-CICR Sucking Pest Advisory 2025"
+  },
+  {
+    "protocol_id": "ipm-010",
+    "crop_name": "Rice / Paddy",
+    "target_pest_disease": "Rice Blast (Magnaporthe oryzae)",
+    "cultural_controls": "Use resistant / tolerant varieties (RNR 15048, MTU 1010, BPT 5204 with seed treatment); avoid over-application of nitrogen; apply nitrogen in 3 split doses.",
+    "mechanical_physical_controls": "Maintain thin film of water; avoid drought stress as dry soil condition drastically escalates blast susceptibility.",
+    "biological_controls": "Seed treatment with Pseudomonas fluorescens @ 10 g/kg seed + foliar spray @ 5 g/L at maximum tillering.",
+    "monitoring_etl": "1-2 spindle-shaped lesions per hill on leaves or initial neck infection signs.",
+    "chemical_last_resort_cibrc": "Amistar Top (Azoxystrobin 18.2% + Difenoconazole 11.4% SC) @ 200 ml/acre (15 ml per 15L pump) or Nativo 75% WG (Trifloxystrobin + Tebuconazole) @ 80 g/acre (6 g per 15L pump).",
+    "niphm_citation": "ICAR-IIRR Blast Management SOP 2025"
+  },
+  {
+    "protocol_id": "ipm-011",
+    "crop_name": "Groundnut / Peanut",
+    "target_pest_disease": "Tikka Leaf Spot & Collar Rot",
+    "cultural_controls": "Crop rotation with non-legumes (sorghum, pearl millet, maize); clean cultivation by destroying crop residues.",
+    "mechanical_physical_controls": "Maintain optimal plant population; ensure adequate drainage to avoid collar water stagnation.",
+    "biological_controls": "Seed treatment with Trichoderma viride @ 4 g/kg seed; application of 1 kg Trichoderma enriched in 100 kg FYM per acre into soil at sowing.",
+    "monitoring_etl": "Initial leaf lesions observed at 40-45 DAS.",
+    "chemical_last_resort_cibrc": "Custodia / Harpul (Tebuconazole 10% + Sulphur 65% WG) @ 500 g/acre (37.5 g per 15L pump) or Saaf (Carbendazim 12% + Mancozeb 63% WP) @ 300 g/acre (22 g per 15L pump).",
+    "niphm_citation": "ICAR-DGR Junagadh Groundnut IPM 2025"
+  },
+  {
+    "protocol_id": "ipm-012",
+    "crop_name": "Soybean",
+    "target_pest_disease": "Girdle Beetle & Semilooper",
+    "cultural_controls": "Plant recommended varieties; maintain plant spacing of 45x5 cm; deep summer ploughing to expose pupae to predatory birds.",
+    "mechanical_physical_controls": "Hand-pick and destroy girdled shoots containing eggs and young larvae at early stage.",
+    "biological_controls": "Erect T-shaped bird perches @ 15-20 per acre; spray Bacillus thuringiensis var. kurstaki @ 400 g/acre (3 g/L).",
+    "monitoring_etl": "5% plants showing girdled rings or 3-4 semilooper larvae per meter row.",
+    "chemical_last_resort_cibrc": "Coragen 18.5% SC (Chlorantraniliprole) @ 60 ml/acre (4.5 ml per 15L pump) or Ampligo (Chlorantraniliprole 9.3% + Lambda-cyhalothrin 4.6% ZC) @ 80 ml/acre.",
+    "niphm_citation": "ICAR-IISR Indore Soybean IPM Module 2025"
+  },
+  {
+    "protocol_id": "ipm-013",
+    "crop_name": "Red Gram / Pigeonpea",
+    "target_pest_disease": "Pod Borer Complex (Helicoverpa & Maruca)",
+    "cultural_controls": "Intercrop with sorghum, maize or green gram; plant trap crops (marigold); maintain wider row spacing (120-150 cm).",
+    "mechanical_physical_controls": "Install Helilure pheromone traps @ 5 traps/acre; shake plants early in morning over cloth sheets to dislodge and collect larvae.",
+    "biological_controls": "Release Trichogramma chilonis @ 40,000 eggs/acre at flower bud stage; spray HaNPV @ 200 LE/acre + 0.5 kg jaggery in evening.",
+    "monitoring_etl": "1 larva per plant or 5% pod damage.",
+    "chemical_last_resort_cibrc": "Coragen 18.5% SC @ 60 ml/acre (4.5 ml per 15L pump) or Fame 39.35% SC (Flubendiamide) @ 40 ml/acre (3 ml per 15L pump) at 50% flowering.",
+    "niphm_citation": "ICAR-IIPR Kanpur Red Gram IPM 2025"
+  },
+  {
+    "protocol_id": "ipm-014",
+    "crop_name": "Chickpea / Bengal Gram",
+    "target_pest_disease": "Gram Pod Borer (Helicoverpa armigera)",
+    "cultural_controls": "Intercrop with coriander, mustard or linseed (4:1 row ratio); early sowing in October to escape heavy terminal pod borer attack.",
+    "mechanical_physical_controls": "Erect bird perches @ 20 T-perches/acre; install Helilure pheromone traps @ 4-5 traps/acre.",
+    "biological_controls": "Spray HaNPV @ 200 LE/acre (1.5 ml/L) or Neem Seed Kernel Extract (NSKE 5%) at pod initiation stage.",
+    "monitoring_etl": "1 larva per meter row or 5-10% pod damage.",
+    "chemical_last_resort_cibrc": "Proclaim 5% SG (Emamectin Benzoate 5% SG) @ 80-88 g/acre (6-6.6 g per 15L pump) or Coragen 18.5% SC @ 50 ml/acre.",
+    "niphm_citation": "ICAR-IIPR Kanpur Chickpea IPM 2025"
+  },
+  {
+    "protocol_id": "ipm-015",
+    "crop_name": "Mustard / Rapeseed",
+    "target_pest_disease": "Mustard Aphid (Lipaphis erysimi)",
+    "cultural_controls": "Sow timely before October 25 to enable crop to pass vulnerable flowering stage before peak aphid immigration in January.",
+    "mechanical_physical_controls": "Install yellow sticky traps @ 15-20 traps/acre; pluck and destroy initial aphid-infested floral twigs.",
+    "biological_controls": "Conserve predatory Coccinellid beetles (Coccinella septempunctata) and syrphid fly maggots; spray Verticillium lecanii @ 1 kg/acre.",
+    "monitoring_etl": "20% plants infested or 1.5 cm aphid colony on central shoot.",
+    "chemical_last_resort_cibrc": "Actara 25% WG (Thiamethoxam 25% WG) @ 40-50 g/acre (3.5 g per 15L pump) or Rogor 30% EC (Dimethoate) @ 250-300 ml/acre (20 ml per 15L pump).",
+    "niphm_citation": "ICAR-DRMR Bharatpur Mustard IPM 2025"
+  },
+  {
+    "protocol_id": "ipm-016",
+    "crop_name": "Sugarcane",
+    "target_pest_disease": "Early Shoot Borer (Chilo infuscatellus)",
+    "cultural_controls": "Plant setts in deep trenches; apply light frequent irrigations during hot summer months; earthing-up at 45 and 90 DAP.",
+    "mechanical_physical_controls": "Trash mulching (10 cm thick dry sugarcane trash) across rows at 3 DAP to conserve soil moisture and prevent borer oviposition.",
+    "biological_controls": "Release Trichogramma chilonis egg parasitoid @ 50,000/ha (2.5 cards) weekly 4-6 times from 30 DAP.",
+    "monitoring_etl": "15% dead hearts during formative stage.",
+    "chemical_last_resort_cibrc": "Coragen 18.5% SC (Chlorantraniliprole) @ 150 ml/acre applied as directed soil drench along cane row at 30-45 DAP.",
+    "niphm_citation": "ICAR-SBI Sugarcane IPM Manual 2025"
+  },
+  {
+    "protocol_id": "ipm-017",
+    "crop_name": "Onion",
+    "target_pest_disease": "Onion Thrips & Purple Blotch",
+    "cultural_controls": "Grow two rows of maize or outer barrier of barrier crops; avoid water stress during bulb enlargement; crop rotation with non-allium crops.",
+    "mechanical_physical_controls": "Install blue and yellow sticky traps @ 20 traps/acre; overhead sprinkler irrigation reduces thrips population by mechanical dislodging.",
+    "biological_controls": "Spray Beauveria bassiana 1x10^8 CFU/g @ 1 kg/acre (5 g/L) with sticker; Trichoderma viride seed and seedling dip.",
+    "monitoring_etl": "30 thrips per plant or initial purple spots on foliage.",
+    "chemical_last_resort_cibrc": "Pegasus 50% WP (Diafenthiuron) @ 240 g/acre (18 g per 15L pump) + Custodia (Tebuconazole + Azoxystrobin) @ 300 ml/acre (22 ml per 15L pump).",
+    "niphm_citation": "ICAR-DOGR Pune Onion IPM Module 2025"
+  },
+  {
+    "protocol_id": "ipm-018",
+    "crop_name": "Potato",
+    "target_pest_disease": "Late Blight (Phytophthora infestans)",
+    "cultural_controls": "Use certified disease-free seed tubers from trusted seed source (CPRI); destroy cull piles and volunteer potato plants.",
+    "mechanical_physical_controls": "High earthing-up to ensure 10-15 cm soil cover over tubers preventing spore wash-down from foliage to tubers.",
+    "biological_controls": "Prophylactic spray of Trichoderma harzianum @ 5 g/L before onset of cloudy fog weather.",
+    "monitoring_etl": "First appearance of water-soaked blighted lesions on leaf margins in locality.",
+    "chemical_last_resort_cibrc": "Preventive: Dithane M-45 (Mancozeb 75% WP) @ 600-800 g/acre (50 g per 15L pump); Curative: Ridomil Gold (Metalaxyl-M 4% + Mancozeb 64% WP) @ 500 g/acre (37.5 g per 15L pump).",
+    "niphm_citation": "ICAR-CPRI Shimla Late Blight SOP 2025"
+  },
+  {
+    "protocol_id": "ipm-019",
+    "crop_name": "Turmeric",
+    "target_pest_disease": "Rhizome Rot (Pythium aphanidermatum)",
+    "cultural_controls": "Select disease-free seed rhizomes; provide excellent field drainage; plant on raised broad beds (120 cm width); incorporate neem cake @ 200 kg/acre.",
+    "mechanical_physical_controls": "Apply green leaf mulch (5 tonnes/acre) at planting and repeat at 45 and 90 DAP to conserve moisture and suppress pathogens.",
+    "biological_controls": "Rhizome treatment with Trichoderma viride @ 5 g/kg rhizome for 30 min before planting; soil application of 2 kg Trichoderma in 200 kg FYM/acre.",
+    "monitoring_etl": "First collar water-soaking or leaf yellowing symptoms.",
+    "chemical_last_resort_cibrc": "Drench collar region with Ridomil Gold (Metalaxyl 4% + Mancozeb 64% WP) @ 2.5 g/L or Copper Oxychloride 50% WP (Blitox) @ 3 g/L.",
+    "niphm_citation": "ICAR-IISR Calicut Turmeric IPM 2025"
+  },
+  {
+    "protocol_id": "ipm-020",
+    "crop_name": "Wheat",
+    "target_pest_disease": "Yellow / Stripe Rust (Puccinia striiformis)",
+    "cultural_controls": "Grow resistant varieties (HD-3086, DBW-187, DBW-222, PBW-725); avoid early sowing of susceptible varieties in foothills of Himalayas.",
+    "mechanical_physical_controls": "Participatory surveillance and stripe rust scouting from December to February.",
+    "biological_controls": "Seed treatment with Trichoderma viride @ 4 g/kg seed to boost systemic plant vigor.",
+    "monitoring_etl": "First isolated yellow stripe pustule colony detected in field.",
+    "chemical_last_resort_cibrc": "Tilt 25% EC (Propiconazole 25% EC) @ 200 ml/acre (15 ml per 15L pump) in 200 liters water immediately upon detection.",
+    "niphm_citation": "ICAR-IIWBR Karnal Wheat Rust SOP 2025"
+  },
+  {
+    "protocol_id": "ipm-021",
+    "crop_name": "Black Gram / Urad",
+    "target_pest_disease": "Yellow Mosaic Virus & Maruca Pod Borer",
+    "cultural_controls": "Use YMV resistant varieties (PU 31, VBN 8, WBG 26); destroy alternate weed hosts like Croton bonplandianum.",
+    "mechanical_physical_controls": "Erect yellow sticky traps @ 15-20 traps/acre to trap whitefly vectors early.",
+    "biological_controls": "Seed treatment with Imidacloprid 600 FS (5 ml/kg seed) followed by foliar spray of Neem oil 1500 ppm @ 2 ml/L.",
+    "monitoring_etl": "5 whiteflies per leaf or 5% webbed flowers/pods.",
+    "chemical_last_resort_cibrc": "Coragen 18.5% SC @ 50 ml/acre (3.5 ml per 15L pump) for Maruca; Actara 25% WG @ 40 g/acre for whitefly vector.",
+    "niphm_citation": "PJTSAU Pulses IPM Manual 2025"
+  }
+]

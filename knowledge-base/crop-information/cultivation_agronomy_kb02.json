@@ -1,0 +1,222 @@
+[
+  {
+    "crop_id": "c1000000-0000-0000-0000-000000000001",
+    "crop_name": "Cotton",
+    "seed_rate_per_acre": "1.8 - 2.2 kg (Bt hybrid seeds - 2 packets of 450g each)",
+    "spacing_row_x_plant_cm": "90 cm x 60 cm (Normal black soil) or 120 cm x 45 cm (High density)",
+    "sowing_windows": {
+      "kharif": "June 15 to July 15 (After receiving 50-60 mm monsoon rainfall)"
+    },
+    "land_preparation": "Deep ploughing with mould-board plough once in 3 years followed by 2-3 harrowings. Incorporate 5 tonnes well-decomposed FYM per acre.",
+    "nursery_or_sowing_method": "Dibbling 1 seed per hill at 3-4 cm depth with non-Bt refuge border rows.",
+    "plant_population_per_acre": "7,400 hills/acre (at 90x60 cm)",
+    "citation": "PJTSAU Vyavasaya Panchangam 2025-26 & ICAR-CICR Nagpur"
+  },
+  {
+    "crop_id": "c1000000-0000-0000-0000-000000000002",
+    "crop_name": "Rice / Paddy",
+    "seed_rate_per_acre": "20 - 25 kg (Fine varieties) / 25 - 30 kg (Coarse varieties) for transplanted; 12 - 15 kg for drum seeding / DSR",
+    "spacing_row_x_plant_cm": "15 cm x 15 cm or 20 cm x 15 cm (Transplanted)",
+    "sowing_windows": {
+      "kharif": "Nursery: May 25 to June 20; Transplanting: June 25 to July 20",
+      "rabi": "Nursery: Nov 15 to Dec 10; Transplanting: Dec 15 to Jan 10"
+    },
+    "land_preparation": "Puddle 2-3 times in standing water followed by leveling using wooden leveller. Keep 2-3 cm standing water.",
+    "nursery_or_sowing_method": "Wet bed nursery (400 sq.m per acre). Transplant 25-30 day old seedlings @ 2-3 seedlings per hill.",
+    "plant_population_per_acre": "133,000 to 177,000 hills/acre",
+    "citation": "PJTSAU Rice Agronomy Manual 2025 & ICAR-IIRR Hyderabad"
+  },
+  {
+    "crop_id": "c1000000-0000-0000-0000-000000000003",
+    "crop_name": "Chilli",
+    "seed_rate_per_acre": "200 - 250 g (Hybrids) / 400 - 500 g (Varieties)",
+    "spacing_row_x_plant_cm": "60 cm x 60 cm or 75 cm x 45 cm (Hybrids)",
+    "sowing_windows": {
+      "kharif": "Nursery: June-July; Transplanting: July-August",
+      "rabi": "Nursery: September-October; Transplanting: October-November"
+    },
+    "land_preparation": "3-4 deep ploughings and planking to bring soil to fine tilth. Form ridges and furrows at 60 cm distance. Apply 8-10 tonnes FYM/acre.",
+    "nursery_or_sowing_method": "Pro-tray nursery with cocopeat or raised nursery beds. Transplant 35-40 day old healthy seedlings.",
+    "plant_population_per_acre": "11,000 to 14,000 plants/acre",
+    "citation": "PJTSAU Chilli Package of Practices 2025 & ICAR-IIHR Bengaluru"
+  },
+  {
+    "crop_id": "c1000000-0000-0000-0000-000000000004",
+    "crop_name": "Tomato",
+    "seed_rate_per_acre": "60 - 80 g (Hybrids) / 150 - 200 g (Open Pollinated)",
+    "spacing_row_x_plant_cm": "90 cm x 45 cm or 120 cm x 60 cm (Staked hybrids)",
+    "sowing_windows": {
+      "kharif": "June to July",
+      "rabi": "October to November",
+      "zaid_summer": "January to February"
+    },
+    "land_preparation": "Plough field 4 times to fine tilth, make broad beds of 90 cm width with 30 cm furrow or ridges at 90 cm.",
+    "nursery_or_sowing_method": "Pro-tray seedling raising using 98-celled trays. Transplant 25-30 day seedlings in afternoon.",
+    "plant_population_per_acre": "7,400 to 9,800 plants/acre",
+    "citation": "ICAR-IIHR Vegetable Production Guide 2025"
+  },
+  {
+    "crop_id": "c1000000-0000-0000-0000-000000000005",
+    "crop_name": "Wheat",
+    "seed_rate_per_acre": "40 - 45 kg (Timely sown) / 50 - 55 kg (Late sown)",
+    "spacing_row_x_plant_cm": "20 - 22.5 cm row spacing (Continuous seed drill sowing)",
+    "sowing_windows": {
+      "rabi_timely": "November 1 to November 20 (Optimal)",
+      "rabi_late": "November 21 to December 10"
+    },
+    "land_preparation": "1 ploughing with disc plough followed by 2 cross harrowings and planking to make a weed-free, firm seedbed.",
+    "nursery_or_sowing_method": "Seed drill or Zero-till ferti-seed drill at depth of 4-5 cm into adequate residual moisture.",
+    "plant_population_per_acre": "Approximately 180,000 plants/acre",
+    "citation": "ICAR-IIWBR Karnal Wheat Package 2025"
+  },
+  {
+    "crop_id": "c1000000-0000-0000-0000-000000000006",
+    "crop_name": "Maize",
+    "seed_rate_per_acre": "7 - 8 kg (Single cross hybrids) / 10 kg (Composite varieties)",
+    "spacing_row_x_plant_cm": "60 cm x 20 cm (Normal) or 75 cm x 20 cm (Winter maize)",
+    "sowing_windows": {
+      "kharif": "June 15 to July 15",
+      "rabi": "October 15 to November 15"
+    },
+    "land_preparation": "Plough to 15-20 cm depth, harrowing twice, leveling. Open ridges and furrows at 60 cm spacing.",
+    "nursery_or_sowing_method": "Direct dibbling at 4-5 cm depth on ridge slopes (1/3rd from bottom).",
+    "plant_population_per_acre": "26,000 to 33,000 plants/acre",
+    "citation": "ICAR-IIMR Ludhiana Maize Agronomy Manual 2025"
+  },
+  {
+    "crop_id": "c1000000-0000-0000-0000-000000000007",
+    "crop_name": "Groundnut / Peanut",
+    "seed_rate_per_acre": "40 - 45 kg kernels (Bunch types) / 35 - 40 kg (Spreading types)",
+    "spacing_row_x_plant_cm": "30 cm x 10 cm (Bunch types) or 30 cm x 15 cm",
+    "sowing_windows": {
+      "kharif": "June 15 to July 15",
+      "rabi_summer": "October 15 to November 15 (Rabi) / January 1 to January 20 (Summer)"
+    },
+    "land_preparation": "Plough field 2-3 times to create friable, loose topsoil to allow easy peg penetration.",
+    "nursery_or_sowing_method": "Seed drill or manual dibbling at 5 cm depth. Treat seed with Trichoderma viride @ 4g/kg seed + Rhizobium @ 250g/10kg.",
+    "plant_population_per_acre": "133,000 plants/acre",
+    "citation": "ICAR-DGR Junagadh & PJTSAU Oilseeds Guide 2025"
+  },
+  {
+    "crop_id": "c1000000-0000-0000-0000-000000000008",
+    "crop_name": "Soybean",
+    "seed_rate_per_acre": "25 - 30 kg (Seed germination must be >70%)",
+    "spacing_row_x_plant_cm": "45 cm x 5 cm or 30 cm x 7.5 cm (Broad bed furrow BBF method recommended)",
+    "sowing_windows": {
+      "kharif": "June 20 to July 10 (Sow after 75-100 mm accumulated monsoon rainfall)"
+    },
+    "land_preparation": "Deep summer ploughing once in 3 years. 2 harrowings and planking. BBF machine forms 45 cm beds with furrows.",
+    "nursery_or_sowing_method": "Direct drilling at 3-4 cm depth. Inoculate with Bradyrhizobium japonicum @ 5g/kg seed.",
+    "plant_population_per_acre": "177,000 plants/acre",
+    "citation": "ICAR-IISR Indore Soybean Production Guide 2025"
+  },
+  {
+    "crop_id": "c1000000-0000-0000-0000-000000000009",
+    "crop_name": "Red Gram / Pigeonpea",
+    "seed_rate_per_acre": "4 - 5 kg (Medium duration sole crop) / 2 kg (Intercrop with Cotton 4:1)",
+    "spacing_row_x_plant_cm": "120 cm x 20 cm or 150 cm x 30 cm (Sole crop in black soil)",
+    "sowing_windows": {
+      "kharif": "June 15 to July 15 (Avoid sowing beyond July 31)"
+    },
+    "land_preparation": "Plough deep to break hardpan. Red soils require 2-3 passes of cultivator and leveling.",
+    "nursery_or_sowing_method": "Direct drilling or dibbling 2 seeds per hill at 4-5 cm depth. Thin to 1 seedling at 15 DAS.",
+    "plant_population_per_acre": "13,300 to 16,600 plants/acre",
+    "citation": "PJTSAU Pulses Vyavasaya Panchangam & ICAR-IIPR Kanpur"
+  },
+  {
+    "crop_id": "c1000000-0000-0000-0000-000000000010",
+    "crop_name": "Chickpea / Bengal Gram",
+    "seed_rate_per_acre": "25 - 30 kg (Desi varieties) / 40 - 45 kg (Kabuli varieties)",
+    "spacing_row_x_plant_cm": "30 cm x 10 cm",
+    "sowing_windows": {
+      "rabi": "October 15 to November 15 (Sow when maximum daily temp drops below 30°C)"
+    },
+    "land_preparation": "Rough seedbed is preferred over fine pulverization to preserve black soil moisture and reduce root rot.",
+    "nursery_or_sowing_method": "Direct drilling at 5-7 cm depth into moist subsoil. Seed treatment with Mesorhizobium ciceri.",
+    "plant_population_per_acre": "133,000 plants/acre",
+    "citation": "ICAR-IIPR Kanpur Chickpea Cultivation Guidelines 2025"
+  },
+  {
+    "crop_id": "c1000000-0000-0000-0000-000000000011",
+    "crop_name": "Mustard / Rapeseed",
+    "seed_rate_per_acre": "1.5 - 2.0 kg",
+    "spacing_row_x_plant_cm": "30 cm x 10 cm (Timely) / 45 cm x 15 cm (High vigor hybrids)",
+    "sowing_windows": {
+      "rabi": "October 1 to October 25 (Crucial to escape aphid infestation in January)"
+    },
+    "land_preparation": "Firm, moist, weed-free seedbed. 2-3 harrowings followed by light planking to retain soil moisture.",
+    "nursery_or_sowing_method": "Direct drilling at shallow depth of 3-4 cm. Thinning at 15-20 DAS is mandatory to maintain 1 plant/hill.",
+    "plant_population_per_acre": "88,000 to 133,000 plants/acre",
+    "citation": "ICAR-DRMR Bharatpur Mustard Package 2025"
+  },
+  {
+    "crop_id": "c1000000-0000-0000-0000-000000000012",
+    "crop_name": "Sugarcane",
+    "seed_rate_per_acre": "25,000 two-budded setts or 16,000 three-budded setts per acre (Approx 3 - 3.5 tonnes cane)",
+    "spacing_row_x_plant_cm": "120 cm or 150 cm wide-row trench / furrow spacing",
+    "sowing_windows": {
+      "spring_planting": "February to March",
+      "autumn_planting": "October to November",
+      "adsali_planting": "July to August (Maharashtra/Telangana)"
+    },
+    "land_preparation": "Deep chiseling up to 45 cm followed by disc harrowing. Open deep furrows/trenches 30 cm deep.",
+    "nursery_or_sowing_method": "End-to-end sett planting in furrows. Dip setts in Carbendazim 0.1% solution for 15 minutes before placing.",
+    "plant_population_per_acre": "35,000 to 45,000 millable canes/acre target",
+    "citation": "ICAR-SBI Coimbatore & ICAR-IISR Lucknow Manual 2025"
+  },
+  {
+    "crop_id": "c1000000-0000-0000-0000-000000000013",
+    "crop_name": "Onion",
+    "seed_rate_per_acre": "3 - 4 kg (Nursery raising for transplanting)",
+    "spacing_row_x_plant_cm": "15 cm x 10 cm (Flat beds or broad beds)",
+    "sowing_windows": {
+      "kharif": "Nursery: May-June; Transplanting: July-August",
+      "late_kharif_rangada": "Nursery: August-September; Transplanting: September-October",
+      "rabi": "Nursery: October-November; Transplanting: December-January"
+    },
+    "land_preparation": "Plough 3 times to bring soil to friable condition. Prepare flat beds (3m x 2m) or broad bed furrows (120 cm top, 30 cm furrow).",
+    "nursery_or_sowing_method": "Transplant 6-7 week old seedlings (15 cm tall with pencil thickness). Clip top 1/3rd leaf before planting.",
+    "plant_population_per_acre": "260,000 plants/acre",
+    "citation": "ICAR-DOGR Rajgurunagar Pune Onion Manual 2025"
+  },
+  {
+    "crop_id": "c1000000-0000-0000-0000-000000000014",
+    "crop_name": "Potato",
+    "seed_rate_per_acre": "10 - 12 quintals (Tubers of 30-40g size with 2-3 active sprouted eyes)",
+    "spacing_row_x_plant_cm": "60 cm x 20 cm",
+    "sowing_windows": {
+      "rabi": "October 15 to November 10"
+    },
+    "land_preparation": "Deep ploughing 20-25 cm, 2 rotavator runs to produce soft clod-free soil. Ridges formed at 60 cm distance.",
+    "nursery_or_sowing_method": "Plant well-chitted tubers 5-7 cm deep on ridges and cover with 5-7 cm soil. Earth-up at 30 DAS.",
+    "plant_population_per_acre": "33,000 hills/acre",
+    "citation": "ICAR-CPRI Shimla Potato Production Manual 2025"
+  },
+  {
+    "crop_id": "c1000000-0000-0000-0000-000000000015",
+    "crop_name": "Turmeric",
+    "seed_rate_per_acre": "8 - 10 quintals (Healthy mother rhizomes or primary fingers with 2 buds)",
+    "spacing_row_x_plant_cm": "45 cm x 20 cm on ridges or 30 cm x 20 cm on raised beds (120 cm width)",
+    "sowing_windows": {
+      "kharif": "May 15 to June 30"
+    },
+    "land_preparation": "Plough 4-5 times, incorporate 10 tonnes FYM/acre + 200 kg neem cake. Form raised beds or ridges.",
+    "nursery_or_sowing_method": "Plant finger rhizomes 4-5 cm deep. Apply green leaf mulch @ 5 tonnes/acre immediately after planting.",
+    "plant_population_per_acre": "44,000 to 66,000 hills/acre",
+    "citation": "ICAR-IISR Kozhikode & PJTSAU Turmeric Guide 2025"
+  },
+  {
+    "crop_id": "c1000000-0000-0000-0000-000000000016",
+    "crop_name": "Black Gram / Urad",
+    "seed_rate_per_acre": "6 - 8 kg (Kharif) / 8 - 10 kg (Rabi / Rice fallow)",
+    "spacing_row_x_plant_cm": "30 cm x 10 cm",
+    "sowing_windows": {
+      "kharif": "June 15 to July 15",
+      "rabi_rice_fallow": "November 15 to December 15 (Broadcast into standing paddy 2-3 days before harvest)"
+    },
+    "land_preparation": "1-2 ploughings and harrowing. For rice-fallow, no land prep is required (relay dibbling).",
+    "nursery_or_sowing_method": "Seed drill or line sowing. Treat with Rhizobium and PSB culture @ 20g/kg seed.",
+    "plant_population_per_acre": "133,000 plants/acre",
+    "citation": "PJTSAU Vyavasaya Panchangam 2025 & ICAR-IIPR Kanpur"
+  }
+]

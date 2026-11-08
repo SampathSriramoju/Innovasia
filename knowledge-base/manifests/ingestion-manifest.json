@@ -1,0 +1,10 @@
+{
+  "ingestion_engine": "BolKisanMasterIngestEngine_v1",
+  "timestamp": "2026-11-08T13:00:00.759028+00:00",
+  "database": "PostgreSQL 17 (bolkisan)",
+  "documents_ingested": 23,
+  "knowledge_records_ingested": 547,
+  "chunks_with_embeddings_ingested": 547,
+  "evaluation_cases_ingested": 3072,
+  "status": "SUCCESS"
+}

@@ -1,0 +1,338 @@
+[
+  {
+    "crop_name": "Cotton",
+    "critical_period_crop_weed_competition": "15 to 60 DAS",
+    "major_weed_flora": "Echinochloa colona, Dactyloctenium aegyptium, Digitaria sanguinalis, Trianthema portulacastrum, Parthenium hysterophorus, Cyperus rotundus.",
+    "pre_emergence_herbicide": {
+      "chemical_name": "Pendimethalin 30% EC (Stomp)",
+      "cibrc_approved_dose_per_acre": "1000 - 1300 ml",
+      "dilution_per_15l_pump": "75 - 100 ml per 15L backpack pump (in 200 L water/acre)",
+      "application_timing": "Within 48 hours of sowing into moist soil before weed emergence",
+      "nozzle_type": "Flat-fan or Flood-jet nozzle"
+    },
+    "post_emergence_herbicide": {
+      "chemical_name": "Quizalofop-ethyl 5% EC (Targa Super) for grasses OR Pyrithiobac-sodium 10% EC (Hitweed) for broadleaf weeds",
+      "cibrc_approved_dose_per_acre": "Quizalofop: 350-400 ml/acre; Pyrithiobac: 250-300 ml/acre",
+      "dilution_per_15l_pump": "25 ml (Quizalofop) or 20 ml (Pyrithiobac) per 15L backpack pump",
+      "application_timing": "Post-emergence spray at 20-30 DAS when weeds are at 2-4 leaf stage",
+      "nozzle_type": "Flat-fan nozzle directed between crop rows"
+    },
+    "cultural_mechanical_practices": "Interculture with blade harrow (Danti) at 20, 40, and 60 DAS; hand weeding in intra-row space at 30 DAS.",
+    "citation": "ICAR-DWR Jabalpur & PJTSAU Cotton Weed Protocol 2025"
+  },
+  {
+    "crop_name": "Rice / Paddy",
+    "critical_period_crop_weed_competition": "15 to 45 DAT (Transplanted) / 10 to 40 DAS (Direct Seeded Rice DSR)",
+    "major_weed_flora": "Echinochloa crus-galli, Echinochloa colona, Cyperus difformis, Cyperus iria, Fimbristylis miliacea, Eclipta alba, Ludwigia parviflora.",
+    "pre_emergence_herbicide": {
+      "chemical_name": "Pretilachlor 50% EC (Rifit) OR Pyrazosulfuron-ethyl 10% WP (Saathi)",
+      "cibrc_approved_dose_per_acre": "Pretilachlor: 400-500 ml/acre; Pyrazosulfuron: 80 g/acre",
+      "dilution_per_15l_pump": "Pretilachlor mixed with 20 kg sand broadcast; Pyrazosulfuron: 6 g per 15L pump",
+      "application_timing": "Pretilachlor: 3-5 DAT in 2-3 cm standing water; Pyrazosulfuron: 3-7 DAT",
+      "nozzle_type": "Sand broadcast or flat-fan nozzle"
+    },
+    "post_emergence_herbicide": {
+      "chemical_name": "Bispyribac-sodium 10% SC (Nominee Gold) for mixed weed flora",
+      "cibrc_approved_dose_per_acre": "80 - 100 ml/acre",
+      "dilution_per_15l_pump": "6.0 - 7.5 ml per 15L backpack pump (in 200 L water/acre)",
+      "application_timing": "15-20 DAT at 2-3 leaf stage of weeds. Drain standing water before spraying; re-flood after 48 hours.",
+      "nozzle_type": "Flat-fan nozzle"
+    },
+    "cultural_mechanical_practices": "Maintain 3-5 cm standing water from tillering stage to suppress weed seed emergence; operate cono-weeder or rotary weeder at 20 and 40 DAT.",
+    "citation": "ICAR-IIRR Hyderabad Rice Weed Guide 2025"
+  },
+  {
+    "crop_name": "Chilli",
+    "critical_period_crop_weed_competition": "20 to 60 DAT",
+    "major_weed_flora": "Amaranthus viridis, Trianthema portulacastrum, Digera arvensis, Cynodon dactylon, Cyperus rotundus.",
+    "pre_emergence_herbicide": {
+      "chemical_name": "Pendimethalin 30% EC (Stomp) OR Oxyfluorfen 23.5% EC (Goal)",
+      "cibrc_approved_dose_per_acre": "Pendimethalin: 1000 ml/acre; Oxyfluorfen: 150-200 ml/acre",
+      "dilution_per_15l_pump": "Pendimethalin: 75 ml per 15L pump; Oxyfluorfen: 12 ml per 15L pump",
+      "application_timing": "Pre-emergence soil spray within 24-48 hours before transplanting into moist soil",
+      "nozzle_type": "Flat-fan nozzle"
+    },
+    "post_emergence_herbicide": {
+      "chemical_name": "Quizalofop-ethyl 5% EC (Targa Super) for narrow-leaved grasses",
+      "cibrc_approved_dose_per_acre": "350 - 400 ml/acre",
+      "dilution_per_15l_pump": "25 ml per 15L backpack pump",
+      "application_timing": "Directed post-emergence spray at 25-30 DAT targeting young grassy weeds",
+      "nozzle_type": "Hooded flat-fan nozzle"
+    },
+    "cultural_mechanical_practices": "Silver-black polyethylene mulching (30 micron) gives 95% weed suppression; manual weeding at 30 and 60 DAT.",
+    "citation": "PJTSAU Spices Weed Guide & ICAR-IIHR 2025"
+  },
+  {
+    "crop_name": "Tomato",
+    "critical_period_crop_weed_competition": "15 to 45 DAT",
+    "major_weed_flora": "Parthenium hysterophorus, Chenopodium album, Portulaca oleracea, Eleusine indica.",
+    "pre_emergence_herbicide": {
+      "chemical_name": "Pendimethalin 38.7% CS (Stomp Xtra) OR Metribuzin 70% WP (Sencor)",
+      "cibrc_approved_dose_per_acre": "Pendimethalin CS: 600-700 ml/acre; Metribuzin: 100-150 g/acre",
+      "dilution_per_15l_pump": "Pendimethalin CS: 45 ml per 15L pump; Metribuzin: 8-10 g per 15L pump",
+      "application_timing": "Apply to moist soil 2-3 days before seedling transplanting",
+      "nozzle_type": "Flat-fan nozzle"
+    },
+    "post_emergence_herbicide": {
+      "chemical_name": "Quizalofop-p-tefuryl 4.41% EC (Pantera) for grassy weeds",
+      "cibrc_approved_dose_per_acre": "300 - 400 ml/acre",
+      "dilution_per_15l_pump": "25 ml per 15L pump",
+      "application_timing": "Post-emergence directed spray at 20-25 DAT",
+      "nozzle_type": "Flat-fan nozzle"
+    },
+    "cultural_mechanical_practices": "Mulching with organic straw or plastic; shallow hoeing at 25 DAT followed by earthing up.",
+    "citation": "ICAR-IIHR Tomato Weed Management Protocol 2025"
+  },
+  {
+    "crop_name": "Wheat",
+    "critical_period_crop_weed_competition": "30 to 45 DAS",
+    "major_weed_flora": "Phalaris minor (Canary grass / Gulli Danda), Avena ludoviciana (Wild oat), Chenopodium album (Bathua), Rumex dentatus, Medicago denticulata.",
+    "pre_emergence_herbicide": {
+      "chemical_name": "Pendimethalin 30% EC (Stomp)",
+      "cibrc_approved_dose_per_acre": "1000 - 1200 ml/acre",
+      "dilution_per_15l_pump": "75 - 90 ml per 15L backpack pump",
+      "application_timing": "Pre-emergence spray within 48 hours of sowing into moist soil",
+      "nozzle_type": "Flat-fan nozzle"
+    },
+    "post_emergence_herbicide": {
+      "chemical_name": "Clodinafop-propargyl 15% WP (Topik) @ 160 g/acre for Phalaris minor OR Metsulfuron-methyl 20% WP (Algrip) @ 8 g/acre for broadleaf weeds OR Sulfosulfuron 75% + Metsulfuron 5% WG (Total) @ 16 g/acre for mixed weeds",
+      "cibrc_approved_dose_per_acre": "Topik: 160 g/acre; Total: 16 g/acre; Algrip: 8 g/acre",
+      "dilution_per_15l_pump": "Topik: 12 g per 15L pump; Total: 1.2 g per 15L pump; Algrip: 0.6 g per 15L pump",
+      "application_timing": "Post-emergence spray at 30-35 DAS after 1st irrigation when Phalaris is at 2-3 leaf stage",
+      "nozzle_type": "Flat-fan nozzle with 200 L water/acre"
+    },
+    "cultural_mechanical_practices": "Zero-tillage / Happy Seeder sowing into standing rice stubble dramatically suppresses Phalaris minor germination; criss-cross narrow row sowing (18 cm).",
+    "citation": "ICAR-IIWBR Karnal Wheat Weed Management 2025"
+  },
+  {
+    "crop_name": "Maize",
+    "critical_period_crop_weed_competition": "15 to 45 DAS",
+    "major_weed_flora": "Echinochloa colona, Digitaria sanguinalis, Commelina benghalensis, Trianthema portulacastrum, Cyperus rotundus.",
+    "pre_emergence_herbicide": {
+      "chemical_name": "Atrazine 50% WP (Atrataf)",
+      "cibrc_approved_dose_per_acre": "400 - 800 g/acre",
+      "dilution_per_15l_pump": "30 - 60 g per 15L backpack pump (in 200 L water/acre)",
+      "application_timing": "Pre-emergence soil spray within 2-3 days of sowing into moist soil",
+      "nozzle_type": "Flat-fan or Flood-jet nozzle"
+    },
+    "post_emergence_herbicide": {
+      "chemical_name": "Tembotrione 34.4% SC (Laudis) OR Halosulfuron-methyl 75% WG (Sempra)",
+      "cibrc_approved_dose_per_acre": "Tembotrione: 115 ml/acre (with 400 ml surfactant); Halosulfuron: 36 g/acre",
+      "dilution_per_15l_pump": "Tembotrione: 8.5 ml per 15L pump; Halosulfuron: 2.7 g per 15L pump",
+      "application_timing": "Post-emergence spray at 15-20 DAS when weeds are at 2-4 leaf stage",
+      "nozzle_type": "Flat-fan nozzle"
+    },
+    "cultural_mechanical_practices": "Interculture with wheel hoe or animal-drawn cultivator at 25 DAS followed by earthing-up.",
+    "citation": "ICAR-IIMR Ludhiana Maize Weed SOP 2025"
+  },
+  {
+    "crop_name": "Groundnut / Peanut",
+    "critical_period_crop_weed_competition": "15 to 45 DAS",
+    "major_weed_flora": "Celosia argentea, Digera arvensis, Commelina benghalensis, Dactyloctenium aegyptium, Cyperus rotundus.",
+    "pre_emergence_herbicide": {
+      "chemical_name": "Pendimethalin 30% EC (Stomp) OR Oxyfluorfen 23.5% EC (Goal)",
+      "cibrc_approved_dose_per_acre": "Pendimethalin: 1000 ml/acre; Oxyfluorfen: 150-200 ml/acre",
+      "dilution_per_15l_pump": "Pendimethalin: 75 ml per 15L pump; Oxyfluorfen: 12 ml per 15L pump",
+      "application_timing": "Pre-emergence soil spray within 48 hours of sowing into moist soil",
+      "nozzle_type": "Flat-fan nozzle"
+    },
+    "post_emergence_herbicide": {
+      "chemical_name": "Imazethapyr 10% SL (Pursuit) OR Quizalofop-ethyl 5% EC (Targa Super)",
+      "cibrc_approved_dose_per_acre": "Imazethapyr: 300-350 ml/acre; Quizalofop: 350-400 ml/acre",
+      "dilution_per_15l_pump": "Imazethapyr: 25 ml per 15L pump; Quizalofop: 28 ml per 15L pump",
+      "application_timing": "Post-emergence spray at 15-20 DAS when weeds are at 2-3 leaf stage",
+      "nozzle_type": "Flat-fan nozzle"
+    },
+    "cultural_mechanical_practices": "DO NOT perform mechanical hoeing or intercultural weeding after 45 DAS as it severs penetrating pegs.",
+    "citation": "ICAR-DGR Junagadh & PJTSAU Groundnut Weed Protocol 2025"
+  },
+  {
+    "crop_name": "Soybean",
+    "critical_period_crop_weed_competition": "15 to 45 DAS",
+    "major_weed_flora": "Echinochloa colona, Digera arvensis, Commelina benghalensis, Euphorbia geniculata, Cyperus rotundus.",
+    "pre_emergence_herbicide": {
+      "chemical_name": "Diclosulam 84% WDG (Strongarm) OR Pendimethalin 30% EC (Stomp)",
+      "cibrc_approved_dose_per_acre": "Diclosulam: 12.4 g/acre; Pendimethalin: 1000-1200 ml/acre",
+      "dilution_per_15l_pump": "Diclosulam: 1 g per 15L pump; Pendimethalin: 75-90 ml per 15L pump",
+      "application_timing": "Pre-emergence spray within 48 hours of sowing into moist soil",
+      "nozzle_type": "Flat-fan nozzle"
+    },
+    "post_emergence_herbicide": {
+      "chemical_name": "Imazethapyr 10% SL (Pursuit) OR Quizalofop-ethyl 5% EC (Targa Super)",
+      "cibrc_approved_dose_per_acre": "Imazethapyr: 300-400 ml/acre; Quizalofop: 350-400 ml/acre",
+      "dilution_per_15l_pump": "25-30 ml per 15L backpack pump",
+      "application_timing": "Early post-emergence spray at 15-20 DAS",
+      "nozzle_type": "Flat-fan nozzle"
+    },
+    "cultural_mechanical_practices": "Interculture with hand hoe or wheel hoe at 25 and 40 DAS.",
+    "citation": "ICAR-IISR Indore Soybean Weed Manual 2025"
+  },
+  {
+    "crop_name": "Red Gram / Pigeonpea",
+    "critical_period_crop_weed_competition": "15 to 60 DAS",
+    "major_weed_flora": "Trianthema portulacastrum, Celosia argentea, Echinochloa colona, Parthenium hysterophorus.",
+    "pre_emergence_herbicide": {
+      "chemical_name": "Pendimethalin 30% EC (Stomp)",
+      "cibrc_approved_dose_per_acre": "1000 - 1200 ml/acre",
+      "dilution_per_15l_pump": "75 - 90 ml per 15L pump",
+      "application_timing": "Pre-emergence spray within 48 hours of sowing",
+      "nozzle_type": "Flat-fan nozzle"
+    },
+    "post_emergence_herbicide": {
+      "chemical_name": "Imazethapyr 10% SL (Pursuit) OR Quizalofop-ethyl 5% EC (Targa Super)",
+      "cibrc_approved_dose_per_acre": "Imazethapyr: 300 ml/acre; Quizalofop: 350 ml/acre",
+      "dilution_per_15l_pump": "22 - 25 ml per 15L pump",
+      "application_timing": "Post-emergence spray at 20-25 DAS",
+      "nozzle_type": "Flat-fan nozzle"
+    },
+    "cultural_mechanical_practices": "Interculture with blade harrow at 25 and 45 DAS; hand weeding at 30 DAS.",
+    "citation": "ICAR-IIPR Kanpur & PJTSAU Pulses Weed Guide 2025"
+  },
+  {
+    "crop_name": "Chickpea / Bengal Gram",
+    "critical_period_crop_weed_competition": "30 to 60 DAS",
+    "major_weed_flora": "Chenopodium album, Asphodelus tenuifolius (Piazi), Fumaria parviflora, Phalaris minor.",
+    "pre_emergence_herbicide": {
+      "chemical_name": "Pendimethalin 30% EC (Stomp)",
+      "cibrc_approved_dose_per_acre": "1000 ml/acre",
+      "dilution_per_15l_pump": "75 ml per 15L backpack pump",
+      "application_timing": "Pre-emergence spray within 48 hours of sowing into moist soil",
+      "nozzle_type": "Flat-fan nozzle"
+    },
+    "post_emergence_herbicide": {
+      "chemical_name": "Quizalofop-ethyl 5% EC (Targa Super) for grassy weeds only",
+      "cibrc_approved_dose_per_acre": "300 - 350 ml/acre",
+      "dilution_per_15l_pump": "22 - 25 ml per 15L pump",
+      "application_timing": "Post-emergence spray at 25-30 DAS",
+      "nozzle_type": "Flat-fan nozzle"
+    },
+    "cultural_mechanical_practices": "1 hand weeding at 30 DAS followed by terminal nipping (pinching apex) at 35 DAS.",
+    "citation": "ICAR-IIPR Kanpur Chickpea Weed Protocol 2025"
+  },
+  {
+    "crop_name": "Mustard / Rapeseed",
+    "critical_period_crop_weed_competition": "20 to 40 DAS",
+    "major_weed_flora": "Chenopodium album, Melilotus indica, Asphodelus tenuifolius, Orobanche aegyptiaca (Broomrape - parasitic weed).",
+    "pre_emergence_herbicide": {
+      "chemical_name": "Pendimethalin 30% EC (Stomp) OR Oxyfluorfen 23.5% EC",
+      "cibrc_approved_dose_per_acre": "Pendimethalin: 1000 ml/acre; Oxyfluorfen: 150 ml/acre",
+      "dilution_per_15l_pump": "Pendimethalin: 75 ml per 15L pump; Oxyfluorfen: 11 ml per 15L pump",
+      "application_timing": "Pre-emergence soil spray within 48 hours of sowing",
+      "nozzle_type": "Flat-fan nozzle"
+    },
+    "post_emergence_herbicide": {
+      "chemical_name": "Quizalofop-ethyl 5% EC (Targa Super) for monocot grassy weeds",
+      "cibrc_approved_dose_per_acre": "300 ml/acre",
+      "dilution_per_15l_pump": "22 ml per 15L pump",
+      "application_timing": "Post-emergence spray at 20-25 DAS",
+      "nozzle_type": "Flat-fan nozzle"
+    },
+    "cultural_mechanical_practices": "Orobanche management: Crop rotation with non-host crops, deep summer ploughing, directed application of Glyphosate @ 25 ml/acre at 30 and 55 DAS under strict expert supervision.",
+    "citation": "ICAR-DRMR Bharatpur Mustard Weed Advisory 2025"
+  },
+  {
+    "crop_name": "Sugarcane",
+    "critical_period_crop_weed_competition": "30 to 120 DAP",
+    "major_weed_flora": "Cyperus rotundus (Motha), Sorghum halepense (Johnson grass), Cynodon dactylon, Dactyloctenium aegyptium, Ipomoea hederifolia.",
+    "pre_emergence_herbicide": {
+      "chemical_name": "Atrazine 50% WP (Atrataf) @ 800 g/acre OR Metribuzin 70% WP (Sencor) @ 400 g/acre",
+      "cibrc_approved_dose_per_acre": "Atrazine: 800 g/acre; Metribuzin: 400 g/acre",
+      "dilution_per_15l_pump": "Atrazine: 60 g per 15L pump; Metribuzin: 30 g per 15L pump",
+      "application_timing": "Pre-emergence soil spray within 3-4 days after sett planting into moist soil",
+      "nozzle_type": "Flood-jet or Flat-fan nozzle"
+    },
+    "post_emergence_herbicide": {
+      "chemical_name": "Halosulfuron-methyl 75% WG (Sempra) @ 36 g/acre for Cyperus rotundus OR 2,4-D Amine salt 58% SL @ 1000 ml/acre for broadleaf weeds",
+      "cibrc_approved_dose_per_acre": "Sempra: 36 g/acre; 2,4-D: 1000 ml/acre",
+      "dilution_per_15l_pump": "Sempra: 2.7 g per 15L pump; 2,4-D: 75 ml per 15L pump",
+      "application_timing": "Post-emergence spray at 30-45 DAP when Cyperus is at 3-4 leaf stage",
+      "nozzle_type": "Flat-fan nozzle"
+    },
+    "cultural_mechanical_practices": "Trash mulching (10 cm thick layer of dry cane trash) suppresses 85% weed growth; interculture at 45 and 90 DAP.",
+    "citation": "ICAR-SBI Coimbatore Sugarcane Weed Guide 2025"
+  },
+  {
+    "crop_name": "Onion",
+    "critical_period_crop_weed_competition": "15 to 45 DAT",
+    "major_weed_flora": "Chenopodium album, Amaranthus viridis, Digitaria sanguinalis, Portulaca oleracea.",
+    "pre_emergence_herbicide": {
+      "chemical_name": "Oxyfluorfen 23.5% EC (Goal) OR Pendimethalin 30% EC (Stomp)",
+      "cibrc_approved_dose_per_acre": "Oxyfluorfen: 150-200 ml/acre; Pendimethalin: 1000 ml/acre",
+      "dilution_per_15l_pump": "Oxyfluorfen: 12-15 ml per 15L pump; Pendimethalin: 75 ml per 15L pump",
+      "application_timing": "Pre-emergence spray to soil before transplanting or within 3 days after transplanting",
+      "nozzle_type": "Flat-fan nozzle"
+    },
+    "post_emergence_herbicide": {
+      "chemical_name": "Quizalofop-ethyl 5% EC (Targa Super) @ 350 ml/acre for grassy weeds",
+      "cibrc_approved_dose_per_acre": "350 ml/acre",
+      "dilution_per_15l_pump": "25 ml per 15L backpack pump",
+      "application_timing": "Post-emergence spray at 20-25 DAT",
+      "nozzle_type": "Flat-fan nozzle"
+    },
+    "cultural_mechanical_practices": "Hand weeding at 30 and 45 DAT; keep beds weed-free during early bulb swelling.",
+    "citation": "ICAR-DOGR Pune Onion Weed Protocol 2025"
+  },
+  {
+    "crop_name": "Potato",
+    "critical_period_crop_weed_competition": "20 to 40 DAP",
+    "major_weed_flora": "Chenopodium album, Trianthema portulacastrum, Phalaris minor, Cyperus rotundus.",
+    "pre_emergence_herbicide": {
+      "chemical_name": "Metribuzin 70% WP (Sencor) OR Pendimethalin 30% EC (Stomp)",
+      "cibrc_approved_dose_per_acre": "Metribuzin: 300-350 g/acre; Pendimethalin: 1000 ml/acre",
+      "dilution_per_15l_pump": "Metribuzin: 25 g per 15L pump; Pendimethalin: 75 ml per 15L pump",
+      "application_timing": "Pre-emergence spray 3-5 days after planting before potato sprouts emerge",
+      "nozzle_type": "Flat-fan nozzle"
+    },
+    "post_emergence_herbicide": {
+      "chemical_name": "Metribuzin 70% WP at low rate (150 g/acre) early post-emergence (up to 5 cm potato height)",
+      "cibrc_approved_dose_per_acre": "150 g/acre",
+      "dilution_per_15l_pump": "11 g per 15L pump",
+      "application_timing": "Early post-emergence before tuber initiation",
+      "nozzle_type": "Flat-fan nozzle"
+    },
+    "cultural_mechanical_practices": "Earthing-up at 30-35 DAP simultaneously destroys emerging weeds and creates bulky ridges for tuberization.",
+    "citation": "ICAR-CPRI Shimla Potato Weed Guide 2025"
+  },
+  {
+    "crop_name": "Turmeric",
+    "critical_period_crop_weed_competition": "30 to 90 DAP",
+    "major_weed_flora": "Cyperus rotundus, Digitaria sanguinalis, Mimosa pudica, Commelina benghalensis.",
+    "pre_emergence_herbicide": {
+      "chemical_name": "Metribuzin 70% WP @ 300 g/acre OR Pendimethalin 30% EC @ 1000 ml/acre",
+      "cibrc_approved_dose_per_acre": "Metribuzin: 300 g/acre; Pendimethalin: 1000 ml/acre",
+      "dilution_per_15l_pump": "Metribuzin: 22 g per 15L pump; Pendimethalin: 75 ml per 15L pump",
+      "application_timing": "Pre-emergence soil spray before applying green leaf mulch",
+      "nozzle_type": "Flat-fan nozzle"
+    },
+    "post_emergence_herbicide": {
+      "chemical_name": "Quizalofop-ethyl 5% EC (Targa Super) @ 350 ml/acre for grasses",
+      "cibrc_approved_dose_per_acre": "350 ml/acre",
+      "dilution_per_15l_pump": "25 ml per 15L pump",
+      "application_timing": "Directed spray between rows at 45-50 DAP",
+      "nozzle_type": "Flat-fan nozzle"
+    },
+    "cultural_mechanical_practices": "Green leaf mulching @ 5 tonnes/acre at planting and repeated at 45 and 90 DAP suppresses 80% weed emergence; manual weeding at 60 DAP.",
+    "citation": "ICAR-IISR Calicut & PJTSAU Turmeric Weed Advisory 2025"
+  },
+  {
+    "crop_name": "Black Gram / Urad",
+    "critical_period_crop_weed_competition": "15 to 30 DAS",
+    "major_weed_flora": "Echinochloa colona, Trianthema portulacastrum, Celosia argentea, Digera arvensis.",
+    "pre_emergence_herbicide": {
+      "chemical_name": "Pendimethalin 30% EC (Stomp)",
+      "cibrc_approved_dose_per_acre": "1000 ml/acre",
+      "dilution_per_15l_pump": "75 ml per 15L pump",
+      "application_timing": "Pre-emergence spray within 48 hours of sowing into moist soil",
+      "nozzle_type": "Flat-fan nozzle"
+    },
+    "post_emergence_herbicide": {
+      "chemical_name": "Imazethapyr 10% SL (Pursuit)",
+      "cibrc_approved_dose_per_acre": "300 ml/acre",
+      "dilution_per_15l_pump": "22 ml per 15L pump",
+      "application_timing": "Post-emergence spray at 15-20 DAS",
+      "nozzle_type": "Flat-fan nozzle"
+    },
+    "cultural_mechanical_practices": "1 hand weeding at 25 DAS; in rice-fallow relay crop, herbicide spray is avoided.",
+    "citation": "PJTSAU Vyavasaya Panchangam 2025"
+  }
+]

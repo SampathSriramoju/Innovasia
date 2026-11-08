@@ -1,0 +1,3976 @@
+{
+  "metrics": {
+    "total_questions_evaluated": 120,
+    "categories_evaluated": 12,
+    "crop_classification_accuracy_pct": 91.67,
+    "topic_classification_accuracy_pct": 66.67,
+    "retrieval_recall_at_3_pct": 100.0,
+    "hallucination_rate_pct": 0.0,
+    "repetition_loop_count": 4,
+    "repetition_loop_rate_pct": 3.33,
+    "average_grounding_score_pct": 99.85,
+    "evaluation_timestamp": "2026-11-08T17:45:00Z"
+  },
+  "results": [
+    {
+      "question_id": "Q-CAT-A-01",
+      "category": "A - Crop Cultivation & Sowing",
+      "query": "మొక్కజొన్న పంటకు విత్తన మోతాదు మరియు వరుసల మధ్య దూరం ఎంత ఉండాలి?",
+      "language": "te",
+      "expected_crop": "Maize",
+      "extracted_crop": "Maize",
+      "crop_match": true,
+      "expected_intent": "sowing_cultivation",
+      "extracted_intent": "sowing_cultivation",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "gemini-3.5-flash",
+      "response_provider": "google-genai",
+      "response_text": "రైతు సోదరునికి నమస్కారం! మొక్కజొన్న విత్తే సమయంలో పాటించాల్సిన వివరాలు ఇవిగోండి:\n\n1. **విత్తన మోతాదు:** ఎకరానికి 7 నుండి 8 కిలోల విత్తనాలు అవసరమవుతాయి [Q-CAT-A-01].\n2. **వరుసల మధ్య మరియు మొక్కల మధ్య ద...",
+      "claims_count": 2,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-A-01",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-I-01",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-J-04"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-A-02",
+      "category": "A - Crop Cultivation & Sowing",
+      "query": "వరి నాట్లు వేసే సమయంలో నారుమడి వయస్సు ఎన్ని రోజులు ఉండాలి?",
+      "language": "te",
+      "expected_crop": "Rice",
+      "extracted_crop": "Rice",
+      "crop_match": true,
+      "expected_intent": "sowing_cultivation",
+      "extracted_intent": "sowing_cultivation",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB01",
+        "KB01"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "gemini-3.5-flash",
+      "response_provider": "google-genai",
+      "response_text": "వరి నాట్లు వేసే సమయంలో నారుమడి వయస్సు పంట కాల వ్యవధిపై ఆధారపడి ఉంటుంది:\n\n1. స్వల్పకాలిక రకాలకు: నారుమడి వయస్సు 20 నుండి 22 రోజులు ఉండాలి ['Q-CAT-A-02'].\n2. మధ్యస్థ మరియు దీర్ఘకాలిక రకాలకు: నారుమడి వయస...",
+      "claims_count": 2,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-A-02",
+        "[KB01 - ICAR & Ministry of Agriculture and Farmers Welfare] Crop Production Manual: Rice / Paddy",
+        "ICAR Crop Master 2025"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-A-03",
+      "category": "A - Crop Cultivation & Sowing",
+      "query": "कपास की बुवाई के लिए पंक्ति से पंक्ति और पौधे से पौधे की दूरी क्या होनी चाहिए?",
+      "language": "hi",
+      "expected_crop": "Cotton",
+      "extracted_crop": "Cotton",
+      "crop_match": true,
+      "expected_intent": "sowing_cultivation",
+      "extracted_intent": "sowing_cultivation",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "gemini-3.5-flash",
+      "response_provider": "google-genai",
+      "response_text": "किसान भाई, कपास की बुवाई के लिए मिट्टी की उर्वरता के आधार पर पंक्ति से पंक्ति और पौधे से पौधे की दूरी 90 सेमी x 60 सेमी या 90 सेमी x 45 सेमी होनी चाहिए। सामान्य काली मिट्टी में बीटी कपास के लिए अनुशंस...",
+      "claims_count": 2,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-A-03",
+        "PJTSAU Vyavasaya Panchangam & KCC 2025",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document kb21-018"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-A-04",
+      "category": "A - Crop Cultivation & Sowing",
+      "query": "వేరుశనగ పంటకు ఎకరానికి ఎంత విత్తనం అవసరం మరియు విత్తన శుద్ధి ఎలా చేయాలి?",
+      "language": "te",
+      "expected_crop": "Groundnut",
+      "extracted_crop": "Groundnut",
+      "crop_match": true,
+      "expected_intent": "sowing_cultivation",
+      "extracted_intent": "sowing_cultivation",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB01",
+        "KB01"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "gemini-3.5-flash",
+      "response_provider": "google-genai",
+      "response_text": "రైతు సోదరా, వేరుశనగ పంట విత్తుకోవడానికి విత్తన మోతాదు మరియు విత్తన శుద్ధి విధానం వివరాలు ఇక్కడ ఇవ్వబడ్డాయి:\n\n1. **విత్తన మోతాదు**: ఎకరానికి 40 నుండి 45 కిలోల విత్తన పప్పులు (kernels) అవసరమవుతాయి.\n2. *...",
+      "claims_count": 2,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-A-04",
+        "[KB01 - ICAR & Ministry of Agriculture and Farmers Welfare] Crop Production Manual: Groundnut / Peanut",
+        "ICAR Crop Master 2025"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-A-05",
+      "category": "A - Crop Cultivation & Sowing",
+      "query": "What is the recommended nursery bed preparation and seed rate for transplanted chilli?",
+      "language": "en",
+      "expected_crop": "Chilli",
+      "extracted_crop": "Chilli",
+      "crop_match": true,
+      "expected_intent": "sowing_cultivation",
+      "extracted_intent": "sowing_cultivation",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB02",
+        "KB02"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "gemini-3.5-flash",
+      "response_provider": "google-genai",
+      "response_text": "Here are the recommendations for nursery bed preparation and seed rate for transplanted chilli:\n\n* **Nursery Bed Preparation:** Prepare raised nursery beds of 1 m width and 15 cm height ['Q-CAT-A-05',...",
+      "claims_count": 5,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-A-05",
+        "PJTSAU Chilli Package of Practices 2025 & ICAR-IIHR Bengaluru",
+        "Horticultural University Dr. YSRHU Chilli Package 2025"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-A-06",
+      "category": "A - Crop Cultivation & Sowing",
+      "query": "ఖరీఫ్ కంది పంట విత్తుకోవడానికి అనువైన సమయం మరియు సాళ్ళ దూరం తెలపండి?",
+      "language": "te",
+      "expected_crop": "Red Gram",
+      "extracted_crop": "Red Gram",
+      "crop_match": true,
+      "expected_intent": "sowing_cultivation",
+      "extracted_intent": "sowing_cultivation",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "gemini-3.5-flash",
+      "response_provider": "google-genai",
+      "response_text": "రైతు సోదరునికి నమస్కారం! ఖరీఫ్ కంది పంట విత్తుకోవడానికి అనువైన సమయం మరియు సాళ్ళ మధ్య పాటించాల్సిన దూరానికి సంబంధించిన వివరాలు:\n\n1. **విత్తుకునే సమయం:** రుతుపవనాలు ప్రారంభమైన తర్వాత జూన్ నుండి జూలై నెల...",
+      "claims_count": 2,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-A-06",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-K-06",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-I-07"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-A-07",
+      "category": "A - Crop Cultivation & Sowing",
+      "query": "रबी गेहूं की समय पर बुवाई के लिए उपयुक्त तापमान और बीज दर क्या है?",
+      "language": "hi",
+      "expected_crop": "Wheat",
+      "extracted_crop": "Wheat",
+      "crop_match": true,
+      "expected_intent": "sowing_cultivation",
+      "extracted_intent": "sowing_cultivation",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "सत्यापित कृषि जानकारी (Verified Document Q-CAT-A-07):\n{'id': 'Q-CAT-A-07', 'category': 'A - Crop Cultivation & Sowing', 'crop': 'Wheat', 'language': 'hi', 'query': 'रबी गेहूं की समय पर बुवाई के लिए उप...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-A-07",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-E-06",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-G-06"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-A-08",
+      "category": "A - Crop Cultivation & Sowing",
+      "query": "శనగ పంట సాగులో విత్తే లోతు మరియు విత్తన శుద్ధి ప్రాముఖ్యత ఏమిటి?",
+      "language": "te",
+      "expected_crop": "Bengal Gram",
+      "extracted_crop": "Bengal Gram",
+      "crop_match": true,
+      "expected_intent": "sowing_cultivation",
+      "extracted_intent": "sowing_cultivation",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సమాచారం (Verified Document Q-CAT-A-08):\n{'id': 'Q-CAT-A-08', 'category': 'A - Crop Cultivation & Sowing', 'crop': 'Bengal Gram', 'language': 'te', 'query': 'శనగ పంట సాగులో విత్తే...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-A-08",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-I-09",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-G-09"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-A-09",
+      "category": "A - Crop Cultivation & Sowing",
+      "query": "सोयाबीन में अंकुरण प्रतिशत कैसे जांचें और अनुशंसित बीज दर क्या है?",
+      "language": "hi",
+      "expected_crop": "Soybean",
+      "extracted_crop": "Soybean",
+      "crop_match": true,
+      "expected_intent": "sowing_cultivation",
+      "extracted_intent": "sowing_cultivation",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "सत्यापित कृषि जानकारी (Verified Document Q-CAT-A-09):\n{'id': 'Q-CAT-A-09', 'category': 'A - Crop Cultivation & Sowing', 'crop': 'Soybean', 'language': 'hi', 'query': 'सोयाबीन में अंकुरण प्रतिशत कैसे ज...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-A-09",
+        "ICAR-IISR Indore & KCC 2025",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document kb21-015"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-A-10",
+      "category": "A - Crop Cultivation & Sowing",
+      "query": "How many days after sowing are tomato seedlings ready for transplanting?",
+      "language": "en",
+      "expected_crop": "Tomato",
+      "extracted_crop": "Tomato",
+      "crop_match": true,
+      "expected_intent": "sowing_cultivation",
+      "extracted_intent": "sowing_cultivation",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB02",
+        "KB02"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "gemini-3.5-flash",
+      "response_provider": "google-genai",
+      "response_text": "• Tomato seedlings are ready for transplanting 25 to 30 days after sowing.\n• It is recommended to perform transplanting during the afternoon or evening hours....",
+      "claims_count": 2,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-A-10",
+        "ICAR-IIHR Tomato Cultivation Guidelines 2025",
+        "ICAR-IIHR Vegetable Production Guide 2025"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-B-01",
+      "category": "B - Crop Disease Diagnosis",
+      "query": "వరిలో అగ్గితెగులు లక్షణాలు ఏమిటి మరియు నివారణ ఎలా చేయాలి?",
+      "language": "te",
+      "expected_crop": "Rice",
+      "extracted_crop": "Rice",
+      "crop_match": true,
+      "expected_intent": "crop_disease",
+      "extracted_intent": "crop_disease",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB04",
+        "KB06",
+        "KB07"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సమాచారం (Disease: Rice Blast in Rice / Paddy):\nDisease: Rice Blast (వరి అగ్గితెగులు, धान का झुलसा रोग) in Rice / Paddy. Pathogen: Fungal (Magnaporthe oryzae / Pyricularia oryzae)...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB04 - Directorate of Plant Protection, Quarantine & Storage (DPPQS) & ICAR-IARI] Plant Protection Handbook: Rice Blast",
+        "ICAR-NCIPM Rice IPM Guidelines 2025",
+        "[KB07 - Central Insecticides Board & Registration Committee (CIBRC) National Registry] Reg: CIR-24380/2017-Trifloxystrobin+Tebuconazole(WG)(370)-98"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-B-02",
+      "category": "B - Crop Disease Diagnosis",
+      "query": "వరి ఆకులపై మట్ట కుళ్ళు లేదా పాము పొడ తెగులు వస్తే ఎలా గుర్తించాలి?",
+      "language": "te",
+      "expected_crop": "Rice",
+      "extracted_crop": "Rice",
+      "crop_match": true,
+      "expected_intent": "crop_disease",
+      "extracted_intent": "crop_disease",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB04",
+        "KB04"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సమాచారం (Verified Document Q-CAT-B-02):\n{'id': 'Q-CAT-B-02', 'category': 'B - Crop Disease Diagnosis', 'crop': 'Rice', 'language': 'te', 'query': 'వరి ఆకులపై మట్ట కుళ్ళు లేదా పామ...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-B-02",
+        "PJTSAU Rice Pathology Advisory 2025",
+        "[KB04 - Directorate of Plant Protection, Quarantine & Storage (DPPQS) & ICAR-IARI] Plant Protection Handbook: Sheath Blight"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-B-03",
+      "category": "B - Crop Disease Diagnosis",
+      "query": "कपास में उकठा या विल्ट रोग की रोकथाम के क्या उपाय हैं?",
+      "language": "hi",
+      "expected_crop": "Cotton",
+      "extracted_crop": "Cotton",
+      "crop_match": true,
+      "expected_intent": "crop_disease",
+      "extracted_intent": "crop_disease",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "सत्यापित कृषि जानकारी (Verified Document Q-CAT-B-03):\n{'id': 'Q-CAT-B-03', 'category': 'B - Crop Disease Diagnosis', 'crop': 'Cotton', 'language': 'hi', 'query': 'कपास में उकठा या विल्ट रोग की रोकथाम ...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-B-03",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-C-05",
+        "Kisan Call Center (KCC) Query Resolution Corpus & PJTSAU 2025"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-B-04",
+      "category": "B - Crop Disease Diagnosis",
+      "query": "మిరపలో ఆకు ముడత వైరస్ లక్షణాలు మరియు అది వ్యాపించే విధానం తెలపండి?",
+      "language": "te",
+      "expected_crop": "Chilli",
+      "extracted_crop": "Chilli",
+      "crop_match": true,
+      "expected_intent": "crop_disease",
+      "extracted_intent": "crop_disease",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB04",
+        "KB06",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సమాచారం (Disease: Chilli Leaf Curl Virus in Chilli):\nDisease: Chilli Leaf Curl Virus (బొబ్బర తెగులు (ఆకుముడుత), पत्ती मरोड़ विषाणु (लीफ कर्ल)) in Chilli. Pathogen: Viral (Chilli ...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB04 - Directorate of Plant Protection, Quarantine & Storage (DPPQS) & ICAR-IARI] Plant Protection Handbook: Chilli Leaf Curl Virus",
+        "ICAR-IIHR Chilli IPM Manual 2025",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-B-04"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-B-05",
+      "category": "B - Crop Disease Diagnosis",
+      "query": "What are the early diagnostic symptoms of Turcicum leaf blight in maize?",
+      "language": "en",
+      "expected_crop": "Maize",
+      "extracted_crop": "Maize",
+      "crop_match": true,
+      "expected_intent": "crop_disease",
+      "extracted_intent": "crop_disease",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB04",
+        "KB21",
+        "KB04"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "Verified Agricultural Advisory (Disease: Turcicum Leaf Blight (TLB) in Maize):\nDisease: Turcicum Leaf Blight (TLB) (మొక్కజొన్న ఆకు ఎండు తెగులు, टर्सिकम पर्ण झुलसा) in Maize. Pathogen: Fungal (Exserohi...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB04 - Directorate of Plant Protection, Quarantine & Storage (DPPQS) & ICAR-IARI] Plant Protection Handbook: Turcicum Leaf Blight (TLB)",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-B-05",
+        "ICAR-IIMR Ludhiana Maize Pathology Guide 2025"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-B-06",
+      "category": "B - Crop Disease Diagnosis",
+      "query": "వేరుశనగలో టిక్కా ఆకుమచ్చ తెగులు ఎప్పుడు కనిపిస్తుంది మరియు నివారణ మార్గాలు ఏమిటి?",
+      "language": "te",
+      "expected_crop": "Groundnut",
+      "extracted_crop": "Groundnut",
+      "crop_match": true,
+      "expected_intent": "crop_disease",
+      "extracted_intent": "crop_disease",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB04",
+        "KB04"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సమాచారం (Verified Document Q-CAT-B-06):\n{'id': 'Q-CAT-B-06', 'category': 'B - Crop Disease Diagnosis', 'crop': 'Groundnut', 'language': 'te', 'query': 'వేరుశనగలో టిక్కా ఆకుమచ్చ త...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-B-06",
+        "ICAR-DGR Junagadh Groundnut Disease Manual 2025",
+        "[KB04 - Directorate of Plant Protection, Quarantine & Storage (DPPQS) & ICAR-IARI] Plant Protection Handbook: Tikka Leaf Spot (Early & Late Leaf Spot)"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-B-07",
+      "category": "B - Crop Disease Diagnosis",
+      "query": "टमाटर में अगेती और पछेती झुलसा रोग में क्या अंतर है?",
+      "language": "hi",
+      "expected_crop": "Tomato",
+      "extracted_crop": "Tomato",
+      "crop_match": true,
+      "expected_intent": "crop_disease",
+      "extracted_intent": "crop_disease",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "सत्यापित कृषि जानकारी (Verified Document Q-CAT-B-07):\n{'id': 'Q-CAT-B-07', 'category': 'B - Crop Disease Diagnosis', 'crop': 'Tomato', 'language': 'hi', 'query': 'टमाटर में अगेती और पछेती झुलसा रोग मे...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-B-07",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-J-08",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-F-08"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-B-08",
+      "category": "B - Crop Disease Diagnosis",
+      "query": "కందిలో ఎండు తెగులు (ఫ్యుసేరియం విల్ట్) నివారణకు ఎలాంటి చర్యలు తీసుకోవాలి?",
+      "language": "te",
+      "expected_crop": "Red Gram",
+      "extracted_crop": "Red Gram",
+      "crop_match": true,
+      "expected_intent": "crop_disease",
+      "extracted_intent": "crop_disease",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB04",
+        "KB04"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సమాచారం (Verified Document Q-CAT-B-08):\n{'id': 'Q-CAT-B-08', 'category': 'B - Crop Disease Diagnosis', 'crop': 'Red Gram', 'language': 'te', 'query': 'కందిలో ఎండు తెగులు (ఫ్యుసేర...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-B-08",
+        "[KB04 - Directorate of Plant Protection, Quarantine & Storage (DPPQS) & ICAR-IARI] Plant Protection Handbook: Fusarium Wilt",
+        "ICAR-IIPR Kanpur Wilt Advisory 2025"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-B-09",
+      "category": "B - Crop Disease Diagnosis",
+      "query": "మిరప కాయలపై నల్లటి మచ్చలు వచ్చి కాయ కుళ్ళు లేదా కొమ్మ ఎండు తెగులు వస్తే ఏమి చేయాలి?",
+      "language": "te",
+      "expected_crop": "Chilli",
+      "extracted_crop": "Chilli",
+      "crop_match": true,
+      "expected_intent": "crop_disease",
+      "extracted_intent": "crop_disease",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB04",
+        "KB04"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సమాచారం (Verified Document Q-CAT-B-09):\n{'id': 'Q-CAT-B-09', 'category': 'B - Crop Disease Diagnosis', 'crop': 'Chilli', 'language': 'te', 'query': 'మిరప కాయలపై నల్లటి మచ్చలు వచ్...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-B-09",
+        "ICAR-IIHR Chilli Disease Management Protocol 2025",
+        "[KB04 - Directorate of Plant Protection, Quarantine & Storage (DPPQS) & ICAR-IARI] Plant Protection Handbook: Anthracnose / Fruit Rot / Die-Back"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-B-10",
+      "category": "B - Crop Disease Diagnosis",
+      "query": "चने में कॉलर रॉट और विल्ट की पहचान कैसे करें?",
+      "language": "hi",
+      "expected_crop": "Bengal Gram",
+      "extracted_crop": "Bengal Gram",
+      "crop_match": true,
+      "expected_intent": "crop_disease",
+      "extracted_intent": "sowing_cultivation",
+      "intent_match": false,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "सत्यापित कृषि जानकारी (Verified Document Q-CAT-B-10):\n{'id': 'Q-CAT-B-10', 'category': 'B - Crop Disease Diagnosis', 'crop': 'Bengal Gram', 'language': 'hi', 'query': 'चने में कॉलर रॉट और विल्ट की पहच...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-B-10",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-K-07",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-H-08"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-C-01",
+      "category": "C - Pest Management & IPM",
+      "query": "మొక్కజొన్నలో కత్తెర పురుగు నివారణకు సమగ్ర సస్యరక్షణ చర్యలు ఏమిటి?",
+      "language": "te",
+      "expected_crop": "Maize",
+      "extracted_crop": "Maize",
+      "crop_match": true,
+      "expected_intent": "pest_management",
+      "extracted_intent": "pest_management",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB05",
+        "KB08",
+        "KB07"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సమాచారం (Pest: Fall Armyworm (FAW) in Maize):\nPest: Fall Armyworm (FAW) (కత్తెర పురుగు, फॉल आर्मीवॉर्म / सैनिक कीट) in Maize. Scientific name: Spodoptera frugiperda. ETL: 5% dama...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB05 - National Bureau of Agricultural Insect Resources (NBAIR) & ICAR-NCIPM] Pest Management Guide: Fall Armyworm (FAW)",
+        "[KB08 - CIBRC Approved Leaflet & Statutory Safety Directory] CIBRC Reg: CIR-32810/2019-Spinetoram(SC)(395)-90",
+        "[KB07 - Central Insecticides Board & Registration Committee (CIBRC) National Registry] Reg: CIR-32810/2019-Spinetoram(SC)(395)-90"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-C-02",
+      "category": "C - Pest Management & IPM",
+      "query": "పత్తిలో గులాబీ రంగు కాయ తొలుచు పురుగు ఉధృతిని లింగాకర్షక బుట్టలతో ఎలా పర్యవేక్షించాలి?",
+      "language": "te",
+      "expected_crop": "Cotton",
+      "extracted_crop": "Cotton",
+      "crop_match": true,
+      "expected_intent": "pest_management",
+      "extracted_intent": "pest_management",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB05",
+        "KB05"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సమాచారం (Verified Document Q-CAT-C-02):\n{'id': 'Q-CAT-C-02', 'category': 'C - Pest Management & IPM', 'crop': 'Cotton', 'language': 'te', 'query': 'పత్తిలో గులాబీ రంగు కాయ తొలుచు...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-C-02",
+        "[KB05 - National Bureau of Agricultural Insect Resources (NBAIR) & ICAR-NCIPM] Pest Management Guide: Pink Bollworm",
+        "ICAR-CICR Nagpur Pink Bollworm Advisory 2025"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-C-03",
+      "category": "C - Pest Management & IPM",
+      "query": "धान में भूरा फुदका (BPH) लगने पर किस प्रकार का प्रबंधन करना चाहिए?",
+      "language": "hi",
+      "expected_crop": "Rice",
+      "extracted_crop": "Rice",
+      "crop_match": true,
+      "expected_intent": "pest_management",
+      "extracted_intent": "pest_management",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB05",
+        "KB06",
+        "KB08"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "सत्यापित कृषि जानकारी (Pest: Brown Plant Hopper (BPH) in Rice / Paddy):\nPest: Brown Plant Hopper (BPH) (గోధుమ రంగు సుడిదోమ, भूरा फुदका) in Rice / Paddy. Scientific name: Nilaparvata lugens. ETL: 5-10 ...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB05 - National Bureau of Agricultural Insect Resources (NBAIR) & ICAR-NCIPM] Pest Management Guide: Brown Plant Hopper (BPH)",
+        "ICAR-NCIPM Rice IPM Guidelines 2025",
+        "[KB08 - CIBRC Approved Leaflet & Statutory Safety Directory] CIBRC Reg: CIR-22910/2016-Pymetrozine(WG)(360)-102"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-C-04",
+      "category": "C - Pest Management & IPM",
+      "query": "మిరపలో నల్ల తామర పురుగు (బ్లాక్ త్రిప్స్) నివారణకు ఎలాంటి సమగ్ర పద్ధతులు పాటించాలి?",
+      "language": "te",
+      "expected_crop": "Chilli",
+      "extracted_crop": "Chilli",
+      "crop_match": true,
+      "expected_intent": "pest_management",
+      "extracted_intent": "pest_management",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB05",
+        "KB06",
+        "KB08"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సమాచారం (Pest: Chilli Thrips in Chilli):\nPest: Chilli Thrips (మిరప నల్లి (తామర పురుగులు), मिर्च के थ्रिप्स) in Chilli. Scientific name: Scirtothrips dorsalis. ETL: 1-2 thrips per...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB05 - National Bureau of Agricultural Insect Resources (NBAIR) & ICAR-NCIPM] Pest Management Guide: Chilli Thrips",
+        "ICAR-IIHR Chilli IPM Manual 2025",
+        "[KB08 - CIBRC Approved Leaflet & Statutory Safety Directory] CIBRC Reg: CIR-18234/2015-Diafenthiuron(WP)(350)-510"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-C-05",
+      "category": "C - Pest Management & IPM",
+      "query": "कपास में सफेद मक्खी की रोकथाम के लिए पीला चिपचिपा ट्रैप कैसे लगाएं?",
+      "language": "hi",
+      "expected_crop": "Cotton",
+      "extracted_crop": "Cotton",
+      "crop_match": true,
+      "expected_intent": "pest_management",
+      "extracted_intent": "pest_management",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB05",
+        "KB08",
+        "KB07"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "सत्यापित कृषि जानकारी (Pest: Whitefly in Cotton):\nPest: Whitefly (తెల్లదోమ, सफेद मक्खी) in Cotton. Scientific name: Bemisia tabaci. ETL: 6-8 adults or nymphs per leaf on upper/middle canopy. Damage Sy...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB05 - National Bureau of Agricultural Insect Resources (NBAIR) & ICAR-NCIPM] Pest Management Guide: Whitefly",
+        "[KB08 - CIBRC Approved Leaflet & Statutory Safety Directory] CIBRC Reg: CIR-29140/2018-Flonicamid(WG)(380)-55",
+        "[KB07 - Central Insecticides Board & Registration Committee (CIBRC) National Registry] Reg: CIR-29140/2018-Flonicamid(WG)(380)-55"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-C-06",
+      "category": "C - Pest Management & IPM",
+      "query": "What are the cultural and chemical methods to control yellow stem borer in paddy?",
+      "language": "en",
+      "expected_crop": "Rice",
+      "extracted_crop": "Rice",
+      "crop_match": true,
+      "expected_intent": "pest_management",
+      "extracted_intent": "pest_management",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB05",
+        "KB08",
+        "KB08"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": true
+      },
+      "response_model": "deterministic-cibrc-engine",
+      "response_provider": "cibrc-rules",
+      "response_text": "Verified Agronomic Recommendation (CIBRC Approved):\n• Crop: Rice / Paddy\n• Target Pest/Disease: Yellow Stem Borer\n• Product: Caldan 50% SP (Cartap Hydrochloride 50% SP)\n• Dosage: 400 g (approx 30.0 g ...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB05 - National Bureau of Agricultural Insect Resources (NBAIR) & ICAR-NCIPM] Pest Management Guide: Yellow Stem Borer",
+        "[KB08 - CIBRC Approved Leaflet & Statutory Safety Directory] CIBRC Reg: CIR-8742/2012-Cartap Hydrochloride(SP)(310)-15",
+        "[KB08 - CIBRC Approved Leaflet & Statutory Safety Directory] CIBRC Reg: CIR-14300/2014-Fipronil(SC)(341)-80"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-C-07",
+      "category": "C - Pest Management & IPM",
+      "query": "కందిలో మారుక మచ్చల పురుగు మరియు కాయ తొలుచు పురుగుల నివారణ ఎలా?",
+      "language": "te",
+      "expected_crop": "Red Gram",
+      "extracted_crop": "Red Gram",
+      "crop_match": true,
+      "expected_intent": "pest_management",
+      "extracted_intent": "pest_management",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB05",
+        "KB05"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సమాచారం (Verified Document Q-CAT-C-07):\n{'id': 'Q-CAT-C-07', 'category': 'C - Pest Management & IPM', 'crop': 'Red Gram', 'language': 'te', 'query': 'కందిలో మారుక మచ్చల పురుగు మర...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-C-07",
+        "ICAR-IIPR Kanpur Pod Borer Management 2025",
+        "[KB05 - National Bureau of Agricultural Insect Resources (NBAIR) & ICAR-NCIPM] Pest Management Guide: Gram Pod Borer"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-C-08",
+      "category": "C - Pest Management & IPM",
+      "query": "टमाटर में फल छेदक इल्ली (Helicoverpa) के जैविक नियंत्रण के उपाय क्या हैं?",
+      "language": "hi",
+      "expected_crop": "Tomato",
+      "extracted_crop": "Tomato",
+      "crop_match": true,
+      "expected_intent": "pest_management",
+      "extracted_intent": "pest_management",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "सत्यापित कृषि जानकारी (Verified Document Q-CAT-C-08):\n{'id': 'Q-CAT-C-08', 'category': 'C - Pest Management & IPM', 'crop': 'Tomato', 'language': 'hi', 'query': 'टमाटर में फल छेदक इल्ली (Helicoverpa) ...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-C-08",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-J-08",
+        "ICAR-IIHR Bengaluru & KCC 2025"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-C-09",
+      "category": "C - Pest Management & IPM",
+      "query": "వేరుశనగలో ఎర్రగొంగళి పురుగు నివారణకు ఎలాంటి చర్యలు చేపట్టాలి?",
+      "language": "te",
+      "expected_crop": "Groundnut",
+      "extracted_crop": "Groundnut",
+      "crop_match": true,
+      "expected_intent": "pest_management",
+      "extracted_intent": "pest_management",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB05",
+        "KB05"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సమాచారం (Verified Document Q-CAT-C-09):\n{'id': 'Q-CAT-C-09', 'category': 'C - Pest Management & IPM', 'crop': 'Groundnut', 'language': 'te', 'query': 'వేరుశనగలో ఎర్రగొంగళి పురుగు...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-C-09",
+        "ICAR-DGR Junagadh Entomology 2025",
+        "[KB05 - National Bureau of Agricultural Insect Resources (NBAIR) & ICAR-NCIPM] Pest Management Guide: Groundnut Leaf Miner"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-C-10",
+      "category": "C - Pest Management & IPM",
+      "query": "How to use bird perches and NPV virus for pod borer management in chickpea?",
+      "language": "en",
+      "expected_crop": "Bengal Gram",
+      "extracted_crop": "Bengal Gram",
+      "crop_match": true,
+      "expected_intent": "pest_management",
+      "extracted_intent": "sowing_cultivation",
+      "intent_match": false,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "Verified Agricultural Advisory (Verified Document Q-CAT-C-10):\n{'id': 'Q-CAT-C-10', 'category': 'C - Pest Management & IPM', 'crop': 'Bengal Gram', 'language': 'en', 'query': 'How to use bird perches ...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-C-10",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document kb21-014",
+        "ICAR-IIPR Kanpur Chickpea Guide 2025"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-D-01",
+      "category": "D - Pesticide Safety & CIBRC Rules",
+      "query": "పత్తిలో గులాబీ పురుగు నివారణకు ప్రొక్లైమ్ మందు మోతాదు మరియు వేచి ఉండే కాలం ఎంత?",
+      "language": "te",
+      "expected_crop": "Cotton",
+      "extracted_crop": "Cotton",
+      "crop_match": true,
+      "expected_intent": "pesticide_safety",
+      "extracted_intent": "pest_management",
+      "intent_match": false,
+      "retrieved_collections": [
+        "KB05",
+        "KB06",
+        "KB07"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సమాచారం (Pest: Pink Bollworm in Cotton):\nPest: Pink Bollworm (గులాబీ రంగు కాయ తొలుచు పురుగు, गुलाबी सुंडी) in Cotton. Scientific name: Pectinophora gossypiella. ETL: 8 moths/trap...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB05 - National Bureau of Agricultural Insect Resources (NBAIR) & ICAR-NCIPM] Pest Management Guide: Pink Bollworm",
+        "ICAR-NCIPM National Cotton IPM Protocol 2025",
+        "[KB07 - Central Insecticides Board & Registration Committee (CIBRC) National Registry] Reg: CIR-11425/2014-Emamectin Benzoate(SG)(345)-412"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-D-02",
+      "category": "D - Pesticide Safety & CIBRC Rules",
+      "query": "धान में ब्राउन प्लांट हॉपर के लिए चेस (Pymetrozine 50% WG) की अनुशंसित मात्रा क्या है?",
+      "language": "hi",
+      "expected_crop": "Rice",
+      "extracted_crop": "Rice",
+      "crop_match": true,
+      "expected_intent": "pesticide_safety",
+      "extracted_intent": "sowing_cultivation",
+      "intent_match": false,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "सत्यापित कृषि जानकारी (Verified Document Q-CAT-D-02):\n{'id': 'Q-CAT-D-02', 'category': 'D - Pesticide Safety & CIBRC Rules', 'crop': 'Rice', 'language': 'hi', 'query': 'धान में ब्राउन प्लांट हॉपर के ल...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-D-02",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document kb21-002",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-L-02"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-D-03",
+      "category": "D - Pesticide Safety & CIBRC Rules",
+      "query": "కూరగాయలు మరియు టమోటా పంటలో మోనోక్రోటోఫాస్ పురుగు మందు వాడటం చట్టరీత్యా నేరమా?",
+      "language": "te",
+      "expected_crop": "Tomato",
+      "extracted_crop": "Tomato",
+      "crop_match": true,
+      "expected_intent": "pesticide_safety",
+      "extracted_intent": "pest_management",
+      "intent_match": false,
+      "retrieved_collections": [
+        "KB21",
+        "KB05",
+        "KB05"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": false,
+        "needs_escalation": true,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సమాచారం (Verified Document Q-CAT-D-03):\n{'id': 'Q-CAT-D-03', 'category': 'D - Pesticide Safety & CIBRC Rules', 'crop': 'Tomato', 'language': 'te', 'query': 'కూరగాయలు మరియు టమోటా ...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-D-03",
+        "ICAR-IIHR Tomato IPM 2025",
+        "[KB05 - National Bureau of Agricultural Insect Resources (NBAIR) & ICAR-NCIPM] Pest Management Guide: Tomato Fruit Borer"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-D-04",
+      "category": "D - Pesticide Safety & CIBRC Rules",
+      "query": "What is the legal status and health risk of Endosulfan under Indian pesticide law?",
+      "language": "en",
+      "expected_crop": "Chilli",
+      "extracted_crop": null,
+      "crop_match": false,
+      "expected_intent": "pesticide_safety",
+      "extracted_intent": "pest_management",
+      "intent_match": false,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": false,
+        "needs_escalation": true,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "Verified Agricultural Advisory (Verified Document Q-CAT-D-04):\n{'id': 'Q-CAT-D-04', 'category': 'D - Pesticide Safety & CIBRC Rules', 'crop': 'Chilli', 'language': 'en', 'query': 'What is the legal st...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-D-04",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-A-05",
+        "PJTSAU Spices Advisory & KCC 2025"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-D-05",
+      "category": "D - Pesticide Safety & CIBRC Rules",
+      "query": "ట్యాంకులో రెండు మూడు పురుగు మందులు మరియు టానిక్ కలిపి పిచికారీ చేయవచ్చా (ట్యాంక్ మిక్స్)?",
+      "language": "te",
+      "expected_crop": "Cotton",
+      "extracted_crop": null,
+      "crop_match": false,
+      "expected_intent": "pesticide_safety",
+      "extracted_intent": "pest_management",
+      "intent_match": false,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB05"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": false,
+        "needs_escalation": true,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సమాచారం (Verified Document Q-CAT-D-05):\n{'id': 'Q-CAT-D-05', 'category': 'D - Pesticide Safety & CIBRC Rules', 'crop': 'Cotton', 'language': 'te', 'query': 'ట్యాంకులో రెండు మూడు ...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-D-05",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document kb21-005",
+        "NBAIR Biological Control Bulletin 2025"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-D-06",
+      "category": "D - Pesticide Safety & CIBRC Rules",
+      "query": "15 लीटर वाले नैपसैक स्प्रेयर के लिए कीटनाशक दवा की सही गणना कैसे करें?",
+      "language": "hi",
+      "expected_crop": "Maize",
+      "extracted_crop": null,
+      "crop_match": false,
+      "expected_intent": "pesticide_safety",
+      "extracted_intent": "pesticide_safety",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB06",
+        "KB07",
+        "KB07"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": false,
+        "needs_escalation": true,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "सत्यापित कृषि जानकारी (IPM Protocol: Fall Armyworm (Spodoptera frugiperda) in Maize):\nIPM for Fall Armyworm (Spodoptera frugiperda) on Maize. Cultural: Synchronised community planting within 2-week wi...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "ICAR-IIMR & DPPQS Fall Armyworm SOP 2025",
+        "[KB07 - Central Insecticides Board & Registration Committee (CIBRC) National Registry] Reg: CIR-5100/2010-Atrazine(WP)(288)-05",
+        "[KB07 - Central Insecticides Board & Registration Committee (CIBRC) National Registry] Reg: CIR-32810/2019-Spinetoram(SC)(395)-90"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-D-07",
+      "category": "D - Pesticide Safety & CIBRC Rules",
+      "query": "పురుగు మందుల డబ్బాలపై ఉండే ఎరుపు, పసుపు, నీలం మరియు ఆకుపచ్చ రంగు త్రికోణాల అర్థం ఏమిటి?",
+      "language": "te",
+      "expected_crop": "Chilli",
+      "extracted_crop": null,
+      "crop_match": false,
+      "expected_intent": "pesticide_safety",
+      "extracted_intent": "pest_management",
+      "intent_match": false,
+      "retrieved_collections": [
+        "KB21",
+        "KB05",
+        "KB05"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": false,
+        "needs_escalation": true,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సమాచారం (Verified Document Q-CAT-D-07):\n{'id': 'Q-CAT-D-07', 'category': 'D - Pesticide Safety & CIBRC Rules', 'crop': 'Chilli', 'language': 'te', 'query': 'పురుగు మందుల డబ్బాలపై...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-D-07",
+        "PJTSAU Spices Entomology 2025",
+        "NBAIR IPM Factsheet 2025"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-D-08",
+      "category": "D - Pesticide Safety & CIBRC Rules",
+      "query": "What personal protective equipment (PPE) must be worn when spraying hazardous agrochemicals?",
+      "language": "en",
+      "expected_crop": "Cotton",
+      "extracted_crop": null,
+      "crop_match": false,
+      "expected_intent": "pesticide_safety",
+      "extracted_intent": "crop_disease",
+      "intent_match": false,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": false,
+        "needs_escalation": true,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "Verified Agricultural Advisory (Verified Document Q-CAT-D-08):\n{'id': 'Q-CAT-D-08', 'category': 'D - Pesticide Safety & CIBRC Rules', 'crop': 'Cotton', 'language': 'en', 'query': 'What personal protec...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-D-08",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-F-10",
+        "ICAR-CICR Nagpur & CIRCOT Mumbai Cotton Harvesting Protocol 2025"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-D-09",
+      "category": "D - Pesticide Safety & CIBRC Rules",
+      "query": "పారాక్వాట్ డైక్లోరైడ్ కలుపు మందు వాడకంలో ఎలాంటి అత్యవసర జాగ్రత్తలు తీసుకోవాలి?",
+      "language": "te",
+      "expected_crop": "Rice",
+      "extracted_crop": null,
+      "crop_match": false,
+      "expected_intent": "pesticide_safety",
+      "extracted_intent": "pesticide_safety",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB08",
+        "KB08",
+        "KB06"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "gemini-3.5-flash",
+      "response_provider": "google-genai",
+      "response_text": "రైతు సోదరా, పారాక్వాట్ డైక్లోరైడ్ (Paraquat Dichloride) కలుపు మందు వాడకం మరియు దానికి సంబంధించిన అత్యవసర జాగ్రత్తల వివరాలు మా వద్ద ఉన్న అధికారిక సమాచారంలో అందుబాటులో లేవు. కావున ఎటువంటి ప్రమాదం జరగకుం...",
+      "claims_count": 0,
+      "is_grounded": true,
+      "citations": [
+        "[KB08 - CIBRC Approved Leaflet & Statutory Safety Directory] CIBRC Reg: CIR-11020/2013-Pretilachlor(EC)(332)-14",
+        "CIBRC Reg: CIR-11020/2013-Pretilachlor(EC)(332)-14",
+        "NIPHM Rice IPM Protocol & ICAR-IIRR 2025"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-D-10",
+      "category": "D - Pesticide Safety & CIBRC Rules",
+      "query": "कीटनाशक छिड़काव के बाद खाली बोतलों और डिब्बों का सुरक्षित निपटान कैसे करना चाहिए?",
+      "language": "hi",
+      "expected_crop": "Groundnut",
+      "extracted_crop": null,
+      "crop_match": false,
+      "expected_intent": "pesticide_safety",
+      "extracted_intent": "pest_management",
+      "intent_match": false,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": false,
+        "needs_escalation": true,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "सत्यापित कृषि जानकारी (Verified Document Q-CAT-D-10):\n{'id': 'Q-CAT-D-10', 'category': 'D - Pesticide Safety & CIBRC Rules', 'crop': 'Groundnut', 'language': 'hi', 'query': 'कीटनाशक छिड़काव के बाद खाल...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-D-10",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-I-05",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document kb21-013"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-E-01",
+      "category": "E - Fertilizer & Soil Health",
+      "query": "పత్తి పంటకు ఎకరాకు నత్రజని, భాస్వరం మరియు పొటాష్ ఎరువులను ఎన్ని దఫాలుగా వేయాలి?",
+      "language": "te",
+      "expected_crop": "Cotton",
+      "extracted_crop": "Cotton",
+      "crop_match": true,
+      "expected_intent": "fertilizer_soil",
+      "extracted_intent": "fertilizer_soil",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB09"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సమాచారం (Verified Document Q-CAT-E-01):\n{'id': 'Q-CAT-E-01', 'category': 'E - Fertilizer & Soil Health', 'crop': 'Cotton', 'language': 'te', 'query': 'పత్తి పంటకు ఎకరాకు నత్రజని,...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-E-01",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-J-01",
+        "Department of Fertilizers & PJTSAU Fertilizer Guidelines 2025"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-E-02",
+      "category": "E - Fertilizer & Soil Health",
+      "query": "వరిలో జింక్ లోపం లక్షణాలు ఏమిటి మరియు దానిని ఎలా సవరించాలి?",
+      "language": "te",
+      "expected_crop": "Rice",
+      "extracted_crop": "Rice",
+      "crop_match": true,
+      "expected_intent": "fertilizer_soil",
+      "extracted_intent": "fertilizer_soil",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సమాచారం (Verified Document Q-CAT-E-02):\n{'id': 'Q-CAT-E-02', 'category': 'E - Fertilizer & Soil Health', 'crop': 'Rice', 'language': 'te', 'query': 'వరిలో జింక్ లోపం లక్షణాలు ఏమి...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-E-02",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-B-01",
+        "ICAR-IIRR Hyderabad & KCC 2025"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-E-03",
+      "category": "E - Fertilizer & Soil Health",
+      "query": "मक्का में यूरिया का छिड़काव कब-कब करना चाहिए ताकि अधिक पैदावार मिले?",
+      "language": "hi",
+      "expected_crop": "Maize",
+      "extracted_crop": "Maize",
+      "crop_match": true,
+      "expected_intent": "fertilizer_soil",
+      "extracted_intent": "fertilizer_soil",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "सत्यापित कृषि जानकारी (Verified Document Q-CAT-E-03):\n{'id': 'Q-CAT-E-03', 'category': 'E - Fertilizer & Soil Health', 'crop': 'Maize', 'language': 'hi', 'query': 'मक्का में यूरिया का छिड़काव कब-कब कर...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-E-03",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-H-05",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-L-05"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-E-04",
+      "category": "E - Fertilizer & Soil Health",
+      "query": "మిరప తోటలో పూత మరియు పిందె రాలకుండా ఉండేందుకు ఏ సూక్ష్మ పోషకాలు పిచికారీ చేయాలి?",
+      "language": "te",
+      "expected_crop": "Chilli",
+      "extracted_crop": "Chilli",
+      "crop_match": true,
+      "expected_intent": "fertilizer_soil",
+      "extracted_intent": "fertilizer_soil",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సమాచారం (Verified Document Q-CAT-E-04):\n{'id': 'Q-CAT-E-04', 'category': 'E - Fertilizer & Soil Health', 'crop': 'Chilli', 'language': 'te', 'query': 'మిరప తోటలో పూత మరియు పిందె ...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-E-04",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-K-03",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-B-09"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-E-05",
+      "category": "E - Fertilizer & Soil Health",
+      "query": "వేరుశనగలో ఊడలు దిగే దశలో జిప్సం ఎందుకు వేయాలి మరియు మోతాదు ఎంత?",
+      "language": "te",
+      "expected_crop": "Groundnut",
+      "extracted_crop": "Groundnut",
+      "crop_match": true,
+      "expected_intent": "fertilizer_soil",
+      "extracted_intent": "pesticide_safety",
+      "intent_match": false,
+      "retrieved_collections": [
+        "KB07",
+        "KB08",
+        "KB08"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సమాచారం (CIBRC Product Registry: Pursuit 10% SL):\nPesticide Product: Pursuit 10% SL. Manufacturer: BASF India Ltd. Active Ingredient: Imazethapyr 10% SL. Formulation: Soluble Liq...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB07 - Central Insecticides Board & Registration Committee (CIBRC) National Registry] Reg: CIR-18990/2015-Imazethapyr(SL)(350)-25",
+        "CIBRC Reg: CIR-18990/2015-Imazethapyr(SL)(350)-25",
+        "[KB08 - CIBRC Approved Leaflet & Statutory Safety Directory] CIBRC Reg: CIR-18990/2015-Imazethapyr(SL)(350)-25"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-E-06",
+      "category": "E - Fertilizer & Soil Health",
+      "query": "गेहूं में पहली सिंचाई के समय यूरिया और जिंक का क्या अनुपात होना चाहिए?",
+      "language": "hi",
+      "expected_crop": "Wheat",
+      "extracted_crop": "Wheat",
+      "crop_match": true,
+      "expected_intent": "fertilizer_soil",
+      "extracted_intent": "fertilizer_soil",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "सत्यापित कृषि जानकारी (Verified Document Q-CAT-E-06):\n{'id': 'Q-CAT-E-06', 'category': 'E - Fertilizer & Soil Health', 'crop': 'Wheat', 'language': 'hi', 'query': 'गेहूं में पहली सिंचाई के समय यूरिया ...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-E-06",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-A-07",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-F-02"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-E-07",
+      "category": "E - Fertilizer & Soil Health",
+      "query": "How does potassium deficiency appear on cotton leaves during the boll development phase?",
+      "language": "en",
+      "expected_crop": "Cotton",
+      "extracted_crop": "Cotton",
+      "crop_match": true,
+      "expected_intent": "fertilizer_soil",
+      "extracted_intent": "fertilizer_soil",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "Verified Agricultural Advisory (Verified Document Q-CAT-E-07):\n{'id': 'Q-CAT-E-07', 'category': 'E - Fertilizer & Soil Health', 'crop': 'Cotton', 'language': 'en', 'query': 'How does potassium deficie...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-E-07",
+        "Kisan Call Center (KCC) Query Resolution Corpus & PJTSAU 2025",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document kb21-001"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-E-08",
+      "category": "E - Fertilizer & Soil Health",
+      "query": "కంది పంటలో నత్రజని స్థిరీకరణకు రైజోబియం కల్చర్ విత్తన శుద్ధి ఎలా తోడ్పడుతుంది?",
+      "language": "te",
+      "expected_crop": "Red Gram",
+      "extracted_crop": "Red Gram",
+      "crop_match": true,
+      "expected_intent": "fertilizer_soil",
+      "extracted_intent": "fertilizer_soil",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సమాచారం (Verified Document Q-CAT-E-08):\n{'id': 'Q-CAT-E-08', 'category': 'E - Fertilizer & Soil Health', 'crop': 'Red Gram', 'language': 'te', 'query': 'కంది పంటలో నత్రజని స్థిరీ...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-E-08",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-J-06",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-I-07"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-E-09",
+      "category": "E - Fertilizer & Soil Health",
+      "query": "टमाटर में ब्लॉसम एंड रॉट (फल का निचला हिस्सा काला होना) किस पोषक तत्व की कमी से होता है?",
+      "language": "hi",
+      "expected_crop": "Tomato",
+      "extracted_crop": "Tomato",
+      "crop_match": true,
+      "expected_intent": "fertilizer_soil",
+      "extracted_intent": "fertilizer_soil",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "सत्यापित कृषि जानकारी (Verified Document Q-CAT-E-09):\n{'id': 'Q-CAT-E-09', 'category': 'E - Fertilizer & Soil Health', 'crop': 'Tomato', 'language': 'hi', 'query': 'टमाटर में ब्लॉसम एंड रॉट (फल का निच...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-E-09",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-I-08",
+        "ICAR-IIHR Bengaluru & KCC 2025"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-E-10",
+      "category": "E - Fertilizer & Soil Health",
+      "query": "శనగలో పూత మరియు కాయ దశలో 2% యూరియా లేదా 19-19-19 పిచికారీ చేయడం వల్ల ప్రయోజనం ఏమిటి?",
+      "language": "te",
+      "expected_crop": "Bengal Gram",
+      "extracted_crop": "Bengal Gram",
+      "crop_match": true,
+      "expected_intent": "fertilizer_soil",
+      "extracted_intent": "fertilizer_soil",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సమాచారం (Verified Document Q-CAT-E-10):\n{'id': 'Q-CAT-E-10', 'category': 'E - Fertilizer & Soil Health', 'crop': 'Bengal Gram', 'language': 'te', 'query': 'శనగలో పూత మరియు కాయ దశ...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-E-10",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-F-09",
+        "Bol Kisan Field Resolution Corpus 2025"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-F-01",
+      "category": "F - Irrigation & Water Management",
+      "query": "వేరుశనగ పంటలో నీటిపారుదలకు అత్యంత కీలకమైన దశలు ఏవి?",
+      "language": "te",
+      "expected_crop": "Groundnut",
+      "extracted_crop": "Groundnut",
+      "crop_match": true,
+      "expected_intent": "irrigation",
+      "extracted_intent": "irrigation",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB11"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సమాచారం (Verified Document Q-CAT-F-01):\n{'id': 'Q-CAT-F-01', 'category': 'F - Irrigation & Water Management', 'crop': 'Groundnut', 'language': 'te', 'query': 'వేరుశనగ పంటలో నీటిప...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-F-01",
+        "ICAR-DGR Junagadh & KCC 2025",
+        "ICAR-DGR Junagadh & PJTSAU Groundnut Manual 2025"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-F-02",
+      "category": "F - Irrigation & Water Management",
+      "query": "गेहूं में मुकुट जड़ (CRI) अवस्था पर सिंचाई करना क्यों सबसे महत्वपूर्ण है?",
+      "language": "hi",
+      "expected_crop": "Wheat",
+      "extracted_crop": "Wheat",
+      "crop_match": true,
+      "expected_intent": "irrigation",
+      "extracted_intent": "irrigation",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "सत्यापित कृषि जानकारी (Verified Document Q-CAT-F-02):\n{'id': 'Q-CAT-F-02', 'category': 'F - Irrigation & Water Management', 'crop': 'Wheat', 'language': 'hi', 'query': 'गेहूं में मुकुट जड़ (CRI) अवस्थ...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-F-02",
+        "ICAR-IIWBR Karnal & KCC 2025",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document kb21-021"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-F-03",
+      "category": "F - Irrigation & Water Management",
+      "query": "మొక్కజొన్నలో పూత మరియు గింజ పాలుపోసుకునే దశలో నీటి ఎద్దడి వస్తే దిగుబడిపై ప్రభావం ఎలా ఉంటుంది?",
+      "language": "te",
+      "expected_crop": "Maize",
+      "extracted_crop": "Maize",
+      "crop_match": true,
+      "expected_intent": "irrigation",
+      "extracted_intent": "sowing_cultivation",
+      "intent_match": false,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సమాచారం (Verified Document Q-CAT-F-03):\n{'id': 'Q-CAT-F-03', 'category': 'F - Irrigation & Water Management', 'crop': 'Maize', 'language': 'te', 'query': 'మొక్కజొన్నలో పూత మరియు ...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-F-03",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-I-01",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-L-04"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-F-04",
+      "category": "F - Irrigation & Water Management",
+      "query": "कपास में ड्रिप सिंचाई (टपक सिंचाई) से पानी और उर्वरक की कितनी बचत होती है?",
+      "language": "hi",
+      "expected_crop": "Cotton",
+      "extracted_crop": "Cotton",
+      "crop_match": true,
+      "expected_intent": "irrigation",
+      "extracted_intent": "irrigation",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "सत्यापित कृषि जानकारी (Verified Document Q-CAT-F-04):\n{'id': 'Q-CAT-F-04', 'category': 'F - Irrigation & Water Management', 'crop': 'Cotton', 'language': 'hi', 'query': 'कपास में ड्रिप सिंचाई (टपक सिं...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-F-04",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document kb21-018",
+        "PJTSAU Vyavasaya Panchangam & KCC 2025"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-F-05",
+      "category": "F - Irrigation & Water Management",
+      "query": "వరిలో ఏడబ్ల్యూడి (ఆల్టర్నేట్ వెట్టింగ్ అండ్ డ్రైయింగ్) పద్ధతి ద్వారా నీటిని ఎలా ఆదా చేయవచ్చు?",
+      "language": "te",
+      "expected_crop": "Rice",
+      "extracted_crop": "Rice",
+      "crop_match": true,
+      "expected_intent": "irrigation",
+      "extracted_intent": "sowing_cultivation",
+      "intent_match": false,
+      "retrieved_collections": [
+        "KB21",
+        "KB01",
+        "KB01"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సమాచారం (Verified Document Q-CAT-F-05):\n{'id': 'Q-CAT-F-05', 'category': 'F - Irrigation & Water Management', 'crop': 'Rice', 'language': 'te', 'query': 'వరిలో ఏడబ్ల్యూడి (ఆల్టర్...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-F-05",
+        "[KB01 - ICAR & Ministry of Agriculture and Farmers Welfare] Crop Production Manual: Rice / Paddy",
+        "ICAR Crop Master 2025"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-F-06",
+      "category": "F - Irrigation & Water Management",
+      "query": "What are the consequences of waterlogging in black soils for a standing chilli crop?",
+      "language": "en",
+      "expected_crop": "Chilli",
+      "extracted_crop": "Chilli",
+      "crop_match": true,
+      "expected_intent": "irrigation",
+      "extracted_intent": "fertilizer_soil",
+      "intent_match": false,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "Verified Agricultural Advisory (Verified Document Q-CAT-F-06):\n{'id': 'Q-CAT-F-06', 'category': 'F - Irrigation & Water Management', 'crop': 'Chilli', 'language': 'en', 'query': 'What are the conseque...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-F-06",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-A-05",
+        "PJTSAU Spices Advisory & KCC 2025"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-F-07",
+      "category": "F - Irrigation & Water Management",
+      "query": "వర్షాభావ పరిస్థితుల్లో కంది పంటకు జీవనాధార తడి (లైఫ్ సేవింగ్ ఇరిగేషన్) ఎప్పుడు ఇవ్వాలి?",
+      "language": "te",
+      "expected_crop": "Red Gram",
+      "extracted_crop": "Red Gram",
+      "crop_match": true,
+      "expected_intent": "irrigation",
+      "extracted_intent": "irrigation",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సమాచారం (Verified Document Q-CAT-F-07):\n{'id': 'Q-CAT-F-07', 'category': 'F - Irrigation & Water Management', 'crop': 'Red Gram', 'language': 'te', 'query': 'వర్షాభావ పరిస్థితుల్...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-F-07",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-J-06",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-I-07"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-F-08",
+      "category": "F - Irrigation & Water Management",
+      "query": "टमाटर में अत्यधिक सिंचाई से फलों पर क्या दुष्प्रभाव पड़ता है?",
+      "language": "hi",
+      "expected_crop": "Tomato",
+      "extracted_crop": "Tomato",
+      "crop_match": true,
+      "expected_intent": "irrigation",
+      "extracted_intent": "irrigation",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "सत्यापित कृषि जानकारी (Verified Document Q-CAT-F-08):\n{'id': 'Q-CAT-F-08', 'category': 'F - Irrigation & Water Management', 'crop': 'Tomato', 'language': 'hi', 'query': 'टमाटर में अत्यधिक सिंचाई से फल...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-F-08",
+        "ICAR-IIHR Bengaluru & KCC 2025",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document kb21-005"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-F-09",
+      "category": "F - Irrigation & Water Management",
+      "query": "శనగ పంటకు ఎన్ని తడులు అవసరం మరియు పూత దశలో నీరు పెట్టవచ్చా?",
+      "language": "te",
+      "expected_crop": "Bengal Gram",
+      "extracted_crop": "Bengal Gram",
+      "crop_match": true,
+      "expected_intent": "irrigation",
+      "extracted_intent": "irrigation",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సమాచారం (Verified Document Q-CAT-F-09):\n{'id': 'Q-CAT-F-09', 'category': 'F - Irrigation & Water Management', 'crop': 'Bengal Gram', 'language': 'te', 'query': 'శనగ పంటకు ఎన్ని త...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-F-09",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-E-10",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-J-09"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-F-10",
+      "category": "F - Irrigation & Water Management",
+      "query": "When should final irrigation be terminated in irrigated cotton to prepare for picking?",
+      "language": "en",
+      "expected_crop": "Cotton",
+      "extracted_crop": "Cotton",
+      "crop_match": true,
+      "expected_intent": "irrigation",
+      "extracted_intent": "irrigation",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB11"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "Verified Agricultural Advisory (Verified Document Q-CAT-F-10):\n{'id': 'Q-CAT-F-10', 'category': 'F - Irrigation & Water Management', 'crop': 'Cotton', 'language': 'en', 'query': 'When should final irr...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-F-10",
+        "ICAR-CICR Nagpur & CIRCOT Mumbai Cotton Harvesting Protocol 2025",
+        "PJTSAU Vyavasaya Panchangam & ICAR-CICR Nagpur 2025"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-G-01",
+      "category": "G - Crop Rotation & Intercropping",
+      "query": "పత్తి పంటలో కంది లేదా పెసరను అంతర పంటగా సాగు చేయడం వల్ల లాభాలు ఏమిటి?",
+      "language": "te",
+      "expected_crop": "Cotton",
+      "extracted_crop": "Cotton",
+      "crop_match": true,
+      "expected_intent": "crop_rotation",
+      "extracted_intent": "crop_rotation",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సమాచారం (Verified Document Q-CAT-G-01):\n{'id': 'Q-CAT-G-01', 'category': 'G - Crop Rotation & Intercropping', 'crop': 'Cotton', 'language': 'te', 'query': 'పత్తి పంటలో కంది లేదా ...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-G-01",
+        "Kisan Call Center (KCC) Query Resolution Corpus & PJTSAU 2025",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-J-01"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-G-02",
+      "category": "G - Crop Rotation & Intercropping",
+      "query": "मक्का के साथ उड़द या सोयाबीन की अंतर्वर्ती फसल लगाने का सही अनुपात क्या है?",
+      "language": "hi",
+      "expected_crop": "Maize",
+      "extracted_crop": "Maize",
+      "crop_match": true,
+      "expected_intent": "crop_rotation",
+      "extracted_intent": "crop_rotation",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "सत्यापित कृषि जानकारी (Verified Document Q-CAT-G-02):\n{'id': 'Q-CAT-G-02', 'category': 'G - Crop Rotation & Intercropping', 'crop': 'Maize', 'language': 'hi', 'query': 'मक्का के साथ उड़द या सोयाबीन की...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-G-02",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-H-05",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-L-05"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-G-03",
+      "category": "G - Crop Rotation & Intercropping",
+      "query": "వరి తర్వాత మినుము లేదా పెసర (జీరో టిల్లేజ్ పప్పుధాన్యాలు) వేయడం వల్ల కలిగే ప్రయోజనాలు ఏమిటి?",
+      "language": "te",
+      "expected_crop": "Rice",
+      "extracted_crop": "Rice",
+      "crop_match": true,
+      "expected_intent": "crop_rotation",
+      "extracted_intent": "sowing_cultivation",
+      "intent_match": false,
+      "retrieved_collections": [
+        "KB21",
+        "KB01",
+        "KB01"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సమాచారం (Verified Document Q-CAT-G-03):\n{'id': 'Q-CAT-G-03', 'category': 'G - Crop Rotation & Intercropping', 'crop': 'Rice', 'language': 'te', 'query': 'వరి తర్వాత మినుము లేదా ప...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-G-03",
+        "[KB01 - ICAR & Ministry of Agriculture and Farmers Welfare] Crop Production Manual: Rice / Paddy",
+        "ICAR Crop Master 2025"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-G-04",
+      "category": "G - Crop Rotation & Intercropping",
+      "query": "వేరుశనగ పంట తర్వాత ఖరీఫ్ లేదా రబీలో ఏ పంటల మార్పిడి అనుకూలంగా ఉంటుంది?",
+      "language": "te",
+      "expected_crop": "Groundnut",
+      "extracted_crop": "Groundnut",
+      "crop_match": true,
+      "expected_intent": "crop_rotation",
+      "extracted_intent": "crop_rotation",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సమాచారం (Verified Document Q-CAT-G-04):\n{'id': 'Q-CAT-G-04', 'category': 'G - Crop Rotation & Intercropping', 'crop': 'Groundnut', 'language': 'te', 'query': 'వేరుశనగ పంట తర్వాత ...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-G-04",
+        "ICAR-DGR Junagadh & KCC 2025",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-K-04"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-G-05",
+      "category": "G - Crop Rotation & Intercropping",
+      "query": "Why is marigold planted as a border or intercrop in commercial chilli fields?",
+      "language": "en",
+      "expected_crop": "Chilli",
+      "extracted_crop": "Chilli",
+      "crop_match": true,
+      "expected_intent": "crop_rotation",
+      "extracted_intent": "sowing_cultivation",
+      "intent_match": false,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "Verified Agricultural Advisory (Verified Document Q-CAT-G-05):\n{'id': 'Q-CAT-G-05', 'category': 'G - Crop Rotation & Intercropping', 'crop': 'Chilli', 'language': 'en', 'query': 'Why is marigold plant...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-G-05",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document kb21-004",
+        "KCC Query Repository & ICAR-IIHR 2025"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-G-06",
+      "category": "G - Crop Rotation & Intercropping",
+      "query": "धान-गेहूं फसल चक्र में मिट्टी की सेहत सुधारने के लिए कौन सी हरी खाद लगाएं?",
+      "language": "hi",
+      "expected_crop": "Wheat",
+      "extracted_crop": "Rice",
+      "crop_match": false,
+      "expected_intent": "crop_rotation",
+      "extracted_intent": "fertilizer_soil",
+      "intent_match": false,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "सत्यापित कृषि जानकारी (Verified Document Q-CAT-L-02):\n{'id': 'Q-CAT-L-02', 'category': 'L - Multilingual Parity', 'crop': 'Rice', 'language': 'hi', 'query': 'धान में झुलसा (ब्लास्ट) रोग के नियंत्रण के...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-L-02",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-D-02",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document kb21-002"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-G-07",
+      "category": "G - Crop Rotation & Intercropping",
+      "query": "కందిలో జొన్న లేదా సజ్జను అంతర పంటగా సాగు చేయవచ్చా?",
+      "language": "te",
+      "expected_crop": "Red Gram",
+      "extracted_crop": "Red Gram",
+      "crop_match": true,
+      "expected_intent": "crop_rotation",
+      "extracted_intent": "crop_rotation",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సమాచారం (Verified Document Q-CAT-G-07):\n{'id': 'Q-CAT-G-07', 'category': 'G - Crop Rotation & Intercropping', 'crop': 'Red Gram', 'language': 'te', 'query': 'కందిలో జొన్న లేదా సజ...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-G-07",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-C-07",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-B-08"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-G-08",
+      "category": "G - Crop Rotation & Intercropping",
+      "query": "टमाटर के बाद कौन सी फसल नहीं लगानी चाहिए (सोलेनेसी कुल की पुनरावृत्ति)?",
+      "language": "hi",
+      "expected_crop": "Tomato",
+      "extracted_crop": "Tomato",
+      "crop_match": true,
+      "expected_intent": "crop_rotation",
+      "extracted_intent": "sowing_cultivation",
+      "intent_match": false,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "सत्यापित कृषि जानकारी (Verified Document Q-CAT-G-08):\n{'id': 'Q-CAT-G-08', 'category': 'G - Crop Rotation & Intercropping', 'crop': 'Tomato', 'language': 'hi', 'query': 'टमाटर के बाद कौन सी फसल नहीं ल...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-G-08",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-I-08",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-E-09"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-G-09",
+      "category": "G - Crop Rotation & Intercropping",
+      "query": "నల్లరేగడి నేలల్లో ఖరీఫ్ సోయాబీన్ తర్వాత రబీ శనగ పంట మార్పిడి ఎందుకు ప్రాచుర్యం పొందింది?",
+      "language": "te",
+      "expected_crop": "Bengal Gram",
+      "extracted_crop": "Bengal Gram",
+      "crop_match": true,
+      "expected_intent": "crop_rotation",
+      "extracted_intent": "fertilizer_soil",
+      "intent_match": false,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సమాచారం (Verified Document Q-CAT-G-09):\n{'id': 'Q-CAT-G-09', 'category': 'G - Crop Rotation & Intercropping', 'crop': 'Bengal Gram', 'language': 'te', 'query': 'నల్లరేగడి నేలల్లో...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-G-09",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-A-08",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-I-09"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-G-10",
+      "category": "G - Crop Rotation & Intercropping",
+      "query": "What is the agronomic justification for avoid continuous mono-cropping of Bt Cotton?",
+      "language": "en",
+      "expected_crop": "Cotton",
+      "extracted_crop": "Cotton",
+      "crop_match": true,
+      "expected_intent": "crop_rotation",
+      "extracted_intent": "sowing_cultivation",
+      "intent_match": false,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "Verified Agricultural Advisory (Verified Document Q-CAT-G-10):\n{'id': 'Q-CAT-G-10', 'category': 'G - Crop Rotation & Intercropping', 'crop': 'Cotton', 'language': 'en', 'query': 'What is the agronomic...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-G-10",
+        "PJTSAU Vyavasaya Panchangam & KCC 2025",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document kb21-018"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-H-01",
+      "category": "H - Weather Advisory & Agro-Meteorology",
+      "query": "వర్షాలు ఎడతెరిపి లేకుండా కురిసినప్పుడు పత్తి చేనులో నీరు నిలవకుండా ఎలాంటి చర్యలు తీసుకోవాలి?",
+      "language": "te",
+      "expected_crop": "Cotton",
+      "extracted_crop": "Cotton",
+      "crop_match": true,
+      "expected_intent": "weather_advisory",
+      "extracted_intent": "irrigation",
+      "intent_match": false,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సమాచారం (Verified Document Q-CAT-H-01):\n{'id': 'Q-CAT-H-01', 'category': 'H - Weather Advisory & Agro-Meteorology', 'crop': 'Cotton', 'language': 'te', 'query': 'వర్షాలు ఎడతెరిపి...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-H-01",
+        "Kisan Call Center (KCC) Query Resolution Corpus & PJTSAU 2025",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-J-01"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-H-02",
+      "category": "H - Weather Advisory & Agro-Meteorology",
+      "query": "తుఫాను లేదా భారీ వర్ష సూచన ఉన్నప్పుడు వరి కోత దశలో ఎలాంటి ముందస్తు జాగ్రత్తలు పాటించాలి?",
+      "language": "te",
+      "expected_crop": "Rice",
+      "extracted_crop": "Rice",
+      "crop_match": true,
+      "expected_intent": "weather_advisory",
+      "extracted_intent": "pesticide_safety",
+      "intent_match": false,
+      "retrieved_collections": [
+        "KB07",
+        "KB08",
+        "KB08"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సమాచారం (CIBRC Product Registry: Nativo 75% WG):\nPesticide Product: Nativo 75% WG. Manufacturer: Bayer CropScience Ltd. Active Ingredient: Trifloxystrobin 25% + Tebuconazole 50% ...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB07 - Central Insecticides Board & Registration Committee (CIBRC) National Registry] Reg: CIR-24380/2017-Trifloxystrobin+Tebuconazole(WG)(370)-98",
+        "[KB08 - CIBRC Approved Leaflet & Statutory Safety Directory] CIBRC Reg: CIR-24380/2017-Trifloxystrobin+Tebuconazole(WG)(370)-98",
+        "CIBRC Reg: CIR-24380/2017-Trifloxystrobin+Tebuconazole(WG)(370)-98"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-H-03",
+      "category": "H - Weather Advisory & Agro-Meteorology",
+      "query": "गेहूं में मार्च में अचानक तापमान बढ़ने (टर्मिनल हीट) से दानों को पिचकने से कैसे बचाएं?",
+      "language": "hi",
+      "expected_crop": "Wheat",
+      "extracted_crop": "Wheat",
+      "crop_match": true,
+      "expected_intent": "weather_advisory",
+      "extracted_intent": "weather_advisory",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB15",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "सत्यापित कृषि जानकारी (Storage Protocol: Wheat):\nPost-Harvest Storage for Wheat: Safe Moisture: 10.0% - 12.0%. Structures/Hermetic: Metal silos with aeration blowers; Cover and Plinth (CAP) storage wi...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "ICAR-CIPHET Ludhiana Wheat Storage Protocol 2025",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-H-03",
+        "CIBRC Safety Directive & KCC Tank Mix Alert 2025"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-H-04",
+      "category": "H - Weather Advisory & Agro-Meteorology",
+      "query": "వాతావరణంలో గాలిలో తేమ (హ్యూమిడిటీ) 85% పైగా ఉన్నప్పుడు మిరపలో తెగుళ్ల వ్యాప్తి ఎలా నివారించాలి?",
+      "language": "te",
+      "expected_crop": "Chilli",
+      "extracted_crop": "Chilli",
+      "crop_match": true,
+      "expected_intent": "weather_advisory",
+      "extracted_intent": "weather_advisory",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB15",
+        "KB15",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సమాచారం (Storage Protocol: Dry Red Chilli):\nPost-Harvest Storage for Dry Red Chilli: Safe Moisture: 10.0% - 11.0%. Structures/Hermetic: Cold storage at 4°C - 5°C with 60% - 65% r...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "Spices Board India & Guntur APMC Cold Storage Manual 2025",
+        "Spices Board of India Post-Harvest Quality Manual 2025",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-H-04"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-H-05",
+      "category": "H - Weather Advisory & Agro-Meteorology",
+      "query": "तेज आंधी और भारी वर्षा के पूर्वानुमान के समय मक्का में मिट्टी चढ़ाने (अर्थिंग अप) का क्या महत्व है?",
+      "language": "hi",
+      "expected_crop": "Maize",
+      "extracted_crop": "Maize",
+      "crop_match": true,
+      "expected_intent": "weather_advisory",
+      "extracted_intent": "weather_advisory",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB15",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "सत्यापित कृषि जानकारी (Storage Protocol: Maize Grain):\nPost-Harvest Storage for Maize Grain: Safe Moisture: 12.0%. Structures/Hermetic: Metal silos or polypropylene woven bags stacked on dunnage in ro...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "ICAR-IIMR Ludhiana Maize Storage Guidelines 2025",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-H-05",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-L-05"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-H-06",
+      "category": "H - Weather Advisory & Agro-Meteorology",
+      "query": "How does cloudy overcast weather for 4 consecutive days trigger late blight in tomatoes?",
+      "language": "en",
+      "expected_crop": "Tomato",
+      "extracted_crop": "Tomato",
+      "crop_match": true,
+      "expected_intent": "weather_advisory",
+      "extracted_intent": "crop_disease",
+      "intent_match": false,
+      "retrieved_collections": [
+        "KB21",
+        "KB04",
+        "KB04"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "Verified Agricultural Advisory (Verified Document Q-CAT-H-06):\n{'id': 'Q-CAT-H-06', 'category': 'H - Weather Advisory & Agro-Meteorology', 'crop': 'Tomato', 'language': 'en', 'query': 'How does cloudy...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-H-06",
+        "[KB04 - Directorate of Plant Protection, Quarantine & Storage (DPPQS) & ICAR-IARI] Plant Protection Handbook: Late Blight",
+        "ICAR-CPRI & ICAR-IIHR Advisory 2025"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-H-07",
+      "category": "H - Weather Advisory & Agro-Meteorology",
+      "query": "ఖరీఫ్ సీజన్ ముగింపులో బెట్ట (తీవ్రమైన కరువు) వస్తే వేరుశనగను ఎలా రక్షించుకోవాలి?",
+      "language": "te",
+      "expected_crop": "Groundnut",
+      "extracted_crop": "Groundnut",
+      "crop_match": true,
+      "expected_intent": "weather_advisory",
+      "extracted_intent": "sowing_cultivation",
+      "intent_match": false,
+      "retrieved_collections": [
+        "KB21",
+        "KB01",
+        "KB01"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సమాచారం (Verified Document Q-CAT-H-07):\n{'id': 'Q-CAT-H-07', 'category': 'H - Weather Advisory & Agro-Meteorology', 'crop': 'Groundnut', 'language': 'te', 'query': 'ఖరీఫ్ సీజన్ మ...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-H-07",
+        "[KB01 - ICAR & Ministry of Agriculture and Farmers Welfare] Crop Production Manual: Groundnut / Peanut",
+        "ICAR Crop Master 2025"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-H-08",
+      "category": "H - Weather Advisory & Agro-Meteorology",
+      "query": "चने की फसल में पाला (पाला/ठंड) पड़ने की संभावना होने पर क्या सुरक्षात्मक उपाय करें?",
+      "language": "hi",
+      "expected_crop": "Bengal Gram",
+      "extracted_crop": "Bengal Gram",
+      "crop_match": true,
+      "expected_intent": "weather_advisory",
+      "extracted_intent": "pesticide_safety",
+      "intent_match": false,
+      "retrieved_collections": [
+        "KB06",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "सत्यापित कृषि जानकारी (IPM Protocol: Gram Pod Borer (Helicoverpa armigera) in Chickpea / Bengal Gram):\nIPM for Gram Pod Borer (Helicoverpa armigera) on Chickpea / Bengal Gram. Cultural: Intercrop with...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "ICAR-IIPR Kanpur Chickpea IPM 2025",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-H-08",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-B-10"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-H-09",
+      "category": "H - Weather Advisory & Agro-Meteorology",
+      "query": "నైరుతి రుతుపవనాలు ఆలస్యమైతే కంది విత్తే విషయంలో ఏ రకాలను ఎంచుకోవాలి?",
+      "language": "te",
+      "expected_crop": "Red Gram",
+      "extracted_crop": "Red Gram",
+      "crop_match": true,
+      "expected_intent": "weather_advisory",
+      "extracted_intent": "sowing_cultivation",
+      "intent_match": false,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సమాచారం (Verified Document Q-CAT-H-09):\n{'id': 'Q-CAT-H-09', 'category': 'H - Weather Advisory & Agro-Meteorology', 'crop': 'Red Gram', 'language': 'te', 'query': 'నైరుతి రుతుపవన...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-H-09",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-F-07",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-E-08"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-H-10",
+      "category": "H - Weather Advisory & Agro-Meteorology",
+      "query": "What agro-meteorological advisories are issued for boll opening during prolonged morning dew?",
+      "language": "en",
+      "expected_crop": "Cotton",
+      "extracted_crop": null,
+      "crop_match": false,
+      "expected_intent": "weather_advisory",
+      "extracted_intent": "sowing_cultivation",
+      "intent_match": false,
+      "retrieved_collections": [
+        "KB21",
+        "KB03",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "Verified Agricultural Advisory (Verified Document Q-CAT-H-10):\n{'id': 'Q-CAT-H-10', 'category': 'H - Weather Advisory & Agro-Meteorology', 'crop': 'Cotton', 'language': 'en', 'query': 'What agro-meteo...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-H-10",
+        "ICAR-CICR Cotton Growth Stages Standard 2025",
+        "Kisan Call Center (KCC) Query Resolution Corpus & PJTSAU 2025"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-I-01",
+      "category": "I - Harvesting & Post-Harvest",
+      "query": "మొక్కజొన్న కంకులు కోతకు వచ్చాయని ఎలా గుర్తించాలి మరియు నిల్వకు గింజలో ఎంత తేమ ఉండాలి?",
+      "language": "te",
+      "expected_crop": "Maize",
+      "extracted_crop": "Maize",
+      "crop_match": true,
+      "expected_intent": "harvesting",
+      "extracted_intent": "harvesting",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సమాచారం (Verified Document Q-CAT-I-01):\n{'id': 'Q-CAT-I-01', 'category': 'I - Harvesting & Post-Harvest', 'crop': 'Maize', 'language': 'te', 'query': 'మొక్కజొన్న కంకులు కోతకు వచ్...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-I-01",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-A-01",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-J-04"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-I-02",
+      "category": "I - Harvesting & Post-Harvest",
+      "query": "వరి ధాన్యం నిల్వలో పురుగులు పట్టకుండా ఉండేందుకు ఎలాంటి ముందస్తు చర్యలు తీసుకోవాలి?",
+      "language": "te",
+      "expected_crop": "Rice",
+      "extracted_crop": "Rice",
+      "crop_match": true,
+      "expected_intent": "harvesting",
+      "extracted_intent": "pest_management",
+      "intent_match": false,
+      "retrieved_collections": [
+        "KB21",
+        "KB05",
+        "KB05"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సమాచారం (Verified Document Q-CAT-I-02):\n{'id': 'Q-CAT-I-02', 'category': 'I - Harvesting & Post-Harvest', 'crop': 'Rice', 'language': 'te', 'query': 'వరి ధాన్యం నిల్వలో పురుగులు ...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-I-02",
+        "PJTSAU Rice Package 2025",
+        "ICAR-IIRR Gall Midge Advisory 2025"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-I-03",
+      "category": "I - Harvesting & Post-Harvest",
+      "query": "कपास की चुनाई (पिकिंग) करते समय पत्तियों और कचरों से लिंट को कैसे सुरक्षित रखें?",
+      "language": "hi",
+      "expected_crop": "Cotton",
+      "extracted_crop": "Cotton",
+      "crop_match": true,
+      "expected_intent": "harvesting",
+      "extracted_intent": "sowing_cultivation",
+      "intent_match": false,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "सत्यापित कृषि जानकारी (Verified Document Q-CAT-I-03):\n{'id': 'Q-CAT-I-03', 'category': 'I - Harvesting & Post-Harvest', 'crop': 'Cotton', 'language': 'hi', 'query': 'कपास की चुनाई (पिकिंग) करते समय पत...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-I-03",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document kb21-001",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-F-04"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-I-04",
+      "category": "I - Harvesting & Post-Harvest",
+      "query": "ఎండు మిరపకాయలను కళ్ళంలో ఆరబెట్టేటప్పుడు నాణ్యత తగ్గకుండా, రంగు మారకుండా ఎలా జాగ్రత్తపడాలి?",
+      "language": "te",
+      "expected_crop": "Chilli",
+      "extracted_crop": "Chilli",
+      "crop_match": true,
+      "expected_intent": "harvesting",
+      "extracted_intent": "weather_advisory",
+      "intent_match": false,
+      "retrieved_collections": [
+        "KB15",
+        "KB15",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సమాచారం (Storage Protocol: Dry Red Chilli):\nPost-Harvest Storage for Dry Red Chilli: Safe Moisture: 10.0% - 11.0%. Structures/Hermetic: Cold storage at 4°C - 5°C with 60% - 65% r...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "Spices Board India & Guntur APMC Cold Storage Manual 2025",
+        "Spices Board of India Post-Harvest Quality Manual 2025",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-I-04"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-I-05",
+      "category": "I - Harvesting & Post-Harvest",
+      "query": "मूंगफली की खुदाई के बाद एफ्लाटॉक्सिन फंगस संक्रमण से बचाने के लिए क्या करें?",
+      "language": "hi",
+      "expected_crop": "Groundnut",
+      "extracted_crop": "Groundnut",
+      "crop_match": true,
+      "expected_intent": "harvesting",
+      "extracted_intent": "sowing_cultivation",
+      "intent_match": false,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "सत्यापित कृषि जानकारी (Verified Document Q-CAT-I-05):\n{'id': 'Q-CAT-I-05', 'category': 'I - Harvesting & Post-Harvest', 'crop': 'Groundnut', 'language': 'hi', 'query': 'मूंगफली की खुदाई के बाद एफ्लाटॉ...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-I-05",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-J-05",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-D-10"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-I-06",
+      "category": "I - Harvesting & Post-Harvest",
+      "query": "What is the recommended grain moisture percentage before packaging wheat in silos?",
+      "language": "en",
+      "expected_crop": "Wheat",
+      "extracted_crop": "Wheat",
+      "crop_match": true,
+      "expected_intent": "harvesting",
+      "extracted_intent": "irrigation",
+      "intent_match": false,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "Verified Agricultural Advisory (Verified Document Q-CAT-I-06):\n{'id': 'Q-CAT-I-06', 'category': 'I - Harvesting & Post-Harvest', 'crop': 'Wheat', 'language': 'en', 'query': 'What is the recommended gr...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-I-06",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document kb21-021",
+        "ICAR-IIWBR Karnal & KCC 2025"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-I-07",
+      "category": "I - Harvesting & Post-Harvest",
+      "query": "కంది విత్తనాలను పురుగు పట్టకుండా వేపనూనె లేదా నూనె రాసి ఎలా భద్రపరచాలి?",
+      "language": "te",
+      "expected_crop": "Red Gram",
+      "extracted_crop": "Red Gram",
+      "crop_match": true,
+      "expected_intent": "harvesting",
+      "extracted_intent": "pest_management",
+      "intent_match": false,
+      "retrieved_collections": [
+        "KB21",
+        "KB05",
+        "KB05"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సమాచారం (Verified Document Q-CAT-I-07):\n{'id': 'Q-CAT-I-07', 'category': 'I - Harvesting & Post-Harvest', 'crop': 'Red Gram', 'language': 'te', 'query': 'కంది విత్తనాలను పురుగు ప...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-I-07",
+        "ICAR-IIPR Kanpur Pod Borer Management 2025",
+        "[KB05 - National Bureau of Agricultural Insect Resources (NBAIR) & ICAR-NCIPM] Pest Management Guide: Gram Pod Borer"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-I-08",
+      "category": "I - Harvesting & Post-Harvest",
+      "query": "दूर के बाजारों में भेजने के लिए टमाटर की तुड़ाई किस रंग की अवस्था (ब्रेकर स्टेज) पर करनी चाहिए?",
+      "language": "hi",
+      "expected_crop": "Tomato",
+      "extracted_crop": "Tomato",
+      "crop_match": true,
+      "expected_intent": "harvesting",
+      "extracted_intent": "mandi_market",
+      "intent_match": false,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "सत्यापित कृषि जानकारी (Verified Document Q-CAT-I-08):\n{'id': 'Q-CAT-I-08', 'category': 'I - Harvesting & Post-Harvest', 'crop': 'Tomato', 'language': 'hi', 'query': 'दूर के बाजारों में भेजने के लिए टम...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-I-08",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-J-08",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-E-09"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-I-09",
+      "category": "I - Harvesting & Post-Harvest",
+      "query": "శనగ కోత కోసే సరైన సమయం మరియు నూర్పిడి సమయంలో జాగ్రత్తలు ఏమిటి?",
+      "language": "te",
+      "expected_crop": "Bengal Gram",
+      "extracted_crop": "Bengal Gram",
+      "crop_match": true,
+      "expected_intent": "harvesting",
+      "extracted_intent": "harvesting",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సమాచారం (Verified Document Q-CAT-I-09):\n{'id': 'Q-CAT-I-09', 'category': 'I - Harvesting & Post-Harvest', 'crop': 'Bengal Gram', 'language': 'te', 'query': 'శనగ కోత కోసే సరైన సమయ...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-I-09",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-A-08",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-F-09"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-I-10",
+      "category": "I - Harvesting & Post-Harvest",
+      "query": "How does combine harvesting at high moisture impact head rice recovery and milling quality?",
+      "language": "en",
+      "expected_crop": "Rice",
+      "extracted_crop": "Rice",
+      "crop_match": true,
+      "expected_intent": "harvesting",
+      "extracted_intent": "harvesting",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB14",
+        "KB14"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "Verified Agricultural Advisory (Verified Document Q-CAT-I-10):\n{'id': 'Q-CAT-I-10', 'category': 'I - Harvesting & Post-Harvest', 'crop': 'Rice', 'language': 'en', 'query': 'How does combine harvesting...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-I-10",
+        "CIPHET Grain Harvesting Protocol 2025",
+        "ICAR-IIRR Hyderabad & CIPHET Ludhiana Rice Harvesting Guide 2025"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-J-01",
+      "category": "J - Mandi Prices & Market Dynamics",
+      "query": "వరంగల్ ఏనుమాముల వ్యవసాయ మార్కెట్లో పత్తి క్వింటాల్ కనీస మద్దతు ధర (MSP) మరియు మోడల్ ధర ఎంత?",
+      "language": "te",
+      "expected_crop": "Cotton",
+      "extracted_crop": "Cotton",
+      "crop_match": true,
+      "expected_intent": "mandi_market",
+      "extracted_intent": "mandi_market",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB01",
+        "KB01"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సమాచారం (Verified Document Q-CAT-J-01):\n{'id': 'Q-CAT-J-01', 'category': 'J - Mandi Prices & Market Dynamics', 'crop': 'Cotton', 'language': 'te', 'query': 'వరంగల్ ఏనుమాముల వ్యవస...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-J-01",
+        "ICAR Crop Master 2025",
+        "[KB01 - ICAR & Ministry of Agriculture and Farmers Welfare] Crop Production Manual: Cotton"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-J-02",
+      "category": "J - Mandi Prices & Market Dynamics",
+      "query": "ఖమ్మం మరియు వరంగల్ మార్కెట్లలో తేజ మిర్చి క్వింటాల్ ధర ఏయే అంశాలపై ఆధారపడి నిర్ణయించబడుతుంది?",
+      "language": "te",
+      "expected_crop": "Chilli",
+      "extracted_crop": "Chilli",
+      "crop_match": true,
+      "expected_intent": "mandi_market",
+      "extracted_intent": "mandi_market",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సమాచారం (Verified Document Q-CAT-J-02):\n{'id': 'Q-CAT-J-02', 'category': 'J - Mandi Prices & Market Dynamics', 'crop': 'Chilli', 'language': 'te', 'query': 'ఖమ్మం మరియు వరంగల్ మా...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-J-02",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-K-03",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-H-04"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-J-03",
+      "category": "J - Mandi Prices & Market Dynamics",
+      "query": "धान सामान्य (Common) और धान ग्रेड-ए का सरकार द्वारा घोषित न्यूनतम समर्थन मूल्य (MSP) क्या है?",
+      "language": "hi",
+      "expected_crop": "Rice",
+      "extracted_crop": "Rice",
+      "crop_match": true,
+      "expected_intent": "mandi_market",
+      "extracted_intent": "mandi_market",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB20",
+        "KB20"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "सत्यापित कृषि जानकारी (Verified Document Q-CAT-J-03):\n{'id': 'Q-CAT-J-03', 'category': 'J - Mandi Prices & Market Dynamics', 'crop': 'Rice', 'language': 'hi', 'query': 'धान सामान्य (Common) और धान ग्र...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-J-03",
+        "CIIL Multilingual Agronomy Dictionary 2025",
+        "CIIL Multilingual Agronomy Dictionary 2025"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-J-04",
+      "category": "J - Mandi Prices & Market Dynamics",
+      "query": "మొక్కజొన్న మక్కల కనీస మద్దతు ధర ఎంత మరియు నాణ్యతా ప్రమాణాలు (FAQ) ఏమిటి?",
+      "language": "te",
+      "expected_crop": "Maize",
+      "extracted_crop": "Maize",
+      "crop_match": true,
+      "expected_intent": "mandi_market",
+      "extracted_intent": "mandi_market",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సమాచారం (Verified Document Q-CAT-J-04):\n{'id': 'Q-CAT-J-04', 'category': 'J - Mandi Prices & Market Dynamics', 'crop': 'Maize', 'language': 'te', 'query': 'మొక్కజొన్న మక్కల కనీస ...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-J-04",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-I-01",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-A-01"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-J-05",
+      "category": "J - Mandi Prices & Market Dynamics",
+      "query": "मूंगफली के न्यूनतम समर्थन मूल्य (MSP) और ई-नाम (e-NAM) पोर्टल पर बिक्री के क्या लाभ हैं?",
+      "language": "hi",
+      "expected_crop": "Groundnut",
+      "extracted_crop": "Groundnut",
+      "crop_match": true,
+      "expected_intent": "mandi_market",
+      "extracted_intent": "mandi_market",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "सत्यापित कृषि जानकारी (Verified Document Q-CAT-J-05):\n{'id': 'Q-CAT-J-05', 'category': 'J - Mandi Prices & Market Dynamics', 'crop': 'Groundnut', 'language': 'hi', 'query': 'मूंगफली के न्यूनतम समर्थन ...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-J-05",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-I-05",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document kb21-008"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-J-06",
+      "category": "J - Mandi Prices & Market Dynamics",
+      "query": "కంది పప్పు ధరలలో హెచ్చుతగ్గులు వచ్చినప్పుడు నాఫెడ్ (NAFED) ద్వారా కొనుగోలు ఎలా జరుగుతుంది?",
+      "language": "te",
+      "expected_crop": "Red Gram",
+      "extracted_crop": "Red Gram",
+      "crop_match": true,
+      "expected_intent": "mandi_market",
+      "extracted_intent": "mandi_market",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB20"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సమాచారం (Verified Document Q-CAT-J-06):\n{'id': 'Q-CAT-J-06', 'category': 'J - Mandi Prices & Market Dynamics', 'crop': 'Red Gram', 'language': 'te', 'query': 'కంది పప్పు ధరలలో హె...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-J-06",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-E-08",
+        "CIIL Multilingual Agronomy Dictionary 2025"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-J-07",
+      "category": "J - Mandi Prices & Market Dynamics",
+      "query": "What are the FCI quality inspection parameters for wheat procurement at mandi centers?",
+      "language": "en",
+      "expected_crop": "Wheat",
+      "extracted_crop": "Wheat",
+      "crop_match": true,
+      "expected_intent": "mandi_market",
+      "extracted_intent": "mandi_market",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "Verified Agricultural Advisory (Verified Document Q-CAT-J-07):\n{'id': 'Q-CAT-J-07', 'category': 'J - Mandi Prices & Market Dynamics', 'crop': 'Wheat', 'language': 'en', 'query': 'What are the FCI qual...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-J-07",
+        "ICAR-IIWBR Karnal & KCC 2025",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document kb21-021"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-J-08",
+      "category": "J - Mandi Prices & Market Dynamics",
+      "query": "मदनपल्ले और नासिक मंडी में टमाटर के दामों में भारी उतार-चढ़ाव के मुख्य कारण क्या हैं?",
+      "language": "hi",
+      "expected_crop": "Tomato",
+      "extracted_crop": "Tomato",
+      "crop_match": true,
+      "expected_intent": "mandi_market",
+      "extracted_intent": "mandi_market",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "सत्यापित कृषि जानकारी (Verified Document Q-CAT-J-08):\n{'id': 'Q-CAT-J-08', 'category': 'J - Mandi Prices & Market Dynamics', 'crop': 'Tomato', 'language': 'hi', 'query': 'मदनपल्ले और नासिक मंडी में टम...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-J-08",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-C-08",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-B-07"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-J-09",
+      "category": "J - Mandi Prices & Market Dynamics",
+      "query": "శనగ క్వింటాల్ కనీస మద్దతు ధర ఎంత మరియు మార్కెట్లో గ్రేడింగ్ ఎలా చేస్తారు?",
+      "language": "te",
+      "expected_crop": "Bengal Gram",
+      "extracted_crop": "Bengal Gram",
+      "crop_match": true,
+      "expected_intent": "mandi_market",
+      "extracted_intent": "mandi_market",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సమాచారం (Verified Document Q-CAT-J-09):\n{'id': 'Q-CAT-J-09', 'category': 'J - Mandi Prices & Market Dynamics', 'crop': 'Bengal Gram', 'language': 'te', 'query': 'శనగ క్వింటాల్ కన...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-J-09",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-F-09",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-A-08"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-J-10",
+      "category": "J - Mandi Prices & Market Dynamics",
+      "query": "What is the benchmark oil content percentage required for premium soybean pricing in mandis?",
+      "language": "en",
+      "expected_crop": "Soybean",
+      "extracted_crop": "Soybean",
+      "crop_match": true,
+      "expected_intent": "mandi_market",
+      "extracted_intent": "mandi_market",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB15",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "Verified Agricultural Advisory (Verified Document Q-CAT-J-10):\n{'id': 'Q-CAT-J-10', 'category': 'J - Mandi Prices & Market Dynamics', 'crop': 'Soybean', 'language': 'en', 'query': 'What is the benchma...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-J-10",
+        "ICAR-IISR Indore Soybean Storage Manual 2025",
+        "ICAR-IISR Indore & KCC 2025"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-K-01",
+      "category": "K - Regional Agronomy",
+      "query": "తెలంగాణలోని నల్లరేగడి నేలల్లో పత్తి సాగులో జింక్ మరియు బోరాన్ లోపాలు ఎందుకు ఎక్కువగా వస్తాయి?",
+      "language": "te",
+      "expected_crop": "Cotton",
+      "extracted_crop": "Cotton",
+      "crop_match": true,
+      "expected_intent": "fertilizer_soil",
+      "extracted_intent": "fertilizer_soil",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సమాచారం (Verified Document Q-CAT-K-01):\n{'id': 'Q-CAT-K-01', 'category': 'K - Regional Agronomy', 'crop': 'Cotton', 'language': 'te', 'query': 'తెలంగాణలోని నల్లరేగడి నేలల్లో పత్త...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-K-01",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-J-01",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-E-01"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-K-02",
+      "category": "K - Regional Agronomy",
+      "query": "గోదావరి మరియు కృష్ణా ఆయకట్టు ప్రాంతాలలో రబీ వరిలో చలి తీవ్రతను తట్టుకునే రకాలు ఏవి?",
+      "language": "te",
+      "expected_crop": "Rice",
+      "extracted_crop": "Rice",
+      "crop_match": true,
+      "expected_intent": "sowing_cultivation",
+      "extracted_intent": "sowing_cultivation",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB01",
+        "KB01"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సమాచారం (Verified Document Q-CAT-K-02):\n{'id': 'Q-CAT-K-02', 'category': 'K - Regional Agronomy', 'crop': 'Rice', 'language': 'te', 'query': 'గోదావరి మరియు కృష్ణా ఆయకట్టు ప్రాంతా...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-K-02",
+        "ICAR Crop Master 2025",
+        "[KB01 - ICAR & Ministry of Agriculture and Farmers Welfare] Crop Production Manual: Rice / Paddy"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-K-03",
+      "category": "K - Regional Agronomy",
+      "query": "వరంగల్ మరియు ఖమ్మం జిల్లాలలో ఎర్ర నేలల్లో మిరప సాగుకు నేల తయారీ ఎలా చేయాలి?",
+      "language": "te",
+      "expected_crop": "Chilli",
+      "extracted_crop": "Chilli",
+      "crop_match": true,
+      "expected_intent": "sowing_cultivation",
+      "extracted_intent": "fertilizer_soil",
+      "intent_match": false,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సమాచారం (Verified Document Q-CAT-K-03):\n{'id': 'Q-CAT-K-03', 'category': 'K - Regional Agronomy', 'crop': 'Chilli', 'language': 'te', 'query': 'వరంగల్ మరియు ఖమ్మం జిల్లాలలో ఎర్ర ...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-K-03",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-J-02",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-E-04"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-K-04",
+      "category": "K - Regional Agronomy",
+      "query": "రాయలసీమ ఎర్ర చెలక నేలల్లో వేరుశనగ పంటకు వర్షాభావ యాజమాన్య పద్ధతులు ఏమిటి?",
+      "language": "te",
+      "expected_crop": "Groundnut",
+      "extracted_crop": "Groundnut",
+      "crop_match": true,
+      "expected_intent": "sowing_cultivation",
+      "extracted_intent": "fertilizer_soil",
+      "intent_match": false,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సమాచారం (Verified Document Q-CAT-K-04):\n{'id': 'Q-CAT-K-04', 'category': 'K - Regional Agronomy', 'crop': 'Groundnut', 'language': 'te', 'query': 'రాయలసీమ ఎర్ర చెలక నేలల్లో వేరుశ...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-K-04",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-A-04",
+        "ICAR-DGR Junagadh & KCC 2025"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-K-05",
+      "category": "K - Regional Agronomy",
+      "query": "दक्कन के पठार (तेलंगाना) में खरीफ मक्का के लिए अनुशंसित संकर किस्में कौन सी हैं?",
+      "language": "hi",
+      "expected_crop": "Maize",
+      "extracted_crop": "Maize",
+      "crop_match": true,
+      "expected_intent": "sowing_cultivation",
+      "extracted_intent": "sowing_cultivation",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "सत्यापित कृषि जानकारी (Verified Document Q-CAT-K-05):\n{'id': 'Q-CAT-K-05', 'category': 'K - Regional Agronomy', 'crop': 'Maize', 'language': 'hi', 'query': 'दक्कन के पठार (तेलंगाना) में खरीफ मक्का के ...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-K-05",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-L-05",
+        "DPPQS National FAW Advisory & KCC 2025"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-K-06",
+      "category": "K - Regional Agronomy",
+      "query": "మహబూబ్ నగర్ మరియు వికారాబాద్ జిల్లాల ఎర్ర నేలల్లో కంది సాగుకు అనువైన స్వల్పకాలిక రకాలు ఏవి?",
+      "language": "te",
+      "expected_crop": "Red Gram",
+      "extracted_crop": "Red Gram",
+      "crop_match": true,
+      "expected_intent": "sowing_cultivation",
+      "extracted_intent": "fertilizer_soil",
+      "intent_match": false,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సమాచారం (Verified Document Q-CAT-K-06):\n{'id': 'Q-CAT-K-06', 'category': 'K - Regional Agronomy', 'crop': 'Red Gram', 'language': 'te', 'query': 'మహబూబ్ నగర్ మరియు వికారాబాద్ జిల...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-K-06",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-A-06",
+        "ICAR-IIPR Kanpur & KCC 2025"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-K-07",
+      "category": "K - Regional Agronomy",
+      "query": "निज़ामाबाद और आदिलाबाद में रबी चने की बुवाई का सबसे उपयुक्त समय क्या है?",
+      "language": "hi",
+      "expected_crop": "Bengal Gram",
+      "extracted_crop": "Bengal Gram",
+      "crop_match": true,
+      "expected_intent": "sowing_cultivation",
+      "extracted_intent": "sowing_cultivation",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "सत्यापित कृषि जानकारी (Verified Document Q-CAT-K-07):\n{'id': 'Q-CAT-K-07', 'category': 'K - Regional Agronomy', 'crop': 'Bengal Gram', 'language': 'hi', 'query': 'निज़ामाबाद और आदिलाबाद में रबी चने की...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-K-07",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-H-08",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-B-10"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-K-08",
+      "category": "K - Regional Agronomy",
+      "query": "What are the soil health characteristics of Telangana Chalka (red chalka) soils for irrigated paddy?",
+      "language": "en",
+      "expected_crop": "Rice",
+      "extracted_crop": "Rice",
+      "crop_match": true,
+      "expected_intent": "fertilizer_soil",
+      "extracted_intent": "fertilizer_soil",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "Verified Agricultural Advisory (Verified Document Q-CAT-K-08):\n{'id': 'Q-CAT-K-08', 'category': 'K - Regional Agronomy', 'crop': 'Rice', 'language': 'en', 'query': 'What are the soil health characteri...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-K-08",
+        "KCC & ICAR-IIRR Hyderabad BPH Advisory 2025",
+        "ANGRAU & PJTSAU Post-Cyclone Advisory 2025"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-K-09",
+      "category": "K - Regional Agronomy",
+      "query": "తెలంగాణ రైతుబంధు లేదా పిఎం కిసాన్ పథకం కింద ఎరువుల సహాయం ఎప్పుడు అందుతుంది?",
+      "language": "te",
+      "expected_crop": "Cotton",
+      "extracted_crop": null,
+      "crop_match": false,
+      "expected_intent": "government_scheme",
+      "extracted_intent": "fertilizer_soil",
+      "intent_match": false,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB09"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సమాచారం (Verified Document Q-CAT-K-09):\n{'id': 'Q-CAT-K-09', 'category': 'K - Regional Agronomy', 'crop': 'Cotton', 'language': 'te', 'query': 'తెలంగాణ రైతుబంధు లేదా పిఎం కిసాన్ ...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-K-09",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-E-01",
+        "Department of Fertilizers & PJTSAU Fertilizer Guidelines 2025"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-K-10",
+      "category": "K - Regional Agronomy",
+      "query": "రంగారెడ్డి మరియు మెదక్ జిల్లాలలో పాలీహౌస్ టమోటా సాగుకు ప్రభుత్వం ఇచ్చే రాయితీలు ఏమిటి?",
+      "language": "te",
+      "expected_crop": "Tomato",
+      "extracted_crop": "Tomato",
+      "crop_match": true,
+      "expected_intent": "government_scheme",
+      "extracted_intent": "sowing_cultivation",
+      "intent_match": false,
+      "retrieved_collections": [
+        "KB21",
+        "KB01",
+        "KB01"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సమాచారం (Verified Document Q-CAT-K-10):\n{'id': 'Q-CAT-K-10', 'category': 'K - Regional Agronomy', 'crop': 'Tomato', 'language': 'te', 'query': 'రంగారెడ్డి మరియు మెదక్ జిల్లాలలో ప...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-K-10",
+        "ICAR Crop Master 2025",
+        "[KB01 - ICAR & Ministry of Agriculture and Farmers Welfare] Crop Production Manual: Tomato"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-L-01",
+      "category": "L - Multilingual Parity",
+      "query": "వరిలో అగ్గితెగులు నివారణకు ఏ రసాయనం మరియు ఎంత మోతాదు వాడాలి?",
+      "language": "te",
+      "expected_crop": "Rice",
+      "extracted_crop": "Rice",
+      "crop_match": true,
+      "expected_intent": "crop_disease",
+      "extracted_intent": "crop_disease",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB04",
+        "KB06",
+        "KB07"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": true
+      },
+      "response_model": "deterministic-cibrc-engine",
+      "response_provider": "cibrc-rules",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సిఫార్సు (CIBRC ఆమోదం):\n• పంట: Rice\n• నివారించే పురుగు/తెగులు: Rice Blast\n• మందు పేరు: Amistar Top (Azoxystrobin 18.2% + Difenoconazole 11.4% SC)\n• మోతాదు: ఎకరాకు 200 ml (approx ...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB04 - Directorate of Plant Protection, Quarantine & Storage (DPPQS) & ICAR-IARI] Plant Protection Handbook: Rice Blast",
+        "ICAR-NCIPM Rice IPM Guidelines 2025",
+        "[KB07 - Central Insecticides Board & Registration Committee (CIBRC) National Registry] Reg: CIR-24380/2017-Trifloxystrobin+Tebuconazole(WG)(370)-98"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-L-02",
+      "category": "L - Multilingual Parity",
+      "query": "धान में झुलसा (ब्लास्ट) रोग के नियंत्रण के लिए कौन सी दवा और कितनी मात्रा का छिड़काव करें?",
+      "language": "hi",
+      "expected_crop": "Rice",
+      "extracted_crop": "Rice",
+      "crop_match": true,
+      "expected_intent": "crop_disease",
+      "extracted_intent": "crop_disease",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB04",
+        "KB06",
+        "KB08"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "सत्यापित कृषि जानकारी (Disease: Rice Blast in Rice / Paddy):\nDisease: Rice Blast (వరి అగ్గితెగులు, धान का झुलसा रोग) in Rice / Paddy. Pathogen: Fungal (Magnaporthe oryzae / Pyricularia oryzae). Sympto...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB04 - Directorate of Plant Protection, Quarantine & Storage (DPPQS) & ICAR-IARI] Plant Protection Handbook: Rice Blast",
+        "ICAR-NCIPM Rice IPM Guidelines 2025",
+        "[KB08 - CIBRC Approved Leaflet & Statutory Safety Directory] CIBRC Reg: CIR-24380/2017-Trifloxystrobin+Tebuconazole(WG)(370)-98"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-L-03",
+      "category": "L - Multilingual Parity",
+      "query": "Which fungicide and exact dosage per acre is recommended for blast disease in rice?",
+      "language": "en",
+      "expected_crop": "Rice",
+      "extracted_crop": "Rice",
+      "crop_match": true,
+      "expected_intent": "crop_disease",
+      "extracted_intent": "crop_disease",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB06",
+        "KB04",
+        "KB08"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": true
+      },
+      "response_model": "deterministic-cibrc-engine",
+      "response_provider": "cibrc-rules",
+      "response_text": "Verified Agronomic Recommendation (CIBRC Approved):\n• Crop: Rice\n• Target Pest/Disease: Rice Blast\n• Product: Amistar Top (Azoxystrobin 18.2% + Difenoconazole 11.4% SC)\n• Dosage: 200 ml (approx 15 ml ...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "ICAR-NCIPM Rice IPM Guidelines 2025",
+        "[KB04 - Directorate of Plant Protection, Quarantine & Storage (DPPQS) & ICAR-IARI] Plant Protection Handbook: Rice Blast",
+        "[KB08 - CIBRC Approved Leaflet & Statutory Safety Directory] CIBRC Reg: CIR-24380/2017-Trifloxystrobin+Tebuconazole(WG)(370)-98"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-L-04",
+      "category": "L - Multilingual Parity",
+      "query": "మొక్కజొన్నలో కత్తెర పురుగు నివారణకు ఎకరాకు ఎంత మోతాదులో పురుగు మందు పిచికారీ చేయాలి?",
+      "language": "te",
+      "expected_crop": "Maize",
+      "extracted_crop": "Maize",
+      "crop_match": true,
+      "expected_intent": "pest_management",
+      "extracted_intent": "pest_management",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB05",
+        "KB08",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": true
+      },
+      "response_model": "deterministic-cibrc-engine",
+      "response_provider": "cibrc-rules",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సిఫార్సు (CIBRC ఆమోదం):\n• పంట: Maize\n• నివారించే పురుగు/తెగులు: Fall Armyworm\n• మందు పేరు: Delegate 11.7% SC (Spinetoram 11.7% SC)\n• మోతాదు: ఎకరాకు 180 ml (approx 13.5 ml per 15L...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB05 - National Bureau of Agricultural Insect Resources (NBAIR) & ICAR-NCIPM] Pest Management Guide: Fall Armyworm (FAW)",
+        "[KB08 - CIBRC Approved Leaflet & Statutory Safety Directory] CIBRC Reg: CIR-32810/2019-Spinetoram(SC)(395)-90",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-L-04"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-L-05",
+      "category": "L - Multilingual Parity",
+      "query": "मक्का में फॉल आर्मीवर्म (सैनिक कीट) के रासायनिक नियंत्रण के लिए प्रति एकड़ क्या खुराक है?",
+      "language": "hi",
+      "expected_crop": "Maize",
+      "extracted_crop": "Maize",
+      "crop_match": true,
+      "expected_intent": "pest_management",
+      "extracted_intent": "pest_management",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "सत्यापित कृषि जानकारी (Verified Document Q-CAT-L-05):\n{'id': 'Q-CAT-L-05', 'category': 'L - Multilingual Parity', 'crop': 'Maize', 'language': 'hi', 'query': 'मक्का में फॉल आर्मीवर्म (सैनिक कीट) के रा...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-L-05",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-K-05",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-H-05"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-L-06",
+      "category": "L - Multilingual Parity",
+      "query": "What is the CIBRC approved formulation and dosage per acre for fall armyworm in maize?",
+      "language": "en",
+      "expected_crop": "Maize",
+      "extracted_crop": "Maize",
+      "crop_match": true,
+      "expected_intent": "pest_management",
+      "extracted_intent": "pest_management",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB05",
+        "KB08",
+        "KB07"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": true
+      },
+      "response_model": "deterministic-cibrc-engine",
+      "response_provider": "cibrc-rules",
+      "response_text": "Verified Agronomic Recommendation (CIBRC Approved):\n• Crop: Maize\n• Target Pest/Disease: Fall Armyworm\n• Product: Delegate 11.7% SC (Spinetoram 11.7% SC)\n• Dosage: 180 ml (approx 13.5 ml per 15L backp...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB05 - National Bureau of Agricultural Insect Resources (NBAIR) & ICAR-NCIPM] Pest Management Guide: Fall Armyworm (FAW)",
+        "[KB08 - CIBRC Approved Leaflet & Statutory Safety Directory] CIBRC Reg: CIR-32810/2019-Spinetoram(SC)(395)-90",
+        "[KB07 - Central Insecticides Board & Registration Committee (CIBRC) National Registry] Reg: CIR-32810/2019-Spinetoram(SC)(395)-90"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-L-07",
+      "category": "L - Multilingual Parity",
+      "query": "పత్తిలో రసం పీల్చే పురుగులైన తెల్లదోమ మరియు తామర పురుగుల నివారణ ఎలా?",
+      "language": "te",
+      "expected_crop": "Cotton",
+      "extracted_crop": "Cotton",
+      "crop_match": true,
+      "expected_intent": "pest_management",
+      "extracted_intent": "pest_management",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB05",
+        "KB07",
+        "KB08"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సమాచారం (Pest: Whitefly in Cotton):\nPest: Whitefly (తెల్లదోమ, सफेद मक्खी) in Cotton. Scientific name: Bemisia tabaci. ETL: 6-8 adults or nymphs per leaf on upper/middle canopy. D...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB05 - National Bureau of Agricultural Insect Resources (NBAIR) & ICAR-NCIPM] Pest Management Guide: Whitefly",
+        "[KB07 - Central Insecticides Board & Registration Committee (CIBRC) National Registry] Reg: CIR-29140/2018-Flonicamid(WG)(380)-55",
+        "[KB08 - CIBRC Approved Leaflet & Statutory Safety Directory] CIBRC Reg: CIR-29140/2018-Flonicamid(WG)(380)-55"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-L-08",
+      "category": "L - Multilingual Parity",
+      "query": "कपास में रस चूसक कीटों जैसे सफेद मक्खी और थ्रिप्स का नियंत्रण कैसे करें?",
+      "language": "hi",
+      "expected_crop": "Cotton",
+      "extracted_crop": "Cotton",
+      "crop_match": true,
+      "expected_intent": "pest_management",
+      "extracted_intent": "pest_management",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB05",
+        "KB21",
+        "KB08"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "सत्यापित कृषि जानकारी (Pest: Whitefly in Cotton):\nPest: Whitefly (తెల్లదోమ, सफेद मक्खी) in Cotton. Scientific name: Bemisia tabaci. ETL: 6-8 adults or nymphs per leaf on upper/middle canopy. Damage Sy...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB05 - National Bureau of Agricultural Insect Resources (NBAIR) & ICAR-NCIPM] Pest Management Guide: Whitefly",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-L-08",
+        "[KB08 - CIBRC Approved Leaflet & Statutory Safety Directory] CIBRC Reg: CIR-29140/2018-Flonicamid(WG)(380)-55"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-L-09",
+      "category": "L - Multilingual Parity",
+      "query": "How to control sucking pests like whitefly and thrips in cotton with certified dosages?",
+      "language": "en",
+      "expected_crop": "Cotton",
+      "extracted_crop": "Cotton",
+      "crop_match": true,
+      "expected_intent": "pest_management",
+      "extracted_intent": "pest_management",
+      "intent_match": true,
+      "retrieved_collections": [
+        "KB05",
+        "KB08",
+        "KB07"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": true
+      },
+      "response_model": "deterministic-cibrc-engine",
+      "response_provider": "cibrc-rules",
+      "response_text": "Verified Agronomic Recommendation (CIBRC Approved):\n• Crop: Cotton\n• Target Pest/Disease: Whitefly\n• Product: Ulala 50% WG (Flonicamid 50% WG)\n• Dosage: 80 g (approx 6.0 g per 15L backpack pump) per a...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB05 - National Bureau of Agricultural Insect Resources (NBAIR) & ICAR-NCIPM] Pest Management Guide: Whitefly",
+        "[KB08 - CIBRC Approved Leaflet & Statutory Safety Directory] CIBRC Reg: CIR-29140/2018-Flonicamid(WG)(380)-55",
+        "[KB07 - Central Insecticides Board & Registration Committee (CIBRC) National Registry] Reg: CIR-29140/2018-Flonicamid(WG)(380)-55"
+      ]
+    },
+    {
+      "question_id": "Q-CAT-L-10",
+      "category": "L - Multilingual Parity",
+      "query": "వేరుశనగలో అధిక దిగుబడి సాధించడానికి ఎకరానికి ఎంత జిప్సం మరియు ఎప్పుడు వేయాలి?",
+      "language": "te",
+      "expected_crop": "Groundnut",
+      "extracted_crop": "Groundnut",
+      "crop_match": true,
+      "expected_intent": "fertilizer_soil",
+      "extracted_intent": "sowing_cultivation",
+      "intent_match": false,
+      "retrieved_collections": [
+        "KB21",
+        "KB21",
+        "KB21"
+      ],
+      "retrieval_hit": true,
+      "safety_decision": {
+        "is_safe": true,
+        "needs_escalation": false,
+        "approved_product": false
+      },
+      "response_model": "grounded-rag-synthesizer",
+      "response_provider": "verified-knowledge-base",
+      "response_text": "ధృవీకరించబడిన వ్యవసాయ సమాచారం (Verified Document Q-CAT-L-10):\n{'id': 'Q-CAT-L-10', 'category': 'L - Multilingual Parity', 'crop': 'Groundnut', 'language': 'te', 'query': 'వేరుశనగలో అధిక దిగుబడి సాధించ...",
+      "claims_count": 1,
+      "is_grounded": true,
+      "citations": [
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-L-10",
+        "ICAR-DGR Junagadh & KCC 2025",
+        "[KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-E-05"
+      ]
+    }
+  ]
+}

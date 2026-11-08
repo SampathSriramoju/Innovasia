@@ -1,0 +1,62 @@
+[
+  {
+    "faq_id": "kcc-faq-001",
+    "crop": "Cotton",
+    "category": "Nutrient Deficiency",
+    "question_en": "Why are cotton leaves turning bronze-red and shedding prematurely?",
+    "question_te": "పత్తిలో ఆకులు ఎరుపు రంగులోకి మారి ఎందుకు రాలిపోతున్నాయి?",
+    "question_hi": "कपास में पत्तियां लाल होकर समय से पहले क्यों गिर रही हैं?",
+    "answer_en": "Leaf reddening (Lal Patti) is caused by Magnesium deficiency, sudden drops in night temperature (<18°C), or severe jassid infestation. Remedy: Foliar spray of Magnesium Sulphate (MgSO4 @ 10 g/L) + Urea (10 g/L) twice at 45 and 65 DAS.",
+    "answer_te": "ఆకు ఎరుపు రంగులోకి మారడం మెగ్నీషియం లోపం, చలి తీవ్రత లేదా రసం పీల్చే పురుగుల వలన వస్తుంది. నివారణ: మెగ్నీషియం సల్ఫేట్ (10 గ్రా/లీ) + యూరియా (10 గ్రా/లీ) కలిపి 45 మరియు 65 రోజులలో పిచికారీ చేయాలి.",
+    "answer_hi": "पत्तियों का लाल होना मैग्नीशियम की कमी, ठंड और रस चूसक कीटों के कारण होता है। उपाय: मैग्नीशियम सल्फेट (10 ग्राम/ली) + यूरिया (10 ग्राम/ली) का 45 और 65 दिनों पर छिड़काव करें।",
+    "source": "Kisan Call Center (KCC) National Query Repository & PJTSAU 2025"
+  },
+  {
+    "faq_id": "kcc-faq-002",
+    "crop": "Rice / Paddy",
+    "category": "Pest Management",
+    "question_en": "Circular patches of dried crop ('hopper burn') appear in paddy field. What should be done?",
+    "question_te": "వరి చేనులో వలయాకారంలో పైరు ఎండిపోయి సుడిదోమ (హాప్పర్ బర్న్) లక్షణాలు కనిపిస్తున్నాయి. ఏమి చేయాలి?",
+    "question_hi": "धान में गोलाकार चकत्तों में फसल सूख रही है (हॉपर बर्न)। क्या करें?",
+    "answer_en": "This is severe Brown Plant Hopper (BPH) attack. Drain standing water from the field immediately. Provide alleyways (aeration paths every 2 meters). Spray Pymetrozine 50% WG @ 120 g/acre or Triflumezopyrim 10% SC @ 94 ml/acre directed at plant base using 200L water.",
+    "answer_te": "ఇది గోధుమ రంగు సుడిదోమ ఉధృతి. వెంటనే పొలంలోని నీటిని తీసివేసి ఆరబెట్టాలి. ప్రతి 2 మీటర్లకు బాటలు తీయాలి. పైమెట్రోజైన్ 50% డబ్ల్యూజీ 120 గ్రా లేదా ట్రైఫ్లూమెజోపైరిమ్ 10% ఎస్సీ 94 మి.లీ ఎకరాకు మొక్క మొదళ్లపై పడేలా పిచికారీ చేయాలి.",
+    "answer_hi": "यह भूरा फुदका (BPH) का गंभीर प्रकोप है। खेत से तुरंत पानी निकाल दें। पाइसमेट्रोज़िन 50% WG 120 ग्राम या ट्राइफ्लूमेज़ोपाइरिम 10% SC 94 मिली प्रति एकड़ 200 लीटर पानी में मिलाकर पौधों की जड़ों के पास छिड़कें।",
+    "source": "KCC & Directorate of Rice Research (IIRR) Hyderabad 2025"
+  },
+  {
+    "faq_id": "kcc-faq-003",
+    "crop": "Chilli",
+    "category": "Pest Management",
+    "question_en": "Chilli leaves are curling upwards into boat-shaped structures. How to control it?",
+    "question_te": "మిరప ఆకులు పైకి దోనెలా ముడుచుకుపోతున్నాయి. ఎలా నివారించాలి?",
+    "question_hi": "मिर्च की पत्तियां ऊपर की ओर नाव के आकार में मुड़ रही हैं। नियंत्रण कैसे करें?",
+    "answer_en": "Upward curling is caused by Chilli Thrips (Scirtothrips dorsalis). Install 15-20 blue sticky traps per acre. Spray Diafenthiuron 50% WP @ 240 g/acre or Spinetoram 11.7% SC @ 180 ml/acre in 200L water. Ensure both sides of leaves are wetted.",
+    "answer_te": "ఆకులు పైకి ముడుచుకోవడం తామర పురుగుల (థ్రిప్స్) లక్షణం. ఎకరాకు 15-20 నీలిరంగు జిగురు అట్టలు పెట్టాలి. డయాఫెంథియురాన్ 50% డబ్ల్యూపీ 240 గ్రా లేదా స్పినెటోరమ్ 11.7% ఎస్సీ 180 మి.లీ 200 లీటర్ల నీటిలో కలిపి పిచికారీ చేయాలి.",
+    "answer_hi": "पत्तियों का ऊपर मुड़ना थ्रिप्स के कारण होता है। प्रति एकड़ 15-20 नीले चिपचिपे प्रपंच लगाएं। डायफेंथियूरॉन 50% WP 240 ग्राम या स्पिनेटोरम 11.7% SC 180 मिली प्रति एकड़ छिड़कें।",
+    "source": "KCC & ICAR-IIHR Bengaluru 2025"
+  },
+  {
+    "faq_id": "kcc-faq-004",
+    "crop": "Tomato",
+    "category": "Disease Management",
+    "question_en": "Lower leaves of tomato have dark brown circular target-board spots. What is the cure?",
+    "question_te": "టమోటా దిగువ ఆకులపై గుండ్రటి నల్లటి వలయాలు (టార్గెట్ బోర్డు) మచ్చలు కనిపిస్తున్నాయి. ఏమి చేయాలి?",
+    "question_hi": "टमाटर की निचली पत्तियों पर भूरे छल्लेदार धब्बे हैं। क्या उपाय है?",
+    "answer_en": "This is Early Blight caused by Alternaria solani. Remove severely infected lower leaves. Spray Mancozeb 75% WP @ 600-800 g/acre or Azoxystrobin 18.2% + Difenoconazole 11.4% SC @ 200 ml/acre in 200L water.",
+    "answer_te": "ఇది ఆల్టర్నేరియా ముందస్తు ఆకుమచ్చ తెగులు. వ్యాధి సోకిన దిగువ ఆకులను తీసివేయాలి. మాంకోజెబ్ 75% డబ్ల్యూపీ 600-800 గ్రా లేదా అజాక్సిస్ట్రోబిన్ + డైఫెనోకోనజోల్ 200 మి.లీ 200 లీటర్ల నీటిలో కలిపి పిచికారీ చేయాలి.",
+    "answer_hi": "यह अगेती झुलसा (अल्टरनेरिया) रोग है। ग्रसित निचली पत्तियों को हटा दें। मैंकोजेब 75% WP 600-800 ग्राम या एज़ोक्सीस्ट्रोबिन + डाइफेनोकोनाज़ोल 200 मिली प्रति एकड़ 200 लीटर पानी में छिड़कें।",
+    "source": "KCC & National Institute of Plant Health Management (NIPHM) 2025"
+  },
+  {
+    "faq_id": "kcc-faq-005",
+    "crop": "Cotton",
+    "category": "Pest Management",
+    "question_en": "Pink Bollworm moths are being caught in pheromone traps. When should I spray?",
+    "question_te": "లింగాకర్షక బుట్టలలో గులాబీ రంగు పురుగు రెక్కల పురుగులు పడుతున్నాయి. ఎప్పుడు పిచికారీ చేయాలి?",
+    "question_hi": "फेरोमोन ट्रैप में गुलाबी सुंडी के पतंगे आ रहे हैं। कब छिड़काव करना चाहिए?",
+    "answer_en": "Economic Threshold Level (ETL) is 8 moths per trap per night for 3 consecutive nights OR 10% damaged green bolls. If exceeded, spray Emamectin Benzoate 5% SG @ 88 g/acre (6.6 g per 15L pump) or Chlorantraniliprole 18.5% SC @ 60 ml/acre in 200L water.",
+    "answer_te": "ఆర్థిక నష్ట పరిమితి (ETL) వరుసగా 3 రాత్రులు బుట్టకు 8 రెక్కల పురుగులు లేదా 10% రోసెట్ పువ్వులు గమనించినపుడు మాత్రమే పిచికారీ చేయాలి. ఎమామెక్టిన్ బెంజోయేట్ 5% ఎస్జీ 88 గ్రా (15 లీటర్ల పంపుకు 6.6 గ్రా) 200 లీటర్ల నీటిలో కలిపి కొట్టాలి.",
+    "answer_hi": "आर्थिक क्षति स्तर (ETL) लगातार 3 रातों तक प्रति ट्रैप 8 पतंगे या 10% हरी कलियों में नुकसान होने पर ही छिड़काव करें। इमामेक्टिन बेंजोएट 5% SG 88 ग्राम (प्रति 15 लीटर पंप 6.6 ग्राम) का छिड़काव करें।",
+    "source": "KCC & ICAR-CICR Nagpur 2025"
+  }
+]

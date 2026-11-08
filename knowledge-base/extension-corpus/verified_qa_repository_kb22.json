@@ -1,0 +1,38 @@
+[
+  {
+    "case_id": "case-wgl-2026-081",
+    "district": "Warangal",
+    "mandal": "Geesugonda",
+    "crop": "Cotton",
+    "growth_stage": "Peak Squaring (55 DAS)",
+    "officer_name": "Dr. K. Srinivas Rao, MAO",
+    "farmer_reported_issue": "Sudden wilting of scattered cotton plants after heavy rain followed by bright sunshine. Soil is black clayey loam.",
+    "diagnosis": "Para-wilt (Physiological Wilt) caused by sudden root asphyxiation / oxygen depletion in saturated soil followed by high transpiration demand.",
+    "verified_prescription": "Do NOT apply chemical fungicides. Drench plant basin with 1% Copper Oxychloride (30g in 10L water) only if collar rot is observed. For para-wilt: Spray 1% Urea (10g/L) + 1% Potassium Nitrate (KNO3 @ 10g/L) or 2% DAP solution to revive root absorption. Lightly stir soil around plants with hoe to allow root aeration.",
+    "outcome": "90% of wilted plants revived within 72 hours; normal boll formation resumed."
+  },
+  {
+    "case_id": "case-krm-2026-104",
+    "district": "Karimnagar",
+    "mandal": "Huzurabad",
+    "crop": "Rice / Paddy",
+    "growth_stage": "Panicle Initiation (65 DAS)",
+    "officer_name": "Smt. T. Padma, AEO",
+    "farmer_reported_issue": "Greyish water-soaked oval lesions on lower leaf sheaths near water line with brown undulating margins. Farmer intended to mix Monocrotophos with Carbendazim.",
+    "diagnosis": "Sheath Blight caused by Rhizoctonia solani. Stopped farmer from using Monocrotophos (ineffective against fungal sheath blight and hazardous).",
+    "verified_prescription": "Drain excess water from field to keep water level below 2 cm. Apply Hexaconazole 5% SC @ 400 ml/acre or Validamycin 3% L @ 400 ml/acre in 200L water directed at the stem base. Repeat after 12 days if disease progresses.",
+    "outcome": "Disease contained at lower leaf sheaths; no neck infection occurred."
+  },
+  {
+    "case_id": "case-gnt-2026-215",
+    "district": "Guntur",
+    "mandal": "Prathipadu",
+    "crop": "Chilli",
+    "growth_stage": "Flowering & Fruit Setting (75 DAS)",
+    "officer_name": "Sri V. Mohan Reddy, ADA",
+    "farmer_reported_issue": "Downward leaf curling with elongated petiole ('inverted cup' symptom), plants looking dark green and brittle.",
+    "diagnosis": "Yellow Mite (Polyphagotarsonemus latus) infestation. Distinct from thrips which cause upward curling.",
+    "verified_prescription": "Apply Spiromesifen 22.9% SC @ 200 ml/acre or Propergite 57% EC @ 400 ml/acre in 200L water. Ensure fine mist spray covering underside of leaves where mites colonize.",
+    "outcome": "Fresh foliage emerged normal within 10 days; flower drop halted."
+  }
+]

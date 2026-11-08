@@ -1,0 +1,130 @@
+[
+  {
+    "crop_name": "Cotton",
+    "physiological_maturity_signs": "Bolls turn brownish-black and hard, followed by bursting of 70-80% bolls exposing dry fluffy white seed cotton (kapas); leaves senesce and turn yellowish-bronze.",
+    "grain_or_produce_moisture_at_harvest": "Seed cotton moisture must be 8% - 10%; pick only when dew has dried completely (after 10:00 AM).",
+    "harvesting_methodology_and_equipment": "Manual hand-picking in 3-4 pickings at 15-day intervals. Pick clean, trash-free kapas; do not pick damaged/stained bolls along with good kapas (keep yellow stained bolls separate); avoid plastic twine or polypropylene shreds in harvest bags to prevent spinning mill contamination.",
+    "post_harvest_field_handling": "Spread kapas on clean tarpaulin sheets under sun for 4-6 hours to reduce moisture below 8% before packing into clean cotton bags. Shred stalks with tractor-drawn stubble shredder immediately after final pick to eliminate Pink Bollworm diapause.",
+    "citation": "ICAR-CICR Nagpur & CIRCOT Mumbai Cotton Harvesting Protocol 2025"
+  },
+  {
+    "crop_name": "Rice / Paddy",
+    "physiological_maturity_signs": "80-85% spikelets on panicles turn golden yellow / straw-colored, while lowest grains on panicle reach hard dough stage; flag leaves turn yellow.",
+    "grain_or_produce_moisture_at_harvest": "Optimal grain moisture at harvest: 20% - 22% for combine harvesting (prevents grain shattering loss); 18% - 20% for manual sickle harvesting.",
+    "harvesting_methodology_and_equipment": "Combine harvester with calibrated cylinder speed (700-800 RPM) to prevent cracked kernels; or manual cutting with improved serrated sickle at 5-10 cm above ground level.",
+    "post_harvest_field_handling": "Do not leave harvested sheaves in standing water; thresh immediately within 24 hours to prevent mould and enzymatic yellowing (stack burning). Sun dry on cement threshing floor or canvas tarpaulin until moisture reaches 13-14%.",
+    "citation": "ICAR-IIRR Hyderabad & CIPHET Ludhiana Rice Harvesting Guide 2025"
+  },
+  {
+    "crop_name": "Chilli",
+    "physiological_maturity_signs": "Green chillies: Harvest when pods reach full length, thick wall, and firm dark green texture. Dry red chillies: Harvest when pods turn completely dark red and firm.",
+    "grain_or_produce_moisture_at_harvest": "Fresh red pods have 70-75% moisture; must be sun-dried until dry pod moisture drops to 10% - 11% (seeds rattle inside pod).",
+    "harvesting_methodology_and_equipment": "Manual hand plucking with intact pedicel (stalk). Harvest in morning or evening in 4-6 pickings at 10-15 day intervals.",
+    "post_harvest_field_handling": "Spread on clean polythene sheets or solar polyhouse tunnel dryers. Avoid spreading directly on bare dirt floors to prevent aflatoxin contamination (Aspergillus flavus). Turn pods twice daily.",
+    "citation": "ICAR-IIHR Bengaluru & Spices Board India Chilli Manual 2025"
+  },
+  {
+    "crop_name": "Tomato",
+    "physiological_maturity_signs": "Harvest stage depends on market distance: 1. Mature Green (for long distance transport 3-5 days away); 2. Breaker Stage (blossom end shows pinkish-yellow blush, ideal for 2-3 day transport); 3. Pink / Turning (local wholesale); 4. Red Ripe (local retail and immediate processing).",
+    "grain_or_produce_moisture_at_harvest": "Fresh succulent berry with 93-94% water content.",
+    "harvesting_methodology_and_equipment": "Gently twist fruit from pedicel stem with calyx intact during early morning cool hours; place in plastic crates with foam lining (avoid stacking crates >4 layers high).",
+    "post_harvest_field_handling": "Field shade precooling under thatched sheds; sort out scarred, cat-faced, or diseased fruits before packing into 20-kg ventilated plastic crates.",
+    "citation": "ICAR-IIHR Vegetable Post-Harvest Manual 2025"
+  },
+  {
+    "crop_name": "Wheat",
+    "physiological_maturity_signs": "Entire canopy turns golden yellow; straw dries and turns brittle; grain cannot be dented with thumbnail and snaps with sharp sound when chewed.",
+    "grain_or_produce_moisture_at_harvest": "Grain moisture at harvest: 14% - 16% (combine harvesting); 12% - 14% for direct manual harvesting.",
+    "harvesting_methodology_and_equipment": "Combine harvester or reaper-binder; manual harvest using serrated sickles followed by multi-crop thresher.",
+    "post_harvest_field_handling": "Dry threshed grain on clean sun-drying floors until moisture reaches 10% - 12% before bagging.",
+    "citation": "ICAR-IIWBR Karnal Wheat Harvesting Protocol 2025"
+  },
+  {
+    "crop_name": "Maize",
+    "physiological_maturity_signs": "Black layer (abscission layer) forms at base of grain where it attaches to cob; husk leaves turn completely paper dry and pale straw-brown; grain moisture drops below 25%.",
+    "grain_or_produce_moisture_at_harvest": "Grain moisture at harvest: 20% - 22% for mechanical cob picker; 22% - 25% for manual cob picking.",
+    "harvesting_methodology_and_equipment": "Manual dehusking and cob snapping; or maize combine with specialized corn header. Shelling with power maize sheller.",
+    "post_harvest_field_handling": "Dry cobs in sun for 3-4 days before shelling; dry shelled kernels to 12% moisture to avoid aflatoxin development.",
+    "citation": "ICAR-IIMR Ludhiana Maize Post-Harvest Guide 2025"
+  },
+  {
+    "crop_name": "Groundnut / Peanut",
+    "physiological_maturity_signs": "Foliage turns yellowish with shedding of lower leaves; inner surface of pod shell develops dark brownish-black vascular netting when scraped with fingernail; kernels show characteristic variety seed coat color.",
+    "grain_or_produce_moisture_at_harvest": "Pod moisture at digging: 30% - 35%; must be dried down to 8% - 9% for safe storage.",
+    "harvesting_methodology_and_equipment": "Tractor-drawn groundnut digger-shaker-inverter or manual bullock blade puller. Invert plants so pods face upward exposed to sun.",
+    "post_harvest_field_handling": "Field curing in inverted windrows for 3-5 days until pods rattle; strip pods using mechanical groundnut pod stripper; sun dry on tarpaulin to <9% moisture to prevent Aspergillus aflatoxin.",
+    "citation": "ICAR-DGR Junagadh & CIPHET Groundnut Harvesting 2025"
+  },
+  {
+    "crop_name": "Soybean",
+    "physiological_maturity_signs": "90-95% leaves turn yellow and drop off leaving bare stems with brown pods; pods rattle distinctly when shaken; grain separates easily from pod shell.",
+    "grain_or_produce_moisture_at_harvest": "Harvest moisture: 13% - 15%; do not harvest below 12% as mechanical cylinder impact splits seed coat and destroys seed germination vigor.",
+    "harvesting_methodology_and_equipment": "Combine harvester with low cylinder speed (400-500 RPM) or manual harvesting with serrated sickle.",
+    "post_harvest_field_handling": "Clean, grade and sun dry slowly under partial shade to 9-10% moisture before storing in clean gunny bags.",
+    "citation": "ICAR-IISR Indore Soybean Harvesting Standard 2025"
+  },
+  {
+    "crop_name": "Red Gram / Pigeonpea",
+    "physiological_maturity_signs": "75-80% pods turn dry and brownish-grey; seeds harden inside pods; leaves dry and drop.",
+    "grain_or_produce_moisture_at_harvest": "Grain moisture at harvest: 14% - 16%; safe storage moisture: 10% - 11%.",
+    "harvesting_methodology_and_equipment": "Manual cutting of whole plants close to base using sickles; bundle and stack upright on threshing floor for 3-5 days curing.",
+    "post_harvest_field_handling": "Thresh by beating with sticks or using pulse thresher; winnow and dry grains in sun for 3 days before storage.",
+    "citation": "ICAR-IIPR Kanpur Pulses Post-Harvest 2025"
+  },
+  {
+    "crop_name": "Chickpea / Bengal Gram",
+    "physiological_maturity_signs": "Leaves and pods turn straw-yellow to golden brown; plants become dry and brittle; seeds shake loose inside inflated pods.",
+    "grain_or_produce_moisture_at_harvest": "Harvest moisture: 12% - 14%; safe storage moisture: 9% - 10%.",
+    "harvesting_methodology_and_equipment": "Manual pulling or sickle cutting in early morning hours to prevent pod shattering loss.",
+    "post_harvest_field_handling": "Stack bundles for 3-4 days in sun; thresh with tractor treading or spike-tooth pulse thresher; dry thoroughly.",
+    "citation": "ICAR-IIPR Kanpur Chickpea Guide 2025"
+  },
+  {
+    "crop_name": "Mustard / Rapeseed",
+    "physiological_maturity_signs": "75-80% siliquae (pods) turn yellowish-brown; seeds inside pods turn dark reddish-brown to black; stems turn yellow.",
+    "grain_or_produce_moisture_at_harvest": "Harvest moisture: 14% - 16%; safe storage moisture: 7% - 8%.",
+    "harvesting_methodology_and_equipment": "Harvest in early morning hours (before 9:00 AM) when dew dampens pods, preventing shattering of siliquae.",
+    "post_harvest_field_handling": "Tie in bundles and stack in conical stooks for 5-7 days; thresh on clean canvas floor; winnow and sun dry to <8% moisture.",
+    "citation": "ICAR-DRMR Bharatpur Mustard Harvesting Guide 2025"
+  },
+  {
+    "crop_name": "Sugarcane",
+    "physiological_maturity_signs": "Hand refractometer brix reading exceeds 18% - 20% in middle internodes; top-to-bottom brix ratio approaches 0.95 - 1.0 (Brix uniformity); metallic sound upon tapping cane; eyes turn prominent.",
+    "grain_or_produce_moisture_at_harvest": "Millable cane stalks; sucrose content 12-14%.",
+    "harvesting_methodology_and_equipment": "Harvest close to ground level using sharp cane billhooks / knives (bottom internodes contain highest sucrose concentration); de-trash green tops cleanly.",
+    "post_harvest_field_handling": "Supply cane to sugar mill within 24 hours of cutting; delay beyond 24-48 hours causes severe enzymatic inversion of sucrose into glucose and fructose, drastically dropping mill recovery.",
+    "citation": "ICAR-SBI Coimbatore Sugarcane Maturity & Milling Guide 2025"
+  },
+  {
+    "crop_name": "Onion",
+    "physiological_maturity_signs": "50% to 70% of plants show 'neck fall' (softening of pseudo-stem top and foliage collapsing to ground); outer bulb scales develop characteristic variety color.",
+    "grain_or_produce_moisture_at_harvest": "Fresh bulb moisture: 82-85%; outer skin cured down to papery parchment texture.",
+    "harvesting_methodology_and_equipment": "Manually pull bulbs by hand or loosen with Khurpi in dry weather; avoid bruising bulbs.",
+    "post_harvest_field_handling": "Field windrow curing: Arrange bulbs in rows so foliage covers lower bulbs protecting them from sunscald for 3-5 days. Then de-top leaving 2.0 - 2.5 cm neck attached to bulb (prevents rot organism entry). Shade cure for 10-12 days on slatted floors.",
+    "citation": "ICAR-DOGR Pune Onion Post-Harvest Protocol 2025"
+  },
+  {
+    "crop_name": "Potato",
+    "physiological_maturity_signs": "Haulm senescence: Vines turn yellow and naturally collapse; or chemical dehaulming performed 10-15 days before harvest; tuber skin sets firm and does not peel when rubbed with thumb pressure.",
+    "grain_or_produce_moisture_at_harvest": "Fresh tubers with 78-80% water; skin cured.",
+    "harvesting_methodology_and_equipment": "Tractor-drawn potato digger-elevator or bullock digger; manual picking into wicker baskets; avoid digging in wet soil.",
+    "post_harvest_field_handling": "Curing: Heap dug potatoes in heaps (1-1.5 m height) under shade covered with 10 cm dry paddy straw for 10-15 days at 15-20°C and 85-90% RH to allow skin thickening and wound healing before grading and storage.",
+    "citation": "ICAR-CPRI Shimla Potato Post-Harvest Protocol 2025"
+  },
+  {
+    "crop_name": "Turmeric",
+    "physiological_maturity_signs": "Foliage turns completely yellow, dries, and withers down to ground level (occurs at 7-9 months after planting depending on variety).",
+    "grain_or_produce_moisture_at_harvest": "Fresh rhizome moisture: 75-80%; cured dried finger moisture: 8% - 10%.",
+    "harvesting_methodology_and_equipment": "Cut dry aerial leaves to ground level; plough field with tractor or mould-board plough; lift clumps carefully with pickaxe without damaging rhizomes.",
+    "post_harvest_field_handling": "Separate mother rhizomes from fingers; clean adhering soil; boil fingers in water or alkaline solution in TNAU/IISR turmeric boilers for 45-60 minutes until soft; sun dry on clean floor for 10-15 days until crisp; polish in mechanical polishing drum.",
+    "citation": "ICAR-IISR Calicut & PJTSAU Turmeric Processing Manual 2025"
+  },
+  {
+    "crop_name": "Black Gram / Urad",
+    "physiological_maturity_signs": "80-85% pods turn brownish-black and dry; seeds harden inside pods.",
+    "grain_or_produce_moisture_at_harvest": "Harvest moisture: 14% - 16%; safe storage moisture: 9% - 10%.",
+    "harvesting_methodology_and_equipment": "Harvest entire plants close to base using sickles in early morning; or 2-stage pod picking.",
+    "post_harvest_field_handling": "Sun dry bundles on threshing floor for 3 days; thresh with beaters or mini thresher; winnow and dry to 9% moisture.",
+    "citation": "PJTSAU Vyavasaya Panchangam 2025"
+  }
+]

@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Bol Kisan</string>
+    <string name="tagline">Multilingual Agricultural Voice Assistant</string>
+    <string name="ask_question_prompt">Tap and speak your agricultural question</string>
+    <string name="listening">Listening… Speak now</string>
+    <string name="processing">Analyzing verified agricultural knowledge…</string>
+    <string name="safety_alert_title">Safety Alert</string>
+    <string name="escalated_to_officer">Escalated to Mandal Agricultural Officer</string>
+    <string name="btn_select_crop">Select Crop</string>
+    <string name="btn_disease_camera">Photo Query</string>
+    <string name="btn_mandi_prices">Mandi Prices</string>
+    <string name="btn_weather">Weather Advisory</string>
+    <string name="btn_officer_help">Officer Support</string>
+    <string name="btn_offline_knowledge">Offline Library</string>
+</resources>

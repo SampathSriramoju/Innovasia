@@ -1,0 +1,342 @@
+[
+  {
+    "product_trade_name": "Proclaim 5% SG",
+    "manufacturer": "Syngenta India Ltd",
+    "active_ingredient": "Emamectin Benzoate 5% SG",
+    "formulation_type": "Soluble Granule (SG)",
+    "cibrc_registration_number": "CIR-11425/2014-Emamectin Benzoate(SG)(345)-412",
+    "toxicity_band": "blue_moderately_toxic",
+    "target_crop_primary": "Cotton",
+    "statutory_source": "Central Insecticides Board & Registration Committee (CIBRC)"
+  },
+  {
+    "product_trade_name": "Ulala 50% WG",
+    "manufacturer": "UPL Ltd",
+    "active_ingredient": "Flonicamid 50% WG",
+    "formulation_type": "Water Dispersible Granule (WG)",
+    "cibrc_registration_number": "CIR-29140/2018-Flonicamid(WG)(380)-55",
+    "toxicity_band": "green_slightly_toxic",
+    "target_crop_primary": "Cotton",
+    "statutory_source": "Central Insecticides Board & Registration Committee (CIBRC)"
+  },
+  {
+    "product_trade_name": "Chess 50% WG",
+    "manufacturer": "Syngenta India Ltd",
+    "active_ingredient": "Pymetrozine 50% WG",
+    "formulation_type": "Water Dispersible Granule (WG)",
+    "cibrc_registration_number": "CIR-22910/2016-Pymetrozine(WG)(360)-102",
+    "toxicity_band": "green_slightly_toxic",
+    "target_crop_primary": "Rice / Paddy",
+    "statutory_source": "Central Insecticides Board & Registration Committee (CIBRC)"
+  },
+  {
+    "product_trade_name": "Amistar Top",
+    "manufacturer": "Syngenta India Ltd",
+    "active_ingredient": "Azoxystrobin 18.2% + Difenoconazole 11.4% SC",
+    "formulation_type": "Suspension Concentrate (SC)",
+    "cibrc_registration_number": "CIR-30412/2018-Azoxystrobin+Difenoconazole(SC)(380)-201",
+    "toxicity_band": "blue_moderately_toxic",
+    "target_crop_primary": "Rice",
+    "statutory_source": "Central Insecticides Board & Registration Committee (CIBRC)"
+  },
+  {
+    "product_trade_name": "Pegasus 50% WP",
+    "manufacturer": "Syngenta India Ltd",
+    "active_ingredient": "Diafenthiuron 50% WP",
+    "formulation_type": "Wettable Powder (WP)",
+    "cibrc_registration_number": "CIR-18234/2015-Diafenthiuron(WP)(350)-510",
+    "toxicity_band": "yellow_highly_toxic",
+    "target_crop_primary": "Chilli",
+    "statutory_source": "Central Insecticides Board & Registration Committee (CIBRC)"
+  },
+  {
+    "product_trade_name": "Tracer 45% SC",
+    "manufacturer": "Corteva Agriscience India",
+    "active_ingredient": "Spinosad 45% SC",
+    "formulation_type": "Suspension Concentrate (SC)",
+    "cibrc_registration_number": "CIR-15430/2014-Spinosad(SC)(335)-82",
+    "toxicity_band": "blue_moderately_toxic",
+    "target_crop_primary": "Chilli",
+    "statutory_source": "Central Insecticides Board & Registration Committee (CIBRC)"
+  },
+  {
+    "product_trade_name": "Dithane M-45",
+    "manufacturer": "Indofil Industries Ltd",
+    "active_ingredient": "Mancozeb 75% WP",
+    "formulation_type": "Wettable Powder (WP)",
+    "cibrc_registration_number": "CIR-4520/2009-Mancozeb(WP)(280)-18",
+    "toxicity_band": "green_slightly_toxic",
+    "target_crop_primary": "Tomato",
+    "statutory_source": "Central Insecticides Board & Registration Committee (CIBRC)"
+  },
+  {
+    "product_trade_name": "Coragen 18.5% SC",
+    "manufacturer": "FMC India Pvt Ltd",
+    "active_ingredient": "Chlorantraniliprole 18.5% SC",
+    "formulation_type": "Suspension Concentrate (SC)",
+    "cibrc_registration_number": "CIR-25114/2017-Chlorantraniliprole(SC)(372)-185",
+    "toxicity_band": "green_slightly_toxic",
+    "target_crop_primary": "Tomato",
+    "statutory_source": "Central Insecticides Board & Registration Committee (CIBRC)"
+  },
+  {
+    "product_trade_name": "Tilt 25% EC",
+    "manufacturer": "Syngenta India Ltd",
+    "active_ingredient": "Propiconazole 25% EC",
+    "formulation_type": "Emulsifiable Concentrate (EC)",
+    "cibrc_registration_number": "CIR-9145/2013-Propiconazole(EC)(320)-65",
+    "toxicity_band": "yellow_highly_toxic",
+    "target_crop_primary": "Wheat",
+    "statutory_source": "Central Insecticides Board & Registration Committee (CIBRC)"
+  },
+  {
+    "product_trade_name": "Actara 25% WG",
+    "manufacturer": "Syngenta India Ltd",
+    "active_ingredient": "Thiamethoxam 25% WG",
+    "formulation_type": "Water Dispersible Granule (WG)",
+    "cibrc_registration_number": "CIR-15982/2014-Thiamethoxam(WG)(338)-80",
+    "toxicity_band": "blue_moderately_toxic",
+    "target_crop_primary": "Wheat",
+    "statutory_source": "Central Insecticides Board & Registration Committee (CIBRC)"
+  },
+  {
+    "product_trade_name": "Delegate 11.7% SC",
+    "manufacturer": "Corteva Agriscience India",
+    "active_ingredient": "Spinetoram 11.7% SC",
+    "formulation_type": "Suspension Concentrate (SC)",
+    "cibrc_registration_number": "CIR-32810/2019-Spinetoram(SC)(395)-90",
+    "toxicity_band": "blue_moderately_toxic",
+    "target_crop_primary": "Maize",
+    "statutory_source": "Central Insecticides Board & Registration Committee (CIBRC)"
+  },
+  {
+    "product_trade_name": "Saaf 75% WP",
+    "manufacturer": "UPL Ltd",
+    "active_ingredient": "Carbendazim 12% + Mancozeb 63% WP",
+    "formulation_type": "Wettable Powder (WP)",
+    "cibrc_registration_number": "CIR-12890/2014-Carbendazim+Mancozeb(WP)(335)-54",
+    "toxicity_band": "blue_moderately_toxic",
+    "target_crop_primary": "Groundnut",
+    "statutory_source": "Central Insecticides Board & Registration Committee (CIBRC)"
+  },
+  {
+    "product_trade_name": "Fame 39.35% SC",
+    "manufacturer": "Bayer CropScience Ltd",
+    "active_ingredient": "Flubendiamide 39.35% SC",
+    "formulation_type": "Suspension Concentrate (SC)",
+    "cibrc_registration_number": "CIR-19445/2015-Flubendiamide(SC)(352)-216",
+    "toxicity_band": "green_slightly_toxic",
+    "target_crop_primary": "Soybean",
+    "statutory_source": "Central Insecticides Board & Registration Committee (CIBRC)"
+  },
+  {
+    "product_trade_name": "Rogor 30% EC",
+    "manufacturer": "FMC India Pvt Ltd",
+    "active_ingredient": "Dimethoate 30% EC",
+    "formulation_type": "Emulsifiable Concentrate (EC)",
+    "cibrc_registration_number": "CIR-2410/2007-Dimethoate(EC)(260)-11",
+    "toxicity_band": "yellow_highly_toxic",
+    "target_crop_primary": "Mustard",
+    "statutory_source": "Central Insecticides Board & Registration Committee (CIBRC)"
+  },
+  {
+    "product_trade_name": "Bavistin 50% WP",
+    "manufacturer": "Crystal Crop Protection Ltd",
+    "active_ingredient": "Carbendazim 50% WP",
+    "formulation_type": "Wettable Powder (WP)",
+    "cibrc_registration_number": "CIR-5812/2010-Carbendazim(WP)(295)-19",
+    "toxicity_band": "blue_moderately_toxic",
+    "target_crop_primary": "Sugarcane",
+    "statutory_source": "Central Insecticides Board & Registration Committee (CIBRC)"
+  },
+  {
+    "product_trade_name": "Caldan 50% SP",
+    "manufacturer": "Dhanuka Agritech Ltd",
+    "active_ingredient": "Cartap Hydrochloride 50% SP",
+    "formulation_type": "Soluble Powder (SP)",
+    "cibrc_registration_number": "CIR-8742/2012-Cartap Hydrochloride(SP)(310)-15",
+    "toxicity_band": "yellow_highly_toxic",
+    "target_crop_primary": "Rice / Paddy",
+    "statutory_source": "Central Insecticides Board & Registration Committee (CIBRC)"
+  },
+  {
+    "product_trade_name": "Token 20% SG",
+    "manufacturer": "Indofil Industries Ltd",
+    "active_ingredient": "Dinotefuran 20% SG",
+    "formulation_type": "Soluble Granule (SG)",
+    "cibrc_registration_number": "CIR-28941/2018-Dinotefuran(SG)(385)-112",
+    "toxicity_band": "blue_moderately_toxic",
+    "target_crop_primary": "Rice / Paddy",
+    "statutory_source": "Central Insecticides Board & Registration Committee (CIBRC)"
+  },
+  {
+    "product_trade_name": "Contaf 5% SC",
+    "manufacturer": "Rallis India Ltd",
+    "active_ingredient": "Hexaconazole 5% SC",
+    "formulation_type": "Suspension Concentrate (SC)",
+    "cibrc_registration_number": "CIR-13904/2014-Hexaconazole(SC)(340)-22",
+    "toxicity_band": "blue_moderately_toxic",
+    "target_crop_primary": "Rice / Paddy",
+    "statutory_source": "Central Insecticides Board & Registration Committee (CIBRC)"
+  },
+  {
+    "product_trade_name": "Folicur 25.9% EC",
+    "manufacturer": "Bayer CropScience Ltd",
+    "active_ingredient": "Tebuconazole 25.9% m/m EC",
+    "formulation_type": "Emulsifiable Concentrate (EC)",
+    "cibrc_registration_number": "CIR-21345/2016-Tebuconazole(EC)(362)-115",
+    "toxicity_band": "blue_moderately_toxic",
+    "target_crop_primary": "Chilli",
+    "statutory_source": "Central Insecticides Board & Registration Committee (CIBRC)"
+  },
+  {
+    "product_trade_name": "Nativo 75% WG",
+    "manufacturer": "Bayer CropScience Ltd",
+    "active_ingredient": "Trifloxystrobin 25% + Tebuconazole 50% WG",
+    "formulation_type": "Water Dispersible Granule (WG)",
+    "cibrc_registration_number": "CIR-24380/2017-Trifloxystrobin+Tebuconazole(WG)(370)-98",
+    "toxicity_band": "blue_moderately_toxic",
+    "target_crop_primary": "Rice / Paddy",
+    "statutory_source": "Central Insecticides Board & Registration Committee (CIBRC)"
+  },
+  {
+    "product_trade_name": "Ridomil Gold",
+    "manufacturer": "Syngenta India Ltd",
+    "active_ingredient": "Metalaxyl-M 4% + Mancozeb 64% WP",
+    "formulation_type": "Wettable Powder (WP)",
+    "cibrc_registration_number": "CIR-17210/2015-Metalaxyl-M+Mancozeb(WP)(348)-16",
+    "toxicity_band": "blue_moderately_toxic",
+    "target_crop_primary": "Potato",
+    "statutory_source": "Central Insecticides Board & Registration Committee (CIBRC)"
+  },
+  {
+    "product_trade_name": "Oberon 22.9% SC",
+    "manufacturer": "Bayer CropScience Ltd",
+    "active_ingredient": "Spiromesifen 22.9% SC",
+    "formulation_type": "Suspension Concentrate (SC)",
+    "cibrc_registration_number": "CIR-22105/2016-Spiromesifen(SC)(358)-110",
+    "toxicity_band": "blue_moderately_toxic",
+    "target_crop_primary": "Chilli",
+    "statutory_source": "Central Insecticides Board & Registration Committee (CIBRC)"
+  },
+  {
+    "product_trade_name": "Regent 5% SC",
+    "manufacturer": "Bayer CropScience Ltd",
+    "active_ingredient": "Fipronil 5% SC",
+    "formulation_type": "Suspension Concentrate (SC)",
+    "cibrc_registration_number": "CIR-14300/2014-Fipronil(SC)(341)-80",
+    "toxicity_band": "blue_moderately_toxic",
+    "target_crop_primary": "Rice / Paddy",
+    "statutory_source": "Central Insecticides Board & Registration Committee (CIBRC)"
+  },
+  {
+    "product_trade_name": "Confidor 17.8% SL",
+    "manufacturer": "Bayer CropScience Ltd",
+    "active_ingredient": "Imidacloprid 17.8% SL",
+    "formulation_type": "Soluble Liquid (SL)",
+    "cibrc_registration_number": "CIR-10870/2013-Imidacloprid(SL)(330)-44",
+    "toxicity_band": "yellow_highly_toxic",
+    "target_crop_primary": "Cotton",
+    "statutory_source": "Central Insecticides Board & Registration Committee (CIBRC)"
+  },
+  {
+    "product_trade_name": "Stomp 30% EC",
+    "manufacturer": "BASF India Ltd",
+    "active_ingredient": "Pendimethalin 30% EC",
+    "formulation_type": "Emulsifiable Concentrate (EC)",
+    "cibrc_registration_number": "CIR-6890/2011-Pendimethalin(EC)(300)-89",
+    "toxicity_band": "blue_moderately_toxic",
+    "target_crop_primary": "Cotton",
+    "statutory_source": "Central Insecticides Board & Registration Committee (CIBRC)"
+  },
+  {
+    "product_trade_name": "Rifit 50% EC",
+    "manufacturer": "Syngenta India Ltd",
+    "active_ingredient": "Pretilachlor 50% EC",
+    "formulation_type": "Emulsifiable Concentrate (EC)",
+    "cibrc_registration_number": "CIR-11020/2013-Pretilachlor(EC)(332)-14",
+    "toxicity_band": "blue_moderately_toxic",
+    "target_crop_primary": "Rice / Paddy",
+    "statutory_source": "Central Insecticides Board & Registration Committee (CIBRC)"
+  },
+  {
+    "product_trade_name": "Atrataf 50% WP",
+    "manufacturer": "Rallis India Ltd",
+    "active_ingredient": "Atrazine 50% WP",
+    "formulation_type": "Wettable Powder (WP)",
+    "cibrc_registration_number": "CIR-5100/2010-Atrazine(WP)(288)-05",
+    "toxicity_band": "blue_moderately_toxic",
+    "target_crop_primary": "Maize",
+    "statutory_source": "Central Insecticides Board & Registration Committee (CIBRC)"
+  },
+  {
+    "product_trade_name": "Nominee Gold 10% SC",
+    "manufacturer": "PI Industries Ltd",
+    "active_ingredient": "Bispyribac-sodium 10% SC",
+    "formulation_type": "Suspension Concentrate (SC)",
+    "cibrc_registration_number": "CIR-21980/2016-Bispyribac-sodium(SC)(360)-76",
+    "toxicity_band": "blue_moderately_toxic",
+    "target_crop_primary": "Rice / Paddy",
+    "statutory_source": "Central Insecticides Board & Registration Committee (CIBRC)"
+  },
+  {
+    "product_trade_name": "Targa Super 5% EC",
+    "manufacturer": "Dhanuka Agritech Ltd",
+    "active_ingredient": "Quizalofop-ethyl 5% EC",
+    "formulation_type": "Emulsifiable Concentrate (EC)",
+    "cibrc_registration_number": "CIR-16780/2015-Quizalofop-ethyl(EC)(346)-18",
+    "toxicity_band": "blue_moderately_toxic",
+    "target_crop_primary": "Soybean",
+    "statutory_source": "Central Insecticides Board & Registration Committee (CIBRC)"
+  },
+  {
+    "product_trade_name": "Pursuit 10% SL",
+    "manufacturer": "BASF India Ltd",
+    "active_ingredient": "Imazethapyr 10% SL",
+    "formulation_type": "Soluble Liquid (SL)",
+    "cibrc_registration_number": "CIR-18990/2015-Imazethapyr(SL)(350)-25",
+    "toxicity_band": "blue_moderately_toxic",
+    "target_crop_primary": "Groundnut / Peanut",
+    "statutory_source": "Central Insecticides Board & Registration Committee (CIBRC)"
+  },
+  {
+    "product_trade_name": "Sempra 75% WG",
+    "manufacturer": "Dhanuka Agritech Ltd",
+    "active_ingredient": "Halosulfuron-methyl 75% WG",
+    "formulation_type": "Water Dispersible Granule (WG)",
+    "cibrc_registration_number": "CIR-29800/2018-Halosulfuron-methyl(WG)(384)-10",
+    "toxicity_band": "blue_moderately_toxic",
+    "target_crop_primary": "Sugarcane",
+    "statutory_source": "Central Insecticides Board & Registration Committee (CIBRC)"
+  },
+  {
+    "product_trade_name": "Topik 15% WP",
+    "manufacturer": "Syngenta India Ltd",
+    "active_ingredient": "Clodinafop-propargyl 15% WP",
+    "formulation_type": "Wettable Powder (WP)",
+    "cibrc_registration_number": "CIR-13200/2014-Clodinafop-propargyl(WP)(337)-67",
+    "toxicity_band": "blue_moderately_toxic",
+    "target_crop_primary": "Wheat",
+    "statutory_source": "Central Insecticides Board & Registration Committee (CIBRC)"
+  },
+  {
+    "product_trade_name": "Kasu-B",
+    "manufacturer": "Dhanuka Agritech Ltd",
+    "active_ingredient": "Kasugamycin 3% SL",
+    "formulation_type": "Soluble Liquid (SL)",
+    "cibrc_registration_number": "CIR-20890/2015-Kasugamycin(SL)(355)-42",
+    "toxicity_band": "green_slightly_toxic",
+    "target_crop_primary": "Rice / Paddy",
+    "statutory_source": "Central Insecticides Board & Registration Committee (CIBRC)"
+  },
+  {
+    "product_trade_name": "Blitox 50% WP",
+    "manufacturer": "Rallis India Ltd",
+    "active_ingredient": "Copper Oxychloride 50% WP",
+    "formulation_type": "Wettable Powder (WP)",
+    "cibrc_registration_number": "CIR-3210/2008-Copper Oxychloride(WP)(265)-12",
+    "toxicity_band": "blue_moderately_toxic",
+    "target_crop_primary": "Tomato",
+    "statutory_source": "Central Insecticides Board & Registration Committee (CIBRC)"
+  }
+]

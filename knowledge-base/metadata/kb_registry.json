@@ -1,0 +1,240 @@
+{
+  "project": "BOL KISAN",
+  "version": "1.0.0",
+  "last_audit_date": "2026-11-08",
+  "total_collections": 23,
+  "total_verified_records": 547,
+  "audit_status": "ALL_COLLECTIONS_VERIFIED",
+  "collections": [
+    {
+      "id": "KB01",
+      "name": "Crop Master Database",
+      "file_path": "crop-information/crops_master_kb01.json",
+      "source_org": "ICAR & Ministry of Agriculture and Farmers Welfare",
+      "status": "verified",
+      "docs_count": 16,
+      "sha256": "6c1270c820a047d6ccb0b18670c8c38e74b604be8b9c78c88cd2e152f2c655ec",
+      "last_audit_date": "2026-11-08"
+    },
+    {
+      "id": "KB02",
+      "name": "Crop Cultivation & Agronomy",
+      "file_path": "crop-information/cultivation_agronomy_kb02.json",
+      "source_org": "PJTSAU Vyavasaya Panchangam & ICAR-CRIDA",
+      "status": "verified",
+      "docs_count": 16,
+      "sha256": "bfe268d8c258c55e5316241a4d79e1487585e27d92cd6fa9a8f1ad9e9c4aecb5",
+      "last_audit_date": "2026-11-08"
+    },
+    {
+      "id": "KB03",
+      "name": "Crop Growth Stages",
+      "file_path": "crop-information/growth_stages_bbch_kb03.json",
+      "source_org": "ICAR BBCH Standardization Committee",
+      "status": "verified",
+      "docs_count": 16,
+      "sha256": "dd1a62768dac3ddf6f21cbcccd2533fba6b07eae050f5f870dd9fb368e5befd6",
+      "last_audit_date": "2026-11-08"
+    },
+    {
+      "id": "KB04",
+      "name": "Crop Diseases Directory",
+      "file_path": "disease-information/crop_diseases_kb04.json",
+      "source_org": "Directorate of Plant Protection, Quarantine & Storage (DPPQS) & ICAR-IARI",
+      "status": "verified",
+      "docs_count": 32,
+      "sha256": "36c9264349e5b8ba34725e8edc1a94342dcd016ae92de11bcecf62c312862599",
+      "last_audit_date": "2026-11-08"
+    },
+    {
+      "id": "KB05",
+      "name": "Pest Information",
+      "file_path": "disease-information/pest_information_kb05.json",
+      "source_org": "National Bureau of Agricultural Insect Resources (NBAIR) & ICAR-NCIPM",
+      "status": "verified",
+      "docs_count": 36,
+      "sha256": "bc09baabb5a6f4a7dd1214f5cb98a5543e1bb2d398b06f5c6f4bb5ecfed0e20f",
+      "last_audit_date": "2026-11-08"
+    },
+    {
+      "id": "KB06",
+      "name": "Integrated Pest Management (IPM)",
+      "file_path": "disease-information/integrated_pest_management_kb06.json",
+      "source_org": "National Institute of Plant Health Management (NIPHM) & NCIPM",
+      "status": "verified",
+      "docs_count": 21,
+      "sha256": "9acf44569dac41b94577332065791308523bb41ec731968a207056ddf420e54d",
+      "last_audit_date": "2026-11-08"
+    },
+    {
+      "id": "KB07",
+      "name": "Pesticide Products",
+      "file_path": "pesticide-labels/pesticide_products_kb07.json",
+      "source_org": "Central Insecticides Board & Registration Committee (CIBRC) National Registry",
+      "status": "verified",
+      "docs_count": 34,
+      "sha256": "9fe2ecfe793b99806863c0307a9c1ca9e261962ec4cc20686bd58cee180222e2",
+      "last_audit_date": "2026-11-08"
+    },
+    {
+      "id": "KB08",
+      "name": "Pesticide Labels and Safety",
+      "file_path": "pesticide-labels/pesticide_labels_safety_kb08.json",
+      "source_org": "CIBRC Approved Leaflet & Statutory Safety Directory",
+      "status": "verified",
+      "docs_count": 37,
+      "sha256": "cef3b0da62e755afbb7d829a902f2c4470fff54b1dcc899ae8e988937f7d1089",
+      "last_audit_date": "2026-11-08"
+    },
+    {
+      "id": "KB09",
+      "name": "Fertilizers & Nutrient Management",
+      "file_path": "nutrients-soil/fertilizers_nutrients_kb09.json",
+      "source_org": "Department of Fertilizers, FAI & PJTSAU",
+      "status": "verified",
+      "docs_count": 16,
+      "sha256": "d8951cefd2ba5d2c26cafcb8a46f2cedf515e3b36644f905009e2a6acbbd9842",
+      "last_audit_date": "2026-11-08"
+    },
+    {
+      "id": "KB10",
+      "name": "Soil Health & Amendments",
+      "file_path": "nutrients-soil/soil_health_amendments_kb10.json",
+      "source_org": "Soil Health Card Scheme (GoI) & ICAR-IISS Bhopal",
+      "status": "verified",
+      "docs_count": 12,
+      "sha256": "08f9e9fe8855499e97ca3fd8b3e568182acdfbd6d2bf00a054dfb804986a9fee",
+      "last_audit_date": "2026-11-08"
+    },
+    {
+      "id": "KB11",
+      "name": "Irrigation Guidance",
+      "file_path": "water-weed-management/irrigation_guidance_kb11.json",
+      "source_org": "Pradhan Mantri Krishi Sinchayee Yojana (PMKSY) & ICAR-WCM",
+      "status": "verified",
+      "docs_count": 16,
+      "sha256": "21216c49e5b47b0d45534f5881da81167bb3e180849bfe7d0ba8dec5a4d27d99",
+      "last_audit_date": "2026-11-08"
+    },
+    {
+      "id": "KB12",
+      "name": "Crop Rotation & Intercropping",
+      "file_path": "water-weed-management/crop_rotation_intercropping_kb12.json",
+      "source_org": "ICAR-Indian Institute of Farming Systems Research (IIFSR) Modipuram",
+      "status": "verified",
+      "docs_count": 12,
+      "sha256": "f4110fbf1b930d39496c765cacae41c798b1be0483c372fa09cb9c56336f2d4f",
+      "last_audit_date": "2026-11-08"
+    },
+    {
+      "id": "KB13",
+      "name": "Weed Management",
+      "file_path": "water-weed-management/weed_management_kb13.json",
+      "source_org": "Directorate of Weed Research (DWR) Jabalpur & CIBRC",
+      "status": "verified",
+      "docs_count": 16,
+      "sha256": "4813308216e9be8f4b9d077993a10da7f3beab0d69add3213e0fcb0ef6564573",
+      "last_audit_date": "2026-11-08"
+    },
+    {
+      "id": "KB14",
+      "name": "Harvesting Guidelines",
+      "file_path": "harvest-postharvest/harvesting_guidelines_kb14.json",
+      "source_org": "Central Institute of Post-Harvest Engineering & Technology (CIPHET) Ludhiana",
+      "status": "verified",
+      "docs_count": 16,
+      "sha256": "35572a1e32baacff42b62c96c23484ce7235264d06a35423bd4d427d1f784195",
+      "last_audit_date": "2026-11-08"
+    },
+    {
+      "id": "KB15",
+      "name": "Post-Harvest Management & Storage",
+      "file_path": "harvest-postharvest/post_harvest_storage_kb15.json",
+      "source_org": "Warehousing Development and Regulatory Authority (WDRA) & CIPHET",
+      "status": "verified",
+      "docs_count": 12,
+      "sha256": "28dc0afa7743c7aec375745900109d189b172365ab00dc57143bffd3fe4abdec",
+      "last_audit_date": "2026-11-08"
+    },
+    {
+      "id": "KB16",
+      "name": "Weather & Climate Agromet",
+      "file_path": "weather-advisories/weather_climate_agromet_kb16.json",
+      "source_org": "India Meteorological Department (IMD) Agromet Advisory Service",
+      "status": "verified",
+      "docs_count": 12,
+      "sha256": "e81dd484427e15eda6e9169cc0055b88b26d8f8572fc8c0af935f4f30c216a08",
+      "last_audit_date": "2026-11-08"
+    },
+    {
+      "id": "KB17",
+      "name": "Agricultural Advisories (Contingency Farming)",
+      "file_path": "weather-advisories/agricultural_advisories_kb17.json",
+      "source_org": "ICAR-CRIDA Hyderabad & State Agriculture Universities",
+      "status": "verified",
+      "docs_count": 15,
+      "sha256": "8695dd833c9fb8fbba6655479f5a1c0e0e945d1dc10a27c4d38634fc5c1f7895",
+      "last_audit_date": "2026-11-08"
+    },
+    {
+      "id": "KB18",
+      "name": "Mandi and Market Prices",
+      "file_path": "market-regional/mandi_market_prices_kb18.json",
+      "source_org": "Agmarknet Portal, Directorate of Marketing & Inspection (DMI)",
+      "status": "verified",
+      "docs_count": 20,
+      "sha256": "7ec85f124c32fcc08f72bc82b3834d03df09bb12b6badb4c643ebc76eb2a7f05",
+      "last_audit_date": "2026-11-08"
+    },
+    {
+      "id": "KB19",
+      "name": "Regional Recommendations",
+      "file_path": "market-regional/regional_recommendations_kb19.json",
+      "source_org": "Zonal Agricultural Research Stations (PJTSAU, ANGRAU, MPKV, RVSKVV, PAU)",
+      "status": "verified",
+      "docs_count": 12,
+      "sha256": "53731d2ccc2915c2e71d3d9551d6e10d353936d5c60f3115ea8e2c30c5abbdf8",
+      "last_audit_date": "2026-11-08"
+    },
+    {
+      "id": "KB20",
+      "name": "Multilingual Agronomy Dictionary",
+      "file_path": "language-faqs/multilingual_agronomy_dictionary_kb20.json",
+      "source_org": "Central Institute of Indian Languages (CIIL) Mysore & SAUs",
+      "status": "verified",
+      "docs_count": 105,
+      "sha256": "0ef2cad5176fdaa4323f686a3ffefdcf70f1ce26f82ec358adafeb7c80285f7d",
+      "last_audit_date": "2026-11-08"
+    },
+    {
+      "id": "KB21",
+      "name": "Agricultural FAQs",
+      "file_path": "language-faqs/agricultural_faqs_kb21.json",
+      "source_org": "Kisan Call Center (KCC 1800-180-1551) Query Database",
+      "status": "verified",
+      "docs_count": 30,
+      "sha256": "17211a4469978524120e69cf05c6c6d211da672a0f233891bed19fb4facfab40",
+      "last_audit_date": "2026-11-08"
+    },
+    {
+      "id": "KB22",
+      "name": "Verified Q&A Repository",
+      "file_path": "language-faqs/verified_qa_repository_kb22.json",
+      "source_org": "Bol Kisan Agricultural Extension Officer Resolution Corpus",
+      "status": "verified",
+      "docs_count": 20,
+      "sha256": "29a63eda8c25eccddb4faad2c9b12f3ec5a52b5420b33da29d8aaa495b21cea6",
+      "last_audit_date": "2026-11-08"
+    },
+    {
+      "id": "KB23",
+      "name": "Regional Extension Officer Directory",
+      "file_path": "language-faqs/extension_officer_directory_kb23.json",
+      "source_org": "State Departments of Agriculture (Telangana, AP, MP, Maharashtra, Punjab)",
+      "status": "verified",
+      "docs_count": 25,
+      "sha256": "6719d21dbf3de90dfa1e93568327b853d7b8d522d61d16757e85104186f92ca2",
+      "last_audit_date": "2026-11-08"
+    }
+  ]
+}

@@ -1,0 +1,354 @@
+[
+  {
+    "zone_id": "zars-tg-001",
+    "zone_name": "Northern Telangana Zone (NTZ)",
+    "headquarters_research_station": "Regional Agricultural Research Station (RARS), Jagtial",
+    "state": "Telangana",
+    "districts_covered": [
+      "Adilabad",
+      "Nirmal",
+      "Mancherial",
+      "Komaram Bheem Asifabad",
+      "Karimnagar",
+      "Jagtial",
+      "Peddapalli",
+      "Nizamabad",
+      "Kamareddy"
+    ],
+    "dominant_soil_types": "Deep Black Cotton Soils (Vertisols 65%), Red Sandy Loams (Chalka 35%)",
+    "annual_rainfall_mm": "900 - 1150 mm",
+    "university_recommended_crop_varieties": {
+      "rice": "RNR 15048 (Telangana Sona - Low GI), JGL 24423 (Jagtyal Rice 1), KNM 118, BPT 5204",
+      "cotton": "Bt cotton hybrids with non-Bt refuge (NCS 145, NCS 207, RCH 659)",
+      "maize": "DHM 117, DHM 121, Bio 9681",
+      "turmeric": "Armoor, PTS 10, IISR Pratibha",
+      "soybean": "JS 335, JS 95-60, Basar (NRC 37)"
+    },
+    "critical_regional_advisories": [
+      "Strictly terminate cotton by December 31 to break Pink Bollworm life cycle.",
+      "In turmeric, broad bed furrow (BBF) with drip irrigation prevents rhizome rot epidemic during heavy August rains.",
+      "For rabi paddy nursery, night water stagnation and polythene sheet cover prevent cold chilling injury."
+    ],
+    "citation": "PJTSAU Vyavasaya Panchangam (Northern Telangana Zone) 2025-26"
+  },
+  {
+    "zone_id": "zars-tg-002",
+    "zone_name": "Central Telangana Zone (CTZ)",
+    "headquarters_research_station": "Regional Agricultural Research Station (RARS), Warangal",
+    "state": "Telangana",
+    "districts_covered": [
+      "Warangal",
+      "Hanamkonda",
+      "Jangaon",
+      "Mahabubabad",
+      "Khammam",
+      "Bhadradri Kothagudem"
+    ],
+    "dominant_soil_types": "Medium Black Soils (50%), Red Sandy Loams (45%), Alluvial fringe (5%)",
+    "annual_rainfall_mm": "950 - 1100 mm",
+    "university_recommended_crop_varieties": {
+      "cotton": "Bt cotton hybrids, spacing 90x60 cm",
+      "chilli": "Teja, Wonder Hot, LCA 334, LCA 625",
+      "rice": "WGL 44 (Siddhi), WGL 915, MTU 1010",
+      "red_gram": "PRG 176 (Ujwala), WRG 65, ICPL 87119 (Asha)"
+    },
+    "critical_regional_advisories": [
+      "Install yellow and blue sticky traps in chilli nurseries for thrips and whitefly vector management.",
+      "Adopt 4:1 cotton + red gram intercropping to hedge against bollworm risk.",
+      "In direct seeded rice (DSR), apply Pretilachlor 50% EC @ 500 ml/acre within 48h of sowing."
+    ],
+    "citation": "PJTSAU Vyavasaya Panchangam (Central Telangana Zone) 2025-26"
+  },
+  {
+    "zone_id": "zars-tg-003",
+    "zone_name": "Southern Telangana Zone (STZ)",
+    "headquarters_research_station": "Regional Agricultural Research Station (RARS), Palem",
+    "state": "Telangana",
+    "districts_covered": [
+      "Mahabubnagar",
+      "Nagarkurnool",
+      "Wanaparthy",
+      "Jogulamba Gadwal",
+      "Nalgonda",
+      "Suryapet",
+      "Yadadri Bhuvanagiri",
+      "Rangareddy",
+      "Vikarabad"
+    ],
+    "dominant_soil_types": "Red Sandy Soils (Dubba & Chalka 75%), Medium Black Soils (25%)",
+    "annual_rainfall_mm": "650 - 800 mm (Drought-prone)",
+    "university_recommended_crop_varieties": {
+      "castor": "DCH 519, PCH 111, ICH 66",
+      "groundnut": "Kadiri 6, Kadiri 9, TAG 24, ICGV 91114",
+      "red_gram": "PRG 176, Hanuma, Asha",
+      "sorghum": "Palem Pacha Jonna (PSV 56), CSH 25"
+    },
+    "critical_regional_advisories": [
+      "Dust mulching with blade harrow at 25 and 45 DAS is mandatory to conserve moisture in red chalka soils.",
+      "Gypsum application @ 200 kg/acre at 40 DAS in groundnut is essential for kernel filling.",
+      "Intercrop Castor with Red Gram (1:1) or Groundnut with Red Gram (7:1)."
+    ],
+    "citation": "PJTSAU Vyavasaya Panchangam (Southern Telangana Zone) 2025-26"
+  },
+  {
+    "zone_id": "zars-ap-001",
+    "zone_name": "Krishna-Godavari Zone (KG Zone)",
+    "headquarters_research_station": "Regional Agricultural Research Station (RARS), Maruteru",
+    "state": "Andhra Pradesh",
+    "districts_covered": [
+      "East Godavari",
+      "West Godavari",
+      "Konaseema",
+      "Eluru",
+      "Krishna",
+      "NTR",
+      "Guntur",
+      "Bapatla"
+    ],
+    "dominant_soil_types": "Deltaic Alluvial Soils (70%), Coastal Sands (15%), Black Soils (15%)",
+    "annual_rainfall_mm": "1000 - 1200 mm",
+    "university_recommended_crop_varieties": {
+      "rice_kharif": "MTU 1061 (Indra - submergence tolerant), MTU 1064 (Amara), MTU 1075, BPT 5204",
+      "rice_rabi": "MTU 1010 (Cottondora Sannalu), MTU 1156, MTU 1153",
+      "black_gram_relay": "LBG 752, LBG 787, PU 31",
+      "chilli": "LCA 334, LCA 625, Teja"
+    },
+    "critical_regional_advisories": [
+      "Use submergence-tolerant variety MTU 1061 in lowlands prone to cyclone waterlogging.",
+      "Broadcast black gram / green gram @ 10 kg/acre into standing paddy 2-3 days before harvest to utilize residual moisture (Zero-till relay).",
+      "Maintain AWD water management to prevent BPH hopper burn."
+    ],
+    "citation": "ANGRAU Vyavasaya Panchangam (Krishna-Godavari Zone) 2025-26"
+  },
+  {
+    "zone_id": "zars-ap-002",
+    "zone_name": "Scarce Rainfall Zone (Rayalaseema)",
+    "headquarters_research_station": "Regional Agricultural Research Station (RARS), Nandyal",
+    "state": "Andhra Pradesh",
+    "districts_covered": [
+      "Kurnool",
+      "Nandyal",
+      "Ananthapuramu",
+      "Sri Sathya Sai",
+      "YSR Kadapa"
+    ],
+    "dominant_soil_types": "Red Sandy Soils (60%), Deep Black Vertisols (40%)",
+    "annual_rainfall_mm": "500 - 650 mm (Lowest in AP)",
+    "university_recommended_crop_varieties": {
+      "groundnut": "Kadiri 6 (K6), Kadiri 9, Kadiri Lepakshi (K-1812), Dharani",
+      "bengal_gram": "NBeG 3, NBeG 49, JG 11, JAKI 9218",
+      "cotton": "Nandyal Cotton 1 (NDLH 1938), Bt hybrids",
+      "foxtail_millet_korra": "Sia 3088, Surya Nandi, Prasad"
+    },
+    "critical_regional_advisories": [
+      "Sow groundnut only after receipt of 50-60 mm soaking monsoon rainfall; avoid sowing beyond July 31.",
+      "In chickpea, sow directly on black soil residual moisture in October without pre-sowing irrigation.",
+      "Construct compartmental bunds (10m x 10m) in May to capture every drop of summer rainwater."
+    ],
+    "citation": "ANGRAU Vyavasaya Panchangam (Scarce Rainfall Zone) 2025-26"
+  },
+  {
+    "zone_id": "zars-mh-001",
+    "zone_name": "Vidarbha Zone",
+    "headquarters_research_station": "Dr. Panjabrao Deshmukh Krishi Vidyapeeth (PDKV), Akola",
+    "state": "Maharashtra",
+    "districts_covered": [
+      "Akola",
+      "Amravati",
+      "Nagpur",
+      "Wardha",
+      "Yavatmal",
+      "Buldhana",
+      "Washim",
+      "Chandrapur"
+    ],
+    "dominant_soil_types": "Deep Black Cotton Soils (Vertisols 80%)",
+    "annual_rainfall_mm": "850 - 1100 mm",
+    "university_recommended_crop_varieties": {
+      "cotton": "Bt hybrids, PDKV Gopal, AKH 081",
+      "soybean": "JS 335, JS 93-05, PDKV Amba (JS 20-34)",
+      "pigeonpea_tur": "BDN 711, PKV Tara, AKT 8811",
+      "chickpea": "JAKI 9218, Digvijay, PKV Harita"
+    },
+    "critical_regional_advisories": [
+      "Broad Bed Furrow (BBF) machine planting of soybean at 45 cm spacing avoids waterlogging and drought.",
+      "Spray Emamectin Benzoate 5% SG @ 88 g/acre strictly when Pink Bollworm pheromone catches exceed 8 moths/trap/night.",
+      "In pigeonpea, nipping terminal buds at 40 DAS increases secondary branching and pod yield by 25%."
+    ],
+    "citation": "Dr. PDKV Akola Krishi Diary & Agronomy Guidelines 2025"
+  },
+  {
+    "zone_id": "zars-mh-002",
+    "zone_name": "Western Maharashtra Plain Zone",
+    "headquarters_research_station": "Mahatma Phule Krishi Vidyapeeth (MPKV), Rahuri",
+    "state": "Maharashtra",
+    "districts_covered": [
+      "Ahmednagar",
+      "Pune",
+      "Nashik",
+      "Satara",
+      "Solapur",
+      "Kolhapur",
+      "Sangli"
+    ],
+    "dominant_soil_types": "Medium Black to Clay Loam Soils (70%), Sandy Alluvium (30%)",
+    "annual_rainfall_mm": "550 - 750 mm (Rain shadow zone)",
+    "university_recommended_crop_varieties": {
+      "sugarcane": "Co 86032 (Nira), CoM 0265 (Phule 265), MS 10001",
+      "onion": "Phule Samarth, Bhima Super, Bhima Red, Bhima Kiran",
+      "pomegranate": "Bhagawa (Sindhuri)",
+      "rabi_sorghum": "Phule Revati, Phule Vasudha, Maldandi (M 35-1)"
+    },
+    "critical_regional_advisories": [
+      "Trash mulching in sugarcane saves 30% water and suppresses weeds.",
+      "For onion purple blotch and thrips, spray Pegasus @ 1.2 g/L + Custodia @ 1.5 ml/L with sticker.",
+      "Drip fertigation in sugarcane using 100% water-soluble fertilizers increases brix sugar recovery."
+    ],
+    "citation": "MPKV Rahuri Agricultural University Diary 2025-26"
+  },
+  {
+    "zone_id": "zars-mp-001",
+    "zone_name": "Malwa Plateau Zone",
+    "headquarters_research_station": "RVSKVV College of Agriculture & ZARS, Indore",
+    "state": "Madhya Pradesh",
+    "districts_covered": [
+      "Indore",
+      "Ujjain",
+      "Dewas",
+      "Dhar",
+      "Shajapur",
+      "Ratlam",
+      "Mandsaur",
+      "Neemuch"
+    ],
+    "dominant_soil_types": "Medium to Deep Black Vertisols (85%)",
+    "annual_rainfall_mm": "800 - 1000 mm",
+    "university_recommended_crop_varieties": {
+      "soybean": "JS 20-34, JS 20-98, NRC 37, RVS 2001-4",
+      "wheat": "GW 322, Lok-1, HI 1544 (Purna), Malavraj (HD 4728)",
+      "chickpea": "JAKI 9218, Dollar Chana (Phule G 0517), RVG 202",
+      "garlic": "G 282, Yamuna Safed (G 1)"
+    },
+    "critical_regional_advisories": [
+      "Seed treatment of soybean with Trichoderma viride (5 g/kg) + Bradyrhizobium is mandatory.",
+      "Apply 1st irrigation to wheat at Crown Root Initiation (21 DAS) without delay.",
+      "In soybean, spray Coragen 18.5% SC @ 60 ml/acre at early appearance of semilooper defoliation."
+    ],
+    "citation": "RVSKVV Gwalior & ICAR-IISR Indore Package of Practices 2025"
+  },
+  {
+    "zone_id": "zars-pb-001",
+    "zone_name": "Central Plain Zone of Punjab",
+    "headquarters_research_station": "Punjab Agricultural University (PAU), Ludhiana",
+    "state": "Punjab",
+    "districts_covered": [
+      "Ludhiana",
+      "Jalandhar",
+      "Kapurthala",
+      "Amritsar",
+      "Tarn Taran",
+      "Patiala",
+      "Fatehgarh Sahib",
+      "Sangrur"
+    ],
+    "dominant_soil_types": "Fertile Alluvial Loams (75%), Sandy Loams (25%)",
+    "annual_rainfall_mm": "600 - 750 mm",
+    "university_recommended_crop_varieties": {
+      "wheat": "PBW 824, PBW 826, DBW 187, DBW 222, HD 3086, PBW 725",
+      "paddy": "PR 126 (Short duration 93 days), PR 128, PR 130, PR 131",
+      "basmati": "Pusa Basmati 1121, Pusa Basmati 1718, Pusa Basmati 1509",
+      "potato": "Kufri Pukhraj, Kufri Jyoti, Kufri Chipsona 1"
+    },
+    "critical_regional_advisories": [
+      "Direct sowing of short-duration PR 126 in late June saves 20-25% groundwater compared to long-duration varieties.",
+      "Adopt in-situ paddy straw management with Happy Seeder / Smart Seeder / Super Seeder without burning stubble.",
+      "Scout for Yellow / Stripe Rust on wheat from December onwards; spray Tilt 25% EC @ 200 ml/acre upon first detection."
+    ],
+    "citation": "PAU Ludhiana Package of Practices for Rabi & Kharif Crops 2025-26"
+  },
+  {
+    "zone_id": "zars-up-001",
+    "zone_name": "South-Western Semi-Arid Zone",
+    "headquarters_research_station": "Bichpuri Zonal Research Station, Agra",
+    "state": "Uttar Pradesh",
+    "districts_covered": [
+      "Agra",
+      "Mathura",
+      "Firozabad",
+      "Mainpuri",
+      "Aligarh",
+      "Hathras",
+      "Etah"
+    ],
+    "dominant_soil_types": "Alluvial Sandy Loams with calcareous kankar layers",
+    "annual_rainfall_mm": "650 - 750 mm",
+    "university_recommended_crop_varieties": {
+      "potato": "Kufri Bahar (3797), Kufri Anand, Kufri Mohan",
+      "mustard": "Rohini, Maya, Varuna, NRCHB 101",
+      "pearl_millet_bajra": "Proagro 9444, HHB 67 Improved",
+      "wheat": "HD 2967, PBW 502, WH 147"
+    },
+    "critical_regional_advisories": [
+      "Dehaulming (cutting vines) of potato at 75-80 DAP hardens skin and prepares tubers for cold storage.",
+      "Spray Mancozeb 75% WP @ 2 g/L preventively in potato and mustard before expected foggy weather to arrest late blight/white rust.",
+      "Gypsum application @ 1 tonne/acre in sodic canal patches improves infiltration."
+    ],
+    "citation": "CSA University of Agriculture & Technology Kanpur 2025"
+  },
+  {
+    "zone_id": "zars-gj-001",
+    "zone_name": "North Saurashtra Agro-Climatic Zone",
+    "headquarters_research_station": "Junagadh Agricultural University (JAU), Junagadh & Targhadia",
+    "state": "Gujarat",
+    "districts_covered": [
+      "Rajkot",
+      "Jamnagar",
+      "Morbi",
+      "Surendranagar",
+      "Amreli",
+      "Bhavnagar"
+    ],
+    "dominant_soil_types": "Medium Black to Shallow Calcareous Soils (80%)",
+    "annual_rainfall_mm": "500 - 650 mm",
+    "university_recommended_crop_varieties": {
+      "groundnut": "GG 20, GJG 22, GG 7, TG 37A",
+      "cotton": "G.Cot.Hy.8, Shankar 6, Bt hybrids",
+      "castor": "GCH 7, GCH 9, GAUCH 1",
+      "sesame": "Gujarat Til 2, Gujarat Til 3"
+    },
+    "critical_regional_advisories": [
+      "Apply Ferrous Sulphate (FeSO4) @ 5 g/L + Citric acid @ 1 g/L for lime-induced iron chlorosis in groundnut.",
+      "Dry sowing of groundnut 3-4 days before anticipated monsoon onset maximizes growing period.",
+      "Pheromone trap monitoring for Spodoptera litura in groundnut."
+    ],
+    "citation": "Junagadh Agricultural University (JAU) Agronomy Guide 2025"
+  },
+  {
+    "zone_id": "zars-ka-001",
+    "zone_name": "Northern Dry Zone (Zone 3)",
+    "headquarters_research_station": "University of Agricultural Sciences (UAS), Dharwad & Vijayapura",
+    "state": "Karnataka",
+    "districts_covered": [
+      "Vijayapura",
+      "Bagalkote",
+      "Gadag",
+      "Koppal",
+      "Belagavi eastern parts",
+      "Ballari"
+    ],
+    "dominant_soil_types": "Medium to Deep Black Vertisols (70%), Red Loams (30%)",
+    "annual_rainfall_mm": "500 - 600 mm",
+    "university_recommended_crop_varieties": {
+      "rabi_sorghum": "M 35-1 (Maldandi), Bimbas, CSV 29R",
+      "bengal_gram": "JAKI 9218, Annigeri 1, BGD 103",
+      "sunflower": "KBSH 41, KBSH 44, RSFH 1887",
+      "pomegranate": "Bhagawa"
+    },
+    "critical_regional_advisories": [
+      "Compartmental bunding before monsoon ensures deep moisture recharge in vertisols for rabi chickpea/sorghum.",
+      "Nipping in chickpea at 35 DAS boosts pod branching.",
+      "Foliar spray of 1% KNO3 during dry spells prevents wilting in rabi pulses."
+    ],
+    "citation": "UAS Dharwad Package of Practices for Dryland Agriculture 2025"
+  }
+]

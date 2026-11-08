@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">बोल किसान</string>
+    <string name="tagline">बहुभाषी कृषि वॉयस सहायक</string>
+    <string name="ask_question_prompt">अपना कृषि प्रश्न पूछने के लिए बटन दबाकर बोलें</string>
+    <string name="listening">सुन रहे हैं… अब बोलें</string>
+    <string name="processing">सत्यापित कृषि जानकारी जांची जा रही है…</string>
+    <string name="safety_alert_title">सुरक्षा चेतावनी</string>
+    <string name="escalated_to_officer">मंडल कृषि अधिकारी को प्रेषित किया गया</string>
+    <string name="btn_select_crop">फसल चुनें</string>
+    <string name="btn_disease_camera">पत्ते की फोटो लें</string>
+    <string name="btn_mandi_prices">मंडी भाव</string>
+    <string name="btn_weather">मौसम सलाह</string>
+    <string name="btn_officer_help">अधिकारी सहायता</string>
+    <string name="btn_offline_knowledge">ऑफलाइन जानकारी</string>
+</resources>

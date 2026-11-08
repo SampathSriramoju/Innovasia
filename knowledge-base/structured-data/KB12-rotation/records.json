@@ -1,0 +1,110 @@
+[
+  {
+    "cropping_system_name": "Cotton + Pigeonpea (Red Gram) Intercropping",
+    "spatial_row_ratio": "4:1, 6:1 or 8:1 (4-8 rows of Cotton followed by 1 row of Pigeonpea)",
+    "suitable_agro_climatic_zones": "Telangana, Vidarbha (Maharashtra), Northern Karnataka, Madhya Pradesh black soil drylands.",
+    "agronomic_synergy_and_benefits": "Pigeonpea is a deep-rooted legume that accesses subsoil moisture from different soil horizons than cotton. Fixes 40-60 kg atmospheric Nitrogen/ha, improves soil aggregation, and acts as an insurance crop against bollworm crop failure.",
+    "economic_land_equivalent_ratio_ler": "LER: 1.35 - 1.45 (35-45% greater biological productivity than monocultures)",
+    "pest_management_benefit": "Pigeonpea serves as a barrier and refuge crop for bollworm parasitoids (Campoletis chloridae and Trichogramma).",
+    "citation": "ICAR-IIFSR Modipuram & ICAR-CICR Nagpur 2025"
+  },
+  {
+    "cropping_system_name": "Groundnut + Pigeonpea (Red Gram) Intercropping",
+    "spatial_row_ratio": "7:1 or 8:1 (7-8 rows of Groundnut to 1 row of Pigeonpea)",
+    "suitable_agro_climatic_zones": "Rayalaseema (AP), Southern Telangana (Mahabubnagar), Saurashtra (Gujarat), Karnataka alfisols.",
+    "agronomic_synergy_and_benefits": "Complementary canopy architecture: Groundnut forms dense horizontal ground cover suppressing weeds and conserving moisture, while Pigeonpea produces tall vertical canopy. Both are legumes contributing biological nitrogen fixation.",
+    "economic_land_equivalent_ratio_ler": "LER: 1.28 - 1.38",
+    "pest_management_benefit": "Reduces incidence of groundnut leaf miner and tikka leaf spot.",
+    "citation": "ICAR-CRIDA Hyderabad Rainfed Intercropping Guide 2025"
+  },
+  {
+    "cropping_system_name": "Soybean + Pigeonpea (Red Gram) Intercropping",
+    "spatial_row_ratio": "4:2 (4 rows of Soybean and 2 rows of Pigeonpea)",
+    "suitable_agro_climatic_zones": "Madhya Pradesh (Malwa, Nimar, Central Vindhyas), Maharashtra (Vidarbha, Marathwada).",
+    "agronomic_synergy_and_benefits": "Temporal complementarity: Soybean matures in 90-95 days and is harvested, after which Pigeonpea expands into the vacated space during October-December using residual subsoil moisture.",
+    "economic_land_equivalent_ratio_ler": "LER: 1.40 - 1.52",
+    "pest_management_benefit": "Deters Spodoptera litura armyworm outbreaks.",
+    "citation": "ICAR-IISR Indore Soybean Cropping Systems 2025"
+  },
+  {
+    "cropping_system_name": "Rice - Chickpea / Bengal Gram Relay Cropping (Paira / Utera)",
+    "spatial_row_ratio": "Sequential relay broadcasting: Chickpea seeds broadcast into standing paddy 2-3 days before harvest",
+    "suitable_agro_climatic_zones": "Eastern UP, Bihar, Chhattisgarh, Madhya Pradesh, West Bengal rice fallows.",
+    "agronomic_synergy_and_benefits": "Utilizes residual soil moisture and capillary water after Kharif rice without tillage; legume root nodules enrich soil nitrogen (30-40 kg N/ha) for succeeding Kharif crops; eliminates fallow land degradation.",
+    "economic_land_equivalent_ratio_ler": "Cropping Intensity increased from 100% to 200%",
+    "pest_management_benefit": "Breaks cycle of rice monophagous pests like Yellow Stem Borer and Brown Plant Hopper.",
+    "citation": "ICAR-IIPR Kanpur Rice-Fallow Pulse Strategy 2025"
+  },
+  {
+    "cropping_system_name": "Maize + Black Gram / Green Gram Intercropping",
+    "spatial_row_ratio": "1:2 or 2:2 additive series",
+    "suitable_agro_climatic_zones": "Telangana, Karnataka, Andhra Pradesh, Rajasthan, Bihar.",
+    "agronomic_synergy_and_benefits": "Maize utilizes high light and nitrogen, while pulses cover inter-row space rapidly suppressing weeds and fixing 30 kg N/acre. Pulse harvest at 65-70 days provides early cash flow.",
+    "economic_land_equivalent_ratio_ler": "LER: 1.25 - 1.35",
+    "pest_management_benefit": "Reduces maize stem borer egg laying on primary host.",
+    "citation": "ICAR-IIMR Ludhiana Maize Agronomy 2025"
+  },
+  {
+    "cropping_system_name": "Sugarcane + Cowpea / French Bean Intercropping",
+    "spatial_row_ratio": "1:2 (2 rows of pulse in 120 cm or 150 cm wide sugarcane inter-row spaces)",
+    "suitable_agro_climatic_zones": "Western Maharashtra, Uttar Pradesh, Tamil Nadu, Telangana canal command areas.",
+    "agronomic_synergy_and_benefits": "Sugarcane has slow early formative growth (up to 90 days); short-duration pulses (55-65 days) mature before cane canopy closes, producing 4-6 quintals of pulse grain per acre without reducing cane yields.",
+    "economic_land_equivalent_ratio_ler": "LER: 1.30 - 1.40",
+    "pest_management_benefit": "Suppresses early weed growth and provides live mulch conserving furrow moisture.",
+    "citation": "ICAR-SBI Coimbatore Sugarcane Intercropping 2025"
+  },
+  {
+    "cropping_system_name": "Rice - Wheat - Green Gram (Summer Mung) Triple Cropping",
+    "spatial_row_ratio": "300% Sequential Cropping Rotation: Kharif Rice -> Rabi Wheat -> Summer Mungbean (60 days)",
+    "suitable_agro_climatic_zones": "Punjab, Haryana, Western Uttar Pradesh Indo-Gangetic Plains.",
+    "agronomic_synergy_and_benefits": "Incorporating short-duration summer green gram (SML 668 / Virat) in April-June fixes 40-50 kg N/ha, adds 3 tonnes green biomass/acre upon threshing, and rejuvenates exhausted rice-wheat soil organic carbon.",
+    "economic_land_equivalent_ratio_ler": "Cropping Intensity: 300%; saves 25% fertilizer N in succeeding paddy",
+    "pest_management_benefit": "Reduces Phalaris minor seed bank through summer solarization and tillage.",
+    "citation": "PAU Ludhiana & ICAR-IIFSR Modipuram 2025"
+  },
+  {
+    "cropping_system_name": "Sorghum + Pigeonpea Intercropping",
+    "spatial_row_ratio": "2:1 (2 rows Sorghum : 1 row Pigeonpea)",
+    "suitable_agro_climatic_zones": "Semi-Arid Tropics: Deccan Plateau, Karnataka, Maharashtra drylands.",
+    "agronomic_synergy_and_benefits": "Proven risk-aversion cropping system for drought-prone drylands; Sorghum harvested at 100 days; Pigeonpea continues to grow until 160 days on deep vertisol moisture.",
+    "economic_land_equivalent_ratio_ler": "LER: 1.38 - 1.48",
+    "pest_management_benefit": "Minimizes Striga weed emergence and builds predatory insect populations.",
+    "citation": "ICAR-IIMR Hyderabad & ICRISAT Dryland Systems 2025"
+  },
+  {
+    "cropping_system_name": "Mustard + Chickpea Intercropping",
+    "spatial_row_ratio": "4:1 or 6:1 (4-6 rows Chickpea : 1 row Mustard)",
+    "suitable_agro_climatic_zones": "Rajasthan, Madhya Pradesh, Haryana, Bundelkhand.",
+    "agronomic_synergy_and_benefits": "Mustard tall stature acts as windbreak; roots explore different soil layers; Chickpea fixes atmospheric nitrogen; mustard acts as trap crop for pod borer predators.",
+    "economic_land_equivalent_ratio_ler": "LER: 1.20 - 1.30",
+    "pest_management_benefit": "Mustard glucosinolate root exudates suppress soil-borne fungal pathogens.",
+    "citation": "ICAR-DRMR Bharatpur & ICAR-IIPR Kanpur 2025"
+  },
+  {
+    "cropping_system_name": "Cotton - Groundnut Biennial Rotation",
+    "spatial_row_ratio": "Crop rotation: Kharif Cotton -> Summer Green Manure -> Kharif Groundnut -> Rabi Bengal Gram",
+    "suitable_agro_climatic_zones": "Saurashtra (Gujarat), Northern Telangana, Western Maharashtra.",
+    "agronomic_synergy_and_benefits": "Breaks monoculture build-up of Pink Bollworm in soil; groundnut fixes nitrogen, lowering fertilizer cost for succeeding cotton by 25%.",
+    "economic_land_equivalent_ratio_ler": "Improves soil health index by 28%",
+    "pest_management_benefit": "Disrupts life cycle of soil-pupating bollworms.",
+    "citation": "ICAR-CICR & ICAR-DGR Biennial Crop Rotation 2025"
+  },
+  {
+    "cropping_system_name": "Turmeric + Maize / Chilli Border Intercropping",
+    "spatial_row_ratio": "1 row of Maize after every 10 rows of Turmeric; or Castor on borders",
+    "suitable_agro_climatic_zones": "Telangana (Nizamabad, Jagtial), Andhra Pradesh (Duggirala), Tamil Nadu (Erode).",
+    "agronomic_synergy_and_benefits": "Maize provides partial shade to turmeric during early scorching summer months (May-June) when young sprouts emerge, reducing sunburn; maize cobs harvested at 85 days.",
+    "economic_land_equivalent_ratio_ler": "LER: 1.25 - 1.35",
+    "pest_management_benefit": "Reduces shoot borer immigration into turmeric canopy.",
+    "citation": "ICAR-IISR Calicut & PJTSAU Turmeric Guide 2025"
+  },
+  {
+    "cropping_system_name": "Dhaincha Green Manure - Rice - Rabi Pulse Rotation",
+    "spatial_row_ratio": "Sequential rotation: Summer Dhaincha (45 days) -> Kharif Rice -> Rabi Urad / Mung",
+    "suitable_agro_climatic_zones": "Godavari Delta, Krishna Delta, Cauvery Basin, Punjab, Bengal.",
+    "agronomic_synergy_and_benefits": "Dhaincha incorporated at 45 DAS adds 8-10 tonnes organic biomass and 60-80 kg N/ha in organic form, lowering chemical nitrogen requirement by 25-50% while improving soil microbial diversity.",
+    "economic_land_equivalent_ratio_ler": "Sustainable Yield Index (SYI) increases from 0.62 to 0.88",
+    "pest_management_benefit": "Reduces incidence of sheath blight and nematodes.",
+    "citation": "PJTSAU Vyavasaya Panchangam & ICAR-IIRR 2025"
+  }
+]

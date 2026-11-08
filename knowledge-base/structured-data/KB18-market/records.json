@@ -1,0 +1,553 @@
+[
+  {
+    "mandi_id": "apmc-tg-001",
+    "mandi_name": "Enumamula Agricultural Market (Warangal)",
+    "district": "Warangal",
+    "state": "Telangana",
+    "major_commodities": [
+      {
+        "commodity": "Cotton (Long Staple)",
+        "variety_grade": "Bt Cotton (Bunny / Brahma / Shankar-6)",
+        "faq_specifications": "Moisture: 8.0% - 12.0%; Trash: <3.0%; Staple length: 29.5 - 30.5 mm; Micronaire: 3.5 - 4.5",
+        "msp_benchmark_inr_per_quintal": 7521,
+        "modal_price_range_inr_per_quintal": "7100 - 7850",
+        "peak_arrival_months": "October to January",
+        "moisture_deduction_rule": "Standard moisture: 8.0%. For every 1% moisture above 8% up to 12%, deduction proportionate to weight; cotton above 12% moisture rejected by CCI."
+      },
+      {
+        "commodity": "Dry Red Chilli",
+        "variety_grade": "Teja (S17 / Wonder Hot / Deluxe)",
+        "faq_specifications": "Moisture: 10% - 11%; Broken pods: <2%; Discolored pods: <3%; Pungency: High SHU",
+        "msp_benchmark_inr_per_quintal": null,
+        "modal_price_range_inr_per_quintal": "14500 - 19800",
+        "peak_arrival_months": "January to May",
+        "moisture_deduction_rule": "Pods must rattle; moisture >12% incurs flat deduction of Rs. 300-500/quintal for drying."
+      },
+      {
+        "commodity": "Maize",
+        "variety_grade": "Yellow Hybrid Maize (FAQ)",
+        "faq_specifications": "Moisture: <14.0%; Foreign matter: <1.0%; Damaged kernels: <3.0%",
+        "msp_benchmark_inr_per_quintal": 2225,
+        "modal_price_range_inr_per_quintal": "2150 - 2380",
+        "peak_arrival_months": "October to December (Kharif) / March to May (Rabi)",
+        "moisture_deduction_rule": "Moisture 14-15%: 1% value deduction; >15%: mandatory sun drying before bidding."
+      }
+    ],
+    "market_infrastructure": "Electronic e-NAM trading, 4 scientific weighbridges, 60,000 MT WDRA accredited godowns, soil and assaying lab.",
+    "citation": "Agmarknet Daily Market Price Bulletin & Telangana Marketing Department 2025"
+  },
+  {
+    "mandi_id": "apmc-tg-002",
+    "mandi_name": "Nizamabad APMC Market Yard",
+    "district": "Nizamabad",
+    "state": "Telangana",
+    "major_commodities": [
+      {
+        "commodity": "Turmeric",
+        "variety_grade": "Nizamabad Finger / Bulb (Curcumin 3.0 - 3.8%)",
+        "faq_specifications": "Moisture: 8.0% - 10.0%; Polished; Well-boiled and cured; Free from fungal mold and scale infestation",
+        "msp_benchmark_inr_per_quintal": null,
+        "modal_price_range_inr_per_quintal": "12500 - 16800",
+        "peak_arrival_months": "February to May",
+        "moisture_deduction_rule": "Moisture >10% rejected for e-NAM bidding until re-dried."
+      },
+      {
+        "commodity": "Paddy / Rice",
+        "variety_grade": "RNR 15048 (Telangana Sona) & BPT 5204 (Samba Mahsuri)",
+        "faq_specifications": "Moisture: <17.0%; Foreign matter: <1.0%; Damaged/discolored: <3.0%",
+        "msp_benchmark_inr_per_quintal": 2320,
+        "modal_price_range_inr_per_quintal": "2350 - 2750",
+        "peak_arrival_months": "November to January",
+        "moisture_deduction_rule": "Moisture up to 17% accepted at full MSP; above 17% deducted @ 1% per percentage point up to 20%."
+      }
+    ],
+    "market_infrastructure": "Largest turmeric terminal market in Telangana; automated assaying lab for curcumin testing; 40,000 MT cold storage capacity.",
+    "citation": "Agmarknet Portal & Spices Board Nizamabad Regional Office 2025"
+  },
+  {
+    "mandi_id": "apmc-ap-001",
+    "mandi_name": "Guntur Mirchi Yard (Asia's Largest Chilli Market)",
+    "district": "Guntur",
+    "state": "Andhra Pradesh",
+    "major_commodities": [
+      {
+        "commodity": "Dry Red Chilli",
+        "variety_grade": "Teja, 334 (S4), Byadgi 5531, Devanur Deluxe, Armoor",
+        "faq_specifications": "Moisture: 9.0% - 11.0%; Stalkless/with stalk; Capsaicin content >0.4%; Aflatoxin <10 ppb",
+        "msp_benchmark_inr_per_quintal": null,
+        "modal_price_range_inr_per_quintal": "16000 - 22500",
+        "peak_arrival_months": "January to May",
+        "moisture_deduction_rule": "Strict inspection; damp chilli with moisture >12% shifted directly to outdoor drying yards."
+      },
+      {
+        "commodity": "Cotton",
+        "variety_grade": "Medium & Long Staple Kapas",
+        "faq_specifications": "Moisture: 8.0% - 11.0%; Clean white lint; Free from leaf trash",
+        "msp_benchmark_inr_per_quintal": 7521,
+        "modal_price_range_inr_per_quintal": "7000 - 7700",
+        "peak_arrival_months": "November to February",
+        "moisture_deduction_rule": "CCI procurement guidelines strictly enforced."
+      }
+    ],
+    "market_infrastructure": "Asia's largest specialized spice market; 120 cold stores within 15 km radius with total holding capacity of 800,000 MT; international export testing lab.",
+    "citation": "Agricultural Market Committee Guntur & Agmarknet 2025"
+  },
+  {
+    "mandi_id": "apmc-tg-003",
+    "mandi_name": "Khammam Agricultural Market Yard",
+    "district": "Khammam",
+    "state": "Telangana",
+    "major_commodities": [
+      {
+        "commodity": "Cotton",
+        "variety_grade": "Long Staple Bt Kapas",
+        "faq_specifications": "Moisture: <10.0%; Staple length: 30 mm",
+        "msp_benchmark_inr_per_quintal": 7521,
+        "modal_price_range_inr_per_quintal": "7150 - 7800",
+        "peak_arrival_months": "October to January",
+        "moisture_deduction_rule": "Standard CCI moisture norms."
+      },
+      {
+        "commodity": "Dry Red Chilli",
+        "variety_grade": "Teja / S17",
+        "faq_specifications": "Moisture: 10.0% - 11.5%",
+        "msp_benchmark_inr_per_quintal": null,
+        "modal_price_range_inr_per_quintal": "14000 - 19200",
+        "peak_arrival_months": "February to April",
+        "moisture_deduction_rule": "Market drying yard deduction apply."
+      }
+    ],
+    "market_infrastructure": "e-NAM enabled electronic trading platform, continuous digital display screens, covered auction sheds.",
+    "citation": "Agmarknet & Department of Agricultural Marketing Telangana 2025"
+  },
+  {
+    "mandi_id": "apmc-ap-002",
+    "mandi_name": "Kurnool APMC Market Yard",
+    "district": "Kurnool",
+    "state": "Andhra Pradesh",
+    "major_commodities": [
+      {
+        "commodity": "Onion",
+        "variety_grade": "Bellary Red / Kurnool Local",
+        "faq_specifications": "Bulb size 40-60 mm; Cured thin neck; Free from bolters and rots; Moisture 80-82%",
+        "msp_benchmark_inr_per_quintal": null,
+        "modal_price_range_inr_per_quintal": "1800 - 3200",
+        "peak_arrival_months": "September to November (Kharif) / January to March (Rabi)",
+        "moisture_deduction_rule": "Thick-neck and wet onions discounted by 20-30% by wholesale commission agents."
+      },
+      {
+        "commodity": "Groundnut (Pods)",
+        "variety_grade": "TMV-2 / K6 / Kadiri Bold (Shelling 70%)",
+        "faq_specifications": "Moisture: <9.0%; Sound mature pods: >85%; Foreign matter: <2.0%",
+        "msp_benchmark_inr_per_quintal": 6783,
+        "modal_price_range_inr_per_quintal": "6400 - 7200",
+        "peak_arrival_months": "October to December",
+        "moisture_deduction_rule": "Moisture >10% incurs 1.5% deduction per percentage point."
+      }
+    ],
+    "market_infrastructure": "Major South Indian onion transit hub; 15,000 MT onion storage sheds; e-NAM trading.",
+    "citation": "Agmarknet Portal & Kurnool AMC 2025"
+  },
+  {
+    "mandi_id": "apmc-mp-001",
+    "mandi_name": "Indore APMC Yard (Chhawani Krishi Upaj Mandi)",
+    "district": "Indore",
+    "state": "Madhya Pradesh",
+    "major_commodities": [
+      {
+        "commodity": "Soybean",
+        "variety_grade": "Yellow Soybean (JS 95-60 / JS 20-34 / NRC 37)",
+        "faq_specifications": "Moisture: <10.0%; Foreign matter: <2.0%; Damaged/shriveled: <3.0%; Oil content: >18.5%",
+        "msp_benchmark_inr_per_quintal": 4892,
+        "modal_price_range_inr_per_quintal": "4650 - 5250",
+        "peak_arrival_months": "October to December",
+        "moisture_deduction_rule": "Moisture 10-12%: proportionate weight cut; >12%: deduction of Rs. 50/quintal per 1% excess moisture."
+      },
+      {
+        "commodity": "Wheat",
+        "variety_grade": "Sharbati / Lok-1 / Malavraj (Durum)",
+        "faq_specifications": "Moisture: <12.0%; Bold lustrous grain; Protein >12%; Foreign matter: <0.75%",
+        "msp_benchmark_inr_per_quintal": 2425,
+        "modal_price_range_inr_per_quintal": "2550 - 3400",
+        "peak_arrival_months": "March to May",
+        "moisture_deduction_rule": "Moisture >12% subject to value cut as per MP Civil Supplies Corporation norms."
+      },
+      {
+        "commodity": "Chickpea / Bengal Gram",
+        "variety_grade": "Kabuli Dollar Chana & Desi Chana (JG 11)",
+        "faq_specifications": "Moisture: <10.0%; Bold grain count: 38-42 count per ounce for Dollar Kabuli",
+        "msp_benchmark_inr_per_quintal": 5650,
+        "modal_price_range_inr_per_quintal": "5800 - 11500 (Dollar Kabuli commands premium)",
+        "peak_arrival_months": "March to May",
+        "moisture_deduction_rule": "Strict dry grain criteria (<10% moisture)."
+      }
+    ],
+    "market_infrastructure": "National soybean pricing benchmark; automated grading and infrared moisture meters; massive WDRA silos.",
+    "citation": "Agmarknet Daily Price Feed & MP Mandi Board 2025"
+  },
+  {
+    "mandi_id": "apmc-mp-002",
+    "mandi_name": "Ujjain Krishi Upaj Mandi",
+    "district": "Ujjain",
+    "state": "Madhya Pradesh",
+    "major_commodities": [
+      {
+        "commodity": "Soybean",
+        "variety_grade": "Yellow Soybean (FAQ)",
+        "faq_specifications": "Moisture: 9-10%; Oil: >18%",
+        "msp_benchmark_inr_per_quintal": 4892,
+        "modal_price_range_inr_per_quintal": "4600 - 5180",
+        "peak_arrival_months": "October to December",
+        "moisture_deduction_rule": "Standard MP Mandi Board moisture scale."
+      },
+      {
+        "commodity": "Wheat",
+        "variety_grade": "Malwi / Sharbati Premium",
+        "faq_specifications": "Moisture: <12%",
+        "msp_benchmark_inr_per_quintal": 2425,
+        "modal_price_range_inr_per_quintal": "2600 - 3300",
+        "peak_arrival_months": "March to May",
+        "moisture_deduction_rule": "Standard deduction."
+      }
+    ],
+    "market_infrastructure": "Full e-NAM connectivity, 8 weighbridges, covered sheds.",
+    "citation": "Agmarknet & MP State Agricultural Marketing Board 2025"
+  },
+  {
+    "mandi_id": "apmc-pb-001",
+    "mandi_name": "Khanna Grain Market (Asia's Largest Grain Market)",
+    "district": "Ludhiana",
+    "state": "Punjab",
+    "major_commodities": [
+      {
+        "commodity": "Wheat",
+        "variety_grade": "PBW-725 / HD-3086 / DBW-187 / DBW-222 (FAQ)",
+        "faq_specifications": "Moisture: <12.0%; Foreign matter: <0.75%; Damaged grains: <2.0%; Shriveled/broken: <4.0%",
+        "msp_benchmark_inr_per_quintal": 2425,
+        "modal_price_range_inr_per_quintal": "2425 - 2475 (Heavy MSP procurement by FCI & Markfed)",
+        "peak_arrival_months": "April to May",
+        "moisture_deduction_rule": "Moisture up to 12% procured at full MSP. Moisture between 12-14% attracts proportionate value cut; >14% strictly rejected."
+      },
+      {
+        "commodity": "Paddy / Rice",
+        "variety_grade": "PR-126 / PR-128 / Pusa Basmati 1121 & 1509",
+        "faq_specifications": "Common Paddy Moisture: <17.0%; Basmati: Extra long slender, moisture <14%",
+        "msp_benchmark_inr_per_quintal": 2300,
+        "modal_price_range_inr_per_quintal": "2300 - 2350 (Common) / 3400 - 4200 (Basmati)",
+        "peak_arrival_months": "October to November",
+        "moisture_deduction_rule": "FCI procurement norm: >17% moisture common paddy rejected."
+      }
+    ],
+    "market_infrastructure": "Asia's largest grain transaction hub; 100% electronic auction and direct farmer bank account settlement (DBT via IFMS Punjab).",
+    "citation": "Punjab Mandi Board & Agmarknet Grain Price Service 2025"
+  },
+  {
+    "mandi_id": "apmc-mh-001",
+    "mandi_name": "Lasalgaon APMC (Asia's Benchmark Onion Market)",
+    "district": "Nashik",
+    "state": "Maharashtra",
+    "major_commodities": [
+      {
+        "commodity": "Onion",
+        "variety_grade": "Unhalti (Rabi / Summer Onion) & Pol / Rangada (Kharif Onion)",
+        "faq_specifications": "Unhalti: Dry papery red skin, moisture <80%, diameter >50 mm, high keeping quality. Pol: Fresh harvested, thick neck",
+        "msp_benchmark_inr_per_quintal": null,
+        "modal_price_range_inr_per_quintal": "1400 - 3600",
+        "peak_arrival_months": "March to June (Unhalti) / October to December (Pol/Rangada)",
+        "moisture_deduction_rule": "Wet or sprouted onions face dynamic 15-40% auction price discounting based on quality visual grading."
+      }
+    ],
+    "market_infrastructure": "National price discovery engine for onions across India; dedicated railway siding for onion rakes; 100,000 MT storage chawls.",
+    "citation": "Lasalgaon Agricultural Produce Market Committee & Agmarknet 2025"
+  },
+  {
+    "mandi_id": "apmc-gj-001",
+    "mandi_name": "Rajkot APMC Market Yard",
+    "district": "Rajkot",
+    "state": "Gujarat",
+    "major_commodities": [
+      {
+        "commodity": "Groundnut (Pods)",
+        "variety_grade": "GG-20 / GJG-22 / Bold Kernels (Shelling 70-72%)",
+        "faq_specifications": "Moisture: <8.0%; Pod cleanliness: >98%; Aflatoxin: Negligible",
+        "msp_benchmark_inr_per_quintal": 6783,
+        "modal_price_range_inr_per_quintal": "6600 - 7500",
+        "peak_arrival_months": "October to January",
+        "moisture_deduction_rule": "Moisture >9% subject to weight deduction."
+      },
+      {
+        "commodity": "Cotton",
+        "variety_grade": "Kapas Shankar-6 (S-6)",
+        "faq_specifications": "Moisture: <9.5%; Staple: 28.5 - 29 mm",
+        "msp_benchmark_inr_per_quintal": 7521,
+        "modal_price_range_inr_per_quintal": "7100 - 7750",
+        "peak_arrival_months": "November to February",
+        "moisture_deduction_rule": "CCI standard procurement rules apply."
+      }
+    ],
+    "market_infrastructure": "Largest groundnut and cotton trading centre in Saurashtra; automated grading and digital auctioning.",
+    "citation": "Rajkot APMC & Agmarknet DMI 2025"
+  },
+  {
+    "mandi_id": "apmc-rj-001",
+    "mandi_name": "Bhamashah Krishi Upaj Mandi (Kota)",
+    "district": "Kota",
+    "state": "Rajasthan",
+    "major_commodities": [
+      {
+        "commodity": "Mustard / Rapeseed",
+        "variety_grade": "Pusa Bold / Giriraj (Oil Content >40%)",
+        "faq_specifications": "Moisture: <8.0%; Foreign matter: <2.0%; Damaged/shriveled: <3.0%",
+        "msp_benchmark_inr_per_quintal": 5950,
+        "modal_price_range_inr_per_quintal": "5700 - 6400",
+        "peak_arrival_months": "March to May",
+        "moisture_deduction_rule": "NAFED/HAFED procurement: Moisture must be strictly <8.0%; oil content <38% penalized."
+      },
+      {
+        "commodity": "Soybean",
+        "variety_grade": "Yellow Soybean",
+        "faq_specifications": "Moisture: <10.0%",
+        "msp_benchmark_inr_per_quintal": 4892,
+        "modal_price_range_inr_per_quintal": "4600 - 5150",
+        "peak_arrival_months": "October to December",
+        "moisture_deduction_rule": "Standard deduction."
+      }
+    ],
+    "market_infrastructure": "Rajasthan's largest grain and oilseeds mandi; electronic assaying; modern warehousing.",
+    "citation": "Rajasthan State Agricultural Marketing Board & Agmarknet 2025"
+  },
+  {
+    "mandi_id": "apmc-up-001",
+    "mandi_name": "Agra APMC Market Yard",
+    "district": "Agra",
+    "state": "Uttar Pradesh",
+    "major_commodities": [
+      {
+        "commodity": "Potato",
+        "variety_grade": "Kufri Bahar (3797) / Kufri Pukhraj / Kufri Chipsona (Processing)",
+        "faq_specifications": "Table potato: Size 45-65 mm, clean skin, no greening, no cuts; Chipsona: Specific gravity >1.080, reducing sugars <0.1%",
+        "msp_benchmark_inr_per_quintal": null,
+        "modal_price_range_inr_per_quintal": "1100 - 1800",
+        "peak_arrival_months": "February to April",
+        "moisture_deduction_rule": "Greened tubers (solanin) and cut/bruised tubers docked 10-15% value."
+      },
+      {
+        "commodity": "Mustard",
+        "variety_grade": "Yellow & Black Mustard (FAQ)",
+        "faq_specifications": "Moisture: <8.0%",
+        "msp_benchmark_inr_per_quintal": 5950,
+        "modal_price_range_inr_per_quintal": "5750 - 6350",
+        "peak_arrival_months": "March to May",
+        "moisture_deduction_rule": "Standard oilseed moisture criteria."
+      }
+    ],
+    "market_infrastructure": "National potato hub with over 350 cold storages in district holding 2.5 million MT; direct buyer tie-ups with snack food processors.",
+    "citation": "UP Mandi Parishad & Agmarknet 2025"
+  },
+  {
+    "mandi_id": "apmc-mh-002",
+    "mandi_name": "Pimpalgaon Baswant APMC",
+    "district": "Nashik",
+    "state": "Maharashtra",
+    "major_commodities": [
+      {
+        "commodity": "Tomato",
+        "variety_grade": "Hybrids (Abhinav / US-440 / Saaho)",
+        "faq_specifications": "Firm, uniform red-ripe, size 50-70 mm, free from cracking and sunscald",
+        "msp_benchmark_inr_per_quintal": null,
+        "modal_price_range_inr_per_quintal": "1200 - 2800 (Highly volatile seasonal swings)",
+        "peak_arrival_months": "August to November (Kharif) / January to March (Rabi)",
+        "moisture_deduction_rule": "Packed in 20-kg crates; cracked or soft rot fruits rejected."
+      },
+      {
+        "commodity": "Onion",
+        "variety_grade": "Red Onion",
+        "faq_specifications": "Moisture: <80%",
+        "msp_benchmark_inr_per_quintal": null,
+        "modal_price_range_inr_per_quintal": "1500 - 3400",
+        "peak_arrival_months": "March to June",
+        "moisture_deduction_rule": "Standard onion grading."
+      }
+    ],
+    "market_infrastructure": "Largest tomato wholesale terminal in India; electronic weighing, cold logistics corridor to Mumbai and North India.",
+    "citation": "Agmarknet & MSAMB Pune 2025"
+  },
+  {
+    "mandi_id": "apmc-mh-003",
+    "mandi_name": "Nagpur Cotton & Orange APMC",
+    "district": "Nagpur",
+    "state": "Maharashtra",
+    "major_commodities": [
+      {
+        "commodity": "Cotton",
+        "variety_grade": "Vidarbha Bt Cotton Kapas (Long Staple)",
+        "faq_specifications": "Moisture: <10.0%; Staple: 29-30 mm",
+        "msp_benchmark_inr_per_quintal": 7521,
+        "modal_price_range_inr_per_quintal": "7100 - 7750",
+        "peak_arrival_months": "November to February",
+        "moisture_deduction_rule": "Standard CCI moisture norms."
+      },
+      {
+        "commodity": "Soybean",
+        "variety_grade": "Yellow Soybean (FAQ)",
+        "faq_specifications": "Moisture: <10.0%",
+        "msp_benchmark_inr_per_quintal": 4892,
+        "modal_price_range_inr_per_quintal": "4600 - 5100",
+        "peak_arrival_months": "October to December",
+        "moisture_deduction_rule": "Standard deduction."
+      }
+    ],
+    "market_infrastructure": "Major commercial hub for Vidarbha; multiple cotton ginning units; e-NAM auctioning.",
+    "citation": "MSAMB Pune & Agmarknet 2025"
+  },
+  {
+    "mandi_id": "apmc-ka-001",
+    "mandi_name": "Gadag APMC Market Yard",
+    "district": "Gadag",
+    "state": "Karnataka",
+    "major_commodities": [
+      {
+        "commodity": "Cotton",
+        "variety_grade": "DCH-32 / Bunny / Hybrid Kapas",
+        "faq_specifications": "Moisture: <10.0%; Staple length: 32 mm",
+        "msp_benchmark_inr_per_quintal": 7521,
+        "modal_price_range_inr_per_quintal": "7200 - 7900",
+        "peak_arrival_months": "December to March",
+        "moisture_deduction_rule": "Standard CCI norms."
+      },
+      {
+        "commodity": "Chickpea / Bengal Gram",
+        "variety_grade": "JG-11 / Annigeri-1 (Desi Chana)",
+        "faq_specifications": "Moisture: <10.0%",
+        "msp_benchmark_inr_per_quintal": 5650,
+        "modal_price_range_inr_per_quintal": "5600 - 6100",
+        "peak_arrival_months": "January to March",
+        "moisture_deduction_rule": "Standard pulse drying rules."
+      }
+    ],
+    "market_infrastructure": "Karnataka State Agricultural Marketing Board e-trading platform, assaying labs.",
+    "citation": "KSAMB Bengaluru & Agmarknet 2025"
+  },
+  {
+    "mandi_id": "apmc-tg-004",
+    "mandi_name": "Suryapet Agricultural Market Yard",
+    "district": "Suryapet",
+    "state": "Telangana",
+    "major_commodities": [
+      {
+        "commodity": "Paddy / Rice",
+        "variety_grade": "Common Grade A & BPT 5204",
+        "faq_specifications": "Moisture: <17.0%; Damaged: <3%",
+        "msp_benchmark_inr_per_quintal": 2320,
+        "modal_price_range_inr_per_quintal": "2320 - 2650",
+        "peak_arrival_months": "November to January",
+        "moisture_deduction_rule": "Civil Supplies Corporation paddy procurement specifications."
+      }
+    ],
+    "market_infrastructure": "Dedicated paddy procurement infrastructure; 12 direct purchase counters.",
+    "citation": "Department of Agriculture Telangana & Agmarknet 2025"
+  },
+  {
+    "mandi_id": "apmc-mp-003",
+    "mandi_name": "Harda Krishi Upaj Mandi",
+    "district": "Harda",
+    "state": "Madhya Pradesh",
+    "major_commodities": [
+      {
+        "commodity": "Wheat",
+        "variety_grade": "Lok-1 / GW-322",
+        "faq_specifications": "Moisture: <12.0%",
+        "msp_benchmark_inr_per_quintal": 2425,
+        "modal_price_range_inr_per_quintal": "2425 - 2650",
+        "peak_arrival_months": "March to May",
+        "moisture_deduction_rule": "Standard MSP deduction."
+      },
+      {
+        "commodity": "Green Gram (Moong)",
+        "variety_grade": "Summer Moong (Virat / Shikha)",
+        "faq_specifications": "Moisture: <10.0%",
+        "msp_benchmark_inr_per_quintal": 8682,
+        "modal_price_range_inr_per_quintal": "8200 - 8900",
+        "peak_arrival_months": "June to July",
+        "moisture_deduction_rule": "Moisture deduction as per NAFED."
+      }
+    ],
+    "market_infrastructure": "Major canal-irrigated triple cropping grain market; automated electronic weighing.",
+    "citation": "MP Mandi Board & Agmarknet 2025"
+  },
+  {
+    "mandi_id": "apmc-pb-002",
+    "mandi_name": "Ludhiana APMC Yard",
+    "district": "Ludhiana",
+    "state": "Punjab",
+    "major_commodities": [
+      {
+        "commodity": "Wheat",
+        "variety_grade": "HD-3086 / PBW-550 (FAQ)",
+        "faq_specifications": "Moisture: <12.0%",
+        "msp_benchmark_inr_per_quintal": 2425,
+        "modal_price_range_inr_per_quintal": "2425 - 2450",
+        "peak_arrival_months": "April to May",
+        "moisture_deduction_rule": "FCI procurement norms."
+      },
+      {
+        "commodity": "Potato",
+        "variety_grade": "Kufri Jyoti / Kufri Pukhraj",
+        "faq_specifications": "Fresh tubers; clean skin",
+        "msp_benchmark_inr_per_quintal": null,
+        "modal_price_range_inr_per_quintal": "1050 - 1650",
+        "peak_arrival_months": "November to February",
+        "moisture_deduction_rule": "Bruised tubers discounted."
+      }
+    ],
+    "market_infrastructure": "Modern vegetable sub-yard and grain market with electronic auctioning.",
+    "citation": "Punjab Mandi Board 2025"
+  },
+  {
+    "mandi_id": "apmc-ap-003",
+    "mandi_name": "Duggirala Turmeric Market Yard",
+    "district": "Guntur",
+    "state": "Andhra Pradesh",
+    "major_commodities": [
+      {
+        "commodity": "Turmeric",
+        "variety_grade": "Duggirala / Krishna Finger (High Curcumin)",
+        "faq_specifications": "Moisture: <10.0%; Well boiled and polished",
+        "msp_benchmark_inr_per_quintal": null,
+        "modal_price_range_inr_per_quintal": "13000 - 17500",
+        "peak_arrival_months": "February to May",
+        "moisture_deduction_rule": "Moisture >10% must be dried in yard."
+      }
+    ],
+    "market_infrastructure": "Historic Andhra turmeric trading center; direct rail connections to Northern consumer centers.",
+    "citation": "Agricultural Market Committee Duggirala & Agmarknet 2025"
+  },
+  {
+    "mandi_id": "apmc-mh-004",
+    "mandi_name": "Akola Cotton & Tur APMC Yard",
+    "district": "Akola",
+    "state": "Maharashtra",
+    "major_commodities": [
+      {
+        "commodity": "Red Gram / Pigeonpea (Tur)",
+        "variety_grade": "White & Red Tur (Maroti / BDN-711)",
+        "faq_specifications": "Moisture: <10.0%; Bold grain, free from bruchid bore holes",
+        "msp_benchmark_inr_per_quintal": 7550,
+        "modal_price_range_inr_per_quintal": "7400 - 8200",
+        "peak_arrival_months": "December to March",
+        "moisture_deduction_rule": "Moisture >12% rejected by NAFED."
+      },
+      {
+        "commodity": "Cotton",
+        "variety_grade": "Kapas Long Staple",
+        "faq_specifications": "Moisture: <10.0%",
+        "msp_benchmark_inr_per_quintal": 7521,
+        "modal_price_range_inr_per_quintal": "7100 - 7700",
+        "peak_arrival_months": "November to January",
+        "moisture_deduction_rule": "Standard CCI norms."
+      }
+    ],
+    "market_infrastructure": "Major dal mill hub with over 100 processing mills in vicinity; e-NAM trading.",
+    "citation": "MSAMB Pune & Agmarknet 2025"
+  }
+]

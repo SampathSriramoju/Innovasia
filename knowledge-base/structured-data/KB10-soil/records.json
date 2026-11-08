@@ -1,0 +1,134 @@
+[
+  {
+    "soil_type": "Deep Black Cotton Soils (Vertisols)",
+    "dominant_regions": "Deccan Plateau: Telangana (Adilabad, Nizamabad, Khammam), Maharashtra (Vidarbha, Marathwada), Madhya Pradesh (Malwa, Nimar), Gujarat, Northern Karnataka.",
+    "characteristics_and_texture": "Clay content 40-60% dominated by montmorillonite clay mineral; high swelling and shrinkage properties; forms wide deep cracks during dry season; self-ploughing; very high moisture retention capacity but poor internal drainage when wet.",
+    "ph_range": "7.5 - 8.5 (Mildly to moderately alkaline)",
+    "organic_carbon_status": "Low to medium (0.35 - 0.55%); benchmark target >0.75%",
+    "major_nutrient_deficiencies": "High in calcium and potassium; deficient in Nitrogen, Phosphorus, Zinc, and available Iron.",
+    "soil_amendments_and_reclamation": "Incorporate broad-bed and furrow (BBF) land configuration to drain excess monsoon surface water. Apply Gypsum @ 1-2 tonnes/acre if exchangeable sodium percentage (ESP) exceeds 15% (sodic phase). Deep summer chiseling once in 3 years.",
+    "green_manuring_and_organic_practices": "Incorporate Dhaincha (Sesbania aculeata) or Sunnhemp (Crotalaria juncea) at 45 DAS (adds 8-10 tonnes green biomass/acre). Apply FYM @ 5 tonnes/acre.",
+    "citation": "ICAR-IISS Bhopal Vertisol Management & PJTSAU 2025"
+  },
+  {
+    "soil_type": "Red Sandy Loams (Alfisols / Chalkas)",
+    "dominant_regions": "Southern Telangana (Mahabubnagar, Nalgonda, Rangareddy), Andhra Pradesh (Rayalaseema), Tamil Nadu, Odisha, Chhota Nagpur plateau.",
+    "characteristics_and_texture": "Formed by weathering of ancient granitic rocks; red color due to ferric oxides; light textured, sandy loam to sandy clay loam; high infiltration rate; low moisture retention capacity; prone to surface crusting after heavy rains.",
+    "ph_range": "6.0 - 7.2 (Slightly acidic to neutral)",
+    "organic_carbon_status": "Very low (<0.40%)",
+    "major_nutrient_deficiencies": "Deficient in Nitrogen, Phosphorus, Potassium, Calcium, Magnesium, and Zinc.",
+    "soil_amendments_and_reclamation": "Break surface crusting using spike tooth harrow after rains. Apply tank silt @ 20-30 bullock cartloads (15 tonnes)/acre once in 4 years to enhance moisture retention and clay fraction. Ridge-furrow cultivation across slope.",
+    "green_manuring_and_organic_practices": "Green manuring with Sunnhemp @ 15 kg seed/acre. Apply vermicompost @ 2 tonnes/acre or enriched FYM.",
+    "citation": "ICAR-CRIDA Hyderabad Rainfed Alfisols Manual 2025"
+  },
+  {
+    "soil_type": "Alluvial Soils (Entisols / Inceptisols)",
+    "dominant_regions": "Indo-Gangetic Plains: Punjab, Haryana, Uttar Pradesh, Bihar, West Bengal, coastal river deltas of Krishna, Godavari, Mahanadi, and Cauvery.",
+    "characteristics_and_texture": "Deposited by Himalayan and peninsular river systems; loamy sand to silty clay loam; deep friable structure; excellent porosity and capillary conductivity; highly responsive to irrigation and intensive multi-cropping.",
+    "ph_range": "6.5 - 7.8 (Neutral to mildly alkaline)",
+    "organic_carbon_status": "Low to medium (0.40 - 0.60%)",
+    "major_nutrient_deficiencies": "Deficient in Nitrogen, Phosphorus, Zinc, and Manganese (especially in rice-wheat rotations).",
+    "soil_amendments_and_reclamation": "Maintain balanced NPK stoichiometry (4:2:1 ratio). Laser land leveling to optimize water distribution and avoid localized waterlogging. Crop residue incorporation (Happy Seeder / Super Seeder technology).",
+    "green_manuring_and_organic_practices": "Summer Green Mungbean / Dhaincha incorporation after wheat harvest. Inoculation with Trichoderma viride to accelerate stubble decomposition.",
+    "citation": "ICAR-CSSRI Karnal & PAU Ludhiana 2025"
+  },
+  {
+    "soil_type": "Saline-Alkali / Sodic Soils (Usar / Kallar)",
+    "dominant_regions": "Indo-Gangetic canal command areas (UP, Punjab, Haryana), canal irrigated pockets of Telangana and Karnataka, coastal tracts of Gujarat and AP.",
+    "characteristics_and_texture": "High soluble salts (EC > 4.0 dS/m in saline soils) or high exchangeable sodium (ESP > 15%, SAR > 13, pH > 8.5 in sodic/alkali soils); soil particles disperse creating impermeable slickenside; severe drainage failure; white or black encrustation.",
+    "ph_range": "8.5 - 10.2 (Strongly alkaline)",
+    "organic_carbon_status": "Extremely low (<0.25%)",
+    "major_nutrient_deficiencies": "Extreme deficiency of Zinc, Iron, and available Calcium; toxic accumulation of Sodium, Carbonates, and Boron.",
+    "soil_amendments_and_reclamation": "Compute Gypsum Requirement (GR). Apply agricultural grade Gypsum (CaSO4·2H2O @ 70-80% purity) @ 3-5 tonnes/acre broadcast and mixed in top 10 cm soil, followed by impounding 10-15 cm water for 15 days to leach displaced sodium down drains. Provide subsurface tile drainage.",
+    "green_manuring_and_organic_practices": "Grow Dhaincha (Sesbania aculeata) tolerant to pH up to 9.5; incorporate at 45 DAS (releases carbonic acid during decomposition which neutralizes sodicity). Apply press mud @ 5 tonnes/acre.",
+    "citation": "ICAR-CSSRI Karnal Reclamation of Sodic Soils Handbook 2025"
+  },
+  {
+    "soil_type": "Acid Soils (Ultisols / Oxisols)",
+    "dominant_regions": "High rainfall hilly zones: North-Eastern States, Kerala, Coastal Karnataka, Konkan Maharashtra, Chhota Nagpur plateau of Jharkhand and Odisha.",
+    "characteristics_and_texture": "Intense tropical leaching removes basic cations (Ca, Mg, K, Na); dominated by kaolinite clay and iron/aluminium oxides; high phosphorus fixation capacity (P gets locked as insoluble aluminium and iron phosphates).",
+    "ph_range": "4.2 - 5.5 (Strongly to moderately acidic)",
+    "organic_carbon_status": "Medium to high (0.75 - 1.2%)",
+    "major_nutrient_deficiencies": "Severe deficiency of Phosphorus, Calcium, Magnesium, Boron, and Molybdenum; Aluminium and Manganese toxicity.",
+    "soil_amendments_and_reclamation": "Liming: Apply agricultural limestone (CaCO3) or dolomite (CaCO3·MgCO3) @ 1.0 - 2.5 tonnes/acre based on soil buffer capacity once in 3 years. Apply Rock Phosphate (RP) instead of water-soluble SSP, as acid soil naturally dissolves rock phosphate.",
+    "green_manuring_and_organic_practices": "Apply well-rotted FYM @ 5 tonnes/acre + biofertilizers (Phosphate Solubilizing Fungi like Aspergillus awamori).",
+    "citation": "ICAR-IISS Bhopal Acid Soil Amelioration Guide 2025"
+  },
+  {
+    "soil_type": "Laterite Soils",
+    "dominant_regions": "Western Ghats, Coastal Kerala, Karnataka, Ratnagiri (Maharashtra), parts of Odisha and West Bengal.",
+    "characteristics_and_texture": "Coarse, porous, honey-combed structure rich in iron and aluminium sesquioxides; poor nutrient holding capacity; low cation exchange capacity (CEC); rapid organic matter oxidation.",
+    "ph_range": "5.0 - 6.2 (Acidic)",
+    "organic_carbon_status": "Low to medium (0.45 - 0.70%)",
+    "major_nutrient_deficiencies": "Deficient in Potassium, Calcium, Magnesium, Boron, and available Phosphorus.",
+    "soil_amendments_and_reclamation": "Split application of chemical fertilizers to avoid leaching loss. Apply Dolomite @ 500 kg/acre to replenish Calcium and Magnesium. Mulching to protect surface from heavy rainfall erosion.",
+    "green_manuring_and_organic_practices": "Intercropping with velvet bean (Mucuna pruriens) or cowpea. Application of coir pith compost @ 3 tonnes/acre.",
+    "citation": "ICAR-CPCRI Kasaragod & KAU Vellanikkara 2025"
+  },
+  {
+    "soil_type": "Coastal Saline Soils",
+    "dominant_regions": "Sundarbans (West Bengal), Coastal Odisha, Andhra Pradesh (Krishna-Godavari delta coastal fringe), Tamil Nadu, Gujarat (Rann of Kutch).",
+    "characteristics_and_texture": "Periodic sea water inundation and high shallow saline groundwater table; high electrical conductivity (EC > 8.0 dS/m); heavy clay to silty loam texture with poor aeration.",
+    "ph_range": "6.8 - 8.2",
+    "organic_carbon_status": "Medium (0.50 - 0.80%)",
+    "major_nutrient_deficiencies": "High in Sodium and Chlorides; low in Nitrogen and Zinc.",
+    "soil_amendments_and_reclamation": "Construct perimeter bunds with one-way flap sluice gates to prevent tidal ingress. Raised-bed and sunken-furrow system (grow paddy in furrows and vegetables on raised beds). Leaching with fresh rainwater during monsoon.",
+    "green_manuring_and_organic_practices": "Cultivate salt-tolerant halophytic green manures; incorporate organic paddy straw mulch to suppress capillary salt ascent during dry summer months.",
+    "citation": "ICAR-CSSRI Regional Research Station Canning Town 2025"
+  },
+  {
+    "soil_type": "Calcareous Soils",
+    "dominant_regions": "Northern Bihar, Saurashtra (Gujarat), parts of Western Rajasthan, Rayalaseema (AP), and Belgaum (Karnataka).",
+    "characteristics_and_texture": "Contain free calcium carbonate (CaCO3 > 5% to 20%) in form of soft powdery lime or hard nodules (kankar); high buffering capacity; causes precipitation of phosphate and micronutrients.",
+    "ph_range": "7.8 - 8.6 (Alkaline)",
+    "organic_carbon_status": "Low (0.30 - 0.45%)",
+    "major_nutrient_deficiencies": "Severe fixation of Phosphorus; acute Iron deficiency (lime-induced iron chlorosis) and Zinc deficiency.",
+    "soil_amendments_and_reclamation": "Band placement of phosphatic fertilizers with acidic fertilizers like Ammonium Sulphate instead of Urea. Apply elemental sulphur @ 200 kg/acre to create localized acidic micro-zones.",
+    "green_manuring_and_organic_practices": "Incorporate green manure crops; application of press mud cake (PMC) @ 5 tonnes/acre which produces organic acids upon rotting.",
+    "citation": "ICAR-IISS Bhopal Calcareous Soils Bulletin 2025"
+  },
+  {
+    "soil_type": "Desert / Arid Sandy Soils (Aridisols)",
+    "dominant_regions": "Western Rajasthan (Thar Desert: Jodhpur, Barmer, Bikaner, Jaisalmer), South-Western Punjab, Haryana fringe.",
+    "characteristics_and_texture": "Coarse sand (>85% sand fraction); single-grain structure; excessive permeability; very poor water retention capacity (wilting point reached in 2-3 days); prone to severe wind erosion.",
+    "ph_range": "7.5 - 8.5",
+    "organic_carbon_status": "Extremely low (<0.20%)",
+    "major_nutrient_deficiencies": "Deficient in Nitrogen, Phosphorus, Potassium, Zinc, and Copper.",
+    "soil_amendments_and_reclamation": "Shelterbelts and windbreaks using Acacia tortilis and Prosopis cineraria (Khejri). Compaction of sandy subsoil with heavy rollers to reduce percolation loss. Drip irrigation with fertigation mandatory.",
+    "green_manuring_and_organic_practices": "Incorporate Guar (Cluster bean) @ 15 kg/acre. Application of Bentonite clay @ 4 tonnes/acre in root zone to improve water holding capacity.",
+    "citation": "ICAR-CAZRI Jodhpur Arid Soils Compendium 2025"
+  },
+  {
+    "soil_type": "Medium Black Soils (Inceptic Vertisols)",
+    "dominant_regions": "Telangana (Warangal, Karimnagar), Maharashtra (Western plains), MP (Indore, Ujjain), Karnataka (Dharwad).",
+    "characteristics_and_texture": "Depth 50-100 cm; clay content 35-45%; dark brown to black; good balance of drainage and moisture retention compared to deep heavy vertisols; versatile for two-crop rotations (Soybean-Wheat or Cotton-Pulse).",
+    "ph_range": "7.2 - 8.2",
+    "organic_carbon_status": "Low to medium (0.45 - 0.65%)",
+    "major_nutrient_deficiencies": "Deficient in Nitrogen, Phosphorus, Sulphur, and Zinc.",
+    "soil_amendments_and_reclamation": "Contour bunding and vegetative barriers (Vetiver grass hedgerows) to arrest soil erosion. Regular addition of FYM.",
+    "green_manuring_and_organic_practices": "Intercropping with Pigeonpea / Cowpea; green leaf manuring with Subabul (Leucaena leucocephala) loppings.",
+    "citation": "PJTSAU Soil Science Department 2025"
+  },
+  {
+    "soil_type": "Peaty and Marshy Soils (Kari Soils / Histosols)",
+    "dominant_regions": "Kottayam and Alappuzha districts of Kerala (Kuttanad submerged tracts), coastal Odisha, Sundarbans.",
+    "characteristics_and_texture": "Formed under anaerobic waterlogged conditions; dark black color; spongy consistency; very high accumulation of undecomposed organic matter; contains iron pyrite (FeS2) which oxidizes to sulphuric acid on drainage producing acid sulphate conditions.",
+    "ph_range": "3.5 - 4.5 (Extremely acidic upon drying)",
+    "organic_carbon_status": "Very high (10 - 40%)",
+    "major_nutrient_deficiencies": "Low available Phosphorus; Potassium and Copper deficiency; Iron and Aluminium toxicity.",
+    "soil_amendments_and_reclamation": "Subsurface drainage with controlled water table management. Heavy liming using burnt quicklime (CaO) or hydrated lime @ 2-3 tonnes/acre to neutralize acidity.",
+    "green_manuring_and_organic_practices": "Application of wood ash @ 1 tonne/acre to supply potash and neutralize acidity. Balanced biofertilizers.",
+    "citation": "KAU Regional Agricultural Research Station Kumarakom 2025"
+  },
+  {
+    "soil_type": "Sub-Montane / Hill Soils",
+    "dominant_regions": "Himalayan foothills: Jammu & Kashmir, Himachal Pradesh, Uttarakhand, Nilgiris (Tamil Nadu).",
+    "characteristics_and_texture": "Formed under temperate forest cover; loam to sandy loam texture with stones and pebbles; high gravel content; shallow to medium depth on steep slopes.",
+    "ph_range": "5.5 - 6.8 (Slightly acidic)",
+    "organic_carbon_status": "High (1.0 - 2.5% in surface horizon)",
+    "major_nutrient_deficiencies": "Deficient in Phosphorus, Zinc, and Boron.",
+    "soil_amendments_and_reclamation": "Bench terracing, contour trenching, and inward sloping terraces with vegetative grassed waterways to eliminate slope run-off erosion. Mulching with pine needles or oak leaves.",
+    "green_manuring_and_organic_practices": "Incorporation of white clover (Trifolium repens) as cover crop; application of well-cured sheep manure or compost @ 5 tonnes/acre.",
+    "citation": "ICAR-IISWC Dehradun Soil Conservation Manual 2025"
+  }
+]

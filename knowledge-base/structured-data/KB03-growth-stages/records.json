@@ -1,0 +1,646 @@
+[
+  {
+    "crop_name": "Cotton",
+    "bbch_scale": [
+      {
+        "bbch_code": "00-09",
+        "stage_name": "Germination & Emergence",
+        "days_range": "1 - 7 DAS",
+        "description": "Radicle emergence and cotyledon unfolding above soil."
+      },
+      {
+        "bbch_code": "10-19",
+        "stage_name": "Leaf Development",
+        "days_range": "8 - 30 DAS",
+        "description": "1st to 8th true leaves unfolded on main stem."
+      },
+      {
+        "bbch_code": "20-29",
+        "stage_name": "Monopodial Branching",
+        "days_range": "30 - 45 DAS",
+        "description": "Vegetative branches emerge from lower nodes."
+      },
+      {
+        "bbch_code": "50-59",
+        "stage_name": "Squaring (Floral Bud Formation)",
+        "days_range": "45 - 65 DAS",
+        "description": "Appearance of triangular flower squares on sympodial branches."
+      },
+      {
+        "bbch_code": "60-69",
+        "stage_name": "Flowering & Anthesis",
+        "days_range": "65 - 90 DAS",
+        "description": "White/cream flowers open, turn pink-red on day 2 after pollination."
+      },
+      {
+        "bbch_code": "70-79",
+        "stage_name": "Boll Development",
+        "days_range": "90 - 130 DAS",
+        "description": "Green bolls enlarge rapidly and reach final physiological size."
+      },
+      {
+        "bbch_code": "80-89",
+        "stage_name": "Boll Bursting & Maturity",
+        "days_range": "130 - 160 DAS",
+        "description": "Capsule valves split, locules flare open, exposing dry white lint."
+      },
+      {
+        "bbch_code": "90-99",
+        "stage_name": "Senescence & Stalk Clearance",
+        "days_range": "160 - 180 DAS",
+        "description": "Leaves senesce; terminal picking completed; crop stalks shredded."
+      }
+    ]
+  },
+  {
+    "crop_name": "Rice / Paddy",
+    "bbch_scale": [
+      {
+        "bbch_code": "00-09",
+        "stage_name": "Germination",
+        "days_range": "1 - 5 DAS",
+        "description": "Coleoptile penetrates husk; radicle elongates."
+      },
+      {
+        "bbch_code": "10-19",
+        "stage_name": "Seedling / Leaf Stage",
+        "days_range": "6 - 25 DAS",
+        "description": "Seedlings develop 3-4 leaves in nursery bed before transplanting."
+      },
+      {
+        "bbch_code": "20-29",
+        "stage_name": "Tillering Stage",
+        "days_range": "25 - 50 DAT",
+        "description": "Primary and secondary tillers emerge; maximum tillering reached."
+      },
+      {
+        "bbch_code": "30-39",
+        "stage_name": "Stem Elongation / Panicle Initiation",
+        "days_range": "50 - 65 DAT",
+        "description": "Internode elongation begins; green ring visible at growing point."
+      },
+      {
+        "bbch_code": "40-49",
+        "stage_name": "Booting Stage",
+        "days_range": "65 - 75 DAT",
+        "description": "Flag leaf sheath swells significantly enclosing developing panicle."
+      },
+      {
+        "bbch_code": "50-59",
+        "stage_name": "Panicle Heading",
+        "days_range": "75 - 85 DAT",
+        "description": "Panicle emerges 50% to 100% from flag leaf sheath."
+      },
+      {
+        "bbch_code": "60-69",
+        "stage_name": "Flowering / Anthesis",
+        "days_range": "85 - 92 DAT",
+        "description": "Spikelets open between 9 AM and 1 PM; self-pollination occurs."
+      },
+      {
+        "bbch_code": "70-79",
+        "stage_name": "Milking Stage",
+        "days_range": "92 - 105 DAT",
+        "description": "Caryopsis filled with white milky starch; spikelets turn light green."
+      },
+      {
+        "bbch_code": "80-89",
+        "stage_name": "Dough & Maturation Stage",
+        "days_range": "105 - 120 DAT",
+        "description": "Soft dough hardens into firm grain; panicles turn golden yellow."
+      },
+      {
+        "bbch_code": "90-99",
+        "stage_name": "Full Ripening & Harvest",
+        "days_range": "120 - 130 DAT",
+        "description": "Grain moisture drops below 20%; ready for combine or manual harvest."
+      }
+    ]
+  },
+  {
+    "crop_name": "Chilli",
+    "bbch_scale": [
+      {
+        "bbch_code": "00-09",
+        "stage_name": "Germination & Seedling",
+        "days_range": "1 - 35 DAS",
+        "description": "Nursery development of true leaves up to 5-6 leaf stage."
+      },
+      {
+        "bbch_code": "20-29",
+        "stage_name": "Vegetative Branching",
+        "days_range": "15 - 40 DAT",
+        "description": "Dichotomous branching from main stem into bushy canopy."
+      },
+      {
+        "bbch_code": "50-59",
+        "stage_name": "Flower Bud Initiation",
+        "days_range": "40 - 55 DAT",
+        "description": "Solitary star-shaped buds form at branch axils."
+      },
+      {
+        "bbch_code": "60-69",
+        "stage_name": "Flowering & Fruit Set",
+        "days_range": "55 - 75 DAT",
+        "description": "White petals open; ovary swells into elongated green berry."
+      },
+      {
+        "bbch_code": "70-79",
+        "stage_name": "Fruit Development & Green Picking",
+        "days_range": "75 - 105 DAT",
+        "description": "Pod reaches full length and firmness; green chilli harvest starts."
+      },
+      {
+        "bbch_code": "80-89",
+        "stage_name": "Red Ripening & Drying",
+        "days_range": "105 - 150 DAT",
+        "description": "Fruits transition from dark green to deep crimson red; multiple pickings."
+      }
+    ]
+  },
+  {
+    "crop_name": "Tomato",
+    "bbch_scale": [
+      {
+        "bbch_code": "00-09",
+        "stage_name": "Germination",
+        "days_range": "1 - 25 DAS",
+        "description": "Pro-tray nursery emergence and development to 4 true leaves."
+      },
+      {
+        "bbch_code": "20-29",
+        "stage_name": "Vegetative & Side Shoots",
+        "days_range": "10 - 30 DAT",
+        "description": "Bush expansion; side suckers pruned in indeterminate types."
+      },
+      {
+        "bbch_code": "50-59",
+        "stage_name": "Inflorescence Emergence",
+        "days_range": "30 - 45 DAT",
+        "description": "First flower clusters (trusses) appear on main stem."
+      },
+      {
+        "bbch_code": "60-69",
+        "stage_name": "Flowering & Anthesis",
+        "days_range": "45 - 60 DAT",
+        "description": "Yellow flowers open; corolla reflexed; self-fertilization."
+      },
+      {
+        "bbch_code": "70-79",
+        "stage_name": "Fruit Growth (Green Stage)",
+        "days_range": "60 - 80 DAT",
+        "description": "Berries enlarge from pea size to mature green stage."
+      },
+      {
+        "bbch_code": "80-89",
+        "stage_name": "Breaker to Red Ripe Stage",
+        "days_range": "80 - 110 DAT",
+        "description": "Breaker, turning, pink, light red to firm red ripe stages; multiple harvests."
+      }
+    ]
+  },
+  {
+    "crop_name": "Wheat",
+    "bbch_scale": [
+      {
+        "bbch_code": "00-09",
+        "stage_name": "Germination",
+        "days_range": "1 - 7 DAS",
+        "description": "Coleoptile penetrates surface; 1st leaf emerges."
+      },
+      {
+        "bbch_code": "10-19",
+        "stage_name": "Crown Root Initiation (CRI)",
+        "days_range": "20 - 25 DAS",
+        "description": "Crown roots initiate at 2 cm below soil; most critical irrigation stage."
+      },
+      {
+        "bbch_code": "20-29",
+        "stage_name": "Tillering Stage",
+        "days_range": "25 - 45 DAS",
+        "description": "Tillers branch from crown nodes; tillering capacity defined."
+      },
+      {
+        "bbch_code": "30-39",
+        "stage_name": "Jointing / Stem Elongation",
+        "days_range": "45 - 65 DAS",
+        "description": "Nodes rise above ground; stem elongates rapidly."
+      },
+      {
+        "bbch_code": "40-49",
+        "stage_name": "Booting Stage",
+        "days_range": "65 - 75 DAS",
+        "description": "Flag leaf sheath bulges with spike enclosed."
+      },
+      {
+        "bbch_code": "50-59",
+        "stage_name": "Heading / Ear Emergence",
+        "days_range": "75 - 85 DAS",
+        "description": "Spike completely emerges from flag leaf collar."
+      },
+      {
+        "bbch_code": "60-69",
+        "stage_name": "Anthesis / Flowering",
+        "days_range": "85 - 92 DAS",
+        "description": "Anthers extrude from florets; pollination complete."
+      },
+      {
+        "bbch_code": "70-79",
+        "stage_name": "Milk Stage",
+        "days_range": "92 - 105 DAS",
+        "description": "Grain content watery to milky white."
+      },
+      {
+        "bbch_code": "80-89",
+        "stage_name": "Dough & Hard Maturity",
+        "days_range": "105 - 120 DAS",
+        "description": "Grain passes soft to hard dough; straw turns bright golden yellow."
+      }
+    ]
+  },
+  {
+    "crop_name": "Maize",
+    "bbch_scale": [
+      {
+        "bbch_code": "00-09",
+        "stage_name": "Emergence (VE)",
+        "days_range": "1 - 6 DAS",
+        "description": "Coleoptile pierces soil surface."
+      },
+      {
+        "bbch_code": "10-19",
+        "stage_name": "Knee-High Stage (V6-V8)",
+        "days_range": "25 - 35 DAS",
+        "description": "Rapid stem elongation; tassel begins forming deep in stem."
+      },
+      {
+        "bbch_code": "50-59",
+        "stage_name": "Tasseling (VT)",
+        "days_range": "50 - 60 DAS",
+        "description": "Male inflorescence (tassel) emerges completely at top of plant."
+      },
+      {
+        "bbch_code": "60-69",
+        "stage_name": "Silking (R1)",
+        "days_range": "55 - 65 DAS",
+        "description": "Female silks emerge from ear tip; pollen shed from tassel."
+      },
+      {
+        "bbch_code": "70-79",
+        "stage_name": "Blister & Milk Stage (R2-R3)",
+        "days_range": "65 - 80 DAS",
+        "description": "Kernels resemble blisters filled with clear then milky fluid."
+      },
+      {
+        "bbch_code": "80-89",
+        "stage_name": "Dent & Physiological Maturity (R5-R6)",
+        "days_range": "80 - 105 DAS",
+        "description": "Black layer forms at base of kernel; husk leaves dry out completely."
+      }
+    ]
+  },
+  {
+    "crop_name": "Groundnut / Peanut",
+    "bbch_scale": [
+      {
+        "bbch_code": "00-09",
+        "stage_name": "Germination & Emergence",
+        "days_range": "1 - 8 DAS",
+        "description": "Hypocotyl pushes cotyledons; 4-tetrafoliate leaves unfold."
+      },
+      {
+        "bbch_code": "20-29",
+        "stage_name": "Vegetative Branching",
+        "days_range": "15 - 30 DAS",
+        "description": "Lateral branches develop from main axis."
+      },
+      {
+        "bbch_code": "50-59",
+        "stage_name": "Flowering Initiation",
+        "days_range": "25 - 35 DAS",
+        "description": "Yellow flowers appear at lower nodes in morning."
+      },
+      {
+        "bbch_code": "60-69",
+        "stage_name": "Pegging (Gynophore Elongation)",
+        "days_range": "35 - 50 DAS",
+        "description": "Peg turns downwards, penetrates soil 3-5 cm."
+      },
+      {
+        "bbch_code": "70-79",
+        "stage_name": "Pod Development",
+        "days_range": "50 - 85 DAS",
+        "description": "Peg tip swells horizontally underground into shell and kernel."
+      },
+      {
+        "bbch_code": "80-89",
+        "stage_name": "Pod Maturity",
+        "days_range": "85 - 115 DAS",
+        "description": "Inner pod shell develops dark brownish-black vascular netting."
+      }
+    ]
+  },
+  {
+    "crop_name": "Soybean",
+    "bbch_scale": [
+      {
+        "bbch_code": "00-09",
+        "stage_name": "Emergence (VE-VC)",
+        "days_range": "1 - 6 DAS",
+        "description": "Cotyledons emerge and unifoliate leaves unfold."
+      },
+      {
+        "bbch_code": "10-19",
+        "stage_name": "Trifoliate Development (V1-V4)",
+        "days_range": "7 - 25 DAS",
+        "description": "1st to 4th trifoliate leaves fully developed on main stem."
+      },
+      {
+        "bbch_code": "50-59",
+        "stage_name": "First Flower (R1-R2)",
+        "days_range": "30 - 45 DAS",
+        "description": "One open flower at any node; full bloom across canopy."
+      },
+      {
+        "bbch_code": "70-79",
+        "stage_name": "Pod & Seed Development (R3-R5)",
+        "days_range": "45 - 75 DAS",
+        "description": "Pods 5 mm to 2 cm long; beans fill cavity completely."
+      },
+      {
+        "bbch_code": "80-89",
+        "stage_name": "Maturity & Leaf Drop (R7-R8)",
+        "days_range": "75 - 95 DAS",
+        "description": "Pods turn tan/brown; 95% leaves senesce and drop; pods rattle."
+      }
+    ]
+  },
+  {
+    "crop_name": "Red Gram / Pigeonpea",
+    "bbch_scale": [
+      {
+        "bbch_code": "00-09",
+        "stage_name": "Germination",
+        "days_range": "1 - 8 DAS",
+        "description": "Epigeal germination; two cotyledonary leaves emerge."
+      },
+      {
+        "bbch_code": "20-29",
+        "stage_name": "Vegetative Branching",
+        "days_range": "20 - 70 DAS",
+        "description": "Profuse primary and secondary branching; deep taproot growth."
+      },
+      {
+        "bbch_code": "50-59",
+        "stage_name": "Flower Bud Formation",
+        "days_range": "70 - 100 DAS",
+        "description": "Terminal and axillary racemes bear bright yellow flower buds."
+      },
+      {
+        "bbch_code": "60-69",
+        "stage_name": "Pod Setting",
+        "days_range": "100 - 125 DAS",
+        "description": "Ovaries develop into green glandular pubescent pods."
+      },
+      {
+        "bbch_code": "80-89",
+        "stage_name": "Pod Ripening & Maturity",
+        "days_range": "125 - 165 DAS",
+        "description": "Pods turn dark brown; seeds harden; ready for harvesting."
+      }
+    ]
+  },
+  {
+    "crop_name": "Chickpea / Bengal Gram",
+    "bbch_scale": [
+      {
+        "bbch_code": "00-09",
+        "stage_name": "Germination",
+        "days_range": "1 - 7 DAS",
+        "description": "Hypogeal germination; plumule emerges above ground."
+      },
+      {
+        "bbch_code": "20-29",
+        "stage_name": "Vegetative Branching & Nipping",
+        "days_range": "15 - 40 DAS",
+        "description": "Primary and secondary branches; terminal nipping at 30-35 DAS."
+      },
+      {
+        "bbch_code": "50-59",
+        "stage_name": "Flowering Initiation",
+        "days_range": "40 - 60 DAS",
+        "description": "Pink/purple or white flowers emerge from leaf axils."
+      },
+      {
+        "bbch_code": "70-79",
+        "stage_name": "Pod Development",
+        "days_range": "60 - 85 DAS",
+        "description": "Inflated pods develop enclosing 1-2 green seeds."
+      },
+      {
+        "bbch_code": "80-89",
+        "stage_name": "Maturity & Drying",
+        "days_range": "85 - 105 DAS",
+        "description": "Foliage and pods turn straw-yellow; seeds shake inside pods."
+      }
+    ]
+  },
+  {
+    "crop_name": "Mustard / Rapeseed",
+    "bbch_scale": [
+      {
+        "bbch_code": "00-09",
+        "stage_name": "Germination",
+        "days_range": "1 - 5 DAS",
+        "description": "Cotyledons emerge and expand into heart shape."
+      },
+      {
+        "bbch_code": "20-29",
+        "stage_name": "Rosette Stage",
+        "days_range": "15 - 35 DAS",
+        "description": "Lower leaves form dense horizontal rosette."
+      },
+      {
+        "bbch_code": "30-39",
+        "stage_name": "Bolting / Stem Elongation",
+        "days_range": "35 - 50 DAS",
+        "description": "Central flower stalk shoots upward rapidly."
+      },
+      {
+        "bbch_code": "60-69",
+        "stage_name": "Flowering Stage",
+        "days_range": "50 - 75 DAS",
+        "description": "Bright yellow 4-petaled flowers bloom continuously."
+      },
+      {
+        "bbch_code": "70-79",
+        "stage_name": "Siliqua (Pod) Formation",
+        "days_range": "75 - 95 DAS",
+        "description": "Long beaked siliquae develop filled with green round seeds."
+      },
+      {
+        "bbch_code": "80-89",
+        "stage_name": "Ripening Stage",
+        "days_range": "95 - 115 DAS",
+        "description": "Pods turn yellowish-brown; seeds turn dark reddish-brown/black."
+      }
+    ]
+  },
+  {
+    "crop_name": "Sugarcane",
+    "bbch_scale": [
+      {
+        "bbch_code": "00-09",
+        "stage_name": "Germination / Sprouting",
+        "days_range": "1 - 35 DAP",
+        "description": "Buds on setts sprout and roots establish."
+      },
+      {
+        "bbch_code": "20-29",
+        "stage_name": "Tillering (Formative Stage)",
+        "days_range": "35 - 120 DAP",
+        "description": "Underground nodal buds produce tillers; canopy closure."
+      },
+      {
+        "bbch_code": "30-39",
+        "stage_name": "Grand Growth Stage",
+        "days_range": "120 - 270 DAP",
+        "description": "Rapid cane elongation; internode formation; high water/nutrient demand."
+      },
+      {
+        "bbch_code": "80-89",
+        "stage_name": "Ripening & Sugar Accumulation",
+        "days_range": "270 - 360 DAP",
+        "description": "Vegetative growth slows; sucrose accumulates in stalk tissue."
+      }
+    ]
+  },
+  {
+    "crop_name": "Onion",
+    "bbch_scale": [
+      {
+        "bbch_code": "00-09",
+        "stage_name": "Germination & Seedling",
+        "days_range": "1 - 45 DAS",
+        "description": "Nursery loop stage; cotyledon straightens; 3-4 leaves develop."
+      },
+      {
+        "bbch_code": "10-19",
+        "stage_name": "Vegetative Leaf Growth",
+        "days_range": "15 - 60 DAT",
+        "description": "Hollow tubular leaves emerge alternately from growing point."
+      },
+      {
+        "bbch_code": "40-49",
+        "stage_name": "Bulb Initiation & Swelling",
+        "days_range": "60 - 100 DAT",
+        "description": "Leaf sheaths swell at base; bulb diameter expands rapidly."
+      },
+      {
+        "bbch_code": "80-89",
+        "stage_name": "Neck Fall & Maturity",
+        "days_range": "100 - 130 DAT",
+        "description": "50-70% pseudo-stems soften and tops collapse ('neck fall')."
+      }
+    ]
+  },
+  {
+    "crop_name": "Potato",
+    "bbch_scale": [
+      {
+        "bbch_code": "00-09",
+        "stage_name": "Sprouting & Emergence",
+        "days_range": "1 - 15 DAP",
+        "description": "Eyes sprout underground; stems and compound leaves emerge."
+      },
+      {
+        "bbch_code": "20-29",
+        "stage_name": "Stolon Formation",
+        "days_range": "15 - 30 DAP",
+        "description": "Underground horizontal stems (stolons) branch from basal nodes."
+      },
+      {
+        "bbch_code": "40-49",
+        "stage_name": "Tuber Initiation",
+        "days_range": "30 - 45 DAP",
+        "description": "Stolon tips swell into marble-sized tuberlets."
+      },
+      {
+        "bbch_code": "70-79",
+        "stage_name": "Tuber Bulking",
+        "days_range": "45 - 80 DAP",
+        "description": "Rapid deposition of starch; tuber size doubles every 10-14 days."
+      },
+      {
+        "bbch_code": "80-89",
+        "stage_name": "Skin Curing & Maturity",
+        "days_range": "80 - 100 DAP",
+        "description": "Haulms senesce or dehaulmed; tuber skin thickens and sets."
+      }
+    ]
+  },
+  {
+    "crop_name": "Turmeric",
+    "bbch_scale": [
+      {
+        "bbch_code": "00-09",
+        "stage_name": "Rhizome Sprouting",
+        "days_range": "1 - 25 DAP",
+        "description": "Mother rhizome buds swell and shoot emerges through mulch."
+      },
+      {
+        "bbch_code": "10-19",
+        "stage_name": "Tillering & Leaf Development",
+        "days_range": "25 - 90 DAP",
+        "description": "Large broad oblong lanceolate leaves produce pseudostem tillers."
+      },
+      {
+        "bbch_code": "40-49",
+        "stage_name": "Rhizome Initiation & Bulking",
+        "days_range": "90 - 180 DAP",
+        "description": "Primary and secondary finger rhizomes grow vigorously underground."
+      },
+      {
+        "bbch_code": "80-89",
+        "stage_name": "Maturity & Foliage Drying",
+        "days_range": "180 - 240 DAP",
+        "description": "Leaves turn yellow and dry down completely; rhizomes ready for harvest."
+      }
+    ]
+  },
+  {
+    "crop_name": "Black Gram / Urad",
+    "bbch_scale": [
+      {
+        "bbch_code": "00-09",
+        "stage_name": "Germination",
+        "days_range": "1 - 5 DAS",
+        "description": "Hypogeal germination; seedling emerges with first unifoliate leaves."
+      },
+      {
+        "bbch_code": "20-29",
+        "stage_name": "Vegetative Branching",
+        "days_range": "10 - 25 DAS",
+        "description": "Trifoliate leaves form with short lateral branches."
+      },
+      {
+        "bbch_code": "50-59",
+        "stage_name": "Flowering",
+        "days_range": "25 - 40 DAS",
+        "description": "Self-fertile pale yellow flowers cluster at branch tips."
+      },
+      {
+        "bbch_code": "70-79",
+        "stage_name": "Pod Filling",
+        "days_range": "40 - 60 DAS",
+        "description": "Slender cylindrical hairy pods develop enclosing 6-10 seeds."
+      },
+      {
+        "bbch_code": "80-89",
+        "stage_name": "Maturity & Blackening",
+        "days_range": "60 - 75 DAS",
+        "description": "Pods turn completely black; single or two-stage harvest."
+      }
+    ]
+  }
+]

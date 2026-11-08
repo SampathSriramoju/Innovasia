@@ -1,0 +1,510 @@
+{
+  "timestamp": "2026-11-08T19:53:07Z",
+  "phase2_gemini": {
+    "api_key_loaded": true,
+    "api_key_length": 53,
+    "available_models": [
+      "models/gemini-2.5-flash",
+      "models/gemini-2.5-pro",
+      "models/gemini-2.5-flash-preview-tts",
+      "models/gemini-2.5-pro-preview-tts",
+      "models/gemma-4-26b-a4b-it",
+      "models/gemma-4-31b-it",
+      "models/gemini-flash-latest",
+      "models/gemini-flash-lite-latest",
+      "models/gemini-pro-latest",
+      "models/gemini-2.5-flash-lite",
+      "models/gemini-2.5-flash-image",
+      "models/gemini-3-flash-preview",
+      "models/gemini-3.1-pro-preview",
+      "models/gemini-3.1-pro-preview-customtools",
+      "models/gemini-3.1-flash-lite-preview",
+      "models/gemini-3.1-flash-lite",
+      "models/gemini-3-pro-image-preview",
+      "models/gemini-3-pro-image",
+      "models/nano-banana-pro-preview",
+      "models/gemini-3.1-flash-image-preview",
+      "models/gemini-3.1-flash-image",
+      "models/gemini-3.1-flash-lite-image",
+      "models/gemini-nano-banana-2.1",
+      "models/gemini-3.5-flash",
+      "models/gemini-3.5-flash-lite",
+      "models/gemini-omni-flash-preview",
+      "models/gemini-omni-1.1-flash",
+      "models/gemini-omni-1.2-flash",
+      "models/gemini-3.5-transcribe",
+      "models/gemini-3.6-flash",
+      "models/gemini-3.7-flash",
+      "models/gemini-3.8-flash",
+      "models/gemini-4-argon",
+      "models/lyria-3-clip-preview",
+      "models/lyria-3-pro-preview",
+      "models/lyria-3.5",
+      "models/gemini-3.1-flash-tts-preview",
+      "models/gemini-3.8-flash-tts",
+      "models/gemini-3.8-flash-lite-tts",
+      "models/gemini-robotics-er-2-preview",
+      "models/gemini-2.5-computer-use-preview-10-2025",
+      "models/antigravity-preview-05-2026",
+      "models/antigravity-preview-09-2026",
+      "models/antigravity-preview-latest",
+      "models/deep-research-max-preview-04-2026",
+      "models/deep-research-preview-04-2026",
+      "models/deep-research-pro-preview-12-2025",
+      "models/gemini-embedding-001",
+      "models/gemini-embedding-2-preview",
+      "models/gemini-embedding-2",
+      "models/aqa",
+      "models/gemini-3.5-transcribe-live",
+      "models/gemini-2.5-flash-native-audio-latest",
+      "models/gemini-2.5-flash-native-audio-preview-09-2025",
+      "models/gemini-2.5-flash-native-audio-preview-12-2025",
+      "models/gemini-3.1-flash-live-preview",
+      "models/gemini-3.8-live",
+      "models/gemini-3.8-live-extended-thinking",
+      "models/gemini-robotics-er-2-streaming-preview",
+      "models/gemini-3.5-live-translate-preview",
+      "models/lyria-realtime-exp"
+    ],
+    "model_tests": {
+      "gemini-3.8-flash": {
+        "status": "FAIL",
+        "error_type": "ClientError",
+        "error_msg": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on",
+        "latency_sec": 0.35
+      },
+      "gemini-flash-latest": {
+        "status": "FAIL",
+        "error_type": "ClientError",
+        "error_msg": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on",
+        "latency_sec": 0.322
+      },
+      "gemini-2.5-flash-image": {
+        "status": "FAIL",
+        "error_type": "ClientError",
+        "error_msg": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on",
+        "latency_sec": 0.497
+      }
+    },
+    "multilingual_tests": {
+      "te": {
+        "status": "PASS",
+        "model_used": "gemini-3.1-flash-lite",
+        "is_fallback": false,
+        "latency_sec": 3.31,
+        "response_length": 396,
+        "response_sample": "నమస్కారం రైతు సోదరులారా, వరి పంటలో అగ్గితెగులును అదుపు చేయడానికి సమగ్ర సస్యరక్షణ పద్ధతులను (IPM) పాటించాలని ICAR 2026 సూ"
+      },
+      "hi": {
+        "status": "PASS",
+        "model_used": "gemini-flash-latest",
+        "is_fallback": false,
+        "latency_sec": 8.705,
+        "response_length": 397,
+        "response_sample": "दिए गए संदर्भ में कपास की गुलाबी सुंडी के लिए केवल अनुशंसित आईपीएम (IPM) और वैधानिक मात्रा अपनाने का सामान्य निर्देश दिय"
+      },
+      "en": {
+        "status": "PASS",
+        "model_used": "gemini-3.1-flash-lite",
+        "is_fallback": false,
+        "latency_sec": 8.855,
+        "response_length": 391,
+        "response_sample": "The provided context identifies that a fertilizer schedule exists for maize, but it does not list the specific NPK quant"
+      }
+    },
+    "error_tests": {
+      "invalid_model": {
+        "handled": true,
+        "error_caught": "ClientError",
+        "message": "404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/gemini-nonexistent-model-xyz is not found "
+      }
+    }
+  },
+  "phase3_rag": {
+    "BM25 Alone": {
+      "precision_at_1": 30.0,
+      "recall_at_3": 50.0,
+      "avg_latency_ms": 6.59,
+      "dim": "N/A",
+      "model_size_mb": 0.4,
+      "licensing": "Apache-2.0",
+      "deployment_cost": "$0/mo"
+    },
+    "256-d Hashing (Baseline)": {
+      "precision_at_1": 10.0,
+      "recall_at_3": 20.0,
+      "avg_latency_ms": 77.36,
+      "dim": 256,
+      "model_size_mb": 0.1,
+      "licensing": "MIT",
+      "deployment_cost": "$0/mo"
+    },
+    "v2.0-agri-multilingual-384": {
+      "precision_at_1": 30.0,
+      "recall_at_3": 65.0,
+      "avg_latency_ms": 109.0,
+      "dim": 384,
+      "model_size_mb": 1.2,
+      "licensing": "Apache-2.0",
+      "deployment_cost": "$0/mo"
+    },
+    "gemini-embedding-001 (Trained Cloud)": {
+      "precision_at_1": 95.0,
+      "recall_at_3": 100.0,
+      "avg_latency_ms": 182.4,
+      "dim": 3072,
+      "model_size_mb": 0.0,
+      "licensing": "Google Commercial API",
+      "deployment_cost": "$0.00002/1k tokens"
+    },
+    "Production Hybrid (BM25 + 384-d)": {
+      "precision_at_1": 65.0,
+      "recall_at_3": 85.0,
+      "avg_latency_ms": 127.66,
+      "dim": 384,
+      "model_size_mb": 1.6,
+      "licensing": "Apache-2.0",
+      "deployment_cost": "$0/mo"
+    }
+  },
+  "phase4_wer": {
+    "overall_raw": {
+      "S": 43,
+      "D": 13,
+      "I": 9,
+      "N": 458,
+      "wer": 14.19
+    },
+    "overall_norm": {
+      "S": 39,
+      "D": 13,
+      "I": 8,
+      "N": 456,
+      "wer": 13.16
+    },
+    "overall_ctx": {
+      "S": 39,
+      "D": 13,
+      "I": 8,
+      "N": 456,
+      "wer": 13.16
+    },
+    "lang_breakdown": {
+      "te": {
+        "raw": {
+          "S": 24,
+          "D": 4,
+          "I": 6,
+          "N": 128,
+          "wer": 26.56
+        },
+        "norm": {
+          "S": 20,
+          "D": 4,
+          "I": 5,
+          "N": 126,
+          "wer": 23.02
+        },
+        "ctx": {
+          "S": 20,
+          "D": 4,
+          "I": 5,
+          "N": 126,
+          "wer": 23.02
+        }
+      },
+      "hi": {
+        "raw": {
+          "S": 11,
+          "D": 2,
+          "I": 2,
+          "N": 167,
+          "wer": 8.98
+        },
+        "norm": {
+          "S": 11,
+          "D": 2,
+          "I": 2,
+          "N": 167,
+          "wer": 8.98
+        },
+        "ctx": {
+          "S": 11,
+          "D": 2,
+          "I": 2,
+          "N": 167,
+          "wer": 8.98
+        }
+      },
+      "en": {
+        "raw": {
+          "S": 8,
+          "D": 7,
+          "I": 1,
+          "N": 163,
+          "wer": 9.82
+        },
+        "norm": {
+          "S": 8,
+          "D": 7,
+          "I": 1,
+          "N": 163,
+          "wer": 9.82
+        },
+        "ctx": {
+          "S": 8,
+          "D": 7,
+          "I": 1,
+          "N": 163,
+          "wer": 9.82
+        }
+      }
+    },
+    "sample_corpus_first_5": [
+      {
+        "audio_id": "BK-AUDIO-TE-01",
+        "sha256": "ea57e09d2c9ecfa88108d70bd202b379cc6374e0909ace777364d1bcb1397f5c",
+        "filename": "BK-AUDIO-TE-01.wav",
+        "lang": "te",
+        "noise": "Clean",
+        "category": "Crop Practice",
+        "ref_text": "మొక్కజొన్న పంటలో కత్తెర పురుగు నివారణకు ఏ మందు వాడాలి",
+        "hyp_text": "మొక్కజొన్న పంటలో కత్తెర పురుగు నివారణకు ఏ మందు వాడాలి",
+        "norm_ref": "మొక్కజొన్న పంటలో కత్తెర పురుగు నివారణకు ఏ మందు వాడాలి",
+        "norm_hyp": "మొక్కజొన్న పంటలో కత్తెర పురుగు నివారణకు ఏ మందు వాడాలి",
+        "raw_edits": {
+          "S": 0,
+          "D": 0,
+          "I": 0,
+          "N": 8,
+          "wer": 0.0
+        },
+        "norm_edits": {
+          "S": 0,
+          "D": 0,
+          "I": 0,
+          "N": 8,
+          "wer": 0.0
+        },
+        "ctx_edits": {
+          "S": 0,
+          "D": 0,
+          "I": 0,
+          "N": 8,
+          "wer": 0.0
+        }
+      },
+      {
+        "audio_id": "BK-AUDIO-TE-02",
+        "sha256": "9bd0c079411b07e7bf05833f0bc1bf1f706dda83bb0e0b15663c65e419beaa05",
+        "filename": "BK-AUDIO-TE-02.wav",
+        "lang": "te",
+        "noise": "Clean",
+        "category": "Fertilizer",
+        "ref_text": "ఎకరాకు యూరియా మరియు డీఏపీ ఎంత మోతాదులో వేయాలి",
+        "hyp_text": "ఎకరాకు యూరియా మరియు డిఎపి ఎంత మోతాదులో వేయాలి",
+        "norm_ref": "ఎకరాకు యూరియా మరియు డీఏపీ ఎంత మోతాదులో వేయాలి",
+        "norm_hyp": "ఎకరాకు యూరియా మరియు డిఎపి ఎంత మోతాదులో వేయాలి",
+        "raw_edits": {
+          "S": 1,
+          "D": 0,
+          "I": 0,
+          "N": 7,
+          "wer": 14.29
+        },
+        "norm_edits": {
+          "S": 1,
+          "D": 0,
+          "I": 0,
+          "N": 7,
+          "wer": 14.29
+        },
+        "ctx_edits": {
+          "S": 1,
+          "D": 0,
+          "I": 0,
+          "N": 7,
+          "wer": 14.29
+        }
+      },
+      {
+        "audio_id": "BK-AUDIO-TE-03",
+        "sha256": "2f7fb2ff3950d84040b8d8b5c9a4a6fa73affe7247b4c1ebde306321f9306b7b",
+        "filename": "BK-AUDIO-TE-03.wav",
+        "lang": "te",
+        "noise": "Tractor Noise",
+        "category": "Pest & Chemical",
+        "ref_text": "ప్రత్తిలో గులాబీ రంగు పురుగు నివారణకు ఎమామెక్టిన్ బెంజోయేట్ ఐదు శాతం ఎస్జీ పిచికారీ చేయాలి",
+        "hyp_text": "ప్రత్తిలో గులాబీ రంగు పురుగు నివారణకు ఎమామెక్టిన్ బెంజోయేట్ ఐదు శాతం ఎస్ జి పిచికారి చేయాలి",
+        "norm_ref": "ప్రత్తిలో గులాబీ రంగు పురుగు నివారణకు ఎమామెక్టిన్ బెంజోయేట్ ఐదు శాతం ఎస్జీ పిచికారీ చేయాలి",
+        "norm_hyp": "ప్రత్తిలో గులాబీ రంగు పురుగు నివారణకు ఎమామెక్టిన్ బెంజోయేట్ ఐదు శాతం ఎస్జి పిచికారి చేయాలి",
+        "raw_edits": {
+          "S": 2,
+          "D": 0,
+          "I": 1,
+          "N": 12,
+          "wer": 25.0
+        },
+        "norm_edits": {
+          "S": 2,
+          "D": 0,
+          "I": 0,
+          "N": 12,
+          "wer": 16.67
+        },
+        "ctx_edits": {
+          "S": 2,
+          "D": 0,
+          "I": 0,
+          "N": 12,
+          "wer": 16.67
+        }
+      },
+      {
+        "audio_id": "BK-AUDIO-TE-04",
+        "sha256": "78d16b489ea7c988cb52fdf6e0b9a0291e4fdc982a1b78158f9d6e96e31ecf88",
+        "filename": "BK-AUDIO-TE-04.wav",
+        "lang": "te",
+        "noise": "Wind Noise",
+        "category": "Pest & Chemical",
+        "ref_text": "వరి అగ్గితెగులు నివారణకు ట్రైసైక్లాజోల్ డెబ్బై ఐదు శాతం డబ్ల్యూపీ మోతాదు ఎంత",
+        "hyp_text": "వరి అగ్గి తెగులు నివారణకు ట్రైసైక్లాజోల్ 75 శాతం డబ్ల్యూ పి మోతాదు ఎంత",
+        "norm_ref": "వరి అగ్గితెగులు నివారణకు ట్రైసైక్లాజోల్ డెబ్బై ఐదు శాతం డబ్ల్యూపీ మోతాదు ఎంత",
+        "norm_hyp": "వరి అగ్గి తెగులు నివారణకు ట్రైసైక్లాజోల్ 75 శాతం డబ్ల్యుపి మోతాదు ఎంత",
+        "raw_edits": {
+          "S": 5,
+          "D": 0,
+          "I": 1,
+          "N": 10,
+          "wer": 60.0
+        },
+        "norm_edits": {
+          "S": 3,
+          "D": 1,
+          "I": 1,
+          "N": 10,
+          "wer": 50.0
+        },
+        "ctx_edits": {
+          "S": 3,
+          "D": 1,
+          "I": 1,
+          "N": 10,
+          "wer": 50.0
+        }
+      },
+      {
+        "audio_id": "BK-AUDIO-TE-05",
+        "sha256": "f6979dd3fc35d1afa48688902b0a3ea03140712f21fb52269fd4231a577bf318",
+        "filename": "BK-AUDIO-TE-05.wav",
+        "lang": "te",
+        "noise": "Market Noise",
+        "category": "Mandi Price",
+        "ref_text": "ఖమ్మం మార్కెట్లో తేజ మిరప క్వింటాల్ ధర ఎంత నడుస్తుంది",
+        "hyp_text": "ఖమ్మం మార్కెట్ లో తేజ మిరప క్వింటాల్ ధర ఎంత నడుస్తుంది",
+        "norm_ref": "ఖమ్మం మార్కెట్లో తేజ మిరప క్వింటాల్ ధర ఎంత నడుస్తుంది",
+        "norm_hyp": "ఖమ్మం మార్కెట్ లో తేజ మిరప క్వింటాల్ ధర ఎంత నడుస్తుంది",
+        "raw_edits": {
+          "S": 1,
+          "D": 0,
+          "I": 1,
+          "N": 8,
+          "wer": 25.0
+        },
+        "norm_edits": {
+          "S": 1,
+          "D": 0,
+          "I": 1,
+          "N": 8,
+          "wer": 25.0
+        },
+        "ctx_edits": {
+          "S": 1,
+          "D": 0,
+          "I": 1,
+          "N": 8,
+          "wer": 25.0
+        }
+      }
+    ]
+  },
+  "phase7_pesticides": {
+    "total": 37,
+    "verified": 26,
+    "pending": 11
+  },
+  "phase8_journeys": [
+    {
+      "journey": "1. Farmer Signup and Login",
+      "status": "PASS",
+      "latency_ms": 262.0,
+      "evidence": "JWT token issued successfully for phone 9876543210"
+    },
+    {
+      "journey": "2. Language switching without OTP or logout",
+      "status": "PASS",
+      "latency_ms": 33.5,
+      "evidence": "Persistent session verified across Telugu and Hindi requests without logout"
+    },
+    {
+      "journey": "3. Telugu Voice Question and Spoken Answer",
+      "status": "PASS",
+      "latency_ms": 9513.5,
+      "evidence": "Grounded response: రైతు సోదరులకు నమస్కారం. మొక్కజొన్నలో కత్తెర పురుగు (Fall Armyworm) నివ... (Model: gemini-3.1-flash-lite)"
+    },
+    {
+      "journey": "4. Hindi & English Voice Questions",
+      "status": "PASS",
+      "latency_ms": 3864.0,
+      "evidence": "Both Hindi and English queries received grounded responses"
+    },
+    {
+      "journey": "5. Crop Disease Image Submission",
+      "status": "PASS",
+      "latency_ms": 16.9,
+      "evidence": "Diagnosis: Bacterial Blight / Angular Leaf Spot (Confidence: 0.94)"
+    },
+    {
+      "journey": "6. Grounded Agricultural Response with Citations",
+      "status": "PASS",
+      "latency_ms": 7339.4,
+      "evidence": "Citations provided: [KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document Q-CAT-L-06, [KB21 - Kisan Call Center (KCC 1800-180-1551) Query Database] Verified Document kb21-1001"
+    },
+    {
+      "journey": "7. Pesticide Query with Verified Label Information",
+      "status": "PASS",
+      "latency_ms": 132.9,
+      "evidence": "Exact CIBRC dose verified: Official CIBRC Dosage: 88 g (approx 6.6 g per 15L backpack pump) (220 g). Wear r..."
+    },
+    {
+      "journey": "8. Uncertain Answer Followed by Human Officer Escalation",
+      "status": "PASS",
+      "latency_ms": 63.5,
+      "evidence": "Escalated ticket created: BK-2026-CE5F (ID: 27c47fae-7368-4c85-9375-0f1d8ec1a353)"
+    },
+    {
+      "journey": "9. Officer Receives Ticket and Submits Response",
+      "status": "PASS",
+      "latency_ms": 30.6,
+      "evidence": "Officer prescription submitted successfully with status RESPONDED"
+    },
+    {
+      "journey": "10. Farmer Receives Response Inside Original Conversation",
+      "status": "PASS",
+      "latency_ms": 13.9,
+      "evidence": "Officer prescription delivered in conversation: 👨‍🌾 [అధికారి సిఫార్సు / Officer Prescription]: Inspected cro..."
+    },
+    {
+      "journey": "11. Conversation History Survives Session",
+      "status": "PASS",
+      "latency_ms": 9.7,
+      "evidence": "Persisted conversations count: 3"
+    },
+    {
+      "journey": "12. Offline Question, Queued Escalation & Synchronization",
+      "status": "PASS",
+      "latency_ms": 12.0,
+      "evidence": "Synced 1 offline tickets to server queue"
+    }
+  ]
+}

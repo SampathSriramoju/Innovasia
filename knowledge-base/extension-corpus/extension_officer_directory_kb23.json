@@ -1,0 +1,86 @@
+[
+  {
+    "officer_id": "off-ts-001",
+    "state": "Telangana",
+    "district": "Warangal",
+    "mandal": "Geesugonda",
+    "name": "Dr. K. Srinivas Rao",
+    "designation": "Mandal Agricultural Officer (MAO)",
+    "office_address": "Rythu Vedika, Geesugonda Mandal, Warangal Rural - 506330",
+    "phone_number": "+91-9876543210",
+    "email": "mao-geesugonda@telangana.gov.in",
+    "jurisdiction_mandals": [
+      "Geesugonda",
+      "Dharmaram",
+      "Elkathurthy"
+    ],
+    "specialization": "Integrated Pest Management & Cotton Agronomy"
+  },
+  {
+    "officer_id": "off-ts-002",
+    "state": "Telangana",
+    "district": "Warangal",
+    "mandal": "Wardhannapet",
+    "name": "Smt. P. Lavanya",
+    "designation": "Mandal Agricultural Officer (MAO)",
+    "office_address": "Rythu Vedika, Wardhannapet Mandal, Warangal Rural - 506313",
+    "phone_number": "+91-9876543211",
+    "email": "mao-wardhannapet@telangana.gov.in",
+    "jurisdiction_mandals": [
+      "Wardhannapet",
+      "Rayaparthy"
+    ],
+    "specialization": "Rice Blast Management & Soil Health Card"
+  },
+  {
+    "officer_id": "off-ts-003",
+    "state": "Telangana",
+    "district": "Karimnagar",
+    "mandal": "Huzurabad",
+    "name": "Sri M. Ramakrishna",
+    "designation": "Mandal Agricultural Officer (MAO)",
+    "office_address": "Rythu Vedika, Huzurabad, Karimnagar - 505468",
+    "phone_number": "+91-9876543212",
+    "email": "mao-huzurabad@telangana.gov.in",
+    "jurisdiction_mandals": [
+      "Huzurabad",
+      "Jammikunta"
+    ],
+    "specialization": "Rice BPH & Paddy Crop Insurance"
+  },
+  {
+    "officer_id": "off-ts-004",
+    "state": "Telangana",
+    "district": "Khammam",
+    "mandal": "Kallur",
+    "name": "Dr. Ch. Anjaneyulu",
+    "designation": "Senior Scientist & Head, KVK Wyra",
+    "office_address": "Krishi Vigyan Kendra (PJTSAU), Wyra, Khammam - 507165",
+    "phone_number": "+91-8749-251234",
+    "email": "kvk-wyra@pjtsau.edu.in",
+    "jurisdiction_mandals": [
+      "Wyra",
+      "Kallur",
+      "Tallada",
+      "Madhira"
+    ],
+    "specialization": "Chilli Black Thrips & Cotton Pink Bollworm Research"
+  },
+  {
+    "officer_id": "off-ap-001",
+    "state": "Andhra Pradesh",
+    "district": "Guntur",
+    "mandal": "Prathipadu",
+    "name": "Sri V. Mohan Reddy",
+    "designation": "Assistant Director of Agriculture (ADA)",
+    "office_address": "O/o Assistant Director of Agriculture, Prathipadu, Guntur - 522019",
+    "phone_number": "+91-9876543214",
+    "email": "ada-prathipadu@ap.gov.in",
+    "jurisdiction_mandals": [
+      "Prathipadu",
+      "Pedanandipadu",
+      "Kakumanu"
+    ],
+    "specialization": "Spices & Commercial Crop Quality Certification"
+  }
+]

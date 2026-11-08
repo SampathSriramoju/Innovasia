@@ -1,0 +1,432 @@
+[
+  {
+    "crop_name": "Cotton",
+    "total_water_requirement_mm": "700 - 1200 mm",
+    "critical_growth_stages": [
+      {
+        "stage_name": "Squaring Stage (Floral bud formation)",
+        "days_range": "45 - 55 DAS",
+        "importance": "Water stress leads to massive square shedding."
+      },
+      {
+        "stage_name": "Peak Flowering",
+        "days_range": "65 - 80 DAS",
+        "importance": "Critical for flower retention and pollen viability."
+      },
+      {
+        "stage_name": "Boll Development Stage",
+        "days_range": "90 - 120 DAS",
+        "importance": "Severe stress causes young boll drop and shorter fiber staple length."
+      }
+    ],
+    "irrigation_methods": {
+      "drip_irrigation": "Inline drip system with 16 mm lateral per crop row, 40-50 cm dripper spacing, 2.0 - 4.0 LPH discharge rate. Operates 2-3 hours every alternate day. Achieves 40-50% water savings and allows fertigation.",
+      "furrow_irrigation": "Alternate furrow irrigation method saves 30-35% water without reducing yield. Irrigate when soil moisture depletes to 50% available water capacity."
+    },
+    "water_stress_remedy": "If moisture stress occurs during dry spells, give foliar spray of 2% Potassium Nitrate (KNO3 @ 20 g/L) or 1% Urea to reduce leaf senescence and square drop.",
+    "citation": "PJTSAU Vyavasaya Panchangam & ICAR-CICR Nagpur 2025"
+  },
+  {
+    "crop_name": "Rice / Paddy",
+    "total_water_requirement_mm": "1100 - 1500 mm",
+    "critical_growth_stages": [
+      {
+        "stage_name": "Seedling Establishment / Initial Tillering",
+        "days_range": "1 - 10 DAT",
+        "importance": "Requires 2 cm standing water for root anchor."
+      },
+      {
+        "stage_name": "Panicle Initiation (PI)",
+        "days_range": "45 - 55 DAT",
+        "importance": "Water deficit drastically reduces spikelet number per panicle."
+      },
+      {
+        "stage_name": "Booting to Heading",
+        "days_range": "65 - 80 DAT",
+        "importance": "Extreme sensitivity; drought causes spikelet sterility and chaffy ears."
+      },
+      {
+        "stage_name": "Flowering / Anthesis",
+        "days_range": "80 - 90 DAT",
+        "importance": "Requires saturated soil; stress causes floret abortion."
+      },
+      {
+        "stage_name": "Milk Stage",
+        "days_range": "90 - 105 DAT",
+        "importance": "Grain filling requires adequate moisture."
+      }
+    ],
+    "irrigation_methods": {
+      "alternate_wetting_and_drying_awd": "Install perforated field water tube (Pani Pipe) of 30 cm length. Re-irrigate to 5 cm depth only when water level inside tube drops to 15 cm below soil surface. Saves 25-30% irrigation water and reduces methane emissions.",
+      "continuous_flooding": "Maintain 2-5 cm shallow standing water during critical reproductive stages."
+    },
+    "water_stress_remedy": "Drain standing water completely 10-12 days before anticipated harvest to facilitate uniform grain drying and mechanical combine movement.",
+    "citation": "ICAR-IIRR Hyderabad AWD Guidelines & PMKSY 2025"
+  },
+  {
+    "crop_name": "Chilli",
+    "total_water_requirement_mm": "600 - 900 mm",
+    "critical_growth_stages": [
+      {
+        "stage_name": "Establishment after Transplanting",
+        "days_range": "1 - 10 DAT",
+        "importance": "Light frequent irrigations prevent seedling mortality."
+      },
+      {
+        "stage_name": "Flower Initiation",
+        "days_range": "35 - 50 DAT",
+        "importance": "Moisture stress causes flower bud drop."
+      },
+      {
+        "stage_name": "Fruit Set & Early Berry Development",
+        "days_range": "60 - 90 DAT",
+        "importance": "Deficit causes fruit drop and small distorted pods."
+      }
+    ],
+    "irrigation_methods": {
+      "drip_irrigation": "Paired row planting with 16 mm lateral between two rows; 30 cm dripper spacing with 2 LPH drippers; run 1.5 - 2.5 hours every alternate day.",
+      "ridge_furrow": "Irrigate furrow up to 2/3rd height of ridge to avoid water wetting root crown directly (prevents collar rot)."
+    },
+    "water_stress_remedy": "Avoid water stagnation at all costs; stagnant water for >12 hours triggers immediate root asphyxiation and wilting.",
+    "citation": "PJTSAU Spices Manual & ICAR-IIHR Bengaluru 2025"
+  },
+  {
+    "crop_name": "Tomato",
+    "total_water_requirement_mm": "400 - 600 mm",
+    "critical_growth_stages": [
+      {
+        "stage_name": "Early Vegetative Growth",
+        "days_range": "15 - 30 DAT",
+        "importance": "Moderate moisture promotes deep root architecture."
+      },
+      {
+        "stage_name": "Flowering & Fruit Set",
+        "days_range": "35 - 55 DAT",
+        "importance": "Stress leads to flower drop and poor blossom fertilization."
+      },
+      {
+        "stage_name": "Fruit Enlargement / Bulking",
+        "days_range": "55 - 80 DAT",
+        "importance": "Irregular watering induces blossom end rot and radial fruit cracking."
+      }
+    ],
+    "irrigation_methods": {
+      "drip_irrigation_with_mulch": "Drip system with silver-black polyethylene mulch (30 micron) reduces crop water demand by 45% and eliminates weed competition.",
+      "furrow_irrigation": "Irrigate every 5-7 days in summer, 8-10 days in winter."
+    },
+    "water_stress_remedy": "Maintain steady, uniform soil moisture; heavy irrigation after a dry spell is the primary cause of fruit skin cracking.",
+    "citation": "ICAR-IIHR Vegetable Irrigation Guide 2025"
+  },
+  {
+    "crop_name": "Wheat",
+    "total_water_requirement_mm": "450 - 650 mm",
+    "critical_growth_stages": [
+      {
+        "stage_name": "Crown Root Initiation (CRI)",
+        "days_range": "20 - 25 DAS",
+        "importance": "Most critical irrigation stage in wheat; delay causes 35-40% irreversible yield penalty."
+      },
+      {
+        "stage_name": "Tillering Stage",
+        "days_range": "40 - 45 DAS",
+        "importance": "Governs effective ear-bearing tiller number."
+      },
+      {
+        "stage_name": "Late Jointing Stage",
+        "days_range": "60 - 65 DAS",
+        "importance": "Determines floret number per spikelet."
+      },
+      {
+        "stage_name": "Flowering / Anthesis",
+        "days_range": "80 - 85 DAS",
+        "importance": "Pollination and fertilization phase."
+      },
+      {
+        "stage_name": "Milk Stage",
+        "days_range": "95 - 100 DAS",
+        "importance": "Affects initial grain filling rate."
+      },
+      {
+        "stage_name": "Dough Stage",
+        "days_range": "105 - 115 DAS",
+        "importance": "Ensures grain test weight and prevents shriveling."
+      }
+    ],
+    "irrigation_methods": {
+      "border_strip_irrigation": "Check basin or border strip (6m x 40m) designed for uniform water spread; apply 60-70 mm depth per irrigation.",
+      "sprinkler_irrigation": "Suitable for undulated topography and light sandy soils; saves 30% water and protects against frost."
+    },
+    "water_stress_remedy": "If only 1 irrigation available: Apply at CRI (21 DAS). If 2 irrigations: Apply at CRI and Flowering. If 3: CRI, Late Jointing, and Milk stage.",
+    "citation": "ICAR-IIWBR Karnal Wheat Irrigation Manual 2025"
+  },
+  {
+    "crop_name": "Maize",
+    "total_water_requirement_mm": "500 - 800 mm",
+    "critical_growth_stages": [
+      {
+        "stage_name": "Knee-High Stage (V6-V8)",
+        "days_range": "30 - 35 DAS",
+        "importance": "Rapid vegetative growth and ear shoot initiation."
+      },
+      {
+        "stage_name": "Tasseling (VT)",
+        "days_range": "50 - 55 DAS",
+        "importance": "Extreme sensitivity; water stress delays silking relative to pollen shed (ASI - Anthesis Silking Interval expands) causing bare cobs."
+      },
+      {
+        "stage_name": "Silking (R1)",
+        "days_range": "55 - 65 DAS",
+        "importance": "Desiccation of silks leads to poor fertilization."
+      },
+      {
+        "stage_name": "Early Grain Filling / Dough Stage",
+        "days_range": "75 - 85 DAS",
+        "importance": "Kernel depth and test weight development."
+      }
+    ],
+    "irrigation_methods": {
+      "furrow_irrigation": "Irrigate in furrows with plants grown on ridges; avoids direct waterlogging of collar roots.",
+      "drip_irrigation": "Inline drip lateral spaced at 60 cm row spacing with fertigation."
+    },
+    "water_stress_remedy": "Maize cannot tolerate water stagnation for more than 24 hours at knee-high stage; provide instant field drainage channels.",
+    "citation": "ICAR-IIMR Ludhiana Maize Water Guide 2025"
+  },
+  {
+    "crop_name": "Groundnut / Peanut",
+    "total_water_requirement_mm": "500 - 700 mm",
+    "critical_growth_stages": [
+      {
+        "stage_name": "Flowering Stage",
+        "days_range": "25 - 35 DAS",
+        "importance": "Ensures maximum flower production."
+      },
+      {
+        "stage_name": "Peg Penetration (Pegging)",
+        "days_range": "35 - 50 DAS",
+        "importance": "Upper 5 cm soil must remain moist and friable to permit peg penetration without mechanical resistance."
+      },
+      {
+        "stage_name": "Pod Development Stage",
+        "days_range": "55 - 75 DAS",
+        "importance": "Kernel enlargement; moisture stress causes 'pops' (empty pods)."
+      }
+    ],
+    "irrigation_methods": {
+      "sprinkler_irrigation": "Sprinkler system operated in morning or late evening; highly effective for softening soil surface during peg entry.",
+      "broad_bed_and_furrow": "BBF method (beds 120 cm wide, furrows 30 cm) with irrigation through furrows."
+    },
+    "water_stress_remedy": "Withhold irrigation during early vegetative phase (10-25 DAS) to encourage deeper taproot elongation; resume at flowering.",
+    "citation": "ICAR-DGR Junagadh & PJTSAU Groundnut Manual 2025"
+  },
+  {
+    "crop_name": "Soybean",
+    "total_water_requirement_mm": "550 - 750 mm",
+    "critical_growth_stages": [
+      {
+        "stage_name": "Flowering (R1-R2)",
+        "days_range": "35 - 45 DAS",
+        "importance": "Moisture deficit causes flower abortion and poor pod set."
+      },
+      {
+        "stage_name": "Pod Filling (R4-R5)",
+        "days_range": "55 - 75 DAS",
+        "importance": "Affects seed size, oil concentration, and seed shriveling."
+      }
+    ],
+    "irrigation_methods": {
+      "broad_bed_furrow_bbf": "BBF system facilitates drainage during heavy monsoon cloudbursts and serves as irrigation furrows during dry spells.",
+      "sprinkler_irrigation": "Supplemental sprinkler irrigation during mid-season monsoon dry spells."
+    },
+    "water_stress_remedy": "If rainfed dry spell exceeds 15 days during pod fill, give 1 protective irrigation of 50 mm.",
+    "citation": "ICAR-IISR Indore Soybean Water Management 2025"
+  },
+  {
+    "crop_name": "Red Gram / Pigeonpea",
+    "total_water_requirement_mm": "600 - 800 mm",
+    "critical_growth_stages": [
+      {
+        "stage_name": "Flower Bud Initiation",
+        "days_range": "75 - 85 DAS",
+        "importance": "Prevents floral drop during post-monsoon dry spell."
+      },
+      {
+        "stage_name": "Pod Setting and Development",
+        "days_range": "100 - 120 DAS",
+        "importance": "Critical for bold seed development."
+      }
+    ],
+    "irrigation_methods": {
+      "protective_irrigation": "1-2 protective furrow irrigations during terminal drought in October-November increase grain yield by 35-50%."
+    },
+    "water_stress_remedy": "Foliar spray of 2% Urea or 1% KNO3 during dry spells reduces drought-induced shedding.",
+    "citation": "ICAR-IIPR Kanpur & PJTSAU 2025"
+  },
+  {
+    "crop_name": "Chickpea / Bengal Gram",
+    "total_water_requirement_mm": "250 - 400 mm",
+    "critical_growth_stages": [
+      {
+        "stage_name": "Pre-flowering / Late Vegetative",
+        "days_range": "40 - 45 DAS",
+        "importance": "Branching and floral bud development."
+      },
+      {
+        "stage_name": "Pod Initiation",
+        "days_range": "65 - 75 DAS",
+        "importance": "Directly impacts seed weight."
+      }
+    ],
+    "irrigation_methods": {
+      "light_furrow_irrigation": "Apply light irrigation (50-60 mm). Never flood chickpea fields, as excess moisture triggers Fusarium wilt and collar rot.",
+      "sprinkler_irrigation": "1-2 light sprinkler rounds."
+    },
+    "water_stress_remedy": "DO NOT irrigate chickpea during active flowering (50-60 DAS) as it triggers excessive vegetative growth and flower drop.",
+    "citation": "ICAR-IIPR Kanpur Chickpea Water Guide 2025"
+  },
+  {
+    "crop_name": "Mustard / Rapeseed",
+    "total_water_requirement_mm": "300 - 450 mm",
+    "critical_growth_stages": [
+      {
+        "stage_name": "Rosette to Pre-flowering",
+        "days_range": "30 - 35 DAS",
+        "importance": "Promotes secondary branching and siliquae points."
+      },
+      {
+        "stage_name": "Pod (Siliqua) Filling",
+        "days_range": "60 - 70 DAS",
+        "importance": "Ensures full seed formation and oil synthesis."
+      }
+    ],
+    "irrigation_methods": {
+      "check_basin_irrigation": "Apply 60 mm irrigation per round.",
+      "sprinkler_irrigation": "Highly effective on undulating semi-arid topography."
+    },
+    "water_stress_remedy": "Ensure 1st irrigation is given without fail at 30-35 DAS after completing thinning and weeding.",
+    "citation": "ICAR-DRMR Bharatpur Mustard Water Manual 2025"
+  },
+  {
+    "crop_name": "Sugarcane",
+    "total_water_requirement_mm": "1500 - 2500 mm",
+    "critical_growth_stages": [
+      {
+        "stage_name": "Sprouting / Germination",
+        "days_range": "1 - 35 DAP",
+        "importance": "Requires moist soil for bud bursting."
+      },
+      {
+        "stage_name": "Tillering (Formative Stage)",
+        "days_range": "35 - 120 DAP",
+        "importance": "Determines millable cane population per acre."
+      },
+      {
+        "stage_name": "Grand Growth Stage",
+        "days_range": "120 - 270 DAP",
+        "importance": "Maximum daily water consumption; water stress shortens internodes."
+      }
+    ],
+    "irrigation_methods": {
+      "subsurface_or_surface_drip": "Drip irrigation with 1.5 - 2.5 LPH drippers saves 50% irrigation water and increases cane yield by 25-35%.",
+      "alternate_furrow": "Trash mulching in alternate furrows saves 30% water."
+    },
+    "water_stress_remedy": "Withhold irrigation 15-20 days before harvest to promote sucrose accumulation and higher brix sugar recovery.",
+    "citation": "ICAR-SBI Coimbatore & ICAR-IISR Lucknow 2025"
+  },
+  {
+    "crop_name": "Onion",
+    "total_water_requirement_mm": "350 - 550 mm",
+    "critical_growth_stages": [
+      {
+        "stage_name": "Establishment",
+        "days_range": "1 - 10 DAT",
+        "importance": "Light watering for seedling root catch."
+      },
+      {
+        "stage_name": "Bulb Initiation",
+        "days_range": "50 - 65 DAT",
+        "importance": "Cell division in bulb scales."
+      },
+      {
+        "stage_name": "Bulb Development & Bulking",
+        "days_range": "65 - 95 DAT",
+        "importance": "High water demand; stress causes splitting and double bulbs."
+      }
+    ],
+    "irrigation_methods": {
+      "micro_sprinkler_or_drip": "Micro-sprinklers provide uniform moisture distribution and lower canopy temperature during hot dry periods.",
+      "flat_bed_irrigation": "Irrigate every 5-6 days in summer and 8-10 days in winter."
+    },
+    "water_stress_remedy": "Stop irrigation 10-15 days before harvesting when 50% top neck-fall occurs to cure outer bulb scales and prevent storage rot.",
+    "citation": "ICAR-DOGR Pune Onion Water Advisory 2025"
+  },
+  {
+    "crop_name": "Potato",
+    "total_water_requirement_mm": "450 - 600 mm",
+    "critical_growth_stages": [
+      {
+        "stage_name": "Stolon Formation & Tuber Initiation",
+        "days_range": "25 - 40 DAP",
+        "importance": "Determines number of tubers set per hill."
+      },
+      {
+        "stage_name": "Tuber Bulking Stage",
+        "days_range": "45 - 75 DAP",
+        "importance": "Rapid starch deposition; water stress causes hollow heart, cracked or misshapen tubers."
+      }
+    ],
+    "irrigation_methods": {
+      "furrow_irrigation": "Maintain water level up to 2/3rd height of ridges; never allow water to submerge ridge tops.",
+      "sprinkler_irrigation": "Uniform wetting in sandy loam tracts."
+    },
+    "water_stress_remedy": "Stop irrigation 10-12 days before dehaulming/harvest to allow tuber skin to harden.",
+    "citation": "ICAR-CPRI Shimla Potato Water Manual 2025"
+  },
+  {
+    "crop_name": "Turmeric",
+    "total_water_requirement_mm": "1200 - 1800 mm",
+    "critical_growth_stages": [
+      {
+        "stage_name": "Rhizome Sprouting",
+        "days_range": "1 - 30 DAP",
+        "importance": "Requires moist environment under green leaf mulch."
+      },
+      {
+        "stage_name": "Tillering & Early Bulking",
+        "days_range": "60 - 120 DAP",
+        "importance": "Vegetative canopy development."
+      },
+      {
+        "stage_name": "Rhizome Development & Finger Expansion",
+        "days_range": "120 - 180 DAP",
+        "importance": "Maximum biomass accumulation."
+      }
+    ],
+    "irrigation_methods": {
+      "drip_irrigation_on_beds": "Paired lateral on 120 cm raised beds saves 35-40% water and prevents rhizome rot water stagnation.",
+      "ridge_and_furrow": "Frequent light irrigations at 7-10 day intervals."
+    },
+    "water_stress_remedy": "Provide instant drainage during monsoon downpours; standing water triggers soft rot (Pythium) epidemic.",
+    "citation": "ICAR-IISR Calicut & PJTSAU Turmeric Guide 2025"
+  },
+  {
+    "crop_name": "Black Gram / Urad",
+    "total_water_requirement_mm": "350 - 500 mm",
+    "critical_growth_stages": [
+      {
+        "stage_name": "Flowering Stage",
+        "days_range": "25 - 35 DAS",
+        "importance": "Essential for flower retention."
+      },
+      {
+        "stage_name": "Pod Filling",
+        "days_range": "40 - 55 DAS",
+        "importance": "Crucial for seed sizing."
+      }
+    ],
+    "irrigation_methods": {
+      "border_or_furrow": "1-2 light irrigations under irrigated situations; for rice-fallow relay crop, depends on residual moisture."
+    },
+    "water_stress_remedy": "Foliar spray of 2% DAP at flowering boosts pod set under receding soil moisture.",
+    "citation": "PJTSAU Vyavasaya Panchangam 2025"
+  }
+]

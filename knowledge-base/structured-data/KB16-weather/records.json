@@ -1,0 +1,197 @@
+[
+  {
+    "bulletin_id": "imd-agro-001",
+    "district_and_agro_climatic_zone": "Warangal & Khammam, Central Telangana Zone",
+    "weather_scenario_or_phenomenon": "Continuous Overcast Skies with Drizzling Rain & High Relative Humidity (>85%, 24-28°C)",
+    "affected_crops": [
+      "Rice / Paddy",
+      "Cotton",
+      "Chilli"
+    ],
+    "agromet_impact_assessment": "Prolonged leaf wetness (>6 hours) and high humidity trigger explosive outbreaks of Rice Blast (leaf and neck blast), Sheath Blight, and Cotton Grey Mildew (Dahiya).",
+    "mandatory_farmer_advisories": [
+      "Postpone all chemical spraying until skies clear and rain stops.",
+      "Drain excess water from rice fields to prevent sheath blight upward progression.",
+      "Hold back top-dressing of chemical nitrogenous fertilizers (Urea) as excessive N escalates fungal blast virulence.",
+      "Keep prophylactic fungicides ready: Spray Amistar Top (Azoxystrobin + Difenoconazole) @ 1 ml/L or Contaf (Hexaconazole 5% SC) @ 2 ml/L once rain recedes."
+    ],
+    "imd_source_attribution": "IMD Agromet Advisory Bulletin, RMC Hyderabad & PJTSAU 2025"
+  },
+  {
+    "bulletin_id": "imd-agro-002",
+    "district_and_agro_climatic_zone": "Kurnool & Anantapur, Scarce Rainfall Zone (Rayalaseema, AP)",
+    "weather_scenario_or_phenomenon": "Dry Spell of 18-20 Days during July-August with Max Temp 35-38°C",
+    "affected_crops": [
+      "Groundnut / Peanut",
+      "Cotton",
+      "Red Gram"
+    ],
+    "agromet_impact_assessment": "Severe moisture stress during groundnut flowering and pegging stage causing peg hardening and floral abortion; jassid and thrips flare-up in cotton.",
+    "mandatory_farmer_advisories": [
+      "Operate tractor-drawn or bullock-drawn blade harrow (Danti) in inter-rows to create a dust mulch (soil mulch) which breaks capillary moisture loss from soil.",
+      "Apply supplemental protective irrigation using rain-gun or sprinkler systems.",
+      "Give foliar spray of 2% Urea (20 g/L) or 2% Potassium Nitrate (KNO3 @ 20 g/L) in early morning or late afternoon to relieve crop water stress."
+    ],
+    "imd_source_attribution": "IMD District Agro-Meteorological Advisory Unit (DAMU) Anantapur & ANGRAU 2025"
+  },
+  {
+    "bulletin_id": "imd-agro-003",
+    "district_and_agro_climatic_zone": "Ludhiana & Patiala, Central Plain Zone, Punjab",
+    "weather_scenario_or_phenomenon": "Terminal Heat Wave (Max Temp >35°C, 4-5°C above normal) during March (Grain Filling Stage)",
+    "affected_crops": [
+      "Wheat"
+    ],
+    "agromet_impact_assessment": "Terminal heat stress shortens grain-filling duration, induces forced maturity, and causes grain shriveling, reducing 1000-grain test weight and wheat yield by 15-25%.",
+    "mandatory_farmer_advisories": [
+      "Provide light and frequent sprinkler irrigations during evening hours to moderate microclimate canopy temperature.",
+      "Foliar spray of 0.2% Potassium Nitrate (KNO3 @ 2 g/L) or 0.2% Alpha-tocopherol at heading and milk stage to enhance thermotolerance.",
+      "Avoid flooding fields during windy afternoon hours to prevent crop lodging."
+    ],
+    "imd_source_attribution": "PAU Ludhiana & IMD Agromet Advisory Service New Delhi 2025"
+  },
+  {
+    "bulletin_id": "imd-agro-004",
+    "district_and_agro_climatic_zone": "Hisar & Karnal, Western Plain Zone, Haryana",
+    "weather_scenario_or_phenomenon": "Severe Cold Wave & Ground Frost Alert (Minimum Temp dropping below 3.0°C in January)",
+    "affected_crops": [
+      "Potato",
+      "Mustard",
+      "Tomato"
+    ],
+    "agromet_impact_assessment": "Intracellular ice crystal formation leads to cellular rupture, blackened foliage, premature flower drop in mustard, and complete frost blighting of potato vines.",
+    "mandatory_farmer_advisories": [
+      "Provide light irrigation to crops in evening hours; water has high specific heat capacity and raises soil and canopy temperature by 1-2°C.",
+      "Create evening smoke around field boundaries (smudging) using dry leaves/straw on the windward side between 11 PM and 5 AM.",
+      "Spray soluble sulphur (80% WDG) @ 2.5 g/L or dilute sulphuric acid (0.1% H2SO4) on standing mustard/potato."
+    ],
+    "imd_source_attribution": "IMD Agromet Advisory Unit Chandigarh & CCSHAU Hisar 2025"
+  },
+  {
+    "bulletin_id": "imd-agro-005",
+    "district_and_agro_climatic_zone": "Guntur & Krishna, Krishna-Godavari Delta Zone, AP",
+    "weather_scenario_or_phenomenon": "Bay of Bengal Depressions / Cyclone Warning with Heavy Rainfall (150-250 mm in 48 hours)",
+    "affected_crops": [
+      "Paddy (Harvesting stage)",
+      "Cotton (Boll opening stage)",
+      "Chilli"
+    ],
+    "agromet_impact_assessment": "Water stagnation, field submergence, lodging of ripe paddy panicles, viviparous grain germination, and rotting of mature cotton bolls.",
+    "mandatory_farmer_advisories": [
+      "Harvest mature standing paddy immediately if crop is at 80-85% maturity and store sheaves in safe elevated sheds.",
+      "Open drainage channels and clear field bund outlets immediately to drain standing storm runoff.",
+      "For logged ripe paddy fields, spray 5% common salt solution (NaCl @ 50 g/L) on standing panicles to suppress in-situ viviparous sprouting.",
+      "Do not apply any fertilizer or chemical sprays until water recedes completely."
+    ],
+    "imd_source_attribution": "Cyclone Warning Centre Visakhapatnam & ANGRAU Amaravati 2025"
+  },
+  {
+    "bulletin_id": "imd-agro-006",
+    "district_and_agro_climatic_zone": "Indore & Ujjain, Malwa Plateau Zone, Madhya Pradesh",
+    "weather_scenario_or_phenomenon": "Excessive Rainfall Cloudburst (>100 mm in 24 hours) during Sowing Window (July)",
+    "affected_crops": [
+      "Soybean",
+      "Maize"
+    ],
+    "agromet_impact_assessment": "Vertisol soil saturation and water ponding; seed rot and asphyxiation of germinating soybean seedlings.",
+    "mandatory_farmer_advisories": [
+      "Construct Broad Bed Furrows (BBF) across slopes so excess rainwater drains rapidly into furrows.",
+      "If seeds rot and plant stand falls below 60% of optimal, re-sow with early maturing soybean varieties (JS 95-60, NRC 37) as soon as soil permits workable tilth.",
+      "Drench collar root zone with Carbendazim 50% WP @ 2 g/L to prevent collar rot."
+    ],
+    "imd_source_attribution": "ICAR-IISR Indore & RVSKVV Gwalior Agromet 2025"
+  },
+  {
+    "bulletin_id": "imd-agro-007",
+    "district_and_agro_climatic_zone": "Nashik & Pune, Western Maharashtra Plain Zone",
+    "weather_scenario_or_phenomenon": "Unseasonal Spring Hailstorm with Gusty Squally Winds (>60 km/h) in February-March",
+    "affected_crops": [
+      "Onion",
+      "Tomato",
+      "Wheat"
+    ],
+    "agromet_impact_assessment": "Physical mechanical injury, shredding of foliage, lodging of wheat, and bruised onion bulbs prone to secondary bacterial rotting.",
+    "mandatory_farmer_advisories": [
+      "Deploy anti-hail protective netting over high-value vegetable and onion seed crops.",
+      "Immediately after hailstorm, spray Mancozeb 75% WP @ 2.5 g/L + Streptocycline @ 0.1 g/L to heal tissue wounds and prevent bacterial soft rot.",
+      "Provide light irrigation to wash off dirt and encourage vegetative recovery."
+    ],
+    "imd_source_attribution": "MPKV Rahuri & IMD Pune Agromet Advisory 2025"
+  },
+  {
+    "bulletin_id": "imd-agro-008",
+    "district_and_agro_climatic_zone": "Nizamabad & Jagtial, Northern Telangana Zone",
+    "weather_scenario_or_phenomenon": "High Day Temperatures (>36°C) & Clear Skies during Rabi Paddy Nursery (December-January)",
+    "affected_crops": [
+      "Rice / Paddy Nursery"
+    ],
+    "agromet_impact_assessment": "Cold night temperatures (<12°C) combined with dry winds cause stunted yellow seedlings (cold injury) in rabi nursery.",
+    "mandatory_farmer_advisories": [
+      "Keep thin layer of water (2-3 cm) in nursery bed during night to insulate roots against chilling, and drain in morning.",
+      "Cover nursery beds with polythene sheets supported by bamboo arches during night (greenhouse cover effect).",
+      "Spray 0.5% Zinc Sulphate + 1% Urea to boost seedling vigor."
+    ],
+    "imd_source_attribution": "PJTSAU Regional Agricultural Research Station Jagtial 2025"
+  },
+  {
+    "bulletin_id": "imd-agro-009",
+    "district_and_agro_climatic_zone": "Bharatpur & Alwar, Flood Plain Zone, Eastern Rajasthan",
+    "weather_scenario_or_phenomenon": "Warm, Humid & Cloudy Weather in January (RH >75%, Temp 15-20°C)",
+    "affected_crops": [
+      "Mustard / Rapeseed"
+    ],
+    "agromet_impact_assessment": "Ideal environmental trigger for rapid immigration and explosive proliferation of Mustard Aphid (Lipaphis erysimi) and White Rust outbreak.",
+    "mandatory_farmer_advisories": [
+      "Scout crop daily; check central shoot inflorescence for aphid colonies.",
+      "If aphid infestation exceeds 20% plants, spray Actara 25% WG (Thiamethoxam) @ 40 g/acre or Dimethoate 30% EC @ 260 ml/acre during late afternoon hours after honeybees return to hives.",
+      "Spray Ridomil Gold @ 2 g/L if white rust porcelain pustules appear on lower leaves."
+    ],
+    "imd_source_attribution": "ICAR-DRMR Bharatpur Agromet Bulletin 2025"
+  },
+  {
+    "bulletin_id": "imd-agro-010",
+    "district_and_agro_climatic_zone": "Shimla & Solan, Sub-Temperate Hill Zone, Himachal Pradesh",
+    "weather_scenario_or_phenomenon": "Dense Fog, Continuous Drizzle & Relative Humidity >95% for 72 Hours (Temp 10-18°C)",
+    "affected_crops": [
+      "Potato",
+      "Tomato"
+    ],
+    "agromet_impact_assessment": "Late Blight Forecasting Alert: 100% favorable conditions for Phytophthora infestans epidemic.",
+    "mandatory_farmer_advisories": [
+      "Apply prophylactic contact fungicide Dithane M-45 (Mancozeb 75% WP) @ 2.5 g/L immediately covering lower and upper leaf surfaces.",
+      "If disease lesions have already appeared, spray curative systemic fungicide Ridomil Gold (Metalaxyl-M + Mancozeb) @ 2.5 g/L without delay.",
+      "High earthing up to protect developing tubers from zoospores washing down."
+    ],
+    "imd_source_attribution": "ICAR-CPRI Shimla Late Blight Forecasting Warning 2025"
+  },
+  {
+    "bulletin_id": "imd-agro-011",
+    "district_and_agro_climatic_zone": "Nagpur & Wardha, Vidarbha Zone, Maharashtra",
+    "weather_scenario_or_phenomenon": "Prolonged Intermittent Showers during October-November (Boll Bursting Stage)",
+    "affected_crops": [
+      "Cotton"
+    ],
+    "agromet_impact_assessment": "Moisture inside bursting bolls causes wet boll rot, internal fiber discoloration, seed sprouting, and severe lint staining.",
+    "mandatory_farmer_advisories": [
+      "Pick burst bolls immediately during sunny intervals; dry kapas thoroughly on tarpaulin.",
+      "Spray Copper Oxychloride 50% WP @ 2.5 g/L + Streptocycline @ 0.1 g/L on green bolls to prevent secondary fungal and bacterial boll rots.",
+      "Remove rotting ground bolls to prevent inoculum build-up."
+    ],
+    "imd_source_attribution": "ICAR-CICR Nagpur & PDKV Akola Agromet Advisory 2025"
+  },
+  {
+    "bulletin_id": "imd-agro-012",
+    "district_and_agro_climatic_zone": "Cuttack & Puri, East Coast Plain Zone, Odisha",
+    "weather_scenario_or_phenomenon": "Post-Monsoon Northeast Monsoon Cyclonic Rainstorms (November)",
+    "affected_crops": [
+      "Rice / Paddy",
+      "Winter Vegetables"
+    ],
+    "agromet_impact_assessment": "Flash flooding of coastal lowlands; submergence of standing paddy crop close to harvest.",
+    "mandatory_farmer_advisories": [
+      "Drain inundated fields rapidly using diesel pump-sets.",
+      "Harvest submerged panicles immediately, wash muddy grains with clean water, and sun-dry.",
+      "Spray 19:19:19 @ 10 g/L on surviving winter vegetables to revive vegetative growth after flood waters recede."
+    ],
+    "imd_source_attribution": "ICAR-NRRI Cuttack & OUAT Bhubaneswar 2025"
+  }
+]

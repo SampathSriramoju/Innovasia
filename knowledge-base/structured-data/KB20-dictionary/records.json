@@ -1,0 +1,737 @@
+[
+  {
+    "english_term": "Rice / Paddy",
+    "telugu_term": "వరి (వరి ధాన్యం)",
+    "hindi_term": "धान / चावल",
+    "category": "Crop",
+    "synonyms_dialects": "ధాన్యము, ప్యాడీ, Chawal, Dhan"
+  },
+  {
+    "english_term": "Cotton",
+    "telugu_term": "ప్రత్తి (పత్తి)",
+    "hindi_term": "कपास",
+    "category": "Crop",
+    "synonyms_dialects": "దూది, కపాస్, Kapas, Rui"
+  },
+  {
+    "english_term": "Chilli",
+    "telugu_term": "మిరప (మిర్చి)",
+    "hindi_term": "मिर्च (लाल मिर्च)",
+    "category": "Crop",
+    "synonyms_dialects": "మిరపకాయ, Mirchi"
+  },
+  {
+    "english_term": "Tomato",
+    "telugu_term": "టమోటా (రామములగ)",
+    "hindi_term": "टमाटर",
+    "category": "Crop",
+    "synonyms_dialects": "టమాటా, Tamatar"
+  },
+  {
+    "english_term": "Wheat",
+    "telugu_term": "గోధుమ",
+    "hindi_term": "गेहूं",
+    "category": "Crop",
+    "synonyms_dialects": "Gehun, Gandum"
+  },
+  {
+    "english_term": "Maize / Corn",
+    "telugu_term": "మొక్కజొన్న",
+    "hindi_term": "मक्का / भुट्टा",
+    "category": "Crop",
+    "synonyms_dialects": "మక్కలు, జొన్నలు, Makka, Bhutta"
+  },
+  {
+    "english_term": "Groundnut / Peanut",
+    "telugu_term": "వేరుశనగ (పల్లీలు)",
+    "hindi_term": "मूंगफली",
+    "category": "Crop",
+    "synonyms_dialects": "శనక్కాయలు, పల్లి, Moongphali"
+  },
+  {
+    "english_term": "Soybean",
+    "telugu_term": "సోయాబీన్",
+    "hindi_term": "सोयाबीन",
+    "category": "Crop",
+    "synonyms_dialects": "సోయా, Soyabean"
+  },
+  {
+    "english_term": "Red Gram / Pigeonpea",
+    "telugu_term": "కందులు (కంది)",
+    "hindi_term": "अरहर / तुअर",
+    "category": "Crop",
+    "synonyms_dialects": "కంది పప్పు, Arhar, Tuvar, Tur"
+  },
+  {
+    "english_term": "Chickpea / Bengal Gram",
+    "telugu_term": "శనగలు (హరభరా)",
+    "hindi_term": "चना / छोला",
+    "category": "Crop",
+    "synonyms_dialects": "శనగపప్పు, Chana, Harbhara"
+  },
+  {
+    "english_term": "Mustard / Rapeseed",
+    "telugu_term": "ఆవాలు",
+    "hindi_term": "सरसों / राई",
+    "category": "Crop",
+    "synonyms_dialects": "Sarson, Rai, Toria"
+  },
+  {
+    "english_term": "Sugarcane",
+    "telugu_term": "చెరకు",
+    "hindi_term": "गन्ना / ईख",
+    "category": "Crop",
+    "synonyms_dialects": "చెరుకు గడ, Ganna, Ikh"
+  },
+  {
+    "english_term": "Onion",
+    "telugu_term": "ఉల్లిపాయ (ఎర్రగడ్డ)",
+    "hindi_term": "प्याज / कांदा",
+    "category": "Crop",
+    "synonyms_dialects": "ఉల్లిగడ్డ, ఎర్రగడ్డలు, Pyaz, Kanda"
+  },
+  {
+    "english_term": "Potato",
+    "telugu_term": "బంగాళాదుంప (ఆలూ)",
+    "hindi_term": "आलू",
+    "category": "Crop",
+    "synonyms_dialects": "ఉర్లగడ్డ, ఆలూగడ్డ, Aloo"
+  },
+  {
+    "english_term": "Turmeric",
+    "telugu_term": "పసుపు",
+    "hindi_term": "हल्दी",
+    "category": "Crop",
+    "synonyms_dialects": "పసుపు కొమ్ములు, Haldi"
+  },
+  {
+    "english_term": "Black Gram / Urad",
+    "telugu_term": "మినుములు (మినుము)",
+    "hindi_term": "उड़द / माश",
+    "category": "Crop",
+    "synonyms_dialects": "మినపపప్పు, Urad, Mash"
+  },
+  {
+    "english_term": "Green Gram / Mungbean",
+    "telugu_term": "పెసలు",
+    "hindi_term": "मूंग",
+    "category": "Crop",
+    "synonyms_dialects": "పెసరపప్పు, Moong"
+  },
+  {
+    "english_term": "Castor",
+    "telugu_term": "ఆముదం",
+    "hindi_term": "अरंडी",
+    "category": "Crop",
+    "synonyms_dialects": "ఆముదాలు, Arandi"
+  },
+  {
+    "english_term": "Sorghum / Great Millet",
+    "telugu_term": "జొన్నలు (తెల్లజొన్న / పచ్చజొన్న)",
+    "hindi_term": "ज्वार",
+    "category": "Crop",
+    "synonyms_dialects": "జొన్న, Jowar"
+  },
+  {
+    "english_term": "Pearl Millet / Bajra",
+    "telugu_term": "సజ్జలు",
+    "hindi_term": "बाजरा",
+    "category": "Crop",
+    "synonyms_dialects": "సజ్జ, Bajra"
+  },
+  {
+    "english_term": "Pink Bollworm",
+    "telugu_term": "గులాబీ రంగు కాయ తొలుచు పురుగు",
+    "hindi_term": "गुलाबी सुंडी",
+    "category": "Pest",
+    "synonyms_dialects": "గులాబీ పురుగు, Gulabi Sundi"
+  },
+  {
+    "english_term": "Brown Plant Hopper (BPH)",
+    "telugu_term": "గోధుమ రంగు సుడిదోమ",
+    "hindi_term": "भूरा फुदका / बीपीएच",
+    "category": "Pest",
+    "synonyms_dialects": "సుడిదోమ, మట్టదోమ, Bhoora Fudka, Matta Doma"
+  },
+  {
+    "english_term": "Yellow Stem Borer",
+    "telugu_term": "కాండం తొలిచే పురుగు",
+    "hindi_term": "पीला तना छेदक",
+    "category": "Pest",
+    "synonyms_dialects": "తెల్ల కంకి తెగులు, Tana Chhedak"
+  },
+  {
+    "english_term": "Rice Leaf Folder",
+    "telugu_term": "ఆకుచుట్టు పురుగు",
+    "hindi_term": "पत्ती लपेटक",
+    "category": "Pest",
+    "synonyms_dialects": "సుట్ట పురుగు, Patti Lapetak"
+  },
+  {
+    "english_term": "Chilli Thrips",
+    "telugu_term": "తామర పురుగులు (మిరప నల్లి)",
+    "hindi_term": "मिर्च के थ्रिप्स",
+    "category": "Pest",
+    "synonyms_dialects": "పైముడుత పురుగులు, Thrips"
+  },
+  {
+    "english_term": "Yellow Mite / Broad Mite",
+    "telugu_term": "పసుపు నల్లి (కిందముడుత)",
+    "hindi_term": "पीली माइट / मकड़ी",
+    "category": "Pest",
+    "synonyms_dialects": "నల్ల తామర, Peeli Mite"
+  },
+  {
+    "english_term": "Whitefly",
+    "telugu_term": "తెల్లదోమ",
+    "hindi_term": "सफेद मक्खी",
+    "category": "Pest",
+    "synonyms_dialects": "తెల్ల ఈగ, Safed Makkhi"
+  },
+  {
+    "english_term": "Jassids / Leafhopper",
+    "telugu_term": "పచ్చదోమ",
+    "hindi_term": "हरा तेला / हरा फुदका",
+    "category": "Pest",
+    "synonyms_dialects": "పచ్చ పురుగు, Hara Tela"
+  },
+  {
+    "english_term": "American Bollworm",
+    "telugu_term": "శనగపచ్చ పురుగు",
+    "hindi_term": "अमेरिकन सुंडी / फली छेदक",
+    "category": "Pest",
+    "synonyms_dialects": "హెలికోనెర్పా, Phali Chhedak"
+  },
+  {
+    "english_term": "Tobacco Caterpillar / Cutworm",
+    "telugu_term": "లద్దె పురుగు",
+    "hindi_term": "तंबाकू की इल्ली / कटवर्म",
+    "category": "Pest",
+    "synonyms_dialects": "లద్దె, Tambaku Illi"
+  },
+  {
+    "english_term": "Fall Armyworm (FAW)",
+    "telugu_term": "కత్తెర పురుగు",
+    "hindi_term": "फॉल आर्मीवॉर्म / सैनिक कीट",
+    "category": "Pest",
+    "synonyms_dialects": "కత్తెర, Sainik Keet"
+  },
+  {
+    "english_term": "Mustard Aphid",
+    "telugu_term": "ఆవాల పేనుబంక",
+    "hindi_term": "सरसों का माहू / चेपा",
+    "category": "Pest",
+    "synonyms_dialects": "మసి పురుగు, Mahu, Chepa"
+  },
+  {
+    "english_term": "Termites",
+    "telugu_term": "చెదలు",
+    "hindi_term": "दीमक",
+    "category": "Pest",
+    "synonyms_dialects": "చెదపురుగులు, Deemak"
+  },
+  {
+    "english_term": "White Grub",
+    "telugu_term": "తెల్ల పురుగు (వేరు పురుగు)",
+    "hindi_term": "सफेद लट / गोबर का कीड़ा",
+    "category": "Pest",
+    "synonyms_dialects": "Safed Lat"
+  },
+  {
+    "english_term": "Girdle Beetle",
+    "telugu_term": "రింగ్ బీటిల్ (కాండం కొరికే పురుగు)",
+    "hindi_term": "गर्डल बीटल / चक्र भृंग",
+    "category": "Pest",
+    "synonyms_dialects": "Girdle Keeda"
+  },
+  {
+    "english_term": "Early Shoot Borer",
+    "telugu_term": "మొవ్వు తొలిచే పురుగు",
+    "hindi_term": "प्ररोह छेदक",
+    "category": "Pest",
+    "synonyms_dialects": "Shoot Borer"
+  },
+  {
+    "english_term": "Gall Midge / Silver Shoot",
+    "telugu_term": "ఉల్లికోడు పురుగు / ఆనెకోడు",
+    "hindi_term": "गाल मिज / पोंगा कीट",
+    "category": "Pest",
+    "synonyms_dialects": "Ullikodu, Silver Shoot"
+  },
+  {
+    "english_term": "Rice Gundhi Bug",
+    "telugu_term": "వరి వెన్ను నల్లి / గంధీ పురుగు",
+    "hindi_term": "गंधी बग",
+    "category": "Pest",
+    "synonyms_dialects": "Gandhibug"
+  },
+  {
+    "english_term": "Rice Blast",
+    "telugu_term": "వరి అగ్గితెగులు",
+    "hindi_term": "धान का झुलसा रोग (ब्लास्ट)",
+    "category": "Disease",
+    "synonyms_dialects": "అగ్గి రోగం, కంకి కుళ్లు, Jhulsa"
+  },
+  {
+    "english_term": "Sheath Blight",
+    "telugu_term": "పాము పొడ తెగులు",
+    "hindi_term": "शीथ ब्लाइट / पर्णच्छद झुलसा",
+    "category": "Disease",
+    "synonyms_dialects": "పాముపొడ, Sheath Blight"
+  },
+  {
+    "english_term": "Bacterial Leaf Blight (BLB)",
+    "telugu_term": "బాక్టీరియా ఎండు తెగులు",
+    "hindi_term": "जीवाणु पत्ती झुलसा",
+    "category": "Disease",
+    "synonyms_dialects": "బాక్టీరియా తెగులు, BLB"
+  },
+  {
+    "english_term": "Early Blight",
+    "telugu_term": "ముందస్తు ఆకుమచ్చ తెగులు",
+    "hindi_term": "अगेती झुलसा",
+    "category": "Disease",
+    "synonyms_dialects": "Ageti Jhulsa"
+  },
+  {
+    "english_term": "Late Blight",
+    "telugu_term": "ఆలస్యపు తెగులు (లేట్ బ్లైట్)",
+    "hindi_term": "पछेती झुलसा",
+    "category": "Disease",
+    "synonyms_dialects": "Pacheti Jhulsa"
+  },
+  {
+    "english_term": "Anthracnose / Fruit Rot / Die-Back",
+    "telugu_term": "కొమ్మ ఎండు మరియు కాయ కుళ్లు తెగులు",
+    "hindi_term": "फल सड़न एवं डाई-बैक",
+    "category": "Disease",
+    "synonyms_dialects": "కొమ్మ ఎండు, Dieback"
+  },
+  {
+    "english_term": "Powdery Mildew",
+    "telugu_term": "బూడిద తెగులు",
+    "hindi_term": "चूर्णिल आसिता / सफेद फफूंद",
+    "category": "Disease",
+    "synonyms_dialects": "బూడిద రోగం, Churnil Asita"
+  },
+  {
+    "english_term": "Yellow / Stripe Rust",
+    "telugu_term": "పసుపు కుంకుమ తెగులు",
+    "hindi_term": "पीला रतुआ / धारीदार गेरुआ",
+    "category": "Disease",
+    "synonyms_dialects": "Peela Ratua"
+  },
+  {
+    "english_term": "Brown / Leaf Rust",
+    "telugu_term": "గోధుమ కుంకుమ తెగులు",
+    "hindi_term": "भूरा रतुआ",
+    "category": "Disease",
+    "synonyms_dialects": "Bhoora Ratua"
+  },
+  {
+    "english_term": "Tikka Leaf Spot",
+    "telugu_term": "టిక్కా ఆకుమచ్చ తెగులు",
+    "hindi_term": "टिक्का रोग / पर्ण चित्ती",
+    "category": "Disease",
+    "synonyms_dialects": "ఆకుమచ్చ, Tikka Rog"
+  },
+  {
+    "english_term": "Fusarium Wilt",
+    "telugu_term": "ఎండు తెగులు (విల్ట్)",
+    "hindi_term": "उकठा रोग / विल्ट",
+    "category": "Disease",
+    "synonyms_dialects": "చేను ఎండిపోవుట, Uktha"
+  },
+  {
+    "english_term": "Sterility Mosaic Disease",
+    "telugu_term": "గొడ్రాలితనం తెగులు (స్టెరిలిటీ మొజాయిక్)",
+    "hindi_term": "बांझपन मोज़ेक रोग",
+    "category": "Disease",
+    "synonyms_dialects": "Sterility Mosaic"
+  },
+  {
+    "english_term": "Purple Blotch",
+    "telugu_term": "ఊదా రంగు మచ్చ తెగులు",
+    "hindi_term": "बैंगनी धब्बा रोग",
+    "category": "Disease",
+    "synonyms_dialects": "Baingani Dhabba"
+  },
+  {
+    "english_term": "Rhizome Rot / Soft Rot",
+    "telugu_term": "దుంప కుళ్లు తెగులు",
+    "hindi_term": "कंद सड़न रोग",
+    "category": "Disease",
+    "synonyms_dialects": "దుంప రోగం, Kand Sadhan"
+  },
+  {
+    "english_term": "Grey Mildew / Dahiya",
+    "telugu_term": "దూది తెగులు (బూడిద తెగులు)",
+    "hindi_term": "दहिया रोग / धूसर फफूंदी",
+    "category": "Disease",
+    "synonyms_dialects": "దహియా రోగం, Dahiya Rog"
+  },
+  {
+    "english_term": "Chlorosis (Yellowing)",
+    "telugu_term": "పాలిపోవుట (ఆకులు పసుపు రంగులోకి మారుట)",
+    "hindi_term": "हरिमहीनता / पीलापन",
+    "category": "Symptom",
+    "synonyms_dialects": "ఆకులు పసుపు తేలుట, Peelapan"
+  },
+  {
+    "english_term": "Necrosis (Tissue death)",
+    "telugu_term": "కణజాలం చనిపోవుట / మాడిపోవుట",
+    "hindi_term": "ऊतक क्षय / झुलसना",
+    "category": "Symptom",
+    "synonyms_dialects": "ఆకులు మాడిపోవుట"
+  },
+  {
+    "english_term": "Dead Heart",
+    "telugu_term": "మొవ్వు ఎండిపోవుట (మొవ్వు కుళ్లు)",
+    "hindi_term": "डेड हार्ट / मृत प्ररोह",
+    "category": "Symptom",
+    "synonyms_dialects": "మొవ్వు పోవుట, Dead Heart"
+  },
+  {
+    "english_term": "White Earhead",
+    "telugu_term": "తెల్ల కంకి",
+    "hindi_term": "सफेद बाली",
+    "category": "Symptom",
+    "synonyms_dialects": "పాలులేని కంకి, Safed Bali"
+  },
+  {
+    "english_term": "Hopper Burn",
+    "telugu_term": "సుడి రోగం / సుడిదోమ మాకుడు",
+    "hindi_term": "हॉपर बर्न",
+    "category": "Symptom",
+    "synonyms_dialects": "Hopperburn"
+  },
+  {
+    "english_term": "Sowing",
+    "telugu_term": "విత్తడం (విత్తుట)",
+    "hindi_term": "बुआई / बोना",
+    "category": "Operation",
+    "synonyms_dialects": "విత్తనాలు వేయుట, Buwai"
+  },
+  {
+    "english_term": "Transplanting",
+    "telugu_term": "నాట్లు వేయుట (నాటు)",
+    "hindi_term": "रोपाई / प्रतिरोपण",
+    "category": "Operation",
+    "synonyms_dialects": "నారు నాటుట, Ropai"
+  },
+  {
+    "english_term": "Nursery Bed",
+    "telugu_term": "నర్సరీ / నారుమడి",
+    "hindi_term": "नर्सरी / पौधशाला",
+    "category": "Operation",
+    "synonyms_dialects": "మడి, Paudhshala"
+  },
+  {
+    "english_term": "Weeding",
+    "telugu_term": "కలుపు తీయుట (కలుపు)",
+    "hindi_term": "निराई / गुड़ाई",
+    "category": "Operation",
+    "synonyms_dialects": "చేను కలుపు, Nirai Gudai"
+  },
+  {
+    "english_term": "Interculture / Hoeing",
+    "telugu_term": "అంతర కృషి (ఎడ్లతో తోలుట)",
+    "hindi_term": "निराई-गुड़ाई / अंतःकर्षण",
+    "category": "Operation",
+    "synonyms_dialects": "గొర్రు తోలుట, దంతి తోలుట"
+  },
+  {
+    "english_term": "Earthing up",
+    "telugu_term": "మొక్క మొదళ్లకు మట్టి ఎగదోయుట",
+    "hindi_term": "मिट्टी चढ़ाना",
+    "category": "Operation",
+    "synonyms_dialects": "బోదెలు కట్టుట, Mitti Chadhana"
+  },
+  {
+    "english_term": "Irrigation",
+    "telugu_term": "నీటిపారుదల (నీరు పెట్టుట)",
+    "hindi_term": "सिंचाई / पानी देना",
+    "category": "Operation",
+    "synonyms_dialects": "తడి కట్టుట, Sinchai"
+  },
+  {
+    "english_term": "Harvesting",
+    "telugu_term": "కోత కోయుట (కోతలు)",
+    "hindi_term": "कटाई / फसल काटना",
+    "category": "Operation",
+    "synonyms_dialects": "చేను కోత, Katai"
+  },
+  {
+    "english_term": "Threshing",
+    "telugu_term": "నూర్పిడి (నూర్పు)",
+    "hindi_term": "गहाई / मड़ाई",
+    "category": "Operation",
+    "synonyms_dialects": "ధాన్యం వేరుచేయుట, Madai, Gahai"
+  },
+  {
+    "english_term": "Winnowing",
+    "telugu_term": "తూర్పారబట్టుట",
+    "hindi_term": "ओसाई / फटकना",
+    "category": "Operation",
+    "synonyms_dialects": "Osai, Phatakna"
+  },
+  {
+    "english_term": "Basal Dose",
+    "telugu_term": "ఆఖరి దుక్కిలో వేయు ఎరువు",
+    "hindi_term": "आधारभूत खाद / बुआई पूर्व उर्वरक",
+    "category": "Input",
+    "synonyms_dialects": "బేసల్ డోస్, Basal Khad"
+  },
+  {
+    "english_term": "Top Dressing",
+    "telugu_term": "పైపాటుగా ఎరువులు వేయుట",
+    "hindi_term": "खड़ी फसल में खाद / टॉप ड्रेसिंग",
+    "category": "Input",
+    "synonyms_dialects": "పైమందు వేయుట, Top Dressing"
+  },
+  {
+    "english_term": "Foliar Spray",
+    "telugu_term": "ఆకులపై పిచికారీ చేయుట",
+    "hindi_term": "पत्तियों पर छिड़काव / फोलियर स्प्रे",
+    "category": "Input",
+    "synonyms_dialects": "స్ప్రే కొట్టుట, Chhidkaw"
+  },
+  {
+    "english_term": "Biofertilizer",
+    "telugu_term": "జీవన ఎరువులు",
+    "hindi_term": "जैव उर्वरक / बायोफर्टिलाइजर",
+    "category": "Input",
+    "synonyms_dialects": "రైజోబియం, జైవ్ ఉర్వరక్"
+  },
+  {
+    "english_term": "Farm Yard Manure (FYM)",
+    "telugu_term": "పశువుల పెంట ఎరువు (పశువుల ఎరువు)",
+    "hindi_term": "गोबर की सड़ी खाद / एफवाईएम",
+    "category": "Input",
+    "synonyms_dialects": "పేడ ఎరువు, Gobar Khad"
+  },
+  {
+    "english_term": "Vermicompost",
+    "telugu_term": "వానపాముల ఎరువు",
+    "hindi_term": "केंचुआ खाद / वर्मीकम्पोस्ट",
+    "category": "Input",
+    "synonyms_dialects": "Vermicompost"
+  },
+  {
+    "english_term": "Green Manure",
+    "telugu_term": "పచ్చిరొట్ట ఎరువు (జీలుగు, జనుము)",
+    "hindi_term": "हरी खाद (ढैंचा, सनई)",
+    "category": "Input",
+    "synonyms_dialects": "Hari Khad, Dhaincha"
+  },
+  {
+    "english_term": "Pre-emergence Herbicide",
+    "telugu_term": "మొలక రాకముందు పిచికారీ చేసే కలుపు మందు",
+    "hindi_term": "जमाव पूर्व खरपतवारनाशी",
+    "category": "Input",
+    "synonyms_dialects": "Pre-emergence"
+  },
+  {
+    "english_term": "Post-emergence Herbicide",
+    "telugu_term": "మొలక వచ్చిన తర్వాత పిచికారీ చేసే కలుపు మందు",
+    "hindi_term": "जमाव बाद खरपतवारनाशी",
+    "category": "Input",
+    "synonyms_dialects": "Post-emergence"
+  },
+  {
+    "english_term": "Pheromone Trap",
+    "telugu_term": "లింగాకర్షక బుట్టలు",
+    "hindi_term": "फेरोमोन ट्रैप / गंध पाश",
+    "category": "Tool",
+    "synonyms_dialects": "పురుగు బుట్టలు, Pheromone Trap"
+  },
+  {
+    "english_term": "Sticky Trap",
+    "telugu_term": "జిగురు అట్టలు (పసుపు / నీలి రంగు)",
+    "hindi_term": "चिपचिपा ट्रैप / स्टिकी ट्रैप",
+    "category": "Tool",
+    "synonyms_dialects": "Sticky Trap"
+  },
+  {
+    "english_term": "Knapsack Sprayer",
+    "telugu_term": "వీపుపై మోసే పిచికారీ పంపు (15 లీటర్ల పంపు)",
+    "hindi_term": "पीठ पर लादने वाला स्प्रेयर (15 लीटर नैपसैक पंप)",
+    "category": "Tool",
+    "synonyms_dialects": "చేతి పంపు, Knapsack Pump"
+  },
+  {
+    "english_term": "Acre",
+    "telugu_term": "ఎకరం (40 గుంటలు)",
+    "hindi_term": "एकड़",
+    "category": "Land Unit",
+    "synonyms_dialects": "43,560 చదరపు అడుగులు, Acre"
+  },
+  {
+    "english_term": "Guntha",
+    "telugu_term": "గుంట (121 చదరపు గజాలు)",
+    "hindi_term": "गुंठा",
+    "category": "Land Unit",
+    "synonyms_dialects": "ఎకరంలో 40వ భాగం, Guntha"
+  },
+  {
+    "english_term": "Cent",
+    "telugu_term": "సెంట్ (ఎకరంలో 100వ భాగం)",
+    "hindi_term": "सेंट",
+    "category": "Land Unit",
+    "synonyms_dialects": "Cent"
+  },
+  {
+    "english_term": "Bigha",
+    "telugu_term": "బీఘా (ఉత్తర భారతదేశ భూమి కొలత)",
+    "hindi_term": "बीघा (पक्का / कच्चा बीघा)",
+    "category": "Land Unit",
+    "synonyms_dialects": "Bigha"
+  },
+  {
+    "english_term": "Killa",
+    "telugu_term": "కిల్లా (పంజాబ్/హర్యానా ఎకరం)",
+    "hindi_term": "किल्ला / मुरब्बा",
+    "category": "Land Unit",
+    "synonyms_dialects": "Killa"
+  },
+  {
+    "english_term": "Quintal",
+    "telugu_term": "క్వింటాల్ (100 కిలోగ్రాములు)",
+    "hindi_term": "क्विंटल (100 किलो)",
+    "category": "Mass Unit",
+    "synonyms_dialects": "Quintal"
+  },
+  {
+    "english_term": "Putti / Khandi",
+    "telugu_term": "పుట్టె / ఖండి (సాంప్రదాయ ధాన్యపు కొలత)",
+    "hindi_term": "खंडी",
+    "category": "Mass Unit",
+    "synonyms_dialects": "Putti, Khandi"
+  },
+  {
+    "english_term": "Murra / Bag",
+    "telugu_term": "బస్తా / సంచి (వరి బస్తా - 75 కిలోలు)",
+    "hindi_term": "बोरी / कट्टा",
+    "category": "Mass Unit",
+    "synonyms_dialects": "బస్తా, Bori, Katta"
+  },
+  {
+    "english_term": "Parthenium / Congress Grass",
+    "telugu_term": "వయ్యారి భామ (కాంగ్రెస్ గడ్డి)",
+    "hindi_term": "गाजर घास / चटक चांदनी",
+    "category": "Weed",
+    "synonyms_dialects": "Gajar Ghas"
+  },
+  {
+    "english_term": "Purple Nutsedge (Cyperus rotundus)",
+    "telugu_term": "తుంగ (భద్ర తుంగ)",
+    "hindi_term": "मोथा / डिला",
+    "category": "Weed",
+    "synonyms_dialects": "Motha, Deela"
+  },
+  {
+    "english_term": "Barnyard Grass (Echinochloa colona)",
+    "telugu_term": "ఊద (ఊద గడ్డి)",
+    "hindi_term": "सांवा / झंझरा",
+    "category": "Weed",
+    "synonyms_dialects": "Sanwa, Ooda"
+  },
+  {
+    "english_term": "Bermuda Grass (Cynodon dactylon)",
+    "telugu_term": "గరిక (గరిక గడ్డి)",
+    "hindi_term": "दूब घास",
+    "category": "Weed",
+    "synonyms_dialects": "Doob Ghas, Garika"
+  },
+  {
+    "english_term": "Lambsquarters (Chenopodium album)",
+    "telugu_term": "పప్పు కూర / బచ్చలి కలుపు",
+    "hindi_term": "बथुआ",
+    "category": "Weed",
+    "synonyms_dialects": "Bathua"
+  },
+  {
+    "english_term": "Canary Grass (Phalaris minor)",
+    "telugu_term": "కనరీ గడ్డి (గోధుమ కలుపు)",
+    "hindi_term": "गुल्ली डंडा / मंडूसी / गेहूं का मामा",
+    "category": "Weed",
+    "synonyms_dialects": "Gulli Danda, Gehun Ka Mama"
+  },
+  {
+    "english_term": "Horse Purslane (Trianthema portulacastrum)",
+    "telugu_term": "ఎర్ర గలిజేరు / గుర్రపు చెంచలి",
+    "hindi_term": "सांथी / बिषखपरा",
+    "category": "Weed",
+    "synonyms_dialects": "Santhi, Vishkhapra"
+  },
+  {
+    "english_term": "Nitrogen",
+    "telugu_term": "నత్రజని (యూరియా రూపంలో)",
+    "hindi_term": "नत्रजन / नाइट्रोजन",
+    "category": "Nutrient",
+    "synonyms_dialects": "Urea, Nitrogen"
+  },
+  {
+    "english_term": "Phosphorus",
+    "telugu_term": "భాస్వరము (డిఎపి / ఎస్ఎస్పి)",
+    "hindi_term": "फास्फोरस / फास्फेट",
+    "category": "Nutrient",
+    "synonyms_dialects": "DAP, SSP"
+  },
+  {
+    "english_term": "Potassium / Potash",
+    "telugu_term": "పొటాష్ (ఎంఒపి)",
+    "hindi_term": "पोटाश",
+    "category": "Nutrient",
+    "synonyms_dialects": "MOP, Potash"
+  },
+  {
+    "english_term": "Zinc",
+    "telugu_term": "జింక్ (దస్తా)",
+    "hindi_term": "जस्ता / जिंक",
+    "category": "Nutrient",
+    "synonyms_dialects": "Zinc Sulphate, Jasta"
+  },
+  {
+    "english_term": "Boron",
+    "telugu_term": "బోరాన్ (వెలిగారం / బొరాక్స్)",
+    "hindi_term": "बोरॉन / सुहागा",
+    "category": "Nutrient",
+    "synonyms_dialects": "Borax, Suhaga"
+  },
+  {
+    "english_term": "Iron",
+    "telugu_term": "ఇనుము (అన్నభేది / ఫెర్రస్)",
+    "hindi_term": "लोहा / आयरन / कशीश",
+    "category": "Nutrient",
+    "synonyms_dialects": "Ferrous Sulphate, Kasis"
+  },
+  {
+    "english_term": "Sulphur",
+    "telugu_term": "గంధకము (సల్ఫర్)",
+    "hindi_term": "गंधक / सल्फर",
+    "category": "Nutrient",
+    "synonyms_dialects": "Gandhak, Sulphur"
+  },
+  {
+    "english_term": "Minimum Support Price (MSP)",
+    "telugu_term": "కనీస మద్దతు ధర (మద్దతు ధర)",
+    "hindi_term": "न्यूनतम समर्थन मूल्य (एमएसपी)",
+    "category": "Policy",
+    "synonyms_dialects": "MSP, Maddatu Dhara"
+  },
+  {
+    "english_term": "Soil Health Card",
+    "telugu_term": "భూసార పరీక్ష పత్రం (మట్టి ఆరోగ్య కార్డు)",
+    "hindi_term": "मृदा स्वास्थ्य कार्ड",
+    "category": "Policy",
+    "synonyms_dialects": "Soil Card"
+  },
+  {
+    "english_term": "Crop Insurance",
+    "telugu_term": "పంటల బీమా (ఫసల్ బీమా)",
+    "hindi_term": "फसल बीमा",
+    "category": "Policy",
+    "synonyms_dialects": "PMFBY"
+  }
+]

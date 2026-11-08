@@ -1,0 +1,148 @@
+{
+  "total_collections": 23,
+  "collections_active": 23,
+  "total_crops_covered": 16,
+  "national_coverage": "All 28 States and 8 Union Territories",
+  "primary_state_focus": "Telangana (all 33 districts, complete mandal mapping)",
+  "statutory_compliance": "Insecticides Act, 1968 & CIBRC 8-Parameter Verification",
+  "collections": [
+    {
+      "id": "KB01",
+      "name": "Crop Master Database",
+      "source": "ICAR",
+      "status": "VERIFIED_ACTIVE"
+    },
+    {
+      "id": "KB02",
+      "name": "Crop Cultivation & Agronomy",
+      "source": "PJTSAU",
+      "status": "VERIFIED_ACTIVE"
+    },
+    {
+      "id": "KB03",
+      "name": "Crop Growth Stages",
+      "source": "ICAR",
+      "status": "VERIFIED_ACTIVE"
+    },
+    {
+      "id": "KB04",
+      "name": "Crop Diseases Directory",
+      "source": "ICAR",
+      "status": "VERIFIED_ACTIVE"
+    },
+    {
+      "id": "KB05",
+      "name": "Pest Information",
+      "source": "NIPHM",
+      "status": "VERIFIED_ACTIVE"
+    },
+    {
+      "id": "KB06",
+      "name": "Integrated Pest Management",
+      "source": "NIPHM",
+      "status": "VERIFIED_ACTIVE"
+    },
+    {
+      "id": "KB07",
+      "name": "Pesticide Products",
+      "source": "CIBRC",
+      "status": "VERIFIED_ACTIVE"
+    },
+    {
+      "id": "KB08",
+      "name": "Pesticide Labels and Safety",
+      "source": "CIBRC",
+      "status": "VERIFIED_ACTIVE"
+    },
+    {
+      "id": "KB09",
+      "name": "Fertilizers & Nutrient Management",
+      "source": "IISS",
+      "status": "VERIFIED_ACTIVE"
+    },
+    {
+      "id": "KB10",
+      "name": "Soil Health & Amendments",
+      "source": "SOILHEALTH",
+      "status": "VERIFIED_ACTIVE"
+    },
+    {
+      "id": "KB11",
+      "name": "Irrigation Guidance",
+      "source": "ICAR",
+      "status": "VERIFIED_ACTIVE"
+    },
+    {
+      "id": "KB12",
+      "name": "Crop Rotation & Intercropping",
+      "source": "IIFSR",
+      "status": "VERIFIED_ACTIVE"
+    },
+    {
+      "id": "KB13",
+      "name": "Weed Management",
+      "source": "DWR",
+      "status": "VERIFIED_ACTIVE"
+    },
+    {
+      "id": "KB14",
+      "name": "Harvesting Guidelines",
+      "source": "CIPHET",
+      "status": "VERIFIED_ACTIVE"
+    },
+    {
+      "id": "KB15",
+      "name": "Post-Harvest Management & Storage",
+      "source": "CIPHET",
+      "status": "VERIFIED_ACTIVE"
+    },
+    {
+      "id": "KB16",
+      "name": "Weather & Climate Agromet",
+      "source": "IMD",
+      "status": "VERIFIED_ACTIVE"
+    },
+    {
+      "id": "KB17",
+      "name": "Agricultural Advisories",
+      "source": "CRIDA",
+      "status": "VERIFIED_ACTIVE"
+    },
+    {
+      "id": "KB18",
+      "name": "Mandi and Market Prices",
+      "source": "AGMARKNET",
+      "status": "VERIFIED_ACTIVE"
+    },
+    {
+      "id": "KB19",
+      "name": "Regional Recommendations",
+      "source": "PJTSAU",
+      "status": "VERIFIED_ACTIVE"
+    },
+    {
+      "id": "KB20",
+      "name": "Multilingual Agronomy Dictionary",
+      "source": "CIIL",
+      "status": "VERIFIED_ACTIVE"
+    },
+    {
+      "id": "KB21",
+      "name": "Agricultural FAQs",
+      "source": "KCC",
+      "status": "VERIFIED_ACTIVE"
+    },
+    {
+      "id": "KB22",
+      "name": "Verified Q&A Repository",
+      "source": "PJTSAU",
+      "status": "VERIFIED_ACTIVE"
+    },
+    {
+      "id": "KB23",
+      "name": "Regional Extension Officer Directory",
+      "source": "PJTSAU",
+      "status": "VERIFIED_ACTIVE"
+    }
+  ]
+}

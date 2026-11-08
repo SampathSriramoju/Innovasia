@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="forest_green_primary">#15803D</color>
+    <color name="leaf_green_secondary">#22C55E</color>
+    <color name="harvest_gold_accent">#A16207</color>
+    <color name="mint_cream_bg">#F0FDF4</color>
+    <color name="dark_earth_fg">#14532D</color>
+    <color name="sprout_border">#BBF7D0</color>
+    <color name="hazard_red">#DC2626</color>
+    <color name="card_white">#FFFFFF</color>
+</resources>

@@ -1,0 +1,38 @@
+{
+  "KB16": [
+    {
+      "id": "doc-kb16-001",
+      "region": "Telangana & Andhra Pradesh",
+      "title": "IMD Agromet Advisory - High Humidity and Dew Precautions",
+      "content": "IMD Agromet Warning: Relative humidity exceeding 85% accompanied by moderate day temperatures (28-32°C) and persistent morning dew creates favorable conditions for blast in paddy and fungal leaf spot in cotton and chilli. Farmers are advised to postpone nitrogenous top dressing and inspect fields daily.",
+      "citation": "India Meteorological Department (IMD) Agromet Bulletin 2025"
+    }
+  ],
+  "KB17": [
+    {
+      "id": "doc-kb17-001",
+      "region": "Warangal & Northern Telangana Zone",
+      "title": "Weekly University Advisory on Cotton Sucking Pests and Pink Bollworm",
+      "content": "PJTSAU Advisory: Sucking pest pressure (jassids and thrips) expected to rise due to intermittent dry spells. If jassids exceed 1-2 per leaf, spray Flonicamid 50 WG @ 60g/acre. For pink bollworm, continue pheromone monitoring and install light traps.",
+      "citation": "PJTSAU Weekly Agricultural Advisory Bulletin 2025"
+    }
+  ],
+  "KB18": [
+    {
+      "id": "doc-kb18-001",
+      "market": "Warangal Enumamula Mandi",
+      "title": "Cotton and Chilli Agmarknet Mandi Prices & MSP",
+      "content": "Warangal Enumamula Agricultural Market Yard: Medium Staple Cotton Minimum Support Price (MSP) is ₹7,121/quintal; Long Staple MSP is ₹7,521/quintal. Current modal market rate for fair average quality (FAQ) cotton with moisture < 12% is ₹7,450 - ₹7,800/quintal. Teja variety dry red chilli trading at ₹16,500 - ₹18,200/quintal.",
+      "citation": "Agmarknet Portal, Directorate of Marketing & Inspection (DMI) 2025"
+    }
+  ],
+  "KB19": [
+    {
+      "id": "doc-kb19-001",
+      "region": "Warangal & Central Telangana",
+      "title": "ZARS Warangal Crop Variety Recommendations",
+      "content": "Zonal Agricultural Research Station (ZARS) Warangal recommends Bt cotton hybrids with tolerance to leaf reddening (such as RCH-659, Mallika, Jaadoo). For rice, gall midge resistant varieties (Telangana Sona / RNR-15048 with low GI, KNM-118, Siddhi) are recommended for both Kharif and Rabi.",
+      "citation": "ZARS Warangal Regional Agricultural Research Station 2025"
+    }
+  ]
+}
