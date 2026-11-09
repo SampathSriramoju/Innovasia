@@ -67,9 +67,16 @@ class SyncWorker(
                 )
 
                 if (response.isSuccessful && response.body() != null) {
-                    Log.i(tag, "Successfully synced ${textTickets.size} text tickets with backend.")
+                    val body = response.body()!!
+                    val ackUuids = (body.syncedClientUuids ?: body.tickets?.mapNotNull { it["client_uuid"] as? String } ?: emptyList()).toSet()
+                    Log.i(tag, "Backend acknowledged ${ackUuids.size} tickets out of ${textTickets.size} sent.")
                     for (t in textTickets) {
-                        dao.markTicketSynced(t.localId)
+                        if (ackUuids.contains(t.localId)) {
+                            dao.markTicketSynced(t.localId)
+                        } else {
+                            Log.w(tag, "Ticket ${t.localId} not acknowledged by backend; preserving for retry.")
+                            allSuccessful = false
+                        }
                     }
                 } else {
                     Log.w(tag, "Backend rejected batch offline-sync: HTTP ${response.code()}")
@@ -125,8 +132,14 @@ class SyncWorker(
                         token = "Bearer $token",
                         request = OfflineSyncRequestDto(syncItems)
                     )
-                    if (response.isSuccessful) {
-                        dao.markTicketSynced(ticket.localId)
+                    if (response.isSuccessful && response.body() != null) {
+                        val body = response.body()!!
+                        val ackUuids = (body.syncedClientUuids ?: body.tickets?.mapNotNull { it["client_uuid"] as? String } ?: emptyList()).toSet()
+                        if (ackUuids.contains(ticket.localId)) {
+                            dao.markTicketSynced(ticket.localId)
+                        } else {
+                            allSuccessful = false
+                        }
                     } else {
                         allSuccessful = false
                     }

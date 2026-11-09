@@ -5,6 +5,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Optional, Dict, Any, List, Tuple
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form, status
+from fastapi.responses import FileResponse
 from fastapi.security import HTTPAuthorizationCredentials
 from sqlalchemy.orm import Session
 
@@ -261,7 +262,7 @@ async def diagnose_crop_disease(
     with open(sanitized_filepath, "wb") as f:
         f.write(sanitized_bytes)
 
-    image_url = f"/static/uploads/diseases/{sanitized_filename}"
+    image_url = f"/api/v1/disease/images/{sanitized_filename}"
 
     # Step 2: Computer Vision & Diagnostic Analysis
     combined_notes = f"{file.filename or ''} {farmer_notes or ''}".strip()
@@ -309,6 +310,23 @@ async def diagnose_crop_disease(
             "crop_name": crop_name or "Unspecified"
         }
 
+    # Handle Unknown Crop / Needs Clarification (without creating an escalation ticket)
+    if diag_res.status == "needs_clarification":
+        return {
+            "status": "needs_clarification",
+            "is_escalated": False,
+            "confidence": 0.0,
+            "disease_name": diag_res.primary_diagnosis,
+            "symptoms": diag_res.farmer_explanation,
+            "treatment": "",
+            "prevention": "",
+            "citations": [],
+            "follow_up_questions": diag_res.follow_up_questions or [],
+            "message": diag_res.farmer_explanation,
+            "image_url": image_url,
+            "crop_name": "Unspecified"
+        }
+
     # Step 3: Check Confidence & Thresholding
     # Ambiguous or Low Confidence (< 0.78) -> Auto Escalation
     if diag_res.status == "escalated" or diag_res.confidence < 0.78:
@@ -319,13 +337,21 @@ async def diagnose_crop_disease(
         escalation_reason = f"Uncertain Disease Diagnosis ({diag_res.primary_diagnosis or 'Ambiguous Symptoms'}, confidence: {round(diag_res.confidence * 100, 1)}%)"
         notes_transcript = farmer_notes or f"Multimodal crop photo inspection for {crop_str} (Confidence: {round(diag_res.confidence * 100, 1)}%, Entropy: {diag_res.entropy})"
 
+        farmer_user = db.query(User).filter(User.id == user_id).first()
+        farmer_profile = farmer_user.farmer_profile if farmer_user else None
+        state = farmer_profile.state if (farmer_profile and farmer_profile.state) else "Telangana"
+        district = farmer_profile.district if (farmer_profile and farmer_profile.district) else "Warangal"
+        mandal = farmer_profile.mandal if (farmer_profile and farmer_profile.mandal) else "Geesugonda"
+        village = farmer_profile.village if (farmer_profile and farmer_profile.village) else "Dharmaram"
+
         ticket = AgriculturalTicket(
             ticket_number=ticket_num,
             farmer_id=user_id,
             crop_id=crop_obj.id if crop_obj else None,
-            state="Telangana",
-            district="Warangal",
-            mandal="Geesugonda",
+            state=state,
+            district=district,
+            mandal=mandal,
+            village=village,
             status="open",
             priority="high",
             escalation_reason=escalation_reason,
@@ -427,3 +453,14 @@ async def diagnose_crop_disease(
         "farmer_explanation": diag_res.farmer_explanation,
         "image_url": image_url
     }
+
+@router.get("/images/{filename}")
+async def get_disease_image(
+    filename: str,
+    current_user: Dict[str, Any] = Depends(get_current_user_payload)
+):
+    safe_name = Path(filename).name
+    image_path = STATIC_UPLOADS_DIR / safe_name
+    if not image_path.exists() or not image_path.is_file():
+        raise HTTPException(status_code=404, detail="Image not found")
+    return FileResponse(str(image_path))

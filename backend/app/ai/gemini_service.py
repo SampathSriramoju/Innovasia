@@ -181,22 +181,31 @@ class GeminiService:
                         is_grounded = len(hallucinated_sources) == 0
                         clean_answer = self._clean_response_text(parsed.get("answer", raw_text))
 
+                        evidence_ok = parsed.get("evidence_sufficient", True) and (len(retrieved_contexts) > 0 or bool(safety_context))
+                        has_claims = len(verified_claims) > 0 or bool(safety_context)
+                        safe_to_answer = is_grounded and evidence_ok and has_claims
+                        status_str = "answered" if safe_to_answer else "insufficient_evidence"
+                        safety_str = "verified" if safe_to_answer else "unverified"
+                        need_escalation = parsed.get("escalation_required", False) or not safe_to_answer
+
                         return {
+                            "status": status_str,
                             "text": clean_answer,
                             "model": candidate_model,
                             "model_used": candidate_model,
                             "is_fallback": False,
                             "fallback_reason": None,
                             "is_grounded": is_grounded,
+                            "is_safe": safe_to_answer,
                             "provider": "google-genai",
                             "topic": parsed.get("topic"),
                             "crop": parsed.get("crop"),
                             "claims": verified_claims,
                             "follow_up_suggestions": parsed.get("follow_up_suggestions") or self._generate_default_followups(parsed.get("crop") or (query_analysis or {}).get("crop"), language),
-                            "evidence_sufficient": parsed.get("evidence_sufficient", True),
-                            "safety_status": parsed.get("safety_status", "verified"),
-                            "escalation_required": parsed.get("escalation_required", False),
-                            "escalation_reason": parsed.get("escalation_reason")
+                            "evidence_sufficient": evidence_ok,
+                            "safety_status": safety_str,
+                            "escalation_required": need_escalation,
+                            "escalation_reason": parsed.get("escalation_reason") or ("Insufficient verified evidence to answer query safely" if not safe_to_answer else None)
                         }
                     except Exception as e:
                         err_str = str(e)
@@ -457,11 +466,16 @@ class GeminiService:
 
         return {
             "text": text,
+            "status": "insufficient_evidence",
             "model": "grounded-rag-synthesizer",
             "model_used": "grounded-rag-synthesizer",
             "is_fallback": True,
             "fallback_reason": "No Matching Knowledge Found",
-            "is_grounded": True,
+            "is_grounded": False,
+            "is_safe": False,
+            "safety_status": "unverified",
+            "escalation_required": True,
+            "escalation_reason": "Insufficient verified agricultural evidence to answer query safely",
             "provider": "verified-knowledge-base",
             "topic": topic,
             "crop": crop,

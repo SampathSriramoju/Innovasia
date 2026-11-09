@@ -92,8 +92,13 @@ class BolKisanRepository(private val context: Context) {
     }
 
     var currentToken: String?
-        get() = prefs.getString("jwt_token", null)
-        set(value) = prefs.edit().putString("jwt_token", value).apply()
+        get() = com.bolkisan.farmer.data.local.SecureTokenStorage.getToken(context) ?: prefs.getString("jwt_token", null)
+        set(value) {
+            com.bolkisan.farmer.data.local.SecureTokenStorage.saveToken(context, value)
+            if (value == null) {
+                prefs.edit().remove("jwt_token").apply()
+            }
+        }
 
     // Observable language state so every screen recomposes when the farmer changes language.
     private val _languageFlow = MutableStateFlow(
@@ -121,6 +126,7 @@ class BolKisanRepository(private val context: Context) {
     fun isLoggedIn(): Boolean = currentToken != null
 
     fun logout() {
+        com.bolkisan.farmer.data.local.SecureTokenStorage.saveToken(context, null)
         prefs.edit().remove("jwt_token").apply()
     }
 
@@ -585,12 +591,16 @@ class BolKisanRepository(private val context: Context) {
                 else -> "$cropName Disease & Pest Management"
             },
             cropName = cropName,
-            confidence = 0.92,
-            severity = "Moderate (Offline ICAR Verified)",
+            confidence = null,
+            severity = when (currentLanguage) {
+                "te" -> "ఆఫ్‌లైన్ విజ్ఞాన నిల్వ (చిత్ర విశ్లేషణ పెండింగ్)"
+                "hi" -> "ऑफलाइन ज्ञानकोश (फोटो विश्लेषण लंबित)"
+                else -> "Offline Knowledge Base (Visual Analysis Pending)"
+            },
             symptoms = when (currentLanguage) {
-                "te" -> "చిత్రం విజయవంతంగా పరిశీలించబడింది. స్థానిక ICAR డేటాబేస్ నుండి ధృవీకరించిన సమాచారం చూపించబడుతోంది."
-                "hi" -> "पत्ती का चित्र सुरक्षित कर लिया गया है। स्थानीय आईसीएआर ज्ञानकोश से प्रमाणित जानकारी प्रदर्शित है।"
-                else -> "Leaf photo analyzed offline. Matched with local verified ICAR package of practices."
+                "te" -> "పంట ఫోటో ఆఫ్‌లైన్‌లో భద్రపరచబడింది (నెట్‌వర్క్ వచ్చినప్పుడు నిపుణుల పరిశీలనకు పంపబడుతుంది). ప్రస్తుతం సంబంధిత పంటకు సంబంధించిన ICAR సమగ్ర సస్యరక్షణ మార్గదర్శకాలు ఇక్కడ అందించబడ్డాయి."
+                "hi" -> "फसल का फोटो ऑफलाइन सुरक्षित कर लिया गया है (नेटवर्क आने पर विशेषज्ञ जांच के लिए भेजा जाएगा)। इस बीच स्थानीय ICAR पैकेज ऑफ प्रैक्टिसेज जानकारी नीचे दी गई है।"
+                else -> "Leaf photo queued locally for cloud/expert visual diagnosis upon reconnection. Relevant ICAR Package of Practices guidelines retrieved from local offline knowledge below."
             },
             treatment = diseaseCard?.content ?: when (currentLanguage) {
                 "te" -> "తక్షణమే నత్రజని ఎరువుల వాడకం ఆపండి. సేంద్రీయ వేప నూనె 5 మి.లీ/లీటర్ లేదా సిఫార్సు చేసిన మందును పిచికారీ చేయండి."
@@ -635,6 +645,80 @@ class BolKisanRepository(private val context: Context) {
         val canonical = canonicalCropName(crop)
         val cards = dao.getKnowledgeByCropSync(canonical, currentLanguage)
         if (cards.isNotEmpty()) cards else dao.getKnowledgeByCropSync(canonical, "en")
+    }
+
+    // Conversation Integration
+    suspend fun getConversations(): Result<List<ConversationSummaryDto>> = withContext(Dispatchers.IO) {
+        val token = currentToken ?: return@withContext Result.failure(Exception("Not authenticated"))
+        try {
+            val res = api.getConversations("Bearer $token")
+            if (res.isSuccessful && res.body() != null) {
+                Result.success(res.body()!!)
+            } else {
+                Result.failure(Exception("Error fetching conversations: ${res.code()}"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    suspend fun createConversation(title: String, crop: String = "General"): Result<ConversationSummaryDto> = withContext(Dispatchers.IO) {
+        val token = currentToken ?: return@withContext Result.failure(Exception("Not authenticated"))
+        try {
+            val req = ConversationCreateDto(title = title, crop = crop, language = currentLanguage)
+            val res = api.createConversation("Bearer $token", req)
+            if (res.isSuccessful && res.body() != null) {
+                Result.success(res.body()!!)
+            } else {
+                Result.failure(Exception("Error creating conversation: ${res.code()}"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    suspend fun getConversationDetail(conversationId: String): Result<ConversationDetailDto> = withContext(Dispatchers.IO) {
+        val token = currentToken ?: return@withContext Result.failure(Exception("Not authenticated"))
+        try {
+            val res = api.getConversationDetail("Bearer $token", conversationId)
+            if (res.isSuccessful && res.body() != null) {
+                Result.success(res.body()!!)
+            } else {
+                Result.failure(Exception("Error fetching conversation detail: ${res.code()}"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    suspend fun postConversationMessage(
+        conversationId: String,
+        queryText: String,
+        crop: String? = null,
+        pestOrDisease: String? = null,
+        chemicalMentioned: String? = null,
+        forceEscalation: Boolean = false
+    ): Result<MessagePostResponseDto> = withContext(Dispatchers.IO) {
+        val token = currentToken ?: return@withContext Result.failure(Exception("Not authenticated"))
+        try {
+            val req = MessagePostDto(
+                queryText = queryText,
+                transcript = queryText,
+                language = currentLanguage,
+                crop = crop ?: "General",
+                pestOrDisease = pestOrDisease,
+                chemicalMentioned = chemicalMentioned,
+                forceEscalation = forceEscalation
+            )
+            val res = api.postConversationMessage("Bearer $token", conversationId, req)
+            if (res.isSuccessful && res.body() != null) {
+                Result.success(res.body()!!)
+            } else {
+                Result.failure(Exception("Error posting message to conversation: ${res.code()}"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
     }
 
     // Seed Offline Knowledge

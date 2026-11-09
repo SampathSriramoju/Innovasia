@@ -121,9 +121,6 @@ class SafetyGate:
         Ensures LLM did not hallucinate conflicting or unauthorized dosage numbers,
         unapproved tank mixtures, or banned agrochemicals.
         """
-        if not decision.approved_product:
-            return True  # Non-chemical or escalated
-
         # 1. Reject if LLM suggested an unapproved tank mixture
         if self.validator.detect_tank_mixture(response_text):
             logger.warning("SafetyGate Intercept: Post-generation scan detected unapproved tank mixture!")
@@ -134,7 +131,23 @@ class SafetyGate:
             logger.warning("SafetyGate Intercept: Post-generation scan detected banned chemical!")
             return False
 
-        # 3. Reject if LLM generated rogue/unapproved dosage numbers
-        return self.validator.scan_for_hallucinated_dosages(response_text, decision.approved_product)
+        # 3. If approved product exists, ensure generated dosage matches approved label numbers
+        if decision.approved_product:
+            return self.validator.scan_for_hallucinated_dosages(response_text, decision.approved_product)
+
+        # 4. If NO approved product was identified, ensure LLM does not hallucinate arbitrary chemical spray dosages
+        detailed_dosages = list(self.validator.DETAILED_DOSAGE.finditer(response_text))
+        if detailed_dosages:
+            chem_keywords = [
+                "spray", "pesticide", "fungicide", "insecticide", "chemical", "dosage", "dose",
+                "ec", "sc", "wp", "sp", "sg", "wdg",
+                "మి.లీ", "లీటరు", "పిచికారీ", "మందు", "कीटनाशक", "छिड़काव", "दवा"
+            ]
+            text_lower = response_text.lower()
+            if any(k in text_lower for k in chem_keywords):
+                logger.warning("SafetyGate Intercept: Rogue chemical dosage detected without approved CIBRC product!")
+                return False
+
+        return True
 
 safety_gate = SafetyGate()

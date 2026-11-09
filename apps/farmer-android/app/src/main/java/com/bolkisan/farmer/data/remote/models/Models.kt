@@ -138,5 +138,69 @@ data class OfflineSyncRequestDto(
 data class OfflineSyncResponseDto(
     @SerializedName("status") val status: String,
     @SerializedName("synced_count") val syncedCount: Int,
+    @SerializedName("synced_client_uuids") val syncedClientUuids: List<String>? = null,
     @SerializedName("tickets") val tickets: List<Map<String, Any>>? = null
+)
+
+// CONVERSATIONS
+data class ConversationCreateDto(
+    @SerializedName("title") val title: String,
+    @SerializedName("crop") val crop: String = "General",
+    @SerializedName("language") val language: String = "te"
+)
+
+data class ConversationSummaryDto(
+    @SerializedName("id") val id: String,
+    @SerializedName("title") val title: String,
+    @SerializedName("crop") val crop: String,
+    @SerializedName("language") val language: String,
+    @SerializedName("message_count") val messageCount: Int,
+    @SerializedName("escalation_status") val escalationStatus: String,
+    @SerializedName("created_at") val createdAt: String?,
+    @SerializedName("updated_at") val updatedAt: String?
+)
+
+data class ConversationMessageDto(
+    @SerializedName("id") val id: String,
+    @SerializedName("sender_type") val senderType: String, // FARMER, AI, OFFICER
+    @SerializedName("original_query") val originalQuery: String?,
+    @SerializedName("transcript") val transcript: String?,
+    @SerializedName("response") val response: String,
+    @SerializedName("source_citations") val sourceCitations: List<String>? = null,
+    @SerializedName("language") val language: String,
+    @SerializedName("is_safe") val isSafe: Boolean = true,
+    @SerializedName("is_escalated") val isEscalated: Boolean = false,
+    @SerializedName("ticket_id") val ticketId: String? = null,
+    @SerializedName("timestamp") val timestamp: String? = null
+)
+
+data class ConversationDetailDto(
+    @SerializedName("id") val id: String,
+    @SerializedName("title") val title: String,
+    @SerializedName("crop") val crop: String,
+    @SerializedName("language") val language: String,
+    @SerializedName("message_count") val messageCount: Int,
+    @SerializedName("escalation_status") val escalationStatus: String,
+    @SerializedName("created_at") val createdAt: String?,
+    @SerializedName("messages") val messages: List<ConversationMessageDto>
+)
+
+data class MessagePostDto(
+    @SerializedName("query_text") val queryText: String,
+    @SerializedName("transcript") val transcript: String? = null,
+    @SerializedName("language") val language: String? = "te",
+    @SerializedName("crop") val crop: String? = "General",
+    @SerializedName("pest_or_disease") val pestOrDisease: String? = null,
+    @SerializedName("chemical_mentioned") val chemicalMentioned: String? = null,
+    @SerializedName("force_escalation") val forceEscalation: Boolean = false
+)
+
+data class MessagePostResponseDto(
+    @SerializedName("status") val status: String,
+    @SerializedName("is_safe") val isSafe: Boolean,
+    @SerializedName("is_escalated") val isEscalated: Boolean,
+    @SerializedName("response_text") val responseText: String,
+    @SerializedName("ticket_number") val ticketNumber: String? = null,
+    @SerializedName("ticket_id") val ticketId: String? = null,
+    @SerializedName("citations") val citations: List<String>? = null
 )

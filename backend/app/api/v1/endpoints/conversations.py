@@ -96,18 +96,38 @@ async def get_conversation(
             Conversation.id == conversation_id,
             Conversation.farmer_id == user_id
         ).first()
+        if not conv:
+            raise HTTPException(status_code=404, detail="Conversation not found")
     elif role == "extension_officer":
+        assigned_mandals = current_user.get("mandals") or []
+        assigned_district = current_user.get("district")
+        assigned_state = current_user.get("state")
+
+        if not assigned_mandals:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Access denied: Extension officer has no assigned jurisdiction."
+            )
+
+        ticket = db.query(AgriculturalTicket).filter(AgriculturalTicket.conversation_id == conversation_id).first()
+        if not ticket:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Access denied: Extension officers can only retrieve conversations that have an associated escalated ticket."
+            )
+
+        mandal_ok = (ticket.mandal in assigned_mandals)
+        district_ok = (not assigned_district) or (ticket.district == assigned_district)
+        state_ok = (not assigned_state) or (ticket.state == assigned_state)
+        assigned_to_me = (ticket.assigned_officer_id == user_id)
+
+        if not (assigned_to_me or (mandal_ok and district_ok and state_ok)):
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Access denied: Conversation ticket is outside officer's assigned jurisdiction."
+            )
+
         conv = db.query(Conversation).filter(Conversation.id == conversation_id).first()
-        if conv:
-            # Check jurisdiction if an escalated ticket is associated
-            ticket = db.query(AgriculturalTicket).filter(AgriculturalTicket.conversation_id == conv.id).first()
-            if ticket:
-                assigned_mandals = current_user.get("mandals", [])
-                if assigned_mandals and ticket.mandal not in assigned_mandals and ticket.assigned_officer_id != user_id:
-                    raise HTTPException(
-                        status_code=status.HTTP_403_FORBIDDEN,
-                        detail="Access denied: Extension officers can only view conversations for tickets within their assigned mandals."
-                    )
     elif role == "admin":
         conv = db.query(Conversation).filter(Conversation.id == conversation_id).first()
     else:
@@ -199,15 +219,22 @@ async def post_message_to_conversation(
 
     if is_forced or safety_decision.needs_escalation:
         ticket_num = generate_ticket_number()
+        farmer_user = db.query(User).filter(User.id == user_id).first()
+        farmer_profile = farmer_user.farmer_profile if farmer_user else None
+        state = farmer_profile.state if (farmer_profile and farmer_profile.state) else "Telangana"
+        district = farmer_profile.district if (farmer_profile and farmer_profile.district) else "Warangal"
+        mandal = farmer_profile.mandal if (farmer_profile and farmer_profile.mandal) else "Geesugonda"
+        village = farmer_profile.village if (farmer_profile and farmer_profile.village) else "Dharmaram"
+
         ticket = AgriculturalTicket(
             ticket_number=ticket_num,
             farmer_id=user_id,
             conversation_id=conv.id,
             crop_id=None,
-            state="Telangana",
-            district="Warangal",
-            mandal="Geesugonda",
-            village="Dharmaram",
+            state=state,
+            district=district,
+            mandal=mandal,
+            village=village,
             status="PENDING",
             priority="emergency" if safety_decision.needs_escalation else "high",
             escalation_reason=safety_decision.escalation_reason or "Farmer requested Human Extension Officer consultation",

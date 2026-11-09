@@ -189,8 +189,8 @@ TANK_MIX_PATTERNS = [
     re.compile(r'\b(?:mix(?:ing)?|combine|combining)\b(?:\s+(?:(?!(?:with|along\s+with)\b)[^\n\r;])+?)?\s+(?:with|along\s+with)\s+(?!water\b|clean\s+water\b)', re.IGNORECASE),
     re.compile(r'\b(mix|mixed|mixing)\s+together\b', re.IGNORECASE),
     re.compile(r'\b(in\s+the\s+same\s+(?:tank|pump|sprayer|drum))\b', re.IGNORECASE),
-    re.compile(r'(రెండు\s*మందులు\s*కలిపి|మందులు\s*కలిపి\s*(?:కొట్ట|స్ప్రే|పిచికారీ)|కాక్టెయిల్)', re.IGNORECASE),
-    re.compile(r'(दोनों\s*दवा(?:एं)?\s*मिलाकर|दवाएं\s*मिलाकर\s*छिड़काव|टैंक\s*मिक्स|कॉकटेल)', re.IGNORECASE)
+    re.compile(r'(రెండు\s*(?:మందులు\s*)?కలిపి|ఒకే\s*ట్యాంకులో|ఒకే\s*పంప్|మందులు\s*కలిపి\s*(?:కొట్ట|స్ప్రే|పిచికారీ)|కాక్టెయిల్)', re.IGNORECASE),
+    re.compile(r'(दोनों\s*(?:दवा(?:एं)?\s*)?मिलाकर|एक\s*ही\s*टैंक\s*में|दवाएं\s*मिलाकर\s*छिड़काव|टैंक\s*मिक्स|कॉकटेल)', re.IGNORECASE)
 ]
 
 # Canonical normalization map: resolves trade names to active ingredients

@@ -1,39 +1,24 @@
 package com.bolkisan.farmer
 
-import com.bolkisan.farmer.domain.OfflineModelCandidate
-import com.bolkisan.farmer.domain.PreinstalledModelInfo
+import com.bolkisan.farmer.domain.OfflineModelManager
+import com.bolkisan.farmer.domain.OfflineModelStatus
 import org.junit.Assert.*
 import org.junit.Test
 
 class OfflineModelTest {
 
     @Test
-    fun testPreinstalledModelInfoDefaults() {
-        val modelInfo = PreinstalledModelInfo(
-            modelId = "agriparam-q4-edge",
-            name = "AgriParam-Q4 Edge SLM",
-            version = "1.0.4",
-            architecture = "Transformer-Decoder-Quantized-INT4",
-            runtime = "LiteRT-LM / GGUF Edge Runtime",
-            parameters = "2.1 Billion",
-            quantization = "INT4_AWQ",
-            fileSizeBytes = 262144L,
-            isPreinstalled = true,
-            isReady = true,
-            localFilePath = "assets://models/agriparam_q4_edge.bin"
-        )
-
-        assertTrue(modelInfo.isPreinstalled)
-        assertTrue(modelInfo.isReady)
-        assertEquals("agriparam-q4-edge", modelInfo.modelId)
-        assertEquals("INT4_AWQ", modelInfo.quantization)
-        assertTrue(modelInfo.fileSizeBytes > 0)
+    fun testOfflineModelMetadataHonesty() {
+        val metadata = OfflineModelManager.metadata
+        assertEquals("gemma-2b-it-mobile-q4", metadata.modelId)
+        assertTrue("Model parameter count must be 2.1B", metadata.parameterCount.contains("2.1"))
+        assertTrue("Download size must be realistic (~1.45GB)", metadata.downloadSizeBytes > 1_000_000_000L)
+        assertTrue("Required storage must be at least 2GB", metadata.requiredStorageBytes >= 2_000_000_000L)
+        assertEquals(4, metadata.minRamGb)
     }
 
     @Test
-    fun testOfflineModelCandidates() {
-        val candidates = OfflineModelCandidate.values()
-        assertTrue(candidates.contains(OfflineModelCandidate.AGRIPARAM_Q4))
-        assertTrue(candidates.contains(OfflineModelCandidate.GEMMA_4_E2B_Q4))
+    fun testOfflineModelDefaultStatusIsNotInstalled() {
+        assertEquals(OfflineModelStatus.NOT_INSTALLED, OfflineModelManager.modelStatus.value)
     }
 }

@@ -78,6 +78,7 @@ class FarmerRegisterRequest(BaseModel):
 
 class OfficerRegisterRequest(BaseModel):
     phone_number: str = Field(..., pattern=r"^\+?[0-9]{10,13}$")
+    otp: Optional[str] = None
     full_name: str
     designation: str = "Mandal Agricultural Officer (MAO)"
     department: str = "Department of Agriculture, Telangana"
@@ -96,6 +97,13 @@ class OfficerLoginRequest(BaseModel):
 async def request_otp(payload: OTPRequest):
     raw_phone = payload.phone_number
     phone = normalize_phone(raw_phone)
+
+    # Disable production OTP login if SMS gateway is unconfigured
+    if settings.ENVIRONMENT == "production" and not settings.SMS_GATEWAY_API_KEY:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="Production SMS delivery gateway is not configured. OTP delivery is unavailable."
+        )
 
     # In dev mode with dev OTP enabled, allow deterministic seed if configured, else random
     if settings.ENVIRONMENT == "development" and settings.ENABLE_DEV_OTP and phone in DEV_SEED_OTPS:
@@ -343,7 +351,37 @@ async def register_farmer(
 
 @router.post("/register-officer")
 async def register_officer(payload: OfficerRegisterRequest, db: Session = Depends(get_db)):
-    phone = normalize_phone(payload.phone_number)
+    raw_phone = payload.phone_number
+    phone = normalize_phone(raw_phone)
+
+    # Verify phone ownership via genuine OTP before officer registration
+    record = LIVE_OTP_STORE.get(phone) or LIVE_OTP_STORE.get(raw_phone)
+    valid_dev = settings.ENVIRONMENT == "development" and settings.ENABLE_DEV_OTP and (
+        (payload.otp and (payload.otp in ["123456", "654321"] or (phone in DEV_SEED_OTPS and payload.otp == DEV_SEED_OTPS[phone])))
+        or (not payload.otp and phone in DEV_SEED_OTPS)
+    )
+    if not record and not valid_dev:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Genuine OTP verification is required to verify officer phone ownership before registration."
+        )
+    if record:
+        if datetime.now(timezone.utc) > record.expires_at:
+            LIVE_OTP_STORE.pop(phone, None)
+            LIVE_OTP_STORE.pop(raw_phone, None)
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="OTP code has expired. Please request a new OTP."
+            )
+        if payload.otp != record.otp and not valid_dev:
+            record.attempts += 1
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Invalid OTP for officer phone verification."
+            )
+        LIVE_OTP_STORE.pop(phone, None)
+        LIVE_OTP_STORE.pop(raw_phone, None)
+
     user = db.query(User).filter(User.phone_number == phone).first()
     if user:
         if user.officer_profile:

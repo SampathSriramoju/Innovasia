@@ -21,6 +21,10 @@ class Settings(BaseSettings):
     # Development Demo Controls (Must strictly be False in production)
     ENABLE_DEV_OTP: bool = True
 
+    # SMS Gateway
+    SMS_GATEWAY_API_KEY: Optional[str] = None
+    SMS_GATEWAY_PROVIDER: Optional[str] = None
+
     # Database
     DATABASE_URL: str = "sqlite+aiosqlite:///./bolkisan.db"
     SYNC_DATABASE_URL: str = "sqlite:///./bolkisan.db"

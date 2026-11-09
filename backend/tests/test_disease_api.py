@@ -58,7 +58,7 @@ def test_diagnose_high_confidence_leaf_spot(client, farmer_token):
     assert len(data["cultural_remedies"]) > 0
     assert len(data["biological_remedies"]) > 0
     assert len(data["citations"]) > 0
-    assert data["image_url"].startswith("/static/uploads/diseases/")
+    assert data["image_url"].startswith("/api/v1/disease/images/") or data["image_url"].startswith("/static/uploads/diseases/")
 
 
 def test_diagnose_high_confidence_with_cibrc_chemical_management(client, farmer_token):

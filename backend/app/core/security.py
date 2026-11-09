@@ -86,6 +86,7 @@ async def get_current_user_payload(
                 detail="Extension Officer account is not approved or has been revoked",
             )
         payload["officer_code"] = officer.officer_code
+        payload["state"] = officer.assigned_state
         payload["district"] = officer.assigned_district
         payload["mandals"] = officer.assigned_mandals or []
 

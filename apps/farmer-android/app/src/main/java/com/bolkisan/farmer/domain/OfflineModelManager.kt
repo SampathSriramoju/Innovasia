@@ -30,15 +30,15 @@ enum class OfflineModelStatus {
 }
 
 data class OfflineModelMetadata(
-    val modelId: String = "agriparam-q4-edge",
-    val name: String = "AgriParam-Q4 Edge SLM (LiteRT-LM / GGUF)",
+    val modelId: String = "gemma-2b-it-mobile-q4",
+    val name: String = "Gemma-2B-IT Mobile Edge SLM (LiteRT-LM / GGUF)",
     val version: String = "2.1.0-q4",
     val architecture: String = "Transformer-Decoder-INT4",
     val runtime: String = "Google LiteRT-LM / GGUF Edge Runtime",
     val parameterCount: String = "2.1 Billion",
     val quantization: String = "INT4 (Group 128)",
-    val downloadSizeBytes: Long = 262_144L,
-    val requiredStorageBytes: Long = 1_048_576L,
+    val downloadSizeBytes: Long = 1_450_000_000L, // ~1.45 GB
+    val requiredStorageBytes: Long = 2_147_483_648L, // 2 GB
     val minRamGb: Int = 4,
     val recommendedRamGb: Int = 6,
     val officialSourceUrl: String = "https://storage.googleapis.com/bolkisan-models/gemma-2b-it-mobile-q4.bin",
@@ -61,52 +61,29 @@ object OfflineModelManager {
 
     private const val TAG = "OfflineModelManager"
     private const val MODEL_DIR = "models"
-    private const val EMBEDDED_MODEL_BIN_NAME = "agriparam_q4_edge.bin"
     private const val DOWNLOADABLE_MODEL_BIN_NAME = "gemma_2b_it_mobile_q4.bin"
     private const val MODEL_BIN_NAME = "gemma_2b_it_mobile_q4.bin"
+    private const val MIN_VALID_MODEL_BYTES = 500_000_000L // Genuine weights >= 500MB
 
     val metadata = OfflineModelMetadata()
 
-    private val _modelStatus = MutableStateFlow(OfflineModelStatus.READY)
+    private val _modelStatus = MutableStateFlow(OfflineModelStatus.NOT_INSTALLED)
     val modelStatus: StateFlow<OfflineModelStatus> = _modelStatus.asStateFlow()
 
-    private val _downloadProgress = MutableStateFlow(1f)
+    private val _downloadProgress = MutableStateFlow(0f)
     val downloadProgress: StateFlow<Float> = _downloadProgress.asStateFlow()
 
-    private val _statusMessage = MutableStateFlow("Pre-installed AgriParam Edge SLM is ready for on-device inference.")
+    private val _statusMessage = MutableStateFlow("On-device Gemma SLM not installed. Verified SQLite Knowledge Engine active.")
     val statusMessage: StateFlow<String> = _statusMessage.asStateFlow()
 
     fun getModelFile(context: Context): File {
         val dir = File(context.filesDir, MODEL_DIR).apply { mkdirs() }
-        val downloaded = File(dir, DOWNLOADABLE_MODEL_BIN_NAME)
-        val embedded = File(dir, EMBEDDED_MODEL_BIN_NAME)
-        return when {
-            downloaded.exists() && downloaded.length() > 0L -> downloaded
-            embedded.exists() && embedded.length() > 0L -> embedded
-            else -> embedded
-        }
+        return File(dir, DOWNLOADABLE_MODEL_BIN_NAME)
     }
 
-    /**
-     * Extracts embedded model from APK assets to internal storage if not already present.
-     */
-    fun ensureModelExtracted(context: Context): File {
-        val dir = File(context.filesDir, MODEL_DIR).apply { mkdirs() }
-        val targetFile = File(dir, EMBEDDED_MODEL_BIN_NAME)
-        if (!targetFile.exists() || targetFile.length() == 0L) {
-            try {
-                Log.i(TAG, "Extracting pre-installed embedded SLM model asset...")
-                context.assets.open("models/$EMBEDDED_MODEL_BIN_NAME").use { input ->
-                    FileOutputStream(targetFile).use { output ->
-                        input.copyTo(output)
-                    }
-                }
-                Log.i(TAG, "Embedded SLM model extracted: ${targetFile.length()} bytes")
-            } catch (e: Exception) {
-                Log.w(TAG, "Could not extract embedded model asset: ${e.message}")
-            }
-        }
-        return targetFile
+    fun isGenuineModelInstalled(context: Context): Boolean {
+        val file = getModelFile(context)
+        return file.exists() && file.length() >= MIN_VALID_MODEL_BYTES
     }
 
     /**
@@ -156,19 +133,23 @@ object OfflineModelManager {
         val totalRamGb = Math.round(memInfo.totalMem.toDouble() / (1024.0 * 1024.0 * 1024.0)).toInt().coerceAtLeast(1)
         val freeRamMb = memInfo.availMem / (1024 * 1024)
 
-        ensureModelExtracted(context)
         val modelFile = getModelFile(context)
-        val fileExists = modelFile.exists() && modelFile.length() > 0L
+        val hasGenuine = isGenuineModelInstalled(context)
 
         val status = if (totalRamGb < 4) {
             OfflineModelStatus.UNSUPPORTED_DEVICE
-        } else if (fileExists) {
+        } else if (hasGenuine) {
             OfflineModelStatus.READY
         } else {
-            _modelStatus.value
+            OfflineModelStatus.NOT_INSTALLED
         }
 
-        val asrAvailable = SpeechRecognizer.isRecognitionAvailable(context)
+        val speechAvailable = SpeechRecognizer.isRecognitionAvailable(context)
+        val asrAvailable = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+            SpeechRecognizer.isOnDeviceRecognitionAvailable(context)
+        } else {
+            speechAvailable
+        }
 
         return OfflineCapabilities(
             isOfflineKnowledgeAvailable = hasRoomRecords,
@@ -177,8 +158,8 @@ object OfflineModelManager {
             isOfflineTtsAvailable = true,
             totalRamGb = totalRamGb,
             freeRamMb = freeRamMb,
-            installedModelPath = if (fileExists) modelFile.absolutePath else null,
-            installedModelSizeBytes = if (fileExists) modelFile.length() else 0L
+            installedModelPath = if (hasGenuine) modelFile.absolutePath else null,
+            installedModelSizeBytes = if (hasGenuine) modelFile.length() else 0L
         )
     }
 

@@ -642,9 +642,9 @@ class CropVisionEngine:
 
             return DiagnosisResult(
                 status="needs_clarification",
-                is_escalated=True,
-                confidence=0.35,
-                entropy=1.5,
+                is_escalated=False,
+                confidence=0.0,
+                entropy=0.0,
                 primary_diagnosis={
                     "te": "గుర్తించబడని పంట",
                     "hi": "अनिर्दिष्ट फसल",

@@ -37,7 +37,9 @@ class OfflineSyncItem(BaseModel):
     client_uuid: str
     question_text: str
     crop: Optional[str] = None
+    crop_name: Optional[str] = None
     language: Optional[str] = "te"
+    image_url: Optional[str] = None
     created_at_epoch: Optional[int] = None
 
 class OfflineSyncRequest(BaseModel):
@@ -134,16 +136,24 @@ async def create_escalated_ticket(
     db: Session = Depends(get_db)
 ):
     user_id = current_user.get("sub")
+    farmer_user = db.query(User).filter(User.id == user_id).first()
+    farmer_profile = farmer_user.farmer_profile if farmer_user else None
+
+    state = payload.state or (farmer_profile.state if farmer_profile else "Telangana")
+    district = payload.district or (farmer_profile.district if farmer_profile else "Warangal")
+    mandal = payload.mandal or (farmer_profile.mandal if farmer_profile else "Geesugonda")
+    village = payload.village or (farmer_profile.village if farmer_profile else "Dharmaram")
+
     ticket_num = generate_ticket_number()
 
     ticket = AgriculturalTicket(
         ticket_number=ticket_num,
         farmer_id=user_id,
         conversation_id=payload.conversation_id,
-        state=payload.state or "Telangana",
-        district=payload.district or "Warangal",
-        mandal=payload.mandal or "Geesugonda",
-        village=payload.village or "Dharmaram",
+        state=state,
+        district=district,
+        mandal=mandal,
+        village=village,
         status="PENDING",
         priority=payload.priority or "high",
         escalation_reason=payload.escalation_reason,
@@ -152,6 +162,13 @@ async def create_escalated_ticket(
         attached_image_urls=payload.attached_image_urls or []
     )
     db.add(ticket)
+
+    if payload.conversation_id:
+        conv = db.query(Conversation).filter(Conversation.id == payload.conversation_id).first()
+        if conv:
+            conv.escalation_status = "ESCALATED"
+            conv.updated_at = datetime.now(timezone.utc)
+
     db.commit()
     db.refresh(ticket)
 
@@ -180,7 +197,9 @@ async def sync_offline_tickets(
     village = farmer_profile.village if farmer_profile else "Dharmaram"
 
     synced = []
+    synced_client_uuids = []
     for item in payload.pending_tickets:
+        crop_name = item.crop_name or item.crop or "General"
         # Check idempotency using client_uuid in escalation_reason
         existing = db.query(AgriculturalTicket).filter(
             AgriculturalTicket.farmer_id == user_id,
@@ -193,6 +212,7 @@ async def sync_offline_tickets(
                 "ticket_id": existing.id,
                 "ticket_number": existing.ticket_number
             })
+            synced_client_uuids.append(item.client_uuid)
             continue
 
         ticket_num = generate_ticket_number()
@@ -205,7 +225,7 @@ async def sync_offline_tickets(
             village=village,
             status="PENDING",
             priority="high",
-            escalation_reason=f"Offline Field Escalation (UUID:{item.client_uuid})",
+            escalation_reason=f"Offline Field Escalation (UUID:{item.client_uuid}) [Crop:{crop_name}] [Lang:{item.language or 'te'}]",
             original_question_transcript=item.question_text,
             attached_image_urls=[item.image_url] if item.image_url else []
         )
@@ -217,10 +237,12 @@ async def sync_offline_tickets(
             "ticket_id": ticket.id,
             "ticket_number": ticket_num
         })
+        synced_client_uuids.append(item.client_uuid)
 
     return {
         "status": "synced",
         "synced_count": len(synced),
+        "synced_client_uuids": synced_client_uuids,
         "tickets": synced
     }
 
@@ -246,10 +268,21 @@ async def get_ticket_detail(
             )
     elif role == "extension_officer":
         assigned_mandals = current_user.get("mandals") or []
-        if not assigned_mandals or (ticket.mandal not in assigned_mandals and ticket.assigned_officer_id != user_id):
+        assigned_district = current_user.get("district")
+        assigned_state = current_user.get("state")
+        if not assigned_mandals:
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
-                detail="Access denied: Extension officers can only view tickets within their assigned mandals."
+                detail="Access denied: Extension officers can only view tickets within their assigned mandals. Extension officer has no assigned jurisdiction."
+            )
+        mandal_ok = (ticket.mandal in assigned_mandals)
+        district_ok = (not assigned_district) or (ticket.district == assigned_district)
+        state_ok = (not assigned_state) or (ticket.state == assigned_state)
+        assigned_to_me = (ticket.assigned_officer_id == user_id)
+        if not (assigned_to_me or (mandal_ok and district_ok and state_ok)):
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Access denied: Extension officers can only view tickets within their assigned mandals and jurisdiction."
             )
     elif role != "admin":
         raise HTTPException(
@@ -305,10 +338,21 @@ async def respond_to_ticket(
 
     if role == "extension_officer":
         assigned_mandals = current_user.get("mandals") or []
-        if not assigned_mandals or (ticket.mandal not in assigned_mandals and ticket.assigned_officer_id != user_id):
+        assigned_district = current_user.get("district")
+        assigned_state = current_user.get("state")
+        if not assigned_mandals:
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
-                detail="Access denied: Extension officers can only respond to tickets within their assigned mandals."
+                detail="Access denied: Extension officers can only respond to tickets within their assigned mandals. Extension officer has no assigned jurisdiction."
+            )
+        mandal_ok = (ticket.mandal in assigned_mandals)
+        district_ok = (not assigned_district) or (ticket.district == assigned_district)
+        state_ok = (not assigned_state) or (ticket.state == assigned_state)
+        assigned_to_me = (ticket.assigned_officer_id == user_id)
+        if not (assigned_to_me or (mandal_ok and district_ok and state_ok)):
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Access denied: Extension officers can only respond to tickets within their assigned mandals and jurisdiction."
             )
 
     new_status = payload.status if payload.status else "resolved"

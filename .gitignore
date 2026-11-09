@@ -48,6 +48,18 @@ apps/farmer-android/local.properties
 
 # Databases & IDE
 *.sqlite
+*.sqlite3
+*.db
+.idea/
+.vscode/
+
+# Uploads & Sensitive Media
+backend/app/static/uploads/
+backend/app/api/static/uploads/
+**/uploads/
+**/static/uploads/
+*.bin
+
 *.db
 .idea/
 .vscode/

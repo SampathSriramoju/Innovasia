@@ -57,9 +57,8 @@ async def root():
         "api_v1": settings.API_V1_STR
     }
 
-# Mount static files directory for disease diagnosis uploads
-static_dir = Path(__file__).resolve().parent / "static"
-static_dir.mkdir(parents=True, exist_ok=True)
-app.mount("/static", StaticFiles(directory=str(static_dir)), name="static")
+# Private uploads directory ensured (served exclusively through authenticated API endpoints)
+uploads_dir = Path(__file__).resolve().parent / "static" / "uploads" / "diseases"
+uploads_dir.mkdir(parents=True, exist_ok=True)
 
 app.include_router(api_router, prefix=settings.API_V1_STR)

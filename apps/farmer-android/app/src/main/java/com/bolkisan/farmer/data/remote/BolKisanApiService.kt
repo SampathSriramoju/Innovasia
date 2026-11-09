@@ -50,4 +50,29 @@ interface BolKisanApiService {
         @Part("farmer_notes") farmerNotes: RequestBody? = null,
         @Part("language") language: RequestBody? = null
     ): Response<DiseaseDiagnosisDto>
+
+    // CONVERSATIONS API
+    @GET("conversations/")
+    suspend fun getConversations(
+        @Header("Authorization") token: String
+    ): Response<List<ConversationSummaryDto>>
+
+    @POST("conversations/")
+    suspend fun createConversation(
+        @Header("Authorization") token: String,
+        @Body request: ConversationCreateDto
+    ): Response<ConversationSummaryDto>
+
+    @GET("conversations/{conversation_id}")
+    suspend fun getConversationDetail(
+        @Header("Authorization") token: String,
+        @Path("conversation_id") conversationId: String
+    ): Response<ConversationDetailDto>
+
+    @POST("conversations/{conversation_id}/messages")
+    suspend fun postConversationMessage(
+        @Header("Authorization") token: String,
+        @Path("conversation_id") conversationId: String,
+        @Body message: MessagePostDto
+    ): Response<MessagePostResponseDto>
 }
