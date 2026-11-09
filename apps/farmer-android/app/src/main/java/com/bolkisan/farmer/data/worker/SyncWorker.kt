@@ -5,6 +5,8 @@ import android.util.Log
 import androidx.work.*
 import com.bolkisan.farmer.data.local.AppDatabase
 import com.bolkisan.farmer.data.remote.ApiClient
+import com.bolkisan.farmer.data.remote.models.OfflineSyncItemDto
+import com.bolkisan.farmer.data.remote.models.OfflineSyncRequestDto
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -36,47 +38,101 @@ class SyncWorker(
             return@withContext Result.success()
         }
 
+        if (token == null) {
+            Log.w(tag, "Cannot sync pending tickets: Farmer is not authenticated. Retrying once logged in.")
+            return@withContext Result.retry()
+        }
+
         Log.i(tag, "Found ${unsyncedTickets.size} pending unsynced tickets to upload.")
 
         var allSuccessful = true
 
-        for (ticket in unsyncedTickets) {
+        // 1. Process Text-only tickets in batch via /api/v1/tickets/offline-sync
+        val textTickets = unsyncedTickets.filter { it.imagePath == null }
+        if (textTickets.isNotEmpty()) {
             try {
-                if (ticket.imagePath != null) {
-                    val file = File(ticket.imagePath)
-                    if (file.exists()) {
-                        val reqFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
-                        val body = MultipartBody.Part.createFormData("file", file.name, reqFile)
-                        val cropBody = ticket.cropName.toRequestBody("text/plain".toMediaTypeOrNull())
-                        val langBody = lang.toRequestBody("text/plain".toMediaTypeOrNull())
-                        val authHeader = token?.let { "Bearer $it" }
+                val syncItems = textTickets.map {
+                    OfflineSyncItemDto(
+                        clientUuid = it.localId,
+                        cropName = it.cropName,
+                        questionText = it.queryText,
+                        imageUrl = null,
+                        language = lang,
+                        createdAtEpoch = it.timestamp
+                    )
+                }
+                val response = ApiClient.apiService.syncOfflineTickets(
+                    token = "Bearer $token",
+                    request = OfflineSyncRequestDto(syncItems)
+                )
 
-                        val response = ApiClient.apiService.diagnoseDisease(
-                            token = authHeader,
-                            file = body,
-                            cropName = cropBody,
-                            language = langBody
-                        )
-
-                        if (response.isSuccessful) {
-                            Log.i(tag, "Successfully uploaded pending disease ticket ${ticket.localId}")
-                            dao.markTicketSynced(ticket.localId)
-                        } else {
-                            Log.w(tag, "Server rejected upload for ${ticket.localId}: code ${response.code()}")
-                            allSuccessful = false
-                        }
-                    } else {
-                        // Image file was removed or missing, mark as synced to prevent infinite loop
-                        Log.w(tag, "Image file not found for ticket ${ticket.localId}, marking synced")
-                        dao.markTicketSynced(ticket.localId)
+                if (response.isSuccessful && response.body() != null) {
+                    Log.i(tag, "Successfully synced ${textTickets.size} text tickets with backend.")
+                    for (t in textTickets) {
+                        dao.markTicketSynced(t.localId)
                     }
                 } else {
-                    // Voice or text query ticket
-                    Log.i(tag, "Synced text ticket ${ticket.localId}")
-                    dao.markTicketSynced(ticket.localId)
+                    Log.w(tag, "Backend rejected batch offline-sync: HTTP ${response.code()}")
+                    allSuccessful = false
                 }
             } catch (e: Exception) {
-                Log.e(tag, "Error syncing ticket ${ticket.localId}: ${e.message}", e)
+                Log.e(tag, "Network error during batch offline-sync: ${e.message}", e)
+                allSuccessful = false
+            }
+        }
+
+        // 2. Process Image / Disease Diagnosis tickets individually
+        val imageTickets = unsyncedTickets.filter { it.imagePath != null }
+        for (ticket in imageTickets) {
+            try {
+                val file = File(ticket.imagePath!!)
+                if (file.exists() && file.length() > 0) {
+                    val reqFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
+                    val body = MultipartBody.Part.createFormData("file", file.name, reqFile)
+                    val cropBody = ticket.cropName.toRequestBody("text/plain".toMediaTypeOrNull())
+                    val notesBody = ticket.queryText.toRequestBody("text/plain".toMediaTypeOrNull())
+                    val langBody = lang.toRequestBody("text/plain".toMediaTypeOrNull())
+
+                    val response = ApiClient.apiService.diagnoseDisease(
+                        token = "Bearer $token",
+                        file = body,
+                        cropName = cropBody,
+                        farmerNotes = notesBody,
+                        language = langBody
+                    )
+
+                    if (response.isSuccessful) {
+                        Log.i(tag, "Successfully uploaded pending disease ticket ${ticket.localId}")
+                        dao.markTicketSynced(ticket.localId)
+                    } else {
+                        Log.w(tag, "Server rejected upload for ${ticket.localId}: code ${response.code()}")
+                        allSuccessful = false
+                    }
+                } else {
+                    // Image was missing or deleted; upload metadata as text ticket so farmer's query is never lost
+                    Log.w(tag, "Image file not found for ticket ${ticket.localId}. Falling back to text sync.")
+                    val syncItems = listOf(
+                        OfflineSyncItemDto(
+                            clientUuid = ticket.localId,
+                            cropName = ticket.cropName,
+                            questionText = "[Image missing on device] ${ticket.queryText}",
+                            imageUrl = null,
+                            language = lang,
+                            createdAtEpoch = ticket.timestamp
+                        )
+                    )
+                    val response = ApiClient.apiService.syncOfflineTickets(
+                        token = "Bearer $token",
+                        request = OfflineSyncRequestDto(syncItems)
+                    )
+                    if (response.isSuccessful) {
+                        dao.markTicketSynced(ticket.localId)
+                    } else {
+                        allSuccessful = false
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e(tag, "Error syncing image ticket ${ticket.localId}: ${e.message}", e)
                 allSuccessful = false
             }
         }
@@ -99,14 +155,14 @@ class SyncWorker(
                     15,
                     TimeUnit.SECONDS
                 )
+                .addTag(WORK_NAME)
                 .build()
 
             WorkManager.getInstance(context).enqueueUniqueWork(
                 WORK_NAME,
-                ExistingWorkPolicy.APPEND_OR_REPLACE,
+                ExistingWorkPolicy.KEEP,
                 workRequest
             )
-            Log.i("SyncWorker", "Enqueued background sync worker with NetworkType.CONNECTED constraint.")
         }
     }
 }

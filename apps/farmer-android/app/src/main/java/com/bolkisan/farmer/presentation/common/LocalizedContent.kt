@@ -412,59 +412,9 @@ fun mandiRows(crop: String, language: String): List<MandiRow> = when (canonicalC
     )
 }
 
-fun pesticideRecommendation(crop: String, language: String): String = when (canonicalCropName(crop)) {
-    "Maize" -> pick(
-        language,
-        "కత్తెర పురుగు నివారణకు: క్లోరాంట్రానిలిప్రోల్ 18.5% SC @ 6.6 ml లేదా ఇమామెక్టిన్ బెంజోయేట్ 5% SG @ 8.0 g ప్రతి 15 లీటర్ల నీటి పంపునకు కలపాలి.",
-        "तना छेदक के लिए: क्लोरैंट्रानिलिप्रोल 18.5% SC @ 6.6 ml या इमामेक्टिन बेंजोएट 5% SG @ 8.0 g प्रति 15 लीटर पानी में मिलाएं।",
-        "For stem borer: Chlorantraniliprole 18.5% SC @ 6.6 ml or Emamectin benzoate 5% SG @ 8.0 g per 15 liters of water."
-    )
-    "Cotton" -> pick(
-        language,
-        "గులాబీ రంగు పురుగు నివారణకు: క్లోరాంట్రానిలిప్రోల్ 18.5% SC @ 6.6 ml లేదా ప్రొఫెనోఫాస్ 50% EC @ 30 ml ప్రతి 15 లీటర్ల నీటికి.",
-        "गुलाबी सुंडी के लिए: क्लोरैंट्रानिलिप्रोल 18.5% SC @ 6.6 ml या प्रोफेनोफॉस 50% EC @ 30 ml प्रति 15 लीटर पानी।",
-        "For pink bollworm: Chlorantraniliprole 18.5% SC @ 6.6 ml or Profenophos 50% EC @ 30 ml per 15 liters of water."
-    )
-    "Chilli" -> pick(
-        language,
-        "తామర పురుగుల నివారణకు: స్పైనోటోరం 11.7% SC @ 15 ml లేదా ఫిప్రోనిల్ 5% SC @ 30 ml ప్రతి 15 లీటర్ల నీటికి.",
-        "थ्रिप्स के लिए: स्पिनोटोरम 11.7% SC @ 15 ml या फिप्रोनिल 5% SC @ 30 ml प्रति 15 लीटर पानी।",
-        "For thrips: Spinetoram 11.7% SC @ 15 ml or Fipronil 5% SC @ 30 ml per 15 liters of water."
-    )
-    "Tomato" -> pick(
-        language,
-        "ముందస్తు మచ్చ తెగులుకు: మాంకోజెబ్ 75% WP @ 30 గ్రాములు లేదా కాపర్ ఆక్సీక్లోరైడ్ 50% WP @ 30 గ్రాములు ప్రతి 15 లీటర్ల నీటికి.",
-        "अगेती झुलसा के लिए: मैंकोजेब 75% WP @ 30 ग्राम या कॉपर ऑक्सीक्लोराइड 50% WP @ 30 ग्राम प्रति 15 लीटर पानी।",
-        "For early blight: Mancozeb 75% WP @ 30 g or Copper Oxychloride 50% WP @ 30 g per 15 liters of water."
-    )
-    "Wheat" -> pick(
-        language,
-        "కుంకుమ (రస్ట్) తెగులుకు: ప్రొపికొనాజోల్ 25% EC @ 15 ml ప్రతి 15 లీటర్ల నీటి పంపునకు కలిపి పిచికారీ చేయాలి.",
-        "रतुआ (रस्ट) रोग के लिए: प्रोपिकोनाजोल 25% EC @ 15 ml प्रति 15 लीटर पानी में मिलाकर छिड़कें।",
-        "For rust disease: Propiconazole 25% EC @ 15 ml per 15 liters of water."
-    )
-    "Groundnut" -> pick(
-        language,
-        "తిక్కా ఆకుమచ్చ తెగులుకు: టెబుకొనాజోల్ 25.9% EC @ 15 ml లేదా హెక్సాకోనాజోల్ 5% SC @ 30 ml ప్రతి 15 లీటర్ల నీటికి.",
-        "टिक्का रोग के लिए: टेबुकोनाजोल 25.9% EC @ 15 ml या हेक्साकोनाजोल 5% SC @ 30 ml प्रति 15 लीटर पानी।",
-        "For tikka disease: Tebuconazole 25.9% EC @ 15 ml or Hexaconazole 5% SC @ 30 ml per 15 liters of water."
-    )
-    "Turmeric" -> pick(
-        language,
-        "దుంప కుళ్లు నివారణకు: మెటలాక్సిల్ 8% + మాంకోజెబ్ 64% WP @ 30 గ్రాములు ప్రతి 15 లీటర్ల నీటితో దుంపల మొదళ్ల వద్ద తడపాలి (Drenching).",
-        "कंद सड़न के लिए: मेटालैक्सिल 8% + मैंकोजेब 64% WP @ 30 ग्राम प्रति 15 लीटर पानी से पौधों की जड़ों में डालें।",
-        "For rhizome rot: Metalaxyl 8% + Mancozeb 64% WP @ 30 g per 15 liters of water for soil drenching."
-    )
-    "Mango" -> pick(
-        language,
-        "తేనెమంచు పురుగు (హాపర్స్) కు: ఇమిడాక్లోప్రిడ్ 17.8% SL @ 5 ml లేదా థయామెథోక్సామ్ 25% WG @ 5 g ప్రతి 15 లీటర్ల నీటికి పూత విచ్చుకోకముందే పిచికారీ చేయాలి.",
-        "फुदका (हॉपर) कीट के लिए: इमिडाक्लोप्रिड 17.8% SL @ 5 ml या थायामेथोक्सम 25% WG @ 5 g प्रति 15 लीटर पानी में बौर आने से पहले छिड़कें।",
-        "For hoppers: Imidacloprid 17.8% SL @ 5 ml or Thiamethoxam 25% WG @ 5 g per 15 liters of water before flower opening."
-    )
-    else -> pick(
-        language,
-        "వరి అగ్గితెగులు కొరకు: ట్రైసైక్లాజోల్ 75% WP @ 9.0 g లేదా ఐసోప్రోథియోలేన్ 40% EC @ 22.5 ml ప్రతి 15 లీటర్ల నీటికి.",
-        "धान झुलसा के लिए: ट्राइसाइक्लाजोल 75% WP @ 9.0 g या आइसोप्रोथियोलेन 40% EC @ 22.5 ml प्रति 15 लीटर पानी।",
-        "For rice blast: Tricyclazole 75% WP @ 9.0 g or Isoprothiolane 40% EC @ 22.5 ml per 15 liters of water."
-    )
-}
+fun pesticideRecommendation(crop: String, language: String): String = pick(
+    language,
+    "పురుగుమందుల మోతాదుల కొరకు CIBRC ధృవీకరించిన అధికారిక లేబుల్ సిఫార్సులను మాత్రమే పాటించాలి. మీ పంట మరియు సమస్య ఆధారంగా ఖచ్చితమైన మోతాదు వివరాలు లేదా వ్యవసాయ విస్తరణ అధికారి సహాయం పొందడానికి ప్రశ్నను అడగండి.",
+    "कीटनाशकों की मात्रा के लिए केवल CIBRC द्वारा स्वीकृत आधिकारिक लेबल सिफारिशों का ही पालन करें। अपनी फसल और कीट/रोग के अनुसार सटीक मात्रा या कृषि विस्तार अधिकारी की सलाह के लिए प्रश्न पूछें।",
+    "For pesticide dosages, always follow official CIBRC certified label recommendations. Please ask your question specifying the crop and pest to receive certified dosage or consult your local agricultural extension officer."
+)

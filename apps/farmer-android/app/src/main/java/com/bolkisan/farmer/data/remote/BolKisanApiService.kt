@@ -34,6 +34,12 @@ interface BolKisanApiService {
         @Body ticket: TicketCreateDto
     ): Response<TicketEscalateResponseDto>
 
+    @POST("tickets/offline-sync")
+    suspend fun syncOfflineTickets(
+        @Header("Authorization") token: String,
+        @Body request: OfflineSyncRequestDto
+    ): Response<OfflineSyncResponseDto>
+
     @Multipart
     @POST("disease/diagnose")
     suspend fun diagnoseDisease(

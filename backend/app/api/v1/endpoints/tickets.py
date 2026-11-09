@@ -57,9 +57,18 @@ async def list_tickets(
     if role == "farmer":
         query = query.filter(AgriculturalTicket.farmer_id == user_id)
     elif role == "extension_officer":
-        assigned_mandals = current_user.get("mandals", [])
-        if assigned_mandals:
-            query = query.filter(AgriculturalTicket.mandal.in_(assigned_mandals))
+        assigned_mandals = current_user.get("mandals") or []
+        if not assigned_mandals:
+            # Empty jurisdiction assignments must deny access, not allow access to all tickets
+            return []
+        query = query.filter(AgriculturalTicket.mandal.in_(assigned_mandals))
+    elif role == "admin":
+        pass
+    else:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Access denied: Unauthorized role."
+        )
 
     if status_filter:
         query = query.filter(AgriculturalTicket.status == status_filter)
@@ -162,20 +171,43 @@ async def sync_offline_tickets(
     db: Session = Depends(get_db)
 ):
     user_id = current_user.get("sub")
+    farmer_user = db.query(User).filter(User.id == user_id).first()
+    farmer_profile = farmer_user.farmer_profile if farmer_user else None
+
+    state = farmer_profile.state if farmer_profile else "Telangana"
+    district = farmer_profile.district if farmer_profile else "Warangal"
+    mandal = farmer_profile.mandal if farmer_profile else "Geesugonda"
+    village = farmer_profile.village if farmer_profile else "Dharmaram"
+
     synced = []
     for item in payload.pending_tickets:
+        # Check idempotency using client_uuid in escalation_reason
+        existing = db.query(AgriculturalTicket).filter(
+            AgriculturalTicket.farmer_id == user_id,
+            AgriculturalTicket.escalation_reason.contains(item.client_uuid)
+        ).first()
+
+        if existing:
+            synced.append({
+                "client_uuid": item.client_uuid,
+                "ticket_id": existing.id,
+                "ticket_number": existing.ticket_number
+            })
+            continue
+
         ticket_num = generate_ticket_number()
         ticket = AgriculturalTicket(
             ticket_number=ticket_num,
             farmer_id=user_id,
-            state="Telangana",
-            district="Warangal",
-            mandal="Geesugonda",
-            village="Dharmaram",
+            state=state,
+            district=district,
+            mandal=mandal,
+            village=village,
             status="PENDING",
             priority="high",
-            escalation_reason="Offline Field Escalation (Synced upon network reconnect)",
-            original_question_transcript=item.question_text
+            escalation_reason=f"Offline Field Escalation (UUID:{item.client_uuid})",
+            original_question_transcript=item.question_text,
+            attached_image_urls=[item.image_url] if item.image_url else []
         )
         db.add(ticket)
         db.commit()
@@ -213,8 +245,8 @@ async def get_ticket_detail(
                 detail="Access denied: Farmers can only view their own tickets."
             )
     elif role == "extension_officer":
-        assigned_mandals = current_user.get("mandals", [])
-        if assigned_mandals and ticket.mandal not in assigned_mandals and ticket.assigned_officer_id != user_id:
+        assigned_mandals = current_user.get("mandals") or []
+        if not assigned_mandals or (ticket.mandal not in assigned_mandals and ticket.assigned_officer_id != user_id):
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
                 detail="Access denied: Extension officers can only view tickets within their assigned mandals."
@@ -272,8 +304,8 @@ async def respond_to_ticket(
         raise HTTPException(status_code=404, detail="Ticket not found")
 
     if role == "extension_officer":
-        assigned_mandals = current_user.get("mandals", [])
-        if assigned_mandals and ticket.mandal not in assigned_mandals and ticket.assigned_officer_id != user_id:
+        assigned_mandals = current_user.get("mandals") or []
+        if not assigned_mandals or (ticket.mandal not in assigned_mandals and ticket.assigned_officer_id != user_id):
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
                 detail="Access denied: Extension officers can only respond to tickets within their assigned mandals."

@@ -15,6 +15,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.bolkisan.farmer.BuildConfig
 import com.bolkisan.farmer.data.repository.BolKisanRepository
 import com.bolkisan.farmer.presentation.common.appStrings
 import com.bolkisan.farmer.theme.*
@@ -28,7 +29,7 @@ fun LoginScreen(
     val coroutineScope = rememberCoroutineScope()
     val currentLang by repository.languageFlow.collectAsState()
     val strings = appStrings(currentLang)
-    var phoneNumber by remember { mutableStateOf("9876543210") }
+    var phoneNumber by remember { mutableStateOf("") }
     var otp by remember { mutableStateOf("") }
     var otpSent by remember { mutableStateOf(false) }
     var loading by remember { mutableStateOf(false) }
@@ -95,7 +96,7 @@ fun LoginScreen(
                             loading = false
                             if (res.isSuccess) {
                                 otpSent = true
-                                otp = res.getOrNull()?.devOtp ?: "123456"
+                                otp = res.getOrNull()?.devOtp ?: ""
                             } else {
                                 errorMessage = res.exceptionOrNull()?.message
                             }
@@ -159,19 +160,21 @@ fun LoginScreen(
                 }
             }
 
-            Spacer(modifier = Modifier.height(24.dp))
-            TextButton(
-                onClick = {
-                    phoneNumber = "9876543210"
-                    otp = "123456"
-                    otpSent = true
+            if (BuildConfig.DEBUG) {
+                Spacer(modifier = Modifier.height(24.dp))
+                TextButton(
+                    onClick = {
+                        phoneNumber = "9876543210"
+                        otp = "123456"
+                        otpSent = true
+                    }
+                ) {
+                    Text(
+                        text = strings.demoAccount,
+                        color = HarvestGoldAccent,
+                        fontWeight = FontWeight.SemiBold
+                    )
                 }
-            ) {
-                Text(
-                    text = strings.demoAccount,
-                    color = HarvestGoldAccent,
-                    fontWeight = FontWeight.SemiBold
-                )
             }
         }
     }

@@ -1,22 +1,53 @@
+import secrets
 import uuid
-from datetime import datetime, timezone
-from fastapi import APIRouter, Depends, HTTPException, status
-from pydantic import BaseModel, Field
+from datetime import datetime, timezone, timedelta
 from typing import Optional, List, Dict, Any
+from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi.security import HTTPAuthorizationCredentials
+from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
+
+from app.core.config import settings
 from app.database.session import get_db
 from app.database.models import User, FarmerProfile, ExtensionOfficer
-from app.core.security import create_access_token, get_current_user_payload, RoleChecker
+from app.core.security import (
+    create_access_token,
+    decode_access_token,
+    get_current_user_payload,
+    security_scheme,
+    RoleChecker
+)
 
 router = APIRouter()
 
-# In-memory OTP store for development & testing
-DEV_OTP_STORE: Dict[str, str] = {
+# Structured in-memory OTP store with expiration & attempt tracking
+class OTPRecord:
+    def __init__(self, otp: str, expires_at: datetime, attempts: int = 0):
+        self.otp = otp
+        self.expires_at = expires_at
+        self.attempts = attempts
+
+# Live OTP Store: phone -> OTPRecord
+LIVE_OTP_STORE: Dict[str, OTPRecord] = {}
+
+# Development deterministic seeds (ONLY used if settings.ENVIRONMENT == "development" and settings.ENABLE_DEV_OTP)
+DEV_SEED_OTPS: Dict[str, str] = {
     "9876543210": "123456",
+    "+919876543210": "123456",
     "9123456789": "654321",
+    "+919123456789": "654321",
     "9000000001": "123456",
-    "9000000002": "123456"
+    "9000000002": "123456",
+    "9111111111": "123456",
+    "9000000088": "123456",
+    "9000000099": "123456"
 }
+
+def normalize_phone(phone: str) -> str:
+    cleaned = phone.strip()
+    if cleaned.startswith("+91") and len(cleaned) == 13:
+        return cleaned[3:]
+    return cleaned
 
 class OTPRequest(BaseModel):
     phone_number: str = Field(..., pattern=r"^\+?[0-9]{10,13}$", description="10-12 digit mobile phone number")
@@ -33,6 +64,7 @@ class OTPVerify(BaseModel):
 
 class FarmerRegisterRequest(BaseModel):
     phone_number: str = Field(..., pattern=r"^\+?[0-9]{10,13}$")
+    otp: Optional[str] = None
     full_name: str
     preferred_lang: Optional[str] = "te"
     state: str = "Telangana"
@@ -62,28 +94,90 @@ class OfficerLoginRequest(BaseModel):
 
 @router.post("/request-otp")
 async def request_otp(payload: OTPRequest):
-    phone = payload.phone_number
-    otp = DEV_OTP_STORE.get(phone, "123456")
-    DEV_OTP_STORE[phone] = otp
+    raw_phone = payload.phone_number
+    phone = normalize_phone(raw_phone)
 
-    return {
+    # In dev mode with dev OTP enabled, allow deterministic seed if configured, else random
+    if settings.ENVIRONMENT == "development" and settings.ENABLE_DEV_OTP and phone in DEV_SEED_OTPS:
+        otp = DEV_SEED_OTPS[phone]
+    else:
+        # Cryptographically secure random 6-digit OTP
+        otp = str(secrets.randbelow(900000) + 100000)
+
+    # Store with 5-minute expiry
+    expires_at = datetime.now(timezone.utc) + timedelta(minutes=5)
+    record = OTPRecord(otp=otp, expires_at=expires_at, attempts=0)
+    LIVE_OTP_STORE[phone] = record
+    LIVE_OTP_STORE[raw_phone] = record
+
+    response: Dict[str, Any] = {
         "status": "success",
-        "message": f"OTP sent to {phone}",
-        "dev_otp": otp
+        "message": f"OTP sent to {raw_phone}"
     }
+
+    # CRITICAL SECURITY: Never return OTP in production API responses
+    if settings.ENVIRONMENT == "development" and settings.ENABLE_DEV_OTP:
+        response["dev_otp"] = otp
+
+    return response
 
 @router.post("/verify-otp")
 async def verify_otp(payload: OTPVerify, db: Session = Depends(get_db)):
-    phone = payload.phone_number
-    expected_otp = DEV_OTP_STORE.get(phone, "123456")
+    raw_phone = payload.phone_number
+    phone = normalize_phone(raw_phone)
 
-    if payload.otp != expected_otp:
+    # Look up OTP record
+    record = LIVE_OTP_STORE.get(phone) or LIVE_OTP_STORE.get(raw_phone)
+
+    # In development mode only: allow seed OTP fallback if requested
+    if not record and settings.ENVIRONMENT == "development" and settings.ENABLE_DEV_OTP:
+        if phone in DEV_SEED_OTPS:
+            record = OTPRecord(
+                otp=DEV_SEED_OTPS[phone],
+                expires_at=datetime.now(timezone.utc) + timedelta(minutes=10),
+                attempts=0
+            )
+
+    if not record:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="No active OTP request found for this mobile number. Please request an OTP first."
+        )
+
+    # Check expiration
+    if datetime.now(timezone.utc) > record.expires_at:
+        LIVE_OTP_STORE.pop(phone, None)
+        LIVE_OTP_STORE.pop(raw_phone, None)
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="OTP code has expired. Please request a new OTP."
+        )
+
+    # Rate limiting on failed verification attempts
+    if record.attempts >= 5:
+        LIVE_OTP_STORE.pop(phone, None)
+        LIVE_OTP_STORE.pop(raw_phone, None)
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Too many failed attempts. Please request a new OTP."
+        )
+
+    # Validate OTP value
+    if payload.otp != record.otp:
+        record.attempts += 1
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Invalid OTP code. Please check and try again."
         )
 
-    user = db.query(User).filter(User.phone_number == phone).first()
+    # Consume OTP on successful verification to prevent replay attacks
+    LIVE_OTP_STORE.pop(phone, None)
+    LIVE_OTP_STORE.pop(raw_phone, None)
+
+    user = db.query(User).filter(
+        (User.phone_number == phone) | (User.phone_number == raw_phone)
+    ).first()
+
     if not user:
         full_name = payload.full_name or f"Farmer {phone[-4:]}"
         user = User(
@@ -137,11 +231,56 @@ async def verify_otp(payload: OTPVerify, db: Session = Depends(get_db)):
     }
 
 @router.post("/register-farmer")
-async def register_farmer(payload: FarmerRegisterRequest, db: Session = Depends(get_db)):
-    user = db.query(User).filter(User.phone_number == payload.phone_number).first()
+async def register_farmer(
+    payload: FarmerRegisterRequest,
+    credentials: Optional[HTTPAuthorizationCredentials] = Depends(security_scheme),
+    db: Session = Depends(get_db)
+):
+    raw_phone = payload.phone_number
+    phone = normalize_phone(raw_phone)
+
+    # Authentication validation: Require either a valid JWT matching the phone OR a verified OTP
+    authenticated_sub = None
+    if credentials and credentials.credentials:
+        token_payload = decode_access_token(credentials.credentials)
+        if token_payload:
+            token_phone = normalize_phone(token_payload.get("phone", ""))
+            if token_phone == phone:
+                authenticated_sub = token_payload.get("sub")
+
+    if not authenticated_sub:
+        if settings.ENVIRONMENT == "development" and settings.ENABLE_DEV_OTP and phone in DEV_SEED_OTPS:
+            # Pre-seeded development test accounts
+            pass
+        else:
+            # Genuine OTP verification is strictly required
+            record = LIVE_OTP_STORE.get(phone) or LIVE_OTP_STORE.get(raw_phone)
+            valid_dev = settings.ENVIRONMENT == "development" and settings.ENABLE_DEV_OTP and payload.otp in ["123456", "654321"]
+            if not record and not valid_dev:
+                raise HTTPException(
+                    status_code=status.HTTP_401_UNAUTHORIZED,
+                    detail="Genuine OTP verification is required before farmer registration or login."
+                )
+            if record and (not payload.otp or payload.otp != record.otp or datetime.now(timezone.utc) > record.expires_at):
+                raise HTTPException(
+                    status_code=status.HTTP_401_UNAUTHORIZED,
+                    detail="Invalid or expired OTP code for farmer registration."
+                )
+            if not valid_dev and not payload.otp:
+                raise HTTPException(
+                    status_code=status.HTTP_401_UNAUTHORIZED,
+                    detail="Genuine OTP verification is required before farmer registration or login."
+                )
+            LIVE_OTP_STORE.pop(phone, None)
+            LIVE_OTP_STORE.pop(raw_phone, None)
+
+    user = db.query(User).filter(
+        (User.phone_number == phone) | (User.phone_number == raw_phone)
+    ).first()
+
     if not user:
         user = User(
-            phone_number=payload.phone_number,
+            phone_number=phone,
             full_name=payload.full_name,
             role="farmer",
             preferred_lang=payload.preferred_lang or "te",
@@ -204,8 +343,8 @@ async def register_farmer(payload: FarmerRegisterRequest, db: Session = Depends(
 
 @router.post("/register-officer")
 async def register_officer(payload: OfficerRegisterRequest, db: Session = Depends(get_db)):
-    # Check if user already exists
-    user = db.query(User).filter(User.phone_number == payload.phone_number).first()
+    phone = normalize_phone(payload.phone_number)
+    user = db.query(User).filter(User.phone_number == phone).first()
     if user:
         if user.officer_profile:
             return {
@@ -219,7 +358,7 @@ async def register_officer(payload: OfficerRegisterRequest, db: Session = Depend
 
     if not user:
         user = User(
-            phone_number=payload.phone_number,
+            phone_number=phone,
             full_name=payload.full_name,
             role="extension_officer",
             preferred_lang="te",
@@ -259,16 +398,27 @@ async def register_officer(payload: OfficerRegisterRequest, db: Session = Depend
 
 @router.post("/officer-login")
 async def officer_login(payload: OfficerLoginRequest, db: Session = Depends(get_db)):
+    raw_phone = payload.phone_number
+    phone = normalize_phone(raw_phone)
+
     officer = db.query(ExtensionOfficer).filter(
         ExtensionOfficer.officer_code == payload.officer_code
     ).first()
 
-    # Pre-seeded approved demo officer
+    # Pre-seeded approved demo officer is STRICTLY limited to development environment
     if not officer and payload.officer_code == "AGRI-TS-042":
-        user = db.query(User).filter(User.phone_number == payload.phone_number).first()
+        if settings.ENVIRONMENT != "development" or not settings.ENABLE_DEV_OTP:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Officer account not found. Demonstration accounts are disabled in production."
+            )
+
+        user = db.query(User).filter(
+            (User.phone_number == phone) | (User.phone_number == raw_phone)
+        ).first()
         if not user:
             user = User(
-                phone_number=payload.phone_number,
+                phone_number=phone,
                 full_name="Dr. K. Srinivas Rao, MAO",
                 role="extension_officer",
                 preferred_lang="te",
@@ -301,7 +451,7 @@ async def officer_login(payload: OfficerLoginRequest, db: Session = Depends(get_
             detail="Invalid officer credentials or unverified officer code."
         )
 
-    # Enforce Approval Status Invariant
+    # Enforce Approval Status Invariant FIRST
     if officer.approval_status == "PENDING_APPROVAL":
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
@@ -312,6 +462,24 @@ async def officer_login(payload: OfficerLoginRequest, db: Session = Depends(get_
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Officer registration application has been rejected by the administrator."
         )
+
+    # Enforce OTP verification
+    record = LIVE_OTP_STORE.get(phone) or LIVE_OTP_STORE.get(raw_phone)
+    if settings.ENVIRONMENT == "development" and settings.ENABLE_DEV_OTP:
+        valid_dev = payload.otp in ["123456", "654321"] or (record and payload.otp == record.otp)
+        if not valid_dev:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Invalid OTP code for officer authentication."
+            )
+    else:
+        if not record or payload.otp != record.otp or datetime.now(timezone.utc) > record.expires_at:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Invalid or expired OTP code for officer authentication."
+            )
+        LIVE_OTP_STORE.pop(phone, None)
+        LIVE_OTP_STORE.pop(raw_phone, None)
 
     token_data = {
         "sub": officer.user_id,
@@ -351,16 +519,17 @@ async def list_pending_officers(
     return [
         {
             "id": o.id,
+            "officer_id": o.id,
             "officer_code": o.officer_code,
             "full_name": o.user.full_name if o.user else "Officer",
             "phone_number": o.user.phone_number if o.user else "",
             "designation": o.designation,
             "department": o.department,
-            "official_email": o.official_email,
-            "employee_id": o.employee_id,
             "assigned_state": o.assigned_state,
             "assigned_district": o.assigned_district,
             "assigned_mandals": o.assigned_mandals,
+            "employee_id": o.employee_id,
+            "official_email": o.official_email,
             "approval_status": o.approval_status,
             "created_at": o.created_at.isoformat() if o.created_at else None
         }
@@ -378,6 +547,7 @@ async def approve_officer(
         raise HTTPException(status_code=404, detail="Officer not found")
 
     officer.approval_status = "APPROVED"
+    officer.verified_at = datetime.now(timezone.utc)
     if officer.user:
         officer.user.is_verified = True
     db.commit()
@@ -386,7 +556,7 @@ async def approve_officer(
         "status": "APPROVED",
         "officer_id": officer.id,
         "officer_code": officer.officer_code,
-        "message": f"Officer {officer.officer_code} approved successfully. Officer can now log in."
+        "message": f"Officer {officer.officer_code} has been approved successfully."
     }
 
 @router.post("/admin/reject-officer/{officer_id}")

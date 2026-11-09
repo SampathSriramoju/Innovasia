@@ -576,34 +576,41 @@ class CropVisionEngine:
                 "en": quality.farmer_guidance_en
             }.get(language, quality.farmer_guidance_te)
 
+            guidance_prefix = {
+                "te": "నాణ్యత తనిఖీ విఫలమైంది",
+                "hi": "गुणवत्ता जांच विफल",
+                "en": "Quality check failed"
+            }.get(language, "Quality check failed")
+
             return DiagnosisResult(
                 status="quality_rejected",
                 is_escalated=False,
                 confidence=0.0,
                 entropy=0.0,
+                primary_diagnosis="Quality Rejected",
                 crop_name=crop_name or "Unspecified Crop",
                 affected_part=affected_part or "leaf",
-                farmer_explanation=f"నాణ్యత తనిఖీ విఫలమైంది: {guidance}",
+                farmer_explanation=f"{guidance_prefix}: {guidance}",
                 follow_up_questions=[guidance or "Please retake a clear photo."],
                 image_url="",
                 citations=[]
             ), quality
 
         # Resolve Crop Name
-        resolved_crop = "Cotton"
+        multilingual_map = {
+            "వరి": "Rice / Paddy", "వరి పంట": "Rice / Paddy", "rice": "Rice / Paddy", "paddy": "Rice / Paddy", "चावल": "Rice / Paddy", "धान": "Rice / Paddy",
+            "ప్రత్తి": "Cotton", "పత్తి": "Cotton", "cotton": "Cotton", "कपास": "Cotton",
+            "మిరప": "Chilli", "మిర్చి": "Chilli", "chilli": "Chilli", "chili": "Chilli", "मिर्च": "Chilli",
+            "టమోటా": "Tomato", "tomato": "Tomato", "टमाटर": "Tomato",
+            "మొక్కజొన్న": "Maize", "maize": "Maize", "corn": "Maize", "मक्का": "Maize",
+            "పసుపు": "Turmeric", "turmeric": "Turmeric", "हल्दी": "Turmeric",
+            "వేరుశనగ": "Groundnut", "groundnut": "Groundnut", "peanut": "Groundnut", "मूंगफली": "Groundnut",
+            "మామిడి": "Mango", "mango": "Mango", "आम": "Mango",
+            "గోధుమ": "Wheat", "wheat": "Wheat", "गेहूं": "Wheat"
+        }
+        resolved_crop = None
         if crop_name:
             crop_name_clean = crop_name.strip()
-            multilingual_map = {
-                "వరి": "Rice / Paddy", "వరి పంట": "Rice / Paddy", "rice": "Rice / Paddy", "paddy": "Rice / Paddy", "चावल": "Rice / Paddy", "धान": "Rice / Paddy",
-                "ప్రత్తి": "Cotton", "పత్తి": "Cotton", "cotton": "Cotton", "कपास": "Cotton",
-                "మిరప": "Chilli", "మిర్చి": "Chilli", "chilli": "Chilli", "chili": "Chilli", "मिर्च": "Chilli",
-                "టమోటా": "Tomato", "tomato": "Tomato", "टमाटर": "Tomato",
-                "మొక్కజొన్న": "Maize", "maize": "Maize", "corn": "Maize", "मक्का": "Maize",
-                "పసుపు": "Turmeric", "turmeric": "Turmeric", "हल्दी": "Turmeric",
-                "వేరుశనగ": "Groundnut", "groundnut": "Groundnut", "peanut": "Groundnut", "मूंगफली": "Groundnut",
-                "మామిడి": "Mango", "mango": "Mango", "आम": "Mango",
-                "గోధుమ": "Wheat", "wheat": "Wheat", "गेहूं": "Wheat"
-            }
             if crop_name_clean in multilingual_map:
                 resolved_crop = multilingual_map[crop_name_clean]
             else:
@@ -611,6 +618,45 @@ class CropVisionEngine:
                     if k in crop_name_clean.lower() or crop_name_clean.lower() in k:
                         resolved_crop = v
                         break
+
+        # If not provided in crop_name, attempt extraction from farmer_notes
+        if not resolved_crop and farmer_notes:
+            notes_clean = farmer_notes.lower()
+            for k, v in multilingual_map.items():
+                if k.lower() in notes_clean:
+                    resolved_crop = v
+                    break
+
+        if not resolved_crop:
+            resolved_crop = "Unspecified Crop"
+            unspecified_msg = {
+                "te": "పంట పేరు స్పష్టంగా గుర్తించబడలేదు. ఖచ్చితమైన విశ్లేషణ కోసం దయచేసి పంట పేరును (ఉదా: పత్తి, వరి, మిర్చి) తెలపండి.",
+                "hi": "फसल का नाम स्पष्ट नहीं है। सटीक निदान के लिए कृपया फसल का नाम (जैसे: कपास, धान, मिर्च) बताएं।",
+                "en": "Crop name could not be identified with certainty. Please specify your crop (e.g. Cotton, Rice, Chilli, Tomato) for accurate diagnosis."
+            }.get(language, "Crop name could not be identified with certainty. Please specify your crop for accurate diagnosis.")
+            followup = {
+                "te": "మీ పంట ఏది? (పత్తి, వరి, మిరప, టమోటా, మొక్కజొన్న?)",
+                "hi": "आपकी फसल कौन सी है? (कपास, धान, मिर्च, टमाटर, मक्का?)",
+                "en": "Which crop is this? (Cotton, Rice, Chilli, Tomato, Maize?)"
+            }.get(language, "Which crop is this?")
+
+            return DiagnosisResult(
+                status="needs_clarification",
+                is_escalated=True,
+                confidence=0.35,
+                entropy=1.5,
+                primary_diagnosis={
+                    "te": "గుర్తించబడని పంట",
+                    "hi": "अनिर्दिष्ट फसल",
+                    "en": "Unspecified Crop"
+                }.get(language, "Unspecified Crop"),
+                crop_name="Unspecified Crop",
+                affected_part=affected_part or "leaf",
+                farmer_explanation=unspecified_msg,
+                follow_up_questions=[followup],
+                image_url="",
+                citations=[]
+            ), quality
 
         crop_catalog = cls.PATHOLOGY_DATABASE.get(resolved_crop, cls.PATHOLOGY_DATABASE["Cotton"])
 

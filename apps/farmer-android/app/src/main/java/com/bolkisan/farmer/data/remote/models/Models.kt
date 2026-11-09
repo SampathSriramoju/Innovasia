@@ -120,3 +120,23 @@ data class DiseaseDiagnosisDto(
     @SerializedName("ticket_number") val ticketNumber: String? = null,
     @SerializedName("is_offline_sync_pending") val isOfflineSyncPending: Boolean = false
 )
+
+// OFFLINE SYNC
+data class OfflineSyncItemDto(
+    @SerializedName("client_uuid") val clientUuid: String,
+    @SerializedName("crop_name") val cropName: String?,
+    @SerializedName("question_text") val questionText: String,
+    @SerializedName("image_url") val imageUrl: String? = null,
+    @SerializedName("language") val language: String? = "te",
+    @SerializedName("created_at_epoch") val createdAtEpoch: Long? = null
+)
+
+data class OfflineSyncRequestDto(
+    @SerializedName("pending_tickets") val pendingTickets: List<OfflineSyncItemDto>
+)
+
+data class OfflineSyncResponseDto(
+    @SerializedName("status") val status: String,
+    @SerializedName("synced_count") val syncedCount: Int,
+    @SerializedName("tickets") val tickets: List<Map<String, Any>>? = null
+)

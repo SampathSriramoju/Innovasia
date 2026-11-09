@@ -265,7 +265,7 @@ class GeminiService:
             p = safety_context["approved_product"]
             if language == "te":
                 text = (
-                    f"వ్యవసాయ నిపుణుల సిఫార్సు:\n"
+                    f"వ్యవసాయ నిపుణుల సిఫార్సు (CIBRC సిఫార్సు):\n"
                     f"• పంట: {p.get('target_crop')}\n"
                     f"• నివారించే పురుగు/తెగులు: {p.get('target_pest') or p.get('target_disease')}\n"
                     f"• మందు పేరు: {p.get('product_trade_name')} ({p.get('active_ingredient')})\n"

@@ -9,7 +9,7 @@ from fastapi.security import HTTPAuthorizationCredentials
 from sqlalchemy.orm import Session
 
 from app.core.logging import logger
-from app.core.security import security_scheme, decode_access_token
+from app.core.security import get_current_user_payload
 from app.database.session import get_db
 from app.database.models import User, Crop, AgriculturalTicket
 from app.safety.safety_gate import safety_gate
@@ -223,21 +223,6 @@ def sanitize_image_bytes(raw_bytes: bytes, content_type: str) -> Tuple[bytes, st
         return bytes(sanitized), "png"
 
 
-async def get_optional_user(
-    credentials: Optional[HTTPAuthorizationCredentials] = Depends(security_scheme),
-    db: Session = Depends(get_db)
-) -> Dict[str, Any]:
-    """Resolves authenticated farmer or provides fallback farmer profile."""
-    if credentials and credentials.credentials:
-        payload = decode_access_token(credentials.credentials)
-        if payload:
-            return payload
-    farmer = db.query(User).filter(User.role == "farmer").first()
-    if farmer:
-        return {"sub": farmer.id, "name": farmer.full_name, "role": "farmer", "lang": farmer.preferred_language or "te"}
-    return {"sub": "user-test-farmer-01", "name": "Farmer", "role": "farmer", "lang": "te"}
-
-
 @router.post("/diagnose")
 async def diagnose_crop_disease(
     file: UploadFile = File(...),
@@ -247,7 +232,7 @@ async def diagnose_crop_disease(
     latitude: Optional[float] = Form(None),
     longitude: Optional[float] = Form(None),
     language: Optional[str] = Form(None),
-    current_user: Dict[str, Any] = Depends(get_optional_user),
+    current_user: Dict[str, Any] = Depends(get_current_user_payload),
     db: Session = Depends(get_db)
 ):
     """

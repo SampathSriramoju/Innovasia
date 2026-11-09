@@ -160,24 +160,10 @@ class BolKisanRepository(private val context: Context) {
             ?: _historyFlow.value.lastOrNull { it.crop.isNotBlank() }?.crop 
             ?: selectedCrop
 
-        var token = currentToken
-        if (token == null) {
-            // Auto-auth demo farmer if needed
-            try {
-                val otpRes = api.requestOtp(OTPRequestDto("+919876543210"))
-                if (otpRes.isSuccessful) {
-                    val devOtp = otpRes.body()?.devOtp ?: "123456"
-                    val vRes = api.verifyOtp(OTPVerifyDto("+919876543210", devOtp, currentLanguage, "Kisan"))
-                    if (vRes.isSuccessful && vRes.body() != null) {
-                        token = vRes.body()!!.accessToken
-                        currentToken = token
-                    }
-                }
-            } catch (e: Exception) {
-                // Ignore
-            }
+        val authToken = currentToken
+        if (authToken == null) {
+            return@withContext Result.failure(Exception("Authentication required: Please log in to escalate questions to an officer."))
         }
-        val authToken = token ?: return@withContext Result.failure(Exception("Unable to obtain authentication session"))
         try {
             val res = api.escalateTicket(
                 token = "Bearer $authToken",
@@ -236,25 +222,8 @@ class BolKisanRepository(private val context: Context) {
             ?: detectCropFromText(queryText)
             ?: _historyFlow.value.lastOrNull { it.crop.isNotBlank() }?.crop
 
-        // Ensure farmer token if not yet authenticated
-        var token = currentToken
-        if (token == null) {
-            try {
-                val otpRes = api.requestOtp(OTPRequestDto("+919876543210"))
-                if (otpRes.isSuccessful) {
-                    val devOtp = otpRes.body()?.devOtp ?: "123456"
-                    val vRes = api.verifyOtp(OTPVerifyDto("+919876543210", devOtp, currentLanguage, "Kisan"))
-                    if (vRes.isSuccessful && vRes.body() != null) {
-                        token = vRes.body()!!.accessToken
-                        currentToken = token
-                    }
-                }
-            } catch (e: Exception) {
-                // Ignore network issue, fallback offline
-            }
-        }
-
-        // Try Online FastAPI with CIBRC / RAG and Multi-turn History
+        // Try Online FastAPI with CIBRC / RAG and Multi-turn History if authenticated
+        val token = currentToken
         if (token != null) {
             try {
                 val historyPayload = _historyFlow.value.takeLast(6).map {

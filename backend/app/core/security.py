@@ -3,7 +3,11 @@ from typing import Optional, List, Dict, Any
 import jwt
 from fastapi import HTTPException, status, Depends
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from sqlalchemy.orm import Session
+
 from app.core.config import settings
+from app.database.session import get_db
+from app.database.models import User, ExtensionOfficer
 
 security_scheme = HTTPBearer(auto_error=False)
 
@@ -24,7 +28,10 @@ def decode_access_token(token: str) -> Optional[Dict[str, Any]]:
     except (jwt.PyJWTError, Exception):
         return None
 
-async def get_current_user_payload(credentials: Optional[HTTPAuthorizationCredentials] = Depends(security_scheme)) -> Dict[str, Any]:
+async def get_current_user_payload(
+    credentials: Optional[HTTPAuthorizationCredentials] = Depends(security_scheme),
+    db: Session = Depends(get_db)
+) -> Dict[str, Any]:
     if not credentials or not credentials.credentials:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -38,6 +45,50 @@ async def get_current_user_payload(credentials: Optional[HTTPAuthorizationCreden
             detail="Invalid or expired authentication token",
             headers={"WWW-Authenticate": "Bearer"},
         )
+
+    user_id = payload.get("sub")
+    if not user_id:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Malformed token: subject identifier missing",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
+    user = db.query(User).filter(User.id == user_id).first()
+    if not user:
+        if settings.ENVIRONMENT == "production":
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="User account no longer exists",
+                headers={"WWW-Authenticate": "Bearer"},
+            )
+        # In development mode, allow synthetic test runner tokens to proceed with token claims
+        return payload
+
+    if not user.is_active:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="User account is inactive or disabled",
+        )
+
+    # Revalidate live role & attributes from database to prevent stale token elevation
+    payload["role"] = user.role
+    payload["phone"] = user.phone_number
+    payload["name"] = user.full_name
+    payload["lang"] = user.preferred_lang
+
+    # Revalidate extension officer status and live jurisdiction
+    if user.role == "extension_officer":
+        officer = db.query(ExtensionOfficer).filter(ExtensionOfficer.user_id == user.id).first()
+        if not officer or officer.approval_status != "APPROVED":
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Extension Officer account is not approved or has been revoked",
+            )
+        payload["officer_code"] = officer.officer_code
+        payload["district"] = officer.assigned_district
+        payload["mandals"] = officer.assigned_mandals or []
+
     return payload
 
 class RoleChecker:
