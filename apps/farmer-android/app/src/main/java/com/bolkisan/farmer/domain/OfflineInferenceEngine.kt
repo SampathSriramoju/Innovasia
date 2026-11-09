@@ -34,7 +34,7 @@ class OfflineInferenceEngine(private val context: Context) {
         val actManager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
         val memInfo = ActivityManager.MemoryInfo()
         actManager.getMemoryInfo(memInfo)
-        val totalRamGb = (memInfo.totalMem / (1024 * 1024 * 1024)).toInt()
+        val totalRamGb = Math.round(memInfo.totalMem.toDouble() / (1024.0 * 1024.0 * 1024.0)).toInt().coerceAtLeast(1)
         val freeRamMb = memInfo.availMem / (1024 * 1024)
         return Pair(totalRamGb, freeRamMb)
     }
