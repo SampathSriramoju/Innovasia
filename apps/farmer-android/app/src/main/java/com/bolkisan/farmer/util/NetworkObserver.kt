@@ -26,7 +26,11 @@ class NetworkObserver(private val context: Context) {
             request,
             object : ConnectivityManager.NetworkCallback() {
                 override fun onAvailable(network: Network) {
-                    _isOnline.value = true
+                    val caps = connectivityManager.getNetworkCapabilities(network)
+                    val hasInternet = caps?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) == true
+                    val isValidated = caps?.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED) == true
+                    // Do NOT mark isOnline = true merely because Wi-Fi is connected without validated internet
+                    _isOnline.value = hasInternet && isValidated
                 }
 
                 override fun onLost(network: Network) {
@@ -37,9 +41,21 @@ class NetworkObserver(private val context: Context) {
                     network: Network,
                     networkCapabilities: NetworkCapabilities
                 ) {
-                    val hasInternet = networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) &&
-                            networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
-                    _isOnline.value = hasInternet
+                    val isAirplaneMode = android.provider.Settings.Global.getInt(
+                        context.contentResolver,
+                        android.provider.Settings.Global.AIRPLANE_MODE_ON,
+                        0
+                    ) != 0
+
+                    if (isAirplaneMode) {
+                        _isOnline.value = false
+                        return
+                    }
+
+                    val hasInternet = networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+                    val isValidated = networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
+                    // Strict check: NET_CAPABILITY_VALIDATED along with NET_CAPABILITY_INTERNET
+                    _isOnline.value = hasInternet && isValidated
                 }
             }
         )
@@ -47,11 +63,20 @@ class NetworkObserver(private val context: Context) {
 
     companion object {
         fun isNetworkAvailable(context: Context): Boolean {
+            val isAirplaneMode = android.provider.Settings.Global.getInt(
+                context.contentResolver,
+                android.provider.Settings.Global.AIRPLANE_MODE_ON,
+                0
+            ) != 0
+            if (isAirplaneMode) return false
+
             val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
                 ?: return false
             val activeNetwork = cm.activeNetwork ?: return false
             val capabilities = cm.getNetworkCapabilities(activeNetwork) ?: return false
-            return capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+            val hasInternet = capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+            val isValidated = capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
+            return hasInternet && isValidated
         }
     }
 }

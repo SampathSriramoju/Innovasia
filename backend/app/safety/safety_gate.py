@@ -82,20 +82,102 @@ class SafetyGate:
                 "severity": "HIGH"
             }
 
-        # Step 3: Identify explicit chemical recommendation query vs general agronomic/symptom query
         query_lower = query_text.lower()
+
+        # Step 2b: Scan for Severe Operational and Food Safety Violations
+        # A. Oral nozzle blowing hazard
+        if any(p in query_lower for p in ["నోటితో", "ముంహ సే ఫూంక", "मुंह से फूंक", "blow through", "mouth to clear", "nozzle with mouth"]):
+            return SafetyDecision(
+                is_safe=False,
+                needs_escalation=True,
+                severity="CRITICAL",
+                escalation_reason="Lethal Operator Hazard: Blowing through clogged pesticide spray nozzles with mouth causes acute oral poisoning and death.",
+                warnings=[
+                    "LETHAL SAFETY HAZARD: Never clear clogged sprayer nozzles with your mouth.",
+                    "Use a soft toothbrush or plastic wire and clean water.",
+                    "Escalating query to extension officer for safe equipment maintenance advisory."
+                ],
+                source_citation="WHO / NIPHM Safe Pesticide Handling Code"
+            ), {"query_type": "operator_safety_hazard", "is_chemical": True, "severity": "CRITICAL"}
+
+        # B. Harvest day pesticide spraying (PHI violation)
+        if any(p in query_lower for p in ["కోసే రోజు", "కోత రోజే", "తోడాయి వాలే దిన్", "तुड़ाई वाले दिन", "day of harvest", "morning of harvest", "same day of harvest"]):
+            return SafetyDecision(
+                is_safe=False,
+                needs_escalation=True,
+                severity="CRITICAL",
+                escalation_reason="Severe Food Safety & Pre-Harvest Interval (PHI) Violation: Applying chemical pesticides on the day of harvest leaves toxic residues exceeding statutory MRL limits.",
+                warnings=[
+                    "FOOD SAFETY VIOLATION: Never apply chemical pesticides on the day of harvest.",
+                    "Every registered chemical mandates a statutory Pre-Harvest Interval (PHI) of 3 to 30 days.",
+                    "Escalating case to Agricultural Officer to prevent consumer poisoning."
+                ],
+                source_citation="FSSAI & CIBRC Pre-Harvest Interval Regulations"
+            ), {"query_type": "phi_violation", "is_chemical": True, "severity": "CRITICAL"}
+
+        # C. Incompatible tank mix (Copper Oxychloride + Chlorpyrifos/OP/EC)
+        has_copper = any(p in query_lower for p in ["కాపర్", "कॉपर", "copper"])
+        has_op_or_ec = any(p in query_lower for p in ["క్లోర్‌పైరిఫాస్", "క్లోరిపైరిఫాస్", "క్లోర్", "क्लोरपायरीफॉस", "chlorpyrifos", "ఎండోసల్ఫాన్"])
+        if has_copper and has_op_or_ec:
+            return SafetyDecision(
+                is_safe=False,
+                needs_escalation=True,
+                severity="HIGH",
+                tank_mixture_detected=True,
+                escalation_reason="Chemical Incompatibility Hazard: Copper Oxychloride must never be tank-mixed with Organophosphates or EC formulations. Causes chemical breakdown, precipitation, and severe phytotoxicity (crop burning).",
+                warnings=[
+                    "PROHIBITED COMBINATION: Copper Oxychloride reacts with Organophosphates and EC formulations.",
+                    "Applying this tank mix burns crop leaves and leaves precipitate in the sprayer.",
+                    "Spray chemicals separately with a minimum 5-day interval."
+                ],
+                source_citation="NIPHM & CIBRC Chemical Incompatibility Standards"
+            ), {"query_type": "incompatible_mixture", "is_chemical": True, "severity": "HIGH"}
+
+        # D. Bio-inputs and Organic remedies bypass chemical escalation
+        is_bio_query = any(k in query_lower for k in [
+            "జీవామృతం", "బీజామృతం", "మజ్జిగ", "పుల్లటి మజ్జిగ", "వేపగింజల", "బ్రహ్మాస్త్రం", "అగ్ని అస్త్రం", "వేప నూనె", "వేప", "నీమ్", "ఫెరమోన్", "లింగాకర్షక",
+            "జీవామృత్", "जीवामृत", "बीजामृत", "छाछ", "खट्टी छाछ", "नीम बीज", "ब्रह्मास्त्र", "नीम तेल", "नीम", "फेरोमोन",
+            "jeevamrit", "beejamrit", "buttermilk", "nske", "brahmastra", "neem oil", "neem", "panchagavya", "pheromone",
+            "bt", "bacillus", "trichoderma", "బవేరియా", "ట్రైకోడెర్మా", "ब्युवेरिया", "ट्राइकोडर्मा",
+            "రైజోబియం", "రాజోబియం", "राइजोबियम", "rhizobium", "psb", "azolla", "bga", "అజోల్లా"
+        ])
+        if is_bio_query and not chemical:
+            return SafetyDecision(
+                is_safe=True,
+                needs_escalation=False,
+                severity="LOW",
+                warnings=[]
+            ), {"query_type": "bio_inputs", "is_chemical": False, "analysis": analysis}
+
+        # Step 3: Scan query text for registered CIBRC products / active ingredients
+        target_chem = chemical
+        if not target_chem:
+            for rec in self.validator.records:
+                trade_name = (rec.get("product_trade_name") or rec.get("trade_name") or "").lower()
+                ai_name = rec.get("active_ingredient", "").lower()
+                # Check for trade name match or active ingredient primary stem match
+                if trade_name and len(trade_name) > 3 and trade_name in query_lower:
+                    target_chem = rec.get("product_trade_name") or rec.get("trade_name")
+                    break
+                if ai_name:
+                    primary_ai = ai_name.split()[0].lower()
+                    if len(primary_ai) > 4 and primary_ai in query_lower:
+                        target_chem = rec.get("product_trade_name") or rec.get("active_ingredient")
+                        break
+
+        # Step 4: Identify explicit chemical recommendation query vs general agronomic/symptom query
         explicit_chemical_intent = any(word in query_lower for word in [
             "spray", "pesticide", "fungicide", "insecticide", "dose", "dosage", "chemical",
             "పురుగు మందు", "తెగులు మందు", "రసాయన", "పిచికారీ మోతాదు", "మందు కొట్టాలి", "మందు స్ప్రే",
             "कीटनाशक", "छिड़काव मात्रा", "दवा की मात्रा", "रासायनिक दवा"
         ])
 
-        if chemical or explicit_chemical_intent:
+        if target_chem or explicit_chemical_intent:
             # Strictly validate through CIBRC 8-parameter engine
             decision = self.validator.validate_pesticide_use(
                 crop=effective_crop,
                 pest_or_disease=effective_pest_or_disease,
-                product_or_chemical=chemical
+                product_or_chemical=target_chem
             )
             return decision, {
                 "query_type": "pesticide_chemical",

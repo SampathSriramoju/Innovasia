@@ -58,7 +58,20 @@ data class VoiceAnswerDto(
     @SerializedName("citations") val citations: List<String>? = null,
     @SerializedName("warnings") val warnings: List<String>? = null,
     @SerializedName("follow_up_suggestions") val followUpSuggestions: List<String>? = null,
-    @SerializedName("tts_playback_url") val ttsPlaybackUrl: String? = null
+    @SerializedName("is_fallback") val isFallback: Boolean? = null,
+    @SerializedName("model_used") val modelUsed: String? = null,
+    @SerializedName("provider") val provider: String? = null,
+    @SerializedName("tts_playback_url") val ttsPlaybackUrl: String? = null,
+    @SerializedName("asr_latency_ms") val asrLatencyMs: Long? = null,
+    @SerializedName("retrieval_latency_ms") val retrievalLatencyMs: Long? = null,
+    @SerializedName("inference_latency_ms") val inferenceLatencyMs: Long? = null,
+    @SerializedName("ttft_ms") val ttftMs: Long? = null,
+    @SerializedName("tokens_per_sec") val tokensPerSec: Double? = null,
+    @SerializedName("safety_gate_latency_ms") val safetyGateLatencyMs: Long? = null,
+    @SerializedName("tts_first_audio_ms") val ttsFirstAudioLatencyMs: Long? = null,
+    @SerializedName("total_v2v_latency_ms") val totalVoiceToVoiceLatencyMs: Long? = null,
+    @SerializedName("is_cold_start") val isColdStart: Boolean? = null,
+    @SerializedName("meets_6sec_sla") val meets6SecSla: Boolean? = null
 )
 
 // CROPS
@@ -204,3 +217,34 @@ data class MessagePostResponseDto(
     @SerializedName("ticket_id") val ticketId: String? = null,
     @SerializedName("citations") val citations: List<String>? = null
 )
+
+// SYSTEM HEALTH
+data class BackendHealthDto(
+    @SerializedName("status") val status: String,
+    @SerializedName("service") val service: String? = null,
+    @SerializedName("version") val version: String? = null,
+    @SerializedName("environment") val environment: String? = null,
+    @SerializedName("database") val database: DatabaseHealthDto? = null,
+    @SerializedName("ai_provider") val aiProvider: AiProviderHealthDto? = null,
+    @SerializedName("safety_gate") val safetyGate: Map<String, Any>? = null
+)
+
+data class DatabaseHealthDto(
+    @SerializedName("status") val status: String,
+    @SerializedName("engine") val engine: String? = null,
+    @SerializedName("dialect") val dialect: String? = null,
+    @SerializedName("error") val error: String? = null
+)
+
+data class AiProviderHealthDto(
+    @SerializedName("provider") val provider: String? = null,
+    @SerializedName("model") val model: String? = null,
+    @SerializedName("model_name") val modelName: String? = null,
+    @SerializedName("is_configured") val isConfigured: Boolean = false,
+    @SerializedName("gemini_configured") val geminiConfigured: Boolean = false,
+    @SerializedName("client_ready") val clientReady: Boolean = false,
+    @SerializedName("status") val status: String? = null
+) {
+    val isGeminiReady: Boolean
+        get() = geminiConfigured || isConfigured || clientReady
+}

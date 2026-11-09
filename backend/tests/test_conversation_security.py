@@ -1,15 +1,11 @@
 import pytest
-from fastapi.testclient import TestClient
-from app.main import app
+from starlette.testclient import TestClient
 from app.core.security import create_access_token
-from app.database.session import SessionLocal
 from app.database.models import User, FarmerProfile, ExtensionOfficer, Conversation, ConversationMessage, AgriculturalTicket
 
-client = TestClient(app)
-
 @pytest.fixture
-def setup_test_users():
-    db = SessionLocal()
+def setup_test_users(db_session):
+    db = db_session
 
     # Farmer 1 (Warangal / Geesugonda)
     farmer1 = db.query(User).filter(User.phone_number == "9700000001").first()
@@ -163,11 +159,10 @@ def setup_test_users():
         "officer_khammam": off_user2,
         "officer_empty": off_user3
     }
-    db.close()
     return tokens, users
 
 
-def test_cross_farmer_conversation_isolation(setup_test_users):
+def test_cross_farmer_conversation_isolation(client: TestClient, setup_test_users):
     tokens, users = setup_test_users
 
     # Farmer 1 creates conversation
@@ -185,7 +180,7 @@ def test_cross_farmer_conversation_isolation(setup_test_users):
     assert res_other.status_code == 404
 
 
-def test_officer_cannot_view_conversation_without_associated_ticket(setup_test_users):
+def test_officer_cannot_view_conversation_without_associated_ticket(client: TestClient, setup_test_users):
     tokens, users = setup_test_users
 
     # Farmer creates unescalated conversation
@@ -200,7 +195,7 @@ def test_officer_cannot_view_conversation_without_associated_ticket(setup_test_u
     assert "associated" in res_off.json()["detail"].lower()
 
 
-def test_officer_cross_jurisdiction_and_empty_jurisdiction_denial(setup_test_users):
+def test_officer_cross_jurisdiction_and_empty_jurisdiction_denial(client: TestClient, setup_test_users):
     tokens, users = setup_test_users
 
     # Farmer creates conversation
@@ -248,7 +243,7 @@ def test_officer_cross_jurisdiction_and_empty_jurisdiction_denial(setup_test_use
     assert res_auth.status_code == 200
 
 
-def test_officer_reply_appears_in_original_farmer_conversation(setup_test_users):
+def test_officer_reply_appears_in_original_farmer_conversation(client: TestClient, setup_test_users):
     tokens, users = setup_test_users
 
     # Farmer creates conversation

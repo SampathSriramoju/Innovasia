@@ -21,6 +21,9 @@ def get_db() -> Generator[Session, None, None]:
     db = SessionLocal()
     try:
         yield db
+    except Exception:
+        db.rollback()
+        raise
     finally:
         db.close()
 
@@ -39,3 +42,15 @@ def init_db():
                             col_type = col.type.compile(engine.dialect)
                             conn.execute(text(f"ALTER TABLE {table_name} ADD COLUMN {col.name} {col_type}"))
             conn.commit()
+
+    # Seed core crops if table is empty
+    with SessionLocal() as db:
+        if db.query(models.Crop).count() == 0:
+            seed_crops = [
+                models.Crop(scientific_name="Gossypium hirsutum", name_en="Cotton", name_te="ప్రత్తి (పత్తి)", name_hi="कपास", category="Commercial Fiber", season="Kharif"),
+                models.Crop(scientific_name="Oryza sativa", name_en="Rice / Paddy", name_te="వరి", name_hi="धान / चावल", category="Cereal Food Grain", season="Kharif / Rabi"),
+                models.Crop(scientific_name="Capsicum annuum", name_en="Chilli", name_te="మిరప", name_hi="मिर्च", category="Spices", season="Kharif / Rabi"),
+                models.Crop(scientific_name="Solanum lycopersicum", name_en="Tomato", name_te="టమోటా", name_hi="टमाटर", category="Vegetable", season="Year-round"),
+            ]
+            db.add_all(seed_crops)
+            db.commit()

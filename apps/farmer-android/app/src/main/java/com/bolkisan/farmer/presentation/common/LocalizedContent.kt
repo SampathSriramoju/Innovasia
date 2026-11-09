@@ -41,6 +41,11 @@ fun canonicalCropName(raw: String?): String {
         clean.equals("Groundnut", ignoreCase = true) || clean.equals("Peanut", ignoreCase = true) || clean.contains("వేరుశనగ") || clean.contains("వేరుశెనగ") || clean.contains("మూంగఫలీ") || clean.contains("मूंगफली") -> "Groundnut"
         clean.equals("Turmeric", ignoreCase = true) || clean.contains("పసుపు") || clean.contains("हल्दी") -> "Turmeric"
         clean.equals("Mango", ignoreCase = true) || clean.contains("మామిడి") || clean.contains("आम") -> "Mango"
+        clean.equals("Red Gram", ignoreCase = true) || clean.equals("Pigeonpea", ignoreCase = true) || clean.contains("కంది") || clean.contains("अरहर") || clean.contains("तुअर") -> "Red Gram"
+        clean.equals("Bengal Gram", ignoreCase = true) || clean.equals("Chickpea", ignoreCase = true) || clean.contains("శనగ") || clean.contains("चना") -> "Bengal Gram"
+        clean.equals("Soybean", ignoreCase = true) || clean.contains("సోయాబీన్") || clean.contains("सोयाबीन") -> "Soybean"
+        clean.equals("Onion", ignoreCase = true) || clean.contains("ఉల్లి") || clean.contains("प्याज") -> "Onion"
+        clean.equals("Organic", ignoreCase = true) || clean.contains("జీవామృతం") || clean.contains("బీజామృతం") || clean.contains("जीवामृत") || clean.contains("बीजामृत") -> "Organic"
         else -> clean
     }
 }

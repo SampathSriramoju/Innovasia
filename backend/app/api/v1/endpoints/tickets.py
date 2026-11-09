@@ -3,6 +3,7 @@ from datetime import datetime, timezone
 from fastapi import APIRouter, Depends, HTTPException, status
 from pydantic import BaseModel, Field
 from typing import List, Optional, Dict, Any
+from sqlalchemy import func
 from sqlalchemy.orm import Session
 from app.database.session import get_db
 from app.database.models import AgriculturalTicket, User, FarmerProfile, TicketMessage, ConversationMessage, Conversation
@@ -86,7 +87,7 @@ async def list_tickets(
         )
 
     if status_filter:
-        query = query.filter(AgriculturalTicket.status == status_filter)
+        query = query.filter(func.upper(AgriculturalTicket.status) == status_filter.upper())
 
     tickets = query.order_by(AgriculturalTicket.created_at.desc()).all()
 

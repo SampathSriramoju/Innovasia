@@ -492,6 +492,27 @@ def export_rag_chunks() -> List[Dict[str, Any]]:
                 "sha256_hash": chunk_hash
             })
 
+    # Also load and append comprehensive verified crop cards
+    cards_path = KB_DIR / "crop-information" / "crop_knowledge_cards_verified.json"
+    if cards_path.exists():
+        try:
+            with open(cards_path, "r", encoding="utf-8") as f:
+                verified_cards = json.load(f)
+            for c in verified_cards:
+                c_hash = hashlib.sha256(c["content"].encode("utf-8")).hexdigest()
+                chunks.append({
+                    "chunk_id": c["id"],
+                    "collection_id": c.get("collectionId", "KB04"),
+                    "title": c["title"],
+                    "crop": c["crop"],
+                    "content": c["content"],
+                    "citation": c["sourceCitation"],
+                    "language": c.get("language", "en"),
+                    "sha256_hash": c_hash
+                })
+        except Exception as e:
+            print(f"[WARN] Failed to append verified crop cards: {e}")
+
     return chunks
 
 

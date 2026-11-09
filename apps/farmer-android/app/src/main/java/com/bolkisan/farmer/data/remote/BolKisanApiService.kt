@@ -8,6 +8,9 @@ import retrofit2.http.*
 
 interface BolKisanApiService {
 
+    @GET("health")
+    suspend fun getHealth(): Response<BackendHealthDto>
+
     @POST("auth/request-otp")
     suspend fun requestOtp(@Body request: OTPRequestDto): Response<OTPResponseDto>
 

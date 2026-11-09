@@ -1,5 +1,11 @@
 package com.bolkisan.farmer.presentation.voice
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -18,11 +24,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
 import com.bolkisan.farmer.data.remote.models.VoiceAnswerDto
 import com.bolkisan.farmer.data.repository.BolKisanRepository
+import com.bolkisan.farmer.domain.voice.AssistantState
+import com.bolkisan.farmer.domain.voice.VoiceAssistantManager
 import com.bolkisan.farmer.presentation.common.NetworkStatusBar
 import com.bolkisan.farmer.presentation.common.appStrings
 import com.bolkisan.farmer.presentation.common.localizedCropName
@@ -35,22 +45,46 @@ fun VoiceAssistantScreen(
     repository: BolKisanRepository,
     onBack: () -> Unit
 ) {
+    val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     val isOnline by repository.isOnline.collectAsState()
     val currentLang by repository.languageFlow.collectAsState()
-    val strings = appStrings(currentLang)
+    val strings = remember(currentLang) { appStrings(currentLang) }
     val quickPrompts = remember(currentLang) { voiceQuickPrompts(currentLang) }
     val cropDisplay = localizedCropName(repository.selectedCrop, currentLang)
-    var isRecording by remember { mutableStateOf(false) }
+
     var recognizedText by remember { mutableStateOf("") }
     var answerState by remember { mutableStateOf<VoiceAnswerDto?>(null) }
     var isLoading by remember { mutableStateOf(false) }
+
+    // Initialize VoiceAssistantManager with speech recognition callback
+    var submitQueryAction by remember { mutableStateOf<((String) -> Unit)?>(null) }
+    val voiceManager = remember {
+        VoiceAssistantManager(context) { query ->
+            if (query.isNotBlank()) {
+                submitQueryAction?.invoke(query)
+            }
+        }
+    }
+
+    DisposableEffect(Unit) {
+        onDispose {
+            voiceManager.release()
+        }
+    }
+
+    val assistantState by voiceManager.assistantState.collectAsState()
+    val liveTranscription by voiceManager.liveTranscription.collectAsState()
+    val rmsLevel by voiceManager.rmsLevel.collectAsState()
+    val isSpeaking by voiceManager.isSpeaking.collectAsState()
+    val isMuted by voiceManager.isMuted.collectAsState()
+    val voiceError by voiceManager.errorMessage.collectAsState()
 
     // Pulsing animation for microphone
     val infiniteTransition = rememberInfiniteTransition(label = "pulse")
     val pulseScale by infiniteTransition.animateFloat(
         initialValue = 1f,
-        targetValue = if (isRecording) 1.25f else 1f,
+        targetValue = if (assistantState == AssistantState.LISTENING) 1.25f else 1f,
         animationSpec = infiniteRepeatable(
             animation = tween(600, easing = FastOutSlowInEasing),
             repeatMode = RepeatMode.Reverse
@@ -59,20 +93,82 @@ fun VoiceAssistantScreen(
     )
 
     fun submitQuery(query: String) {
-        recognizedText = query
+        val cleanQuery = query.trim()
+        if (cleanQuery.isBlank()) return
+
+        recognizedText = cleanQuery
+        voiceManager.stopSpeaking()
+        voiceManager.setProcessingState()
         isLoading = true
+
         coroutineScope.launch {
-            val res = repository.askQuestion(query)
+            val asrLatency = voiceManager.getLastAsrLatencyMs()
+            val res = repository.askQuestion(cleanQuery, asrLatencyMs = asrLatency)
             isLoading = false
             if (res.isSuccess) {
-                answerState = res.getOrNull()
+                val ans = res.getOrNull()
+                answerState = ans
+                voiceManager.setReadyState()
+
+                if (ans != null) {
+                    voiceManager.recordPipelineLatencies(
+                        retrievalMs = ans.retrievalLatencyMs ?: 0L,
+                        ttftMs = ans.ttftMs ?: 0L,
+                        inferenceMs = ans.inferenceLatencyMs ?: 0L,
+                        tokensPerSec = ans.tokensPerSec ?: 0.0,
+                        safetyMs = ans.safetyGateLatencyMs ?: 0L,
+                        isColdStart = ans.isColdStart ?: false
+                    )
+                }
+
+                // CRITICAL: Call voiceManager.speak ONLY on ans.responseText (the AI answer), NEVER on the farmer's question!
+                val spokenText = ans?.responseText
+                if (!spokenText.isNullOrBlank() && !isMuted) {
+                    voiceManager.speak(spokenText, currentLang)
+                }
             } else {
+                voiceManager.setReadyState()
+                val errorReason = res.exceptionOrNull()?.message ?: "Unknown error"
                 answerState = VoiceAnswerDto(
                     status = "error",
                     isSafe = false,
-                    responseText = "${strings.voiceServerError}\n[Error: ${res.exceptionOrNull()?.message}]",
+                    responseText = "${strings.voiceServerError}\n[Error: $errorReason]",
                     citations = listOf("Local Network Fallback")
                 )
+            }
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        submitQueryAction = { query -> submitQuery(query) }
+    }
+
+    // Microphone Permission Launcher
+    val recordAudioLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        if (isGranted) {
+            voiceManager.startListening(currentLang, isOnline)
+        } else {
+            Toast.makeText(context, "Microphone permission is required for voice assistant", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    fun handleMicTapped() {
+        if (assistantState == AssistantState.LISTENING) {
+            voiceManager.stopListening()
+        } else if (assistantState == AssistantState.SPEAKING) {
+            voiceManager.stopSpeaking()
+        } else {
+            val hasPermission = ContextCompat.checkSelfPermission(
+                context,
+                Manifest.permission.RECORD_AUDIO
+            ) == PackageManager.PERMISSION_GRANTED
+
+            if (hasPermission) {
+                voiceManager.startListening(currentLang, isOnline)
+            } else {
+                recordAudioLauncher.launch(Manifest.permission.RECORD_AUDIO)
             }
         }
     }
@@ -113,12 +209,44 @@ fun VoiceAssistantScreen(
                 }
             }
 
-            // Real-Time Network State Banner
+            // Real-Time Network State Banner (differentiating Online, Offline SLM, Offline Knowledge)
             NetworkStatusBar(
                 isOnline = isOnline,
                 language = currentLang,
                 modifier = Modifier.padding(vertical = 6.dp)
             )
+
+            // Voice error banner (handles missing offline speech pack gracefully)
+            if (voiceError != null) {
+                Surface(
+                    shape = RoundedCornerShape(12.dp),
+                    color = Color(0xFFFFFBEB),
+                    border = androidx.compose.foundation.BorderStroke(1.dp, Color(0xFFFDE68A)),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 6.dp)
+                ) {
+                    Row(
+                        modifier = Modifier.padding(12.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            Icons.Default.Info,
+                            contentDescription = null,
+                            tint = Color(0xFFD97706),
+                            modifier = Modifier.size(20.dp)
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(
+                            text = voiceError ?: "",
+                            fontSize = 12.sp,
+                            color = Color(0xFF92400E),
+                            fontWeight = FontWeight.Medium,
+                            lineHeight = 17.sp
+                        )
+                    }
+                }
+            }
 
             Spacer(modifier = Modifier.height(10.dp))
 
@@ -144,14 +272,14 @@ fun VoiceAssistantScreen(
                 }
             }
 
-            Spacer(modifier = Modifier.height(28.dp))
+            Spacer(modifier = Modifier.height(24.dp))
 
             // Central Push-To-Talk Button (80dp diameter with haptic pulse)
             Box(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier.size(120.dp)
             ) {
-                if (isRecording) {
+                if (assistantState == AssistantState.LISTENING) {
                     Box(
                         modifier = Modifier
                             .size(110.dp)
@@ -162,21 +290,16 @@ fun VoiceAssistantScreen(
 
                 Surface(
                     shape = CircleShape,
-                    color = if (isRecording) HazardRed else ForestGreenPrimary,
+                    color = if (assistantState == AssistantState.LISTENING) HazardRed else ForestGreenPrimary,
                     modifier = Modifier
                         .size(80.dp)
                         .clip(CircleShape)
-                        .clickable {
-                            isRecording = !isRecording
-                            if (!isRecording) {
-                                submitQuery(quickPrompts.firstOrNull()?.text ?: strings.voiceTitle)
-                            }
-                        },
+                        .clickable { handleMicTapped() },
                     shadowElevation = 6.dp
                 ) {
                     Box(contentAlignment = Alignment.Center) {
                         Icon(
-                            if (isRecording) Icons.Default.Stop else Icons.Default.Mic,
+                            if (assistantState == AssistantState.LISTENING) Icons.Default.Stop else Icons.Default.Mic,
                             contentDescription = "Push to Talk",
                             tint = CardWhite,
                             modifier = Modifier.size(40.dp)
@@ -186,12 +309,48 @@ fun VoiceAssistantScreen(
             }
 
             Text(
-                text = if (isRecording) strings.voiceListening else strings.voiceTapToSpeak,
+                text = when {
+                    assistantState == AssistantState.LISTENING -> strings.voiceListening
+                    isSpeaking -> strings.heroSpeaking
+                    isLoading -> strings.thinkingIndicator
+                    else -> strings.voiceTapToSpeak
+                },
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Bold,
-                color = if (isRecording) HazardRed else ForestGreenPrimary,
-                modifier = Modifier.padding(top = 12.dp)
+                color = if (assistantState == AssistantState.LISTENING) HazardRed else ForestGreenPrimary,
+                modifier = Modifier.padding(top = 10.dp)
             )
+
+            // Live speech transcription during listening
+            if (assistantState == AssistantState.LISTENING && liveTranscription.isNotBlank()) {
+                Surface(
+                    shape = RoundedCornerShape(12.dp),
+                    color = Color(0xFFF1F8F4),
+                    border = androidx.compose.foundation.BorderStroke(1.dp, Color(0xFFC7EBD1)),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 12.dp)
+                ) {
+                    Row(
+                        modifier = Modifier.padding(12.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            Icons.Default.GraphicEq,
+                            contentDescription = null,
+                            tint = ForestGreenPrimary,
+                            modifier = Modifier.size(18.dp)
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(
+                            text = liveTranscription,
+                            fontSize = 13.sp,
+                            color = DarkEarthFg,
+                            fontWeight = FontWeight.Medium
+                        )
+                    }
+                }
+            }
 
             if (isLoading) {
                 Spacer(modifier = Modifier.height(20.dp))
@@ -206,7 +365,46 @@ fun VoiceAssistantScreen(
 
             // Results Card
             answerState?.let { ans ->
-                Spacer(modifier = Modifier.height(24.dp))
+                Spacer(modifier = Modifier.height(20.dp))
+
+                // Farmer Recognized Question preview
+                if (recognizedText.isNotBlank()) {
+                    Surface(
+                        shape = RoundedCornerShape(14.dp),
+                        color = ForestGreenPrimary,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Column(modifier = Modifier.padding(12.dp)) {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Icon(
+                                    Icons.Default.Person,
+                                    contentDescription = null,
+                                    tint = Color.White.copy(alpha = 0.8f),
+                                    modifier = Modifier.size(14.dp)
+                                )
+                                Spacer(modifier = Modifier.width(4.dp))
+                                Text(
+                                    text = when (currentLang) {
+                                        "te" -> "రైతు ప్రశ్న"
+                                        "hi" -> "किसान का प्रश्न"
+                                        else -> "Farmer Question"
+                                    },
+                                    fontSize = 10.sp,
+                                    color = Color.White.copy(alpha = 0.8f),
+                                    fontWeight = FontWeight.SemiBold
+                                )
+                            }
+                            Spacer(modifier = Modifier.height(4.dp))
+                            Text(
+                                text = recognizedText,
+                                fontSize = 13.5.sp,
+                                color = Color.White,
+                                fontWeight = FontWeight.Medium
+                            )
+                        }
+                    }
+                    Spacer(modifier = Modifier.height(10.dp))
+                }
 
                 if (!ans.isSafe || ans.status == "escalated") {
                     // Safety Escalation Card (Red)
@@ -258,6 +456,15 @@ fun VoiceAssistantScreen(
                     }
                 } else {
                     // Verified Answer Card (Green)
+                    val status = ans.status ?: "online"
+                    val (badgeBg, badgeText, badgeFg) = when {
+                        status == "answered_offline_slm" -> Triple(Color(0xFFF5F3FF), "⚡ OFFLINE SLM (Qwen3-0.6B On-Device AI)", Color(0xFF5B21B6))
+                        status == "answered_offline_fallback" -> Triple(Color(0xFFFFFBEB), "📦 OFFLINE KNOWLEDGE (Room SQLite ICAR)", Color(0xFF92400E))
+                        status == "offline_queued" -> Triple(Color(0xFFFFFBEB), "⏳ OFFLINE QUEUED (Auto-Sync)", Color(0xFF92400E))
+                        isOnline -> Triple(Color(0xFFDCFCE7), "🟢 ONLINE (FastAPI Cloud/LAN)", Color(0xFF14532D))
+                        else -> Triple(Color(0xFFFFFBEB), "📦 OFFLINE KNOWLEDGE (Room SQLite ICAR)", Color(0xFF92400E))
+                    }
+
                     Card(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -266,6 +473,7 @@ fun VoiceAssistantScreen(
                         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
                     ) {
                         Column(modifier = Modifier.padding(18.dp)) {
+                            // Header with Status Badge and Audio Wave
                             Row(
                                 modifier = Modifier.fillMaxWidth(),
                                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -273,30 +481,27 @@ fun VoiceAssistantScreen(
                             ) {
                                 Row(verticalAlignment = Alignment.CenterVertically) {
                                     Icon(Icons.Default.CheckCircle, contentDescription = "Verified", tint = ForestGreenPrimary)
-                                    Spacer(modifier = Modifier.width(8.dp))
-                                    Text(
-                                        text = strings.verifiedInfo,
-                                        fontWeight = FontWeight.Bold,
-                                        fontSize = 16.sp,
-                                        color = ForestGreenPrimary
-                                    )
+                                    Spacer(modifier = Modifier.width(6.dp))
+                                    Surface(
+                                        shape = RoundedCornerShape(6.dp),
+                                        color = badgeBg
+                                    ) {
+                                        Text(
+                                            text = badgeText,
+                                            fontSize = 9.5.sp,
+                                            fontWeight = FontWeight.Bold,
+                                            color = badgeFg,
+                                            modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
+                                        )
+                                    }
                                 }
 
-                                Surface(
-                                    shape = CircleShape,
-                                    color = MintCreamBg,
-                                    modifier = Modifier.size(36.dp)
-                                ) {
-                                    Box(contentAlignment = Alignment.Center) {
-                                        Icon(Icons.Default.VolumeUp, contentDescription = "Play Audio", tint = ForestGreenPrimary, modifier = Modifier.size(20.dp))
-                                    }
+                                if (isSpeaking) {
+                                    VoiceAnimatedAudioWave(isSpeaking = true, barColor = ForestGreenPrimary)
                                 }
                             }
 
-                            val cleanedDisplay = ans.responseText
-                                .replace(Regex("\\[.*?\\]"), "")
-                                .replace(Regex("(?m)^\\s*(?:ఆధారం|మూలం|स्रोत|Source|Citation)\\s*:.*$"), "")
-                                .trim()
+                            val cleanedDisplay = ans.responseText.trim()
 
                             Text(
                                 text = cleanedDisplay,
@@ -305,10 +510,172 @@ fun VoiceAssistantScreen(
                                 modifier = Modifier.padding(top = 10.dp),
                                 lineHeight = 21.sp
                             )
+
+                            if (!ans.citations.isNullOrEmpty()) {
+                                Spacer(modifier = Modifier.height(8.dp))
+                                Text(
+                                    text = ans.citations.joinToString(" • "),
+                                    fontSize = 10.5.sp,
+                                    fontWeight = FontWeight.Medium,
+                                    color = MutedSlate
+                                )
+                            }
+
+                            if (ans.totalVoiceToVoiceLatencyMs != null || ans.inferenceLatencyMs != null) {
+                                Spacer(modifier = Modifier.height(6.dp))
+                                Surface(
+                                    shape = RoundedCornerShape(6.dp),
+                                    color = Color(0xFFF3F4F6)
+                                ) {
+                                    val v2vText = ans.totalVoiceToVoiceLatencyMs?.let { "${it}ms" } ?: "${ans.inferenceLatencyMs ?: 0}ms"
+                                    val slaPass = (ans.totalVoiceToVoiceLatencyMs ?: ans.inferenceLatencyMs ?: 0L) <= 6000L
+                                    Text(
+                                        text = "⚡ Voice-to-Voice: $v2vText • SLA (<6s): ${if (slaPass) "PASSED" else "EXCEEDED"}",
+                                        fontSize = 10.sp,
+                                        fontWeight = FontWeight.Medium,
+                                        color = if (slaPass) ForestGreenPrimary else HazardRed,
+                                        modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
+                                    )
+                                }
+                            }
+
+                            Spacer(modifier = Modifier.height(12.dp))
+                            HorizontalDivider(color = Color(0xFFE5E7EB), thickness = 0.5.dp)
+                            Spacer(modifier = Modifier.height(10.dp))
+
+                            // Working Audio Controls: Play/Pause, Replay, Stop, Mute
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                    // Play / Pause Button
+                                    Surface(
+                                        shape = CircleShape,
+                                        color = if (isSpeaking) Color(0xFFDCFCE7) else MintCreamBg,
+                                        modifier = Modifier
+                                            .size(36.dp)
+                                            .clip(CircleShape)
+                                            .clickable {
+                                                if (isSpeaking) {
+                                                    voiceManager.stopSpeaking()
+                                                } else {
+                                                    voiceManager.speak(ans.responseText, currentLang)
+                                                }
+                                            }
+                                    ) {
+                                        Box(contentAlignment = Alignment.Center) {
+                                            Icon(
+                                                if (isSpeaking) Icons.Default.Pause else Icons.Default.PlayArrow,
+                                                contentDescription = if (isSpeaking) "Pause" else "Play",
+                                                tint = ForestGreenPrimary,
+                                                modifier = Modifier.size(20.dp)
+                                            )
+                                        }
+                                    }
+
+                                    Spacer(modifier = Modifier.width(10.dp))
+
+                                    // Replay Button
+                                    Surface(
+                                        shape = CircleShape,
+                                        color = MintCreamBg,
+                                        modifier = Modifier
+                                            .size(36.dp)
+                                            .clip(CircleShape)
+                                            .clickable {
+                                                voiceManager.speak(ans.responseText, currentLang)
+                                            }
+                                    ) {
+                                        Box(contentAlignment = Alignment.Center) {
+                                            Icon(
+                                                Icons.Default.Replay,
+                                                contentDescription = "Replay",
+                                                tint = ForestGreenPrimary,
+                                                modifier = Modifier.size(18.dp)
+                                            )
+                                        }
+                                    }
+
+                                    Spacer(modifier = Modifier.width(10.dp))
+
+                                    // Stop Button
+                                    if (isSpeaking) {
+                                        Surface(
+                                            shape = CircleShape,
+                                            color = Color(0xFFFEE2E2),
+                                            modifier = Modifier
+                                                .size(36.dp)
+                                                .clip(CircleShape)
+                                                .clickable { voiceManager.stopSpeaking() }
+                                        ) {
+                                            Box(contentAlignment = Alignment.Center) {
+                                                Icon(
+                                                    Icons.Default.Stop,
+                                                    contentDescription = "Stop",
+                                                    tint = HazardRed,
+                                                    modifier = Modifier.size(18.dp)
+                                                )
+                                            }
+                                        }
+                                        Spacer(modifier = Modifier.width(10.dp))
+                                    }
+                                }
+
+                                // Mute / Unmute Button
+                                IconButton(
+                                    onClick = { voiceManager.toggleMute() },
+                                    modifier = Modifier.size(36.dp)
+                                ) {
+                                    Icon(
+                                        if (isMuted) Icons.Default.VolumeOff else Icons.Default.VolumeUp,
+                                        contentDescription = if (isMuted) "Unmute" else "Mute",
+                                        tint = if (isMuted) HazardRed else ForestGreenPrimary,
+                                        modifier = Modifier.size(22.dp)
+                                    )
+                                }
+                            }
                         }
                     }
                 }
             }
+        }
+    }
+}
+
+@Composable
+fun VoiceAnimatedAudioWave(
+    isSpeaking: Boolean,
+    modifier: Modifier = Modifier,
+    barColor: Color = ForestGreenPrimary
+) {
+    val infiniteTransition = rememberInfiniteTransition(label = "audioWaveVoice")
+    val heights = (0..4).map { index ->
+        infiniteTransition.animateFloat(
+            initialValue = 0.2f,
+            targetValue = if (isSpeaking) 1.0f else 0.2f,
+            animationSpec = infiniteRepeatable(
+                animation = tween(300 + index * 80, easing = LinearOutSlowInEasing),
+                repeatMode = RepeatMode.Reverse
+            ),
+            label = "bar_$index"
+        )
+    }
+
+    Row(
+        modifier = modifier.height(14.dp),
+        horizontalArrangement = Arrangement.spacedBy(2.5.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        heights.forEach { anim ->
+            Box(
+                modifier = Modifier
+                    .width(3.dp)
+                    .fillMaxHeight(anim.value)
+                    .clip(RoundedCornerShape(1.5.dp))
+                    .background(barColor)
+            )
         }
     }
 }

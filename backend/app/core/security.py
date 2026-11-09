@@ -56,14 +56,11 @@ async def get_current_user_payload(
 
     user = db.query(User).filter(User.id == user_id).first()
     if not user:
-        if settings.ENVIRONMENT == "production":
-            raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="User account no longer exists",
-                headers={"WWW-Authenticate": "Bearer"},
-            )
-        # In development mode, allow synthetic test runner tokens to proceed with token claims
-        return payload
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="User account does not exist or has been removed",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
 
     if not user.is_active:
         raise HTTPException(

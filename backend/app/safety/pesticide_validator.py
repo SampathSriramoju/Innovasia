@@ -286,7 +286,19 @@ class PesticideValidator:
         unit_match = re.search(r'\b(g|gm|gms|grams?|kg|ml|liters?)\b', dosage_per_acre, re.I)
         unit = PesticideValidator.normalize_unit(unit_match.group(0)) if unit_match else "g"
 
-        water_vol = dilution_nums[0] if dilution_nums else 200.0
+        # Explicitly extract per-acre water volume, avoiding per-hectare confusion (e.g. 500 L/ha vs 200 L/acre)
+        acre_water_match = re.search(r'(\d+(?:\.\d+)?)\s*(?:l|liters?|litres?)\s*(?:per|/)?\s*acre', dilution_liters, re.I)
+        if not acre_water_match:
+            acre_water_match = re.search(r'\((\d+(?:\.\d+)?)\s*(?:l|liters?|litres?)\)', dilution_liters, re.I)
+        
+        if acre_water_match:
+            water_vol = float(acre_water_match.group(1))
+        elif dilution_nums:
+            candidates = [n for n in dilution_nums if 100 <= n <= 350]
+            water_vol = candidates[0] if candidates else dilution_nums[0]
+        else:
+            water_vol = 200.0
+
         if not acre_nums or water_vol <= 0:
             return f"Refer to label dilution rate per {int(knapsack_liters)}L sprayer"
 
@@ -463,7 +475,19 @@ class PesticideValidator:
         if banned_decision:
             return banned_decision
 
-        if not crop or not pest_or_disease:
+        if not crop:
+            return SafetyDecision(
+                is_safe=False,
+                needs_escalation=True,
+                severity="MEDIUM",
+                escalation_reason="Crop or target pest/disease could not be unambiguously identified.",
+                warnings=[
+                    "Both crop name and target pest/disease must be specified for chemical safety validation.",
+                    "Escalating case to Regional Agricultural Extension Officer."
+                ]
+            )
+
+        if not pest_or_disease and not product_or_chemical:
             return SafetyDecision(
                 is_safe=False,
                 needs_escalation=True,
@@ -499,7 +523,7 @@ class PesticideValidator:
 
         crop_clean = crop.lower().strip()
         canonical_crop = CROP_ALIASES.get(crop_clean, crop_clean).lower()
-        pest_clean = pest_or_disease.lower().strip()
+        pest_clean = pest_or_disease.lower().strip() if pest_or_disease else None
         chemical_clean = product_or_chemical.lower().strip() if product_or_chemical else None
 
         # Search for exact 8-parameter match in CIBRC registry
@@ -516,19 +540,26 @@ class PesticideValidator:
                 crop_clean in rec_crop or rec_crop in crop_clean or
                 canonical_crop in rec_crop or rec_crop in canonical_crop
             )
-            # Pest or disease match
-            pest_match = (pest_clean in rec_pest or rec_pest in pest_clean) if rec_pest else False
-            disease_match = (pest_clean in rec_disease or rec_disease in pest_clean) if rec_disease else False
 
-            if crop_match and (pest_match or disease_match):
-                if chemical_clean:
-                    if (chemical_clean in rec_prod or 
-                        chemical_clean in rec_ai or 
-                        rec_prod in chemical_clean or
-                        rec_ai.split()[0].lower() in chemical_clean):
-                        matched_records.append(rec)
-                else:
-                    matched_records.append(rec)
+            # Pest or disease match (if pest specified)
+            pest_match = True
+            if pest_clean:
+                p_m = (pest_clean in rec_pest or rec_pest in pest_clean) if rec_pest else False
+                d_m = (pest_clean in rec_disease or rec_disease in pest_clean) if rec_disease else False
+                pest_match = p_m or d_m
+
+            # Chemical match (if chemical specified)
+            chem_match = True
+            if chemical_clean:
+                chem_match = (
+                    chemical_clean in rec_prod or 
+                    chemical_clean in rec_ai or 
+                    rec_prod in chemical_clean or
+                    rec_ai.split()[0].lower() in chemical_clean
+                )
+
+            if crop_match and pest_match and chem_match:
+                matched_records.append(rec)
 
         if not matched_records:
             # Check for Off-label use: Is this chemical registered for OTHER crops?

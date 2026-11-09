@@ -1,3 +1,4 @@
+import asyncio
 import json
 import re
 import time
@@ -115,16 +116,31 @@ class GeminiService:
             if turns:
                 history_text = "PREVIOUS CONVERSATION CONTEXT:\n" + "\n".join(turns) + "\n\n"
 
+        # Build Ambiguity and Clarification Guidance
+        ambiguity_guidance = ""
+        if query_analysis and query_analysis.get("has_ambiguous_symptoms"):
+            ambiguity_guidance = (
+                "\nSPECIAL MANDATE - AMBIGUOUS SYMPTOMS OBSERVED:\n"
+                "The farmer has described non-specific symptoms (such as general leaf yellowing, spots, curling, or wilting) that can stem from multiple distinct causes (e.g., nutrient deficiency, fungal/bacterial infection, or insect sap-sucking).\n"
+                "DO NOT jump to a single definitive disease diagnosis.\n"
+                "1. Distinguish established facts from possibilities.\n"
+                "2. State the top 2-3 most common probable causes strictly supported by the retrieved context.\n"
+                "3. Formulate 1-2 focused clarifying questions asking the farmer about specific leaf signs (such as whether leaf veins remain green while tissue turns yellow, whether discoloration is on upper vs lower leaves, or whether webbing/insects are visible underneath) or the crop growth stage.\n"
+                "4. Strongly recommend physical inspection or consulting the Mandal Agricultural Officer (MAO) before applying any chemical spray.\n"
+            )
+
         system_instruction = (
             "You are BOL KISAN (बोल किसान / బోల్ కిసాన్), an intelligent, expert AI Agricultural Voice Assistant for Indian farmers.\n"
-            "STRICT GROUNDING & NATURAL SPEECH MANDATE:\n"
-            "1. Answer ONLY using the facts present in the RETRIEVED CONTEXT below.\n"
-            "2. NEVER invent dosages, chemical trade names, crop protection schedules, or unverified claims.\n"
-            "3. If context contains CIBRC approved formulation, state the exact product name, dose per acre/pump, and water volume.\n"
-            "4. CLEAN SPOKEN SPEECH: Do NOT include document IDs, bracketed numbers, or citation references (e.g. NEVER write ['KB-DOC-01'], ['cibrc-001'], or [CIR-...] in the answer). Provide clean, natural spoken advice without academic citation tags.\n"
-            "5. If the retrieved context is insufficient to answer safely, state what information is missing and advise consulting an Agricultural Officer.\n"
-            f"6. Language requirement: {lang_instruction}\n"
-            "7. Return your response STRICTLY as a JSON object adhering to this schema:\n"
+            "STRICT GROUNDING & NON-NEGOTIABLE AGRICULTURAL SAFETY MANDATE:\n"
+            "1. Answer ONLY using the facts present in the [VERIFIED EVIDENCE] section below.\n"
+            "2. ZERO CHEMICAL HALLUCINATION: ALL chemical pesticide, fungicide, herbicide trade names, active ingredients, dosages, water dilution, and Pre-Harvest Interval (PHI) days MUST originate strictly from the retrieved [VERIFIED EVIDENCE] or [STATUTORY APPROVED REGULATION]. You are strictly forbidden from inventing, extrapolating, or guessing chemical treatments.\n"
+            "3. If chemical evidence is missing or unverified for the specific crop and pest/disease, explicitly state that no verified CIBRC chemical label is available in the database, state uncertainty, and advise the farmer to consult the Mandal Agricultural Extension Officer (MAO) or local KVK before applying any chemical.\n"
+            "4. Prioritize cultural, agronomic, and non-chemical ICAR Integrated Pest Management (IPM) practices whenever available in context.\n"
+            "5. DISTINGUISH FACTS FROM UNCERTAINTY: When symptoms described are non-specific or ambiguous, do NOT jump to a definitive diagnosis. Present the probable causes clearly, distinguish what is certain from what is uncertain, and ask 1-2 focused clarifying questions.\n"
+            "6. CLEAN SPOKEN SPEECH: Do NOT include document IDs, bracketed numbers, or citation references (e.g. NEVER write ['KB-DOC-01'], ['cibrc-001'], or [CIR-...] in the answer). Provide clean, natural spoken advice without academic citation tags.\n"
+            f"7. Language requirement: {lang_instruction}\n"
+            f"{ambiguity_guidance}\n"
+            "8. Return your response STRICTLY as a JSON object adhering to this schema:\n"
             "{\n"
             '  "status": "answered" | "insufficient_evidence",\n'
             '  "topic": "<Identified agricultural topic>",\n'
@@ -145,7 +161,7 @@ class GeminiService:
         )
 
         user_prompt = (
-            f"RETRIEVED CONTEXT DOCUMENTS:\n{formatted_context}\n\n"
+            f"[VERIFIED EVIDENCE]\n{formatted_context}\n\n"
             f"{history_text}"
             f"FARMER QUESTION: {query}\n"
             f"REQUESTED LANGUAGE CODE: {language}"
@@ -158,10 +174,15 @@ class GeminiService:
                 max_retries = 2
                 for attempt in range(max_retries):
                     try:
-                        response = self.client.models.generate_content(
+                        response = await asyncio.to_thread(
+                            self.client.models.generate_content,
                             model=candidate_model,
                             contents=[system_instruction, user_prompt],
-                            config={"response_mime_type": "application/json"}
+                            config={
+                                "response_mime_type": "application/json",
+                                "temperature": settings.GEMINI_TEMPERATURE,
+                                "max_output_tokens": settings.GEMINI_MAX_OUTPUT_TOKENS
+                            }
                         )
                         raw_text = response.text or ""
                         parsed = json.loads(raw_text)
@@ -182,7 +203,7 @@ class GeminiService:
                         clean_answer = self._clean_response_text(parsed.get("answer", raw_text))
 
                         evidence_ok = parsed.get("evidence_sufficient", True) and (len(retrieved_contexts) > 0 or bool(safety_context))
-                        has_claims = len(verified_claims) > 0 or bool(safety_context)
+                        has_claims = len(verified_claims) > 0 or bool(safety_context) or (len(retrieved_contexts) > 0 and evidence_ok and is_grounded)
                         safe_to_answer = is_grounded and evidence_ok and has_claims
                         status_str = "answered" if safe_to_answer else "insufficient_evidence"
                         safety_str = "verified" if safe_to_answer else "unverified"
@@ -222,7 +243,7 @@ class GeminiService:
                                 if attempt < max_retries - 1:
                                     backoff_sec = (attempt + 1) * 1.5
                                     logger.info(f"Transient rate-limit (429) on {candidate_model}. Backing off {backoff_sec}s...")
-                                    time.sleep(backoff_sec)
+                                    await asyncio.sleep(backoff_sec)
                                     continue
                         else:
                             # Other exceptions (404, invalid model, connection error): move to next model
@@ -440,6 +461,16 @@ class GeminiService:
                         text = f"कृषि सलाह ({title}):\n{lang_disclaimer}{clean_content}\n\nस्रोत: {citation}"
                     else:
                         text = f"Agricultural Advisory ({title}):\n{clean_content}\n\nSource: {citation}"
+
+                    if query_analysis and query_analysis.get("has_ambiguous_symptoms"):
+                        clarification = query_analysis.get("clarification_prompt")
+                        if clarification:
+                            if language == "te":
+                                text = f"{text}\n\nగమనిక: ఈ లక్షణాలు వివిధ కారణాల వల్ల రావచ్చు. ఖచ్చితమైన నిర్ధారణ కోసం:\n{clarification}\nఏదైనా రసాయనం పిచికారీ చేయడానికి ముందు మండల వ్యవసాయ అధికారిని సంప్రదించండి."
+                            elif language == "hi":
+                                text = f"{text}\n\nनोट: ये लक्षण कई कारणों से हो सकते हैं। सटीक पहचान के लिए:\n{clarification}\nकिसी भी रसायन का छिड़काव करने से पहले कृषि विस्तार अधिकारी से परामर्श करें।"
+                            else:
+                                text = f"{text}\n\nNote: These symptoms can arise from multiple causes. To confirm:\n{clarification}\nPlease consult your local Agricultural Extension Officer before applying chemicals."
 
                     return {
                         "text": text,

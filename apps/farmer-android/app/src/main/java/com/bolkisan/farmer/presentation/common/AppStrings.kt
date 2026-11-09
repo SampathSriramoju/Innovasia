@@ -97,6 +97,11 @@ class AppStrings(val code: String) {
     )
     val takePhotoSheet get() = t("ఫోటో తీయండి", "फोटो खींचें", "Take Photo")
     val chooseGallerySheet get() = t("గ్యాలరీ నుండి ఎంచుకోండి", "गैलरी से चुनें", "Choose from Gallery")
+    val attachSheetTitle get() = t(
+        "పంట చిత్రాన్ని జతచేయండి",
+        "फसल की तस्वीर जोड़ें",
+        "Attach Crop Photo"
+    )
     val attachImageSheet get() = t("పంట తెగులు చిత్రాన్ని జతచేయండి", "फसल रोग का चित्र संलग्न करें", "Attach Crop Photo for Diagnosis")
     val removeAttachment get() = t("తొలగించు", "हटाएं", "Remove")
     val chatWelcomeTitle get() = t(
@@ -469,14 +474,14 @@ class AppStrings(val code: String) {
 
     // ------------------------------------------------------------- offline
     val offlineLibraryTitle get() = t(
-        "ఆఫ్‌లైన్ వ్యవసాయ సమాచారం",
-        "ऑफ़लाइन कृषि जानकारी",
-        "Offline Agricultural Library"
+        "ఆఫ్‌లైన్ AI & నిల్వ వివరాలు",
+        "ऑफ़लाइन AI और संग्रहण",
+        "Offline AI & Storage Diagnostics"
     )
     val offlineLibrarySubtitle get() = t(
-        "ఇంటర్నెట్ లేనప్పుడు కూడా పని చేస్తుంది (Room SQLite కాష్)",
-        "इंटरनेट के बिना भी काम करता है (Room SQLite कैश)",
-        "Works even without internet (Room SQLite cache)"
+        "ఆన్-డివైస్ SLM మోడల్ స్థితి, హార్డ్‌వేర్ & ICAR నాలెడ్జ్ కాష్",
+        "ऑन-डिवाइस SLM मॉडल स्थिति, हार्डवेयर व ICAR ज्ञानकोश",
+        "On-device SLM status, hardware & ICAR knowledge cache"
     )
     val preinstalledModel get() = t(
         "ముందే ఇన్‌స్టాల్ చేసిన ఆఫ్‌లైన్ AI మోడల్",

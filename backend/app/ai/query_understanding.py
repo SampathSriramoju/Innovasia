@@ -9,52 +9,52 @@ class QueryUnderstanding:
 
     CROP_PATTERNS = {
         "Rice": [
-            r"\brice\b", r"\bpaddy\b", r"\boryza\b",
-            "వరి", "వరిలో", "వరిపంట", "వరికి", "ధాన్యం",
-            "धान", "चावल"
+            r"\brice\b", r"\bpaddy\b", r"\boryza\b", r"\bdhaan\b", r"\bvari\b",
+            "వరి", "వరిలో", "వరిపంట", "వరికి", "ధాన్యం", "వడ్లు", "బియ్యం",
+            "धान", "चावल", "धान में", "धान की"
         ],
         "Cotton": [
-            r"\bcotton\b", r"\bgossypium\b",
-            "పత్తి", "ప్రత్తి", "పత్తిలో", "ప్రత్తిలో", "పత్తికి", "ప్రత్తికి",
-            "कपास"
+            r"\bcotton\b", r"\bgossypium\b", r"\bkapas\b", r"\bpatti\b",
+            "పత్తి", "ప్రత్తి", "పత్తిలో", "ప్రత్తిలో", "పత్తికి", "ప్రత్తికి", "పత్తిచెట్టు", "దూది",
+            "कपास", "कपास में", "कपास की"
         ],
         "Chilli": [
-            r"\bchilli\b", r"\bchili\b", r"\bchillies\b", r"\bchilies\b", r"\bcapsicum\b",
-            "మిరప", "మిరపలో", "మిరపకి", "మిర్చి",
-            "मिर्च", "मिर्ची"
+            r"\bchilli\b", r"\bchili\b", r"\bchillies\b", r"\bchilies\b", r"\bcapsicum\b", r"\bmirchi\b", r"\bmirapa\b",
+            "మిరప", "మిరపలో", "మిరపకి", "మిర్చి", "మిర్చిలో",
+            "मिर्च", "मिर्ची", "मिर्च में", "मिर्च की"
         ],
         "Maize": [
-            r"\bmaize\b", r"\bcorn\b",
+            r"\bmaize\b", r"\bcorn\b", r"\bmakka\b", r"\bmokkajonna\b",
             "మొక్కజొన్న", "మొక్కజొన్నలో", "మొక్కజొన్నకి", "మక్క", "మక్కజొన్న",
-            "मक्का", "मक्के"
+            "मक्का", "मक्के", "मक्का में"
         ],
         "Wheat": [
-            r"\bwheat\b", r"\btriticum\b",
+            r"\bwheat\b", r"\btriticum\b", r"\bgehun\b", r"\bgodhuma\b",
             "గోధుమ", "గోధుమలో", "గోధుమకి",
-            "गेहूं", "गेंहू"
+            "गेहूं", "गेंहू", "गेहूं में"
         ],
         "Tomato": [
-            r"\btomato\b", r"\btomatoes\b",
+            r"\btomato\b", r"\btomatoes\b", r"\btamatar\b",
             "టమోటా", "టమాటా", "టమోటాలో", "టమాటాల్లో",
-            "टमाटर"
+            "टमाटर", "टमाटर में", "टमाटर की"
         ],
         "Groundnut": [
-            r"\bgroundnut\b", r"\bpeanut\b",
+            r"\bgroundnut\b", r"\bpeanut\b", r"\bpalli\b",
             "వేరుశనగ", "వేరుశెనగ", "వేరుశనగలో", "పల్లీ",
-            "मूंगफली"
+            "मूंगफली", "मूंगफली में"
         ],
         "Sugarcane": [
-            r"\bsugarcane\b",
-            "చెరకు", "చెరకులో",
-            "गन्ना"
+            r"\bsugarcane\b", r"\bganna\b", r"\bcheraku\b",
+            "చెరకు", "చెరకులో", "చెరకుకి",
+            "गन्ना", "गन्ने"
         ],
         "Red Gram": [
-            r"\bred gram\b", r"\bpigeon pea\b", r"\btur\b", r"\barhar\b",
+            r"\bred gram\b", r"\bpigeon pea\b", r"\btur\b", r"\barhar\b", r"\bkandi\b",
             "కంది", "కందిలో", "కందికి",
             "अरहर", "तुअर"
         ],
         "Bengal Gram": [
-            r"\bbengal gram\b", r"\bchickpea\b", r"\bchana\b",
+            r"\bbengal gram\b", r"\bchickpea\b", r"\bchana\b", r"\bsenaga\b",
             "శనగ", "శనగలో", "హరిమంత",
             "चना", "चने"
         ],
@@ -64,17 +64,17 @@ class QueryUnderstanding:
             "सोयाबीन", "सोया"
         ],
         "Turmeric": [
-            r"\bturmeric\b", r"\bcurcuma\b",
+            r"\bturmeric\b", r"\bcurcuma\b", r"\bhaldi\b", r"\bpasupu\b",
             "పసుపు", "పసుపులో", "పసుపుకి",
-            "हल्दी"
+            "हल्दी", "हल्दी में"
         ],
         "Mango": [
-            r"\bmango\b", r"\bmangoes\b", r"\bmangifera\b",
+            r"\bmango\b", r"\bmangoes\b", r"\bmangifera\b", r"\baam\b", r"\bmamidi\b",
             "మామిడి", "మామిడిలో", "మామిడికి", "మామిడిచెట్టు",
-            "आम"
+            "आम", "आम में"
         ],
         "Onion": [
-            r"\bonion\b", r"\bonions\b", r"\ballium\b",
+            r"\bonion\b", r"\bonions\b", r"\ballium\b", r"\bpyaz\b", r"\bulli\b",
             "ఉల్లి", "ఉల్లిపాయ", "ఉల్లిలో", "ఉల్లిగడ్డ",
             "प्याज"
         ]
@@ -166,23 +166,66 @@ class QueryUnderstanding:
         ]
     }
 
+    AMBIGUOUS_SYMPTOM_PATTERNS = {
+        "yellowing": [
+            r"\byellow\b", r"\byellowing\b", r"\bpale yellow\b", r"\bchlorosis\b",
+            "పసుపు", "పసుపు రంగు", "ఆకులు పసుపు", "పసుపుగా", "పసుపు పచ్చగా",
+            "पीला", "पीलापन", "पीली", "पीले", "पत्तियां पीली"
+        ],
+        "leaf_spots": [
+            r"\bspots\b", r"\bspotting\b", r"\bdots\b",
+            "మచ్చలు", "ఆకుమచ్చలు", "చిన్న మచ్చలు",
+            "धब्बे", "दाग", "निशान"
+        ],
+        "leaf_curling": [
+            r"\bcurling\b", r"\bcurled\b", r"\bwrinkled\b",
+            "ముడత", "ముడుచుకు", "ముడుచుకున్నాయి", "ఆకు ముడత",
+            "मुड़ना", "मुड़ रही", "मरोड़", "पत्ती मुड़"
+        ],
+        "wilting_drying": [
+            r"\bwilting\b", r"\bdrying\b", r"\bdrooping\b",
+            "వాడిపోవడం", "ఎండిపోవడం", "వాడిపోతున్నాయి", "ఎండిపోతున్నాయి",
+            "सूखना", "मुरझाना", "मुरझा रही", "सूख रही"
+        ]
+    }
+
+    GENERIC_TERMS = {
+        "spray", "spraying", "water", "watering", "leaf", "leaves", "crop", "crops",
+        "plant", "plants", "field", "farm", "farmer", "dose", "dosage", "chemical", "medicine",
+        "tell", "give", "how", "what", "can", "should", "problem", "remedy",
+        "to", "on", "in", "of", "the", "a", "an", "is", "for", "with", "at", "by", "from", "and", "or", "so", "be", "do", "it",
+        "my", "me", "we", "our", "you", "your", "they", "this", "that", "these", "those",
+        "స్ప్రే", "పిచికారీ", "నీరు", "నీళ్ళు", "ఆకు", "ఆకులు", "పంట", "మొక్క", "చెట్టు",
+        "మందు", "మందులు", "మోతాదు", "రసాయనం", "సమస్య", "నివారణ", "ఎలా", "ఏమిటి", "చెప్పండి",
+        "కి", "కు", "లో", "పై", "మీద", "నుంచి", "నుండి", "కోసం", "తో", "వల్ల", "వలన", "ఈ", "ఆ", "నా", "మా",
+        "स्प्रे", "छिड़काव", "पानी", "पत्ता", "पत्ती", "फसल", "पौधा", "दवा", "दवाई", "खुराक", "समस्या", "उपाय", "बताएं",
+        "के", "की", "का", "को", "में", "पर", "से", "लिए", "और", "या", "यह", "वह", "इस", "उस", "मेरा", "मेरी"
+    }
+
     TARGET_ENTITIES = {
         # Diseases
         "rice blast": ["rice blast", "blast", "అగ్గితెగులు", "झुलसा", "బ్లాస్ట్"],
+        "late blight": ["late blight", "early blight", "blight", "లేట్ బ్లైట్", "లెక్క తెగులు", "లేట్ బ్లైట్ తెగులు", "लेट ब्लाइट", "झुलसा", "पछेती झुलसा", "अगेती झुलसा"],
+        "tikka leaf spot": ["tikka", "tikka leaf spot", "సర్కోస్పోరా", "టిక్కా తెగులు", "టిక్కా", "टिक्का", "टिक्का रोग", "पत्ती धब्बा"],
         "bacterial blight": ["bacterial blight", "బాక్టీరియా ఆకుమచ్చ", "జీవాణు ఆకుమచ్చ"],
         "sheath blight": ["sheath blight", "మట్ట తెగులు"],
         "leaf curl": ["leaf curl", "ఆకు ముడత", "పెంకి ముడత", "मरोड़िया"],
         "turcicum leaf blight": ["turcicum", "టర్సికం", "ఆకు ఎండు తెగులు"],
         "anthracnose dieback": ["anthracnose", "dieback", "కొమ్మ ఎండు తెగులు"],
         "powdery mildew": ["powdery mildew", "బూడిద తెగులు"],
+        "rust": ["yellow rust", "brown rust", "stripe rust", "rust", "కుంకుమ తెగులు", "రస్ట్", "रतुआ", "पीला रतुआ", "गेरुआ"],
         "root rot": ["root rot", "వేరు కుళ్ళు"],
         # Pests
         "fall armyworm": ["fall armyworm", "armyworm", "కత్తెర పురుగు", "సైనిక పురుగు", "फॉगी"],
         "pink bollworm": ["pink bollworm", "గులాబీ రంగు పురుగు", "గులాబీ పురుగు", "गुलाबी सुंडी"],
+        "pod borer": ["pod borer", "fruit borer", "gram pod borer", "శనగ పచ్చ పురుగు", "కాయతొలుచు పురుగు", "కాయ తొలుచు పురుగు", "फली छेदक", "फल छेदक", "हेलिकोवर्पा"],
+        "bollworm": ["bollworm", "american bollworm", "spotted bollworm", "పత్తి కాయ పురుగు", "కాయ పురుగు", "బోల్ వార్మ్"],
         "whitefly": ["whitefly", "తెల్లదోమ", "తెల్ల దోమ", "सफेद मक्खी"],
         "thrips": ["thrips", "black thrips", "తామర పురుగులు", "నల్ల తామర", "थ्रिप्स"],
         "brown plant hopper": ["brown plant hopper", "bph", "సుడిదోమ", "भूरा फुदका"],
-        "stem borer": ["stem borer", "కాండం తొలుచు పురుగు", "તના छेदक"]
+        "stem borer": ["stem borer", "కాండం తొలుచు పురుగు", "तना छेदक"],
+        "aphid": ["aphid", "aphids", "పేనుబంక", "మాహు", "माहू", "चेपा"],
+        "mite": ["mite", "mites", "red spider mite", "ఎర్ర నల్లి", "నల్లి", "लाल मकड़ी", "माइट"]
     }
 
     @classmethod
@@ -309,7 +352,30 @@ class QueryUnderstanding:
             primary_intent = "out_of_domain"
             recommended_collections = []
 
-        # 4. Ambiguity Evaluation
+        # 4. Ambiguous Symptoms Extraction
+        detected_ambiguous_symptoms: List[str] = []
+        for sym_type, patterns in cls.AMBIGUOUS_SYMPTOM_PATTERNS.items():
+            for pat in patterns:
+                matched = False
+                if pat.startswith("\\b"):
+                    if re.search(pat, query_lower):
+                        matched = True
+                else:
+                    if pat.lower() in query_lower:
+                        matched = True
+                if matched:
+                    if sym_type not in detected_ambiguous_symptoms:
+                        detected_ambiguous_symptoms.append(sym_type)
+                    break
+
+        has_ambiguous_symptoms = bool(detected_ambiguous_symptoms) and (target_entity is None)
+
+        # 5. Generic-Only Query Detection
+        words_in_q = [w for w in re.findall(r'[\u0c00-\u0c7f]+|[\u0900-\u097f]+|[a-zA-Z0-9]+', query_lower) if len(w) >= 2]
+        substantive_words = [w for w in words_in_q if w not in cls.GENERIC_TERMS]
+        is_generic_query = (len(words_in_q) > 0 and len(substantive_words) == 0 and not target_entity and not detected_crops)
+
+        # 6. Ambiguity Evaluation
         # If intent is heavily crop-specific (disease, pest, pesticide dose, sowing, yield, spacing) but no crop was identified or in history
         is_ambiguous = False
         clarification_prompt = None
@@ -322,6 +388,38 @@ class QueryUnderstanding:
                 clarification_prompt = "आप किस फसल के बारे में पूछ रहे हैं? (उदा: कपास, धान, मिर्च, टमाटर, मक्का)"
             else:
                 clarification_prompt = "Which crop are you referring to? (e.g. Cotton, Rice, Chilli, Tomato, Maize)"
+        elif is_generic_query:
+            is_ambiguous = True
+            if lang == "te":
+                clarification_prompt = "దయచేసి మీ పంట పేరు మరియు ఆకులపై కనిపిస్తున్న నిర్దిష్ట లక్షణాలు లేదా పురుగులను వివరంగా చెప్పండి."
+            elif lang == "hi":
+                clarification_prompt = "कृपया अपनी फसल का नाम और पत्तियों पर दिखने वाले विशिष्ट लक्षण या कीट का विवरण बताएं।"
+            else:
+                clarification_prompt = "Please specify your crop name and the exact symptoms or pests you observe on the leaves."
+        elif has_ambiguous_symptoms:
+            # Symptoms are mentioned but multiple causes exist (differential diagnosis required)
+            sym = detected_ambiguous_symptoms[0] if detected_ambiguous_symptoms else "symptoms"
+            if sym == "yellowing":
+                if lang == "te":
+                    clarification_prompt = "ఆకులు పసుపు రంగులోకి మారడానికి పోషక లోపం (జింక్/నత్రజని/ఇనుము), నీటి ఎద్దడి లేదా రసం పీల్చే పురుగులు కారణం కావచ్చు. ఆకుల ఈనెలు పచ్చగా ఉండి మధ్య భాగం పసుపుగా ఉందా? ఆకుల అడుగున పురుగులు ఏమైనా ఉన్నాయా?"
+                elif lang == "hi":
+                    clarification_prompt = "पत्तियों का पीला पड़ना पोषक तत्वों की कमी (जिंक/नाइट्रोजन/लोहा), जल भराव या रस चूसक कीटों के कारण हो सकता है। क्या पत्तियों की नसें हरी हैं और बीच का भाग पीला है, या पत्ती के नीचे कीट हैं?"
+                else:
+                    clarification_prompt = "Leaf yellowing can be caused by nutrient deficiency (Zinc/Iron/Nitrogen), water stress, or sap-sucking pests. Are leaf veins green while tissue turns yellow, or are there insects under the leaves?"
+            elif sym == "leaf_spots":
+                if lang == "te":
+                    clarification_prompt = "ఆకుమచ్చలు శిలీంధ్ర లేదా బాక్టీరియా వల్ల రావచ్చు. మచ్చల చుట్టూ పసుపు రంగు వలయం ఉందా, లేదా మచ్చలు కోణాకారంలో ఉన్నాయా? పంట ఏ దశలో ఉంది?"
+                elif lang == "hi":
+                    clarification_prompt = "पत्ती के धब्बे फफूंद या जीवाणु से हो सकते हैं। क्या धब्बों के चारों ओर पीला घेरा है, या धब्बे कोणीय हैं? फसल किस अवस्था में है?"
+                else:
+                    clarification_prompt = "Leaf spots may be fungal or bacterial. Do the spots have a yellow halo or concentric rings, and what is the crop growth stage?"
+            elif sym == "leaf_curling":
+                if lang == "te":
+                    clarification_prompt = "ఆకు ముడత తామర పురుగులు, తెల్లదోమ లేదా వైరస్ వల్ల రావచ్చు. ఆకులు పైకి ముడుచుకుంటున్నాయా లేక కిందికి ముడుచుకుంటున్నాయా?"
+                elif lang == "hi":
+                    clarification_prompt = "पत्तियों का मुड़ना थ्रिप्स, सफेद मक्खी या वायरस से हो सकता है। क्या पत्तियां ऊपर की ओर मुड़ रही हैं या नीचे की ओर?"
+                else:
+                    clarification_prompt = "Leaf curl can be caused by thrips, whiteflies, or virus. Are the leaves curling upward (boat-shaped) or downward?"
 
         return {
             "language": lang,
@@ -333,6 +431,9 @@ class QueryUnderstanding:
             "is_agricultural": has_agri_evidence,
             "recommended_collections": recommended_collections,
             "is_ambiguous": is_ambiguous,
+            "has_ambiguous_symptoms": has_ambiguous_symptoms,
+            "ambiguous_symptoms": detected_ambiguous_symptoms,
+            "is_generic_query": is_generic_query,
             "clarification_prompt": clarification_prompt
         }
 

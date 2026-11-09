@@ -28,12 +28,11 @@ async def list_crops(db: Session = Depends(get_db)):
             Crop(scientific_name="Gossypium hirsutum", name_en="Cotton", name_te="ప్రత్తి (పత్తి)", name_hi="कपास", category="Commercial Fiber", season="Kharif"),
             Crop(scientific_name="Oryza sativa", name_en="Rice / Paddy", name_te="వరి", name_hi="धान / चावल", category="Cereal Food Grain", season="Kharif / Rabi"),
             Crop(scientific_name="Capsicum annuum", name_en="Chilli", name_te="మిరప", name_hi="मिर्च", category="Spices", season="Kharif / Rabi"),
-            Crop(scientific_name="Solanum lycopersicum", name_en="Tomato", name_te="టమోటా", name_hi="टमाटर", category="Vegetable", season="Year-round"),
+            Crop(scientific_name="Solanum lycopersicum", name_en="Tomato", name_te="టమోటా", name_hi="టమాటా", category="Vegetable", season="Year-round"),
         ]
         db.add_all(seed_crops)
         db.commit()
-        crops = db.query(Crop).all()
-
+        crops = db.query(Crop).filter(Crop.is_active == True).all()
     return crops
 
 @router.get("/{crop_id}")

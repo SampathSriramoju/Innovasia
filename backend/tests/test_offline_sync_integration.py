@@ -1,17 +1,12 @@
 import pytest
-from fastapi.testclient import TestClient
-from app.main import app
+from starlette.testclient import TestClient
 from app.core.security import create_access_token
-from app.database.session import SessionLocal
 from app.database.models import User, FarmerProfile, AgriculturalTicket
 
-client = TestClient(app)
-
 @pytest.fixture
-def auth_farmer_token():
-    db = SessionLocal()
-    # Create or fetch test farmer
-    farmer = db.query(User).filter(User.phone_number == "9888877771").first()
+def auth_farmer_token(db_session):
+    # Create test farmer in isolated test database session
+    farmer = db_session.query(User).filter(User.phone_number == "9888877771").first()
     if not farmer:
         farmer = User(
             phone_number="9888877771",
@@ -21,9 +16,9 @@ def auth_farmer_token():
             is_active=True,
             is_verified=True
         )
-        db.add(farmer)
-        db.commit()
-        db.refresh(farmer)
+        db_session.add(farmer)
+        db_session.commit()
+        db_session.refresh(farmer)
 
         profile = FarmerProfile(
             user_id=farmer.id,
@@ -33,11 +28,10 @@ def auth_farmer_token():
             village="Dharmaram",
             land_size_acres=4.0
         )
-        db.add(profile)
-        db.commit()
+        db_session.add(profile)
+        db_session.commit()
 
     farmer_id = farmer.id
-    db.close()
 
     token = create_access_token(data={
         "sub": farmer_id,
@@ -49,7 +43,7 @@ def auth_farmer_token():
     return token, farmer_id
 
 
-def test_batch_offline_sync_text_tickets(auth_farmer_token):
+def test_batch_offline_sync_text_tickets(client: TestClient, auth_farmer_token):
     token, farmer_id = auth_farmer_token
     headers = {"Authorization": f"Bearer {token}"}
 
@@ -84,7 +78,7 @@ def test_batch_offline_sync_text_tickets(auth_farmer_token):
     assert len(data["tickets"]) == 2
 
 
-def test_offline_sync_with_image_url(auth_farmer_token):
+def test_offline_sync_with_image_url(client: TestClient, db_session, auth_farmer_token):
     token, farmer_id = auth_farmer_token
     headers = {"Authorization": f"Bearer {token}"}
 
@@ -109,14 +103,12 @@ def test_offline_sync_with_image_url(auth_farmer_token):
     ticket_id = data["tickets"][0]["ticket_id"]
 
     # Verify in DB that image_url was stored
-    db = SessionLocal()
-    ticket = db.query(AgriculturalTicket).filter(AgriculturalTicket.id == ticket_id).first()
+    ticket = db_session.query(AgriculturalTicket).filter(AgriculturalTicket.id == ticket_id).first()
     assert ticket is not None
     assert "/api/v1/disease/images/leaf_sample_001.jpg" in ticket.attached_image_urls
-    db.close()
 
 
-def test_offline_sync_idempotency_duplicate_requests(auth_farmer_token):
+def test_offline_sync_idempotency_duplicate_requests(client: TestClient, db_session, auth_farmer_token):
     token, farmer_id = auth_farmer_token
     headers = {"Authorization": f"Bearer {token}"}
 
@@ -153,10 +145,8 @@ def test_offline_sync_idempotency_duplicate_requests(auth_farmer_token):
     assert ticket_id1 == ticket_id2
     assert ticket_number1 == ticket_number2
 
-    db = SessionLocal()
-    matching_tickets = db.query(AgriculturalTicket).filter(
+    matching_tickets = db_session.query(AgriculturalTicket).filter(
         AgriculturalTicket.farmer_id == farmer_id,
         AgriculturalTicket.escalation_reason.contains("sync-idemp-uuid-004")
     ).all()
     assert len(matching_tickets) == 1
-    db.close()

@@ -16,8 +16,9 @@ class BolKisanApp : Application() {
         super.onCreate()
         repository = BolKisanRepository(this)
 
-        // Seed initial offline ICAR & CIBRC knowledge on IO thread
+        // Seed initial offline ICAR & CIBRC knowledge on IO thread with background priority
         CoroutineScope(Dispatchers.IO).launch {
+            android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND)
             repository.seedOfflineKnowledgeIfEmpty()
             // Evaluate device hardware capabilities and offline subsystem readiness
             com.bolkisan.farmer.domain.OfflineModelManager.getOfflineCapabilities(this@BolKisanApp)

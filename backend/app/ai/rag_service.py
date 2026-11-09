@@ -15,29 +15,68 @@ MULTILINGUAL_DICTIONARY = {
     "మిరప": ["chilli", "chili", "capsicum", "మిరప"],
     "టమోటా": ["tomato", "solanum lycopersicum", "టమోటా"],
     "వేరుశనగ": ["groundnut", "peanut", "arachis hypogaea", "వేరుశనగ"],
+    "మొక్కజొన్న": ["maize", "corn", "zea mays", "మొక్కజొన్న", "మక్క"],
+    "మక్క": ["maize", "corn", "zea mays", "మొక్కజొన్న", "మక్క"],
+    "కంది": ["red gram", "pigeonpea", "cajanus cajan", "కంది"],
+    "శనగ": ["bengal gram", "chickpea", "cicer arietinum", "శనగ"],
+    "మినప": ["black gram", "urad", "vigna mungo", "మినప"],
+    "పెసర": ["green gram", "moong", "vigna radiata", "పెసర"],
+    "సోయాబీన్": ["soybean", "glycine max", "సోయాబీన్"],
+    "చెరకు": ["sugarcane", "saccharum officinarum", "చెరకు"],
+    "పసుపు": ["turmeric", "curcuma longa", "పసుపు"],
+    "గోధుమ": ["wheat", "triticum aestivum", "గోధుమ"],
     "కપાસ": ["cotton", "कपास"],
     "धान": ["rice", "paddy", "धान", "चावल"],
     "चावल": ["rice", "paddy", "धान", "चावल"],
     "मिर्च": ["chilli", "chili", "मिर्च"],
     "टमाटर": ["tomato", "टमाटर"],
+    "मक्का": ["maize", "corn", "मक्का"],
+    "अरहर": ["red gram", "pigeonpea", "अरहर", "तुअर"],
+    "तुअर": ["red gram", "pigeonpea", "अरहर", "तुअर"],
+    "चना": ["bengal gram", "chickpea", "चना"],
+    "उड़द": ["black gram", "urad", "उड़द"],
+    "मूंग": ["green gram", "moong", "मूंग"],
+    "सोयाबीन": ["soybean", "सोयाबीन"],
+    "गन्ना": ["sugarcane", "गन्ना"],
+    "हल्दी": ["turmeric", "हल्दी"],
+    "गेहूं": ["wheat", "गेहूं"],
     
     # Pests and Diseases
     "గులాబీ రంగు కాయ తొలుచు పురుగు": ["pink bollworm", "pectinophora gossypiella", "గులాబీ రంగు కాయ తొలుచు పురుగు"],
     "గులాబీ పురుగు": ["pink bollworm", "pectinophora gossypiella"],
+    "కత్తెర పురుగు": ["fall armyworm", "faw", "spodoptera frugiperda", "కత్తెర పురుగు"],
+    "తెల్లదోమ": ["whitefly", "bemisia tabaci", "తెల్లదోమ"],
+    "కాండం తొలుచు పురుగు": ["stem borer", "scirpophaga incertulas", "కాండం తొలుచు పురుగు", "కాండం తొలిచే పురుగు"],
+    "కాండం తొలిచే పురుగు": ["stem borer", "scirpophaga incertulas", "కాండం తొలుచు పురుగు"],
+    "శనగ పచ్చ పురుగు": ["gram pod borer", "american bollworm", "helicoverpa armigera", "శనగ పచ్చ పురుగు"],
+    "లద్దె పురుగు": ["tobacco caterpillar", "spodoptera litura", "లద్దె పురుగు"],
+    "పచ్చదోమ": ["jassids", "leafhopper", "amrasca biguttula", "పచ్చదోమ"],
+    "పేనుబంక": ["aphids", "aphis gossypii", "పేనుబంక"],
     "సుడిదోమ": ["brown plant hopper", "bph", "nilaparvata lugens", "సుడిదోమ"],
     "తామర పురుగులు": ["thrips", "scirtothrips dorsalis", "తామర పురుగులు"],
-    "నల్లి": ["mites", "thrips", "spider mites", "నల్లి"],
+    "నల్లి": ["mites", "thrips", "spider mites", "నల్లి", "ఎర్రనల్లి"],
     "అగ్గితెగులు": ["rice blast", "magnaporthe oryzae", "blast", "అగ్గితెగులు", "బ్లాస్ట్"],
     "బ్లాస్ట్": ["rice blast", "blast", "magnaporthe", "అగ్గితెగులు"],
     "ఆకుమచ్చ": ["leaf spot", "angular leaf spot", "bacterial blight", "xanthomonas", "ఆకుమచ్చ"],
     "ముందస్తు తెగులు": ["early blight", "alternaria solani", "ముందస్తు తెగులు"],
     "ఆకు ముడత": ["leaf curl", "begomovirus", "geminivirus", "ముడత"],
+    "బూడిద తెగులు": ["powdery mildew", "erysiphe", "బూడిద తెగులు"],
+    "తుప్పు తెగులు": ["rust", "puccinia", "తుప్పు తెగులు"],
     "పసుపు రంగు": ["chlorosis", "yellowing", "iron deficiency", "zinc deficiency"],
+    "మొవ్వు కుళ్ళు": ["bud rot", "stem rot", "మొవ్వు కుళ్ళు"],
     "గులాबी सुंडी": ["pink bollworm", "pectinophora gossypiella", "गुलाबी सुंडी"],
+    "फॉल आर्मीवर्म": ["fall armyworm", "faw", "spodoptera frugiperda", "फॉल आर्मीवर्म"],
+    "सफेद मक्खी": ["whitefly", "bemisia tabaci", "सफेद मक्खी"],
+    "तना छेदक": ["stem borer", "scirpophaga incertulas", "तना छेदक"],
+    "चना फली छेदक": ["gram pod borer", "helicoverpa armigera", "चना फली छेदक"],
     "भूरा फुदका": ["brown plant hopper", "bph", "भूरा फुदका"],
+    "थ्रिप्स": ["thrips", "थ्रिप्स"],
+    "माहू": ["aphids", "माहू"],
     "झुलसा": ["blast", "blight", "झुलसा", "झुलसा रोग"],
     "पत्ती धब्बा": ["leaf spot", "पत्ती धब्बा"],
     "पत्ती मुड़न": ["leaf curl", "पत्ती मुड़न", "पर्ण कुंचन"],
+    "चूर्णिल आसिता": ["powdery mildew", "चूर्णिल आसिता"],
+    "गेरुआ": ["rust", "गेरुआ"],
     "कीटनाशक": ["pesticide", "insecticide", "कीटनाशक"],
     "उर्वरक": ["fertilizer", "खाद", "उर्वरक"],
     "सिंचाई": ["irrigation", "सिंचाई"],
@@ -61,6 +100,61 @@ MULTILINGUAL_DICTIONARY = {
     "काली मिट्टी": ["black cotton soil", "vertisol", "काली मिट्टी"],
     "खरपतवार": ["weed", "herbicide", "खरपतवार"]
 }
+
+# Generic agricultural stopwords to prevent spurious document matching
+GENERIC_AGRI_STOPWORDS = {
+    # English
+    "spray", "spraying", "sprayed", "water", "watering", "leaf", "leaves", "crop", "crops",
+    "plant", "plants", "field", "fields", "farm", "farming", "farmer", "farmers", "dose",
+    "dosage", "chemical", "chemicals", "medicine", "medicines", "problem", "problems",
+    "tell", "give", "how", "what", "which", "when", "can", "should", "used", "using",
+    "apply", "application", "treatment", "control", "manage", "management", "remedy",
+    "prevent", "prevention", "help", "good", "best", "need", "take",
+    # Telugu
+    "స్ప్రే", "పిచికారీ", "నీరు", "నీళ్ళు", "తడి", "ఆకు", "ఆకులు", "పంట", "పంటలు", "మొక్క",
+    "మొక్కలు", "చెట్టు", "చెట్లు", "పొలం", "రైతు", "రైతులు", "మందు", "మందులు", "మోతాదు",
+    "రసాయనం", "రసాయనాలు", "సమస్య", "సమస్యలు", "నివారణ", "నివారించడం", "ఎలా", "ఏమిటి",
+    "ఏం", "ఎంత", "చెప్పండి", "చేయాలి", "వాడాలి", "గురించి", "మరియు", "కూడా", "ఇవ్వండి",
+    # Hindi
+    "स्प्रे", "छिड़काव", "पानी", "पत्ता", "पत्ती", "पत्तियां", "फसल", "फसलों", "पौधा",
+    "पौधे", "खेत", "किसान", "दवा", "दवाई", "खुराक", "मात्रा", "रसायन", "समस्या", "उपाय",
+    "नियंत्रण", "रोकथाम", "बताएं", "करें", "कैसे", "क्या", "कितना", "की", "का", "में", "से", "हो"
+}
+
+def normalize_crop_name(crop: Optional[str]) -> Optional[str]:
+    """Canonicalizes crop names across Telugu, Hindi, English and scientific aliases."""
+    if not crop:
+        return None
+    c = crop.lower().strip()
+    if any(k in c for k in ["rice", "paddy", "oryza", "వరి", "ధాన్యం", "వడ్లు", "బియ్యం", "धान", "चावल", "dhaan", "vari"]):
+        return "rice"
+    if any(k in c for k in ["cotton", "gossypium", "పత్తి", "ప్రత్తి", "దూది", "कपास", "kapas", "patti"]):
+        return "cotton"
+    if any(k in c for k in ["chilli", "chili", "capsicum", "మిరప", "మిర్చి", "मिर्च", "mirchi", "mirapa"]):
+        return "chilli"
+    if any(k in c for k in ["tomato", "solanum lycopersicum", "టమోటా", "టమాటా", "टमाटर", "tamatar"]):
+        return "tomato"
+    if any(k in c for k in ["maize", "corn", "zea", "మొక్కజొన్న", "మక్క", "मक्का", "makka", "mokkajonna"]):
+        return "maize"
+    if any(k in c for k in ["wheat", "triticum", "గోధుమ", "गेहूं", "gehun", "godhuma"]):
+        return "wheat"
+    if any(k in c for k in ["groundnut", "peanut", "arachis", "వేరుశనగ", "పల్లీ", "मूंगफली", "palli"]):
+        return "groundnut"
+    if any(k in c for k in ["sugarcane", "చెరకు", "गन्ना", "ganna", "cheraku"]):
+        return "sugarcane"
+    if any(k in c for k in ["turmeric", "curcuma", "పసుపు", "हल्दी", "haldi", "pasupu"]):
+        return "turmeric"
+    if any(k in c for k in ["mango", "mangifera", "మామిడి", "आम", "aam", "mamidi"]):
+        return "mango"
+    if any(k in c for k in ["onion", "allium", "ఉల్లి", "प्याज", "pyaz", "ulli"]):
+        return "onion"
+    if any(k in c for k in ["red gram", "pigeon pea", "tur", "arhar", "కంది", "अरहर", "kandi"]):
+        return "red gram"
+    if any(k in c for k in ["bengal gram", "chickpea", "chana", "శనగ", "चना", "senaga"]):
+        return "bengal gram"
+    if any(k in c for k in ["soybean", "soya", "సోయా", "सोया"]):
+        return "soybean"
+    return c
 
 
 class BM25Retriever:
@@ -293,32 +387,59 @@ class RAGService:
 
     def _load_knowledge_base(self):
         """
-        Dynamically scans the entire knowledge-base/ directory recursively.
-        Indexes all collections from KB01 to KB23.
+        Loads the authoritative knowledge base.
+        Prioritizes the canonical, pre-indexed dataset in knowledge-base/metadata/rag_chunks.json
+        with clean collection attribution (KB01 to KB23) and provenance.
+        Falls back to directory scanning if unavailable, strictly excluding intermediate structured-data dumps.
         """
         self.documents = []
         if not self.kb_dir.exists():
             logger.warning(f"Knowledge base directory {self.kb_dir} does not exist.")
             return
 
-        json_files = list(self.kb_dir.glob("**/*.json"))
-        logger.info(f"RAG Service scanning {len(json_files)} knowledge base files in {self.kb_dir}...")
-
-        EXCLUDED_DIRS = {"evaluation", "eval-audio", "manifests", "metadata", "raw-documents", "processed-documents", "crop-vision-dataset"}
-
-        for file_path in json_files:
-            # Skip non-KB directories and metadata
-            if any(part in EXCLUDED_DIRS for part in file_path.parts):
-                continue
-            if file_path.name == "kb_registry.json":
-                continue
-
+        canonical_rag = self.kb_dir / "metadata" / "rag_chunks.json"
+        if canonical_rag.exists():
             try:
-                with open(file_path, "r", encoding="utf-8") as f:
-                    data = json.load(f)
-                    self._parse_and_index_file(file_path, data)
+                with open(canonical_rag, "r", encoding="utf-8") as f:
+                    canonical_chunks = json.load(f)
+                for chunk in canonical_chunks:
+                    c_id = chunk.get("collection_id", "KB21")
+                    reg_meta = self.registry.get(c_id, {})
+                    source_org = reg_meta.get("source_org", "ICAR Verified Repository")
+                    self.documents.append({
+                        "document_id": chunk.get("chunk_id", ""),
+                        "collection_id": c_id,
+                        "source_org": source_org,
+                        "title": chunk.get("title", ""),
+                        "crop": chunk.get("crop"),
+                        "target": None,
+                        "content": chunk.get("content", ""),
+                        "citation": chunk.get("citation", f"[{c_id} - {source_org}] {chunk.get('title', '')}"),
+                        "raw_item": chunk
+                    })
+                logger.info(f"RAG Service indexed {len(self.documents)} verified chunks directly from canonical rag_chunks.json.")
             except Exception as e:
-                logger.error(f"Error loading knowledge base file {file_path.name}: {e}")
+                logger.error(f"Error loading canonical rag_chunks.json: {e}")
+
+        if not self.documents:
+            json_files = list(self.kb_dir.glob("**/*.json"))
+            logger.info(f"RAG Service scanning {len(json_files)} knowledge base files in {self.kb_dir}...")
+
+            EXCLUDED_DIRS = {"evaluation", "eval-audio", "manifests", "metadata", "raw-documents", "processed-documents", "crop-vision-dataset", "structured-data"}
+
+            for file_path in json_files:
+                # Skip non-KB directories and metadata
+                if any(part in EXCLUDED_DIRS for part in file_path.parts):
+                    continue
+                if file_path.name == "kb_registry.json":
+                    continue
+
+                try:
+                    with open(file_path, "r", encoding="utf-8") as f:
+                        data = json.load(f)
+                        self._parse_and_index_file(file_path, data)
+                except Exception as e:
+                    logger.error(f"Error loading knowledge base file {file_path.name}: {e}")
 
         # Multilingual topic expansion for collections
         COL_TOPIC_SYNONYMS = {
@@ -840,7 +961,10 @@ class RAGService:
 
         # 4. Calculate Calibrated Hybrid Score for each document
         scored_candidates: List[Tuple[float, Dict[str, Any]]] = []
-        crop_clean = effective_crop.lower().strip() if effective_crop else None
+        crop_clean = normalize_crop_name(effective_crop)
+
+        # Filter out generic terms to prevent irrelevant documents from matching on words like 'spray', 'water', 'leaf'
+        substantive_query_tokens = [t.lower() for t in query_tokens if t.lower() not in GENERIC_AGRI_STOPWORDS and len(t) >= 2]
 
         for idx, doc in enumerate(self.documents):
             # Optional collection filter
@@ -848,8 +972,33 @@ class RAGService:
             if collection_filter and doc_col not in collection_filter:
                 continue
 
+            doc_crop_raw = doc.get("crop")
+            doc_crop_norm = normalize_crop_name(doc_crop_raw)
+
+            # 1. STRICT CROP FILTERING: Prevent cross-crop hallucination (e.g. Cotton advice for Paddy)
+            if crop_clean:
+                if doc_crop_norm and doc_crop_norm not in ["general", "all", "soils", "soil", "weather", "market", "agri", ""]:
+                    if doc_crop_norm != crop_clean:
+                        # Strictly reject document from a different crop
+                        continue
+                elif not doc_crop_norm and doc_col in ["KB01", "KB02", "KB03", "KB04", "KB05", "KB07", "KB08", "KB20"]:
+                    # Crop-specific collection document missing a valid crop match -> do not attribute to this crop
+                    continue
+
             bm25_norm = raw_bm25_scores[idx] / max_bm25
             vec_sim = max(0.0, self.vector_embedder.cosine_similarity(query_vec, self.doc_vectors[idx]))
+
+            # 2. STRICT KEYWORD / SEMANTIC FILTERING:
+            # Ensure document matches substantive domain terms rather than solely generic stopwords or bare crop names
+            doc_text_lower = f"{doc.get('title', '')} {doc.get('target', '')} {doc.get('content', '')}".lower()
+            if substantive_query_tokens:
+                crop_aliases = {crop_clean, "cotton", "rice", "paddy", "chilli", "tomato", "maize", "వరి", "పత్తి", "మిరప", "టమోటా", "మొక్కజొన్న", "धान", "कपास", "मक्का"} if crop_clean else set()
+                non_crop_tokens = [st for st in substantive_query_tokens if st not in crop_aliases]
+                check_tokens = non_crop_tokens if non_crop_tokens else substantive_query_tokens
+                has_substantive_match = any(st in doc_text_lower for st in check_tokens)
+                if not has_substantive_match and vec_sim < 0.74:
+                    # Reject document matching solely on generic terms or bare crop names without topic match
+                    continue
 
             # Base semantic score (0.0 to 1.0)
             base_score = (0.55 * bm25_norm) + (0.45 * vec_sim)
@@ -860,18 +1009,12 @@ class RAGService:
             if base_score < 0.06:
                 continue
 
-            # Bounded gentle multipliers instead of massive overpowering additions
+            # Bounded gentle multipliers
             multiplier = 1.0
-            doc_crop = (doc.get("crop") or "").lower()
 
-            # Crop matching / filtering
-            if crop_clean:
-                if doc_crop:
-                    if crop_clean in doc_crop or doc_crop in crop_clean:
-                        multiplier *= 1.30
-                    elif doc_crop not in ["general", "all", "soils", ""]:
-                        # Severe penalty for a completely different crop
-                        multiplier *= 0.15
+            # Crop match boost
+            if crop_clean and doc_crop_norm and doc_crop_norm == crop_clean:
+                multiplier *= 1.40
             
             # Collection intent alignment: prioritize primary specialized collection
             rec_list = analysis.get("recommended_collections", [])

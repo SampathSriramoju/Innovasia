@@ -102,7 +102,49 @@ def test_extension_officer_mandal_jurisdiction(client: TestClient, db_session):
         role="farmer",
         is_active=True
     )
+    # Setup out-of-bounds officer in Khammam
+    user_khammam = User(
+        id="user-officer-khammam",
+        phone_number="9876543204",
+        full_name="Officer Khammam",
+        role="extension_officer",
+        is_active=True
+    )
+    officer_khammam = ExtensionOfficer(
+        id="officer-khammam-01",
+        user_id=user_khammam.id,
+        officer_code="AGRI-TS-KHM",
+        designation="MAO",
+        department="Agri",
+        assigned_state="Telangana",
+        assigned_district="Khammam",
+        assigned_mandals=["Kusumanchi", "Tirumalayapalem"],
+        approval_status="APPROVED"
+    )
+    # Setup in-bounds officer in Geesugonda
+    user_geesu = User(
+        id="user-officer-geesugonda",
+        phone_number="9876543205",
+        full_name="Officer Geesugonda",
+        role="extension_officer",
+        is_active=True
+    )
+    officer_geesu = ExtensionOfficer(
+        id="officer-geesu-01",
+        user_id=user_geesu.id,
+        officer_code="AGRI-TS-GEESU",
+        designation="MAO",
+        department="Agri",
+        assigned_state="Telangana",
+        assigned_district="Warangal",
+        assigned_mandals=["Geesugonda", "Wardhannapet"],
+        approval_status="APPROVED"
+    )
     db_session.add(farmer)
+    db_session.add(user_khammam)
+    db_session.add(officer_khammam)
+    db_session.add(user_geesu)
+    db_session.add(officer_geesu)
     db_session.commit()
 
     ticket_geesu = AgriculturalTicket(

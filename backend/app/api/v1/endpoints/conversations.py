@@ -307,6 +307,29 @@ async def post_message_to_conversation(
     )
     generated_text = ai_result["text"]
 
+    # Step 5: Post-Generation Deterministic Safety Validation
+    is_post_safe = safety_gate.validate_llm_response(generated_text, safety_decision)
+    if not is_post_safe:
+        # LLM hallucinated unapproved numbers -> Fallback directly to verified CIBRC database record
+        p = safety_decision.approved_product
+        if p and isinstance(p, dict):
+            if lang == "te":
+                generated_text = f"CIBRC అధికారిక మోతాదు: ఎకరాకు {p.get('dosage_per_acre')} ({p.get('dosage_per_hectare')}). {p.get('safety_precautions')}"
+            elif lang == "hi":
+                generated_text = f"CIBRC आधिकारिक मात्रा: प्रति एकड़ {p.get('dosage_per_acre')} ({p.get('dosage_per_hectare')})। {p.get('safety_precautions')}"
+            else:
+                generated_text = f"Official CIBRC Dosage: {p.get('dosage_per_acre')} ({p.get('dosage_per_hectare')}). {p.get('safety_precautions')}"
+        else:
+            if lang == "te":
+                generated_text = "గమనిక: ఈ అంశానికి సంబంధించి నిర్దిష్ట CIBRC రసాయన మోతాదు ధృవీకరించబడలేదు. దయచేసి సమగ్ర సలహా కోసం స్థానిక వ్యవసాయ అధికారి (MAO) లేదా కృషి విజ్ఞాన కేంద్రాన్ని (KVK) సంప్రదించండి."
+            elif lang == "hi":
+                generated_text = "नोट: इस संदर्भ में कोई विशिष्ट CIBRC अनुमोदित रासायनिक मात्रा सत्यापित नहीं है। कृपया उचित मार्गदर्शन के लिए स्थानीय कृषि विस्तार अधिकारी या कृषि विज्ञान केंद्र (KVK) से संपर्क करें।"
+            else:
+                generated_text = "Note: No specific CIBRC approved chemical dosage is verified for this query. Please consult your local Agricultural Extension Officer or KVK for verified advice."
+
+    # Clean all citation IDs and reference headers from farmer-facing response text
+    generated_text = gemini_service._clean_response_text(generated_text)
+
     citations = [c.get("citation") for c in retrieved_chunks] if retrieved_chunks else [safety_decision.source_citation]
 
     conv.message_count += 2

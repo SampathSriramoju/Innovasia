@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!--
+      DEBUG-ONLY NETWORK SECURITY CONFIGURATION:
+      Allows cleartext HTTP traffic to local development backends (emulator loopback 10.0.2.2 and private Wi-Fi LAN subnets).
+      This configuration is strictly isolated to debug builds and is NEVER bundled in production release builds.
+    -->
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors>
+            <certificates src="system" />
+            <certificates src="user" />
+        </trust-anchors>
+    </base-config>
+
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">10.0.2.2</domain>
+        <domain includeSubdomains="true">localhost</domain>
+        <domain includeSubdomains="true">127.0.0.1</domain>
+    </domain-config>
+</network-security-config>

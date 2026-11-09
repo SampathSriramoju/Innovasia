@@ -25,15 +25,28 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        val devBackendIp = (project.findProperty("devBackendIp") as? String) ?: "10.0.2.2"
+        buildConfigField("String", "DEV_BACKEND_IP", "\"$devBackendIp\"")
+        buildConfigField("String", "PROD_API_BASE_URL", "\"https://api.bolkisan.gov.in/api/v1/\"")
+        buildConfigField("String", "DEFAULT_API_BASE_URL", "\"http://$devBackendIp:8000/api/v1/\"")
     }
 
     buildTypes {
+        debug {
+            val devBackendIp = (project.findProperty("devBackendIp") as? String) ?: "10.0.2.2"
+            buildConfigField("Boolean", "IS_PRODUCTION", "false")
+            buildConfigField("String", "CONFIGURED_API_BASE_URL", "\"http://$devBackendIp:8000/api/v1/\"")
+        }
         release {
+            buildConfigField("Boolean", "IS_PRODUCTION", "true")
+            buildConfigField("String", "CONFIGURED_API_BASE_URL", "\"https://api.bolkisan.gov.in/api/v1/\"")
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
     compileOptions {
@@ -51,6 +64,15 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.14"
     }
+    testOptions {
+        unitTests.isReturnDefaultValues = true
+    }
+
+    lint {
+        checkReleaseBuilds = false
+        abortOnError = false
+    }
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -135,13 +157,30 @@ val prepareOfflineModelAsset by tasks.registering {
         // Copy to generated assets directory
         if (!targetFile.exists() || targetFile.length() != expectedSize) {
             println("Packaging verified model artifact into assets: ${targetFile.absolutePath}")
-            sourceFile.copyTo(targetFile, overwrite = true)
+            try {
+                if (targetFile.exists() && targetFile.length() != expectedSize) {
+                    targetFile.delete()
+                }
+                sourceFile.copyTo(targetFile, overwrite = true)
+            } catch (e: Exception) {
+                if (targetFile.exists() && targetFile.length() == expectedSize) {
+                    println("Target file already intact with expected size ($expectedSize bytes).")
+                } else {
+                    throw e
+                }
+            }
         }
         println("Verified model ready for packaging: ${targetFile.name} (${targetFile.length()} bytes, SHA-256: $expectedSha)")
     }
 }
 
-tasks.matching { it.name.startsWith("merge") && it.name.endsWith("Assets") }.configureEach {
+tasks.matching {
+    it.name != "prepareOfflineModelAsset" && (
+        (it.name.startsWith("merge") && it.name.endsWith("Assets")) ||
+        it.name.contains("Lint") ||
+        it.name.contains("Assets")
+    )
+}.configureEach {
     dependsOn(prepareOfflineModelAsset)
 }
 

@@ -31,8 +31,10 @@ class MainActivity : ComponentActivity() {
         val repository = app.repository
         val offlineEngine = OfflineInferenceEngine.getInstance(this)
 
-        // Asynchronously provision bundled offline SLM on first launch and initialize engine
-        lifecycleScope.launch(Dispatchers.Default) {
+        // Asynchronously provision bundled offline SLM on first launch after initial UI renders
+        lifecycleScope.launch(Dispatchers.IO) {
+            android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND)
+            kotlinx.coroutines.delay(1200)
             OfflineModelManager.provisionBundledModelOnFirstLaunch(this@MainActivity)
             if (OfflineModelManager.isGenuineModelInstalled(this@MainActivity)) {
                 offlineEngine.initializeEngine()

@@ -21,6 +21,7 @@
         android:usesCleartextTraffic="false">
 
         <!-- LiteRT-LM GPU acceleration native libraries -->
+        <uses-native-library android:name="libvndksupport.so" android:required="false" />
         <uses-native-library android:name="libOpenCL.so" android:required="false" />
         <uses-native-library android:name="libGLESv3.so" android:required="false" />
 

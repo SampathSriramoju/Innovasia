@@ -52,6 +52,8 @@ data class OfflineCapabilities(
     val modelStatus: OfflineModelStatus,
     val isOfflineAsrAvailable: Boolean,
     val isOfflineTtsAvailable: Boolean,
+    val asrStatusDescription: String = "Speech Engine",
+    val ttsStatusDescription: String = "TTS Engine",
     val isBundledAssetPresent: Boolean,
     val isModelExtractedAndVerified: Boolean,
     val isEngineInitialized: Boolean,
@@ -70,6 +72,12 @@ object OfflineModelManager {
     const val MIN_VALID_MODEL_BYTES = 343_490_560L
     const val EXPECTED_SHA256 = "bf1aba9ce8d963124407353c6aa4cbf72eba78db21ae133de983eac672ce83e0"
     private const val EXTRACTION_TEMP_NAME = "bolkisan_qwen3_0_6b_int4.litertlm.tmp"
+
+    private const val PREFS_VERIFICATION = "bolkisan_model_verification_ledger"
+    private const val KEY_RECORD_SHA = "verified_sha256"
+    private const val KEY_RECORD_SIZE = "verified_size_bytes"
+    private const val KEY_RECORD_MODIFIED = "verified_last_modified"
+    private const val KEY_RECORD_MODEL_ID = "verified_model_id"
 
     val metadata = OfflineModelMetadata()
 
@@ -93,6 +101,22 @@ object OfflineModelManager {
         return File(dir, EXTRACTION_TEMP_NAME)
     }
 
+    fun markModelVerified(context: Context, file: File, sha256: String) {
+        val prefs = context.getSharedPreferences(PREFS_VERIFICATION, Context.MODE_PRIVATE)
+        prefs.edit()
+            .putString(KEY_RECORD_SHA, sha256)
+            .putLong(KEY_RECORD_SIZE, file.length())
+            .putLong(KEY_RECORD_MODIFIED, file.lastModified())
+            .putString(KEY_RECORD_MODEL_ID, metadata.modelId)
+            .apply()
+        Log.i(TAG, "Recorded trustworthy verification record for ${file.name} (SHA: ${sha256.take(8)}...)")
+    }
+
+    fun clearModelVerificationRecord(context: Context) {
+        val prefs = context.getSharedPreferences(PREFS_VERIFICATION, Context.MODE_PRIVATE)
+        prefs.edit().clear().apply()
+    }
+
     /**
      * Checks if the built-in model asset exists in the APK assets.
      */
@@ -107,10 +131,37 @@ object OfflineModelManager {
 
     /**
      * Checks whether a genuine model file exists on disk, meets exact size, and matches SHA-256.
+     * Uses persistent verification ledger to avoid hashing 343MB on every farmer question (O(1)).
+     * Only recalculates full byte-by-byte SHA-256 when forceRecheck is true or file modified.
      */
-    fun isGenuineModelInstalled(context: Context): Boolean {
+    fun isGenuineModelInstalled(context: Context, forceRecheckHash: Boolean = false): Boolean {
         val file = getModelFile(context)
-        return file.exists() && file.length() == metadata.downloadSizeBytes && verifyChecksum(file, metadata.expectedSha256)
+        if (!file.exists() || file.length() != metadata.downloadSizeBytes) {
+            return false
+        }
+
+        val prefs = context.getSharedPreferences(PREFS_VERIFICATION, Context.MODE_PRIVATE)
+        val recordedSha = prefs.getString(KEY_RECORD_SHA, null)
+        val recordedSize = prefs.getLong(KEY_RECORD_SIZE, -1L)
+        val recordedTime = prefs.getLong(KEY_RECORD_MODIFIED, -1L)
+        val recordedId = prefs.getString(KEY_RECORD_MODEL_ID, null)
+
+        val hasValidRecord = !forceRecheckHash &&
+                recordedSha.equals(metadata.expectedSha256, ignoreCase = true) &&
+                recordedSize == file.length() &&
+                recordedTime == file.lastModified() &&
+                recordedId == metadata.modelId
+
+        if (hasValidRecord) {
+            return true
+        }
+
+        // Full cryptographic re-verification
+        val isHashValid = verifyChecksum(file, metadata.expectedSha256)
+        if (isHashValid) {
+            markModelVerified(context, file, metadata.expectedSha256)
+        }
+        return isHashValid
     }
 
     /**
@@ -136,27 +187,40 @@ object OfflineModelManager {
     }
 
     /**
-     * Hardware memory and storage suitability check.
-     * Enforces the hard 4GB total RAM / 800MB free memory requirement.
+     * Hardware memory and storage suitability check based on real measurements.
+     * Enforces minimum 3.4 GB total physical RAM (4GB-class hardware tier),
+     * minimum 650 MB free RAM, lowMemory flag guard, and required storage.
      */
     fun checkHardwareSuitability(context: Context): Pair<Boolean, String> {
         val actManager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
         val memInfo = ActivityManager.MemoryInfo()
         actManager.getMemoryInfo(memInfo)
-        val totalRamGb = Math.round(memInfo.totalMem.toDouble() / (1024.0 * 1024.0 * 1024.0)).toInt().coerceAtLeast(1)
-        val freeRamMb = memInfo.availMem / (1024 * 1024)
 
-        if (totalRamGb < metadata.minRamGb) {
+        val totalMemBytes = memInfo.totalMem
+        val totalRamGb = Math.round(totalMemBytes.toDouble() / (1024.0 * 1024.0 * 1024.0)).toInt().coerceAtLeast(1)
+        val freeRamMb = memInfo.availMem / (1024 * 1024)
+        val isLowMemory = memInfo.lowMemory
+
+        // Device physical RAM tier check: true 4GB devices have totalMem around 3.5GB - 3.8GB
+        if (totalMemBytes < 3_400_000_000L) {
             return Pair(
                 false,
-                "Device has ${totalRamGb}GB RAM (< ${metadata.minRamGb}GB required). Safe Room SQLite FTS5 active to prevent OOM."
+                "Device physical RAM: ${String.format("%.2f", totalMemBytes / (1024.0 * 1024.0 * 1024.0))}GB (< 3.4GB 4GB-tier required). Safe Room SQLite active."
             )
         }
 
-        if (freeRamMb < 800) {
+        // Active memory pressure guard
+        if (isLowMemory) {
             return Pair(
                 false,
-                "Low available memory: ${freeRamMb}MB free (< 800MB required). Safe Room SQLite Knowledge active."
+                "Device is currently under memory pressure (lowMemory=true, ${freeRamMb}MB free). Safe Room SQLite active to prevent OS kill."
+            )
+        }
+
+        if (freeRamMb < 650) {
+            return Pair(
+                false,
+                "Low available memory: ${freeRamMb}MB free (< 650MB required for LiteRT-LM runtime). Safe Room SQLite active."
             )
         }
 
@@ -171,7 +235,7 @@ object OfflineModelManager {
             )
         }
 
-        return Pair(true, "Hardware suitable: ${totalRamGb}GB RAM, ${freeRamMb}MB free RAM, ${freeStorageMb}MB storage.")
+        return Pair(true, "Hardware measured suitable: ${totalRamGb}GB RAM, ${freeRamMb}MB free, ${freeStorageMb}MB storage.")
     }
 
     /**
@@ -266,6 +330,7 @@ object OfflineModelManager {
                 _statusMessage.value = "Failed to commit verified model file to app storage."
                 return@withContext false
             }
+            markModelVerified(context, targetFile, metadata.expectedSha256)
 
             // Step 6: Engine initialization
             _modelStatus.value = OfflineModelStatus.INITIALIZING
@@ -274,6 +339,7 @@ object OfflineModelManager {
             val engineInit = OfflineInferenceEngine.getInstance(context).initializeEngine()
             if (!engineInit) {
                 targetFile.delete()
+                clearModelVerificationRecord(context)
                 _modelStatus.value = OfflineModelStatus.FAILED
                 _statusMessage.value = "LiteRT-LM runtime initialization failed on this device."
                 return@withContext false
@@ -325,28 +391,46 @@ object OfflineModelManager {
         val isAssetBundled = isBundledModelAssetAvailable(context)
 
         val status = when {
-            totalRamGb < metadata.minRamGb -> OfflineModelStatus.UNSUPPORTED_DEVICE
-            freeRamMb < 800 && !hasGenuine -> OfflineModelStatus.INSUFFICIENT_MEMORY
-            hasGenuine && isEngineReady -> OfflineModelStatus.READY
+            _modelStatus.value == OfflineModelStatus.FAILED -> OfflineModelStatus.FAILED
             _modelStatus.value == OfflineModelStatus.EXTRACTING -> OfflineModelStatus.EXTRACTING
             _modelStatus.value == OfflineModelStatus.VERIFYING -> OfflineModelStatus.VERIFYING
             _modelStatus.value == OfflineModelStatus.INITIALIZING -> OfflineModelStatus.INITIALIZING
+            memInfo.totalMem < 3_400_000_000L -> OfflineModelStatus.UNSUPPORTED_DEVICE
+            (freeRamMb < 650 || memInfo.lowMemory) && !hasGenuine -> OfflineModelStatus.INSUFFICIENT_MEMORY
+            hasGenuine && isEngineReady -> OfflineModelStatus.READY
             hasGenuine -> OfflineModelStatus.INITIALIZING
             else -> OfflineModelStatus.NOT_INSTALLED
         }
 
+        // Truthful ASR evaluation
         val speechAvailable = SpeechRecognizer.isRecognitionAvailable(context)
-        val asrAvailable = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+        val onDeviceEnginePresent = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
             SpeechRecognizer.isOnDeviceRecognitionAvailable(context)
         } else {
-            speechAvailable
+            false
+        }
+        val asrDescription = when {
+            onDeviceEnginePresent -> "On-Device Speech Engine Active (Supports offline voice)"
+            speechAvailable -> "System Speech Recognition Available"
+            else -> "Speech Recognizer Not Installed"
+        }
+
+        // Truthful TTS evaluation
+        val ttsIntent = android.content.Intent(android.speech.tts.TextToSpeech.Engine.ACTION_CHECK_TTS_DATA)
+        val resolveInfo = context.packageManager.queryIntentActivities(ttsIntent, 0)
+        val ttsEngineInstalled = resolveInfo.isNotEmpty()
+        val ttsDescription = when {
+            ttsEngineInstalled -> "System TTS Engine Active (Multi-language voice output)"
+            else -> "Text-to-Speech Engine Not Available"
         }
 
         return OfflineCapabilities(
             isOfflineKnowledgeAvailable = hasRoomRecords,
             modelStatus = status,
-            isOfflineAsrAvailable = asrAvailable,
-            isOfflineTtsAvailable = true,
+            isOfflineAsrAvailable = onDeviceEnginePresent || speechAvailable,
+            isOfflineTtsAvailable = ttsEngineInstalled,
+            asrStatusDescription = asrDescription,
+            ttsStatusDescription = ttsDescription,
             isBundledAssetPresent = isAssetBundled,
             isModelExtractedAndVerified = hasGenuine,
             isEngineInitialized = isEngineReady,
@@ -412,6 +496,7 @@ object OfflineModelManager {
 
             if (targetFile.exists()) targetFile.delete()
             if (tempFile.renameTo(targetFile)) {
+                markModelVerified(context, targetFile, metadata.expectedSha256)
                 _modelStatus.value = OfflineModelStatus.INITIALIZING
                 _statusMessage.value = "Initializing LiteRT-LM runtime..."
                 if (OfflineInferenceEngine.getInstance(context).initializeEngine()) {
@@ -420,6 +505,7 @@ object OfflineModelManager {
                     Result.success(targetFile)
                 } else {
                     targetFile.delete()
+                    clearModelVerificationRecord(context)
                     _modelStatus.value = OfflineModelStatus.FAILED
                     _statusMessage.value = "Initialization failed on device."
                     Result.failure(Exception("Engine init failed"))
@@ -481,6 +567,7 @@ object OfflineModelManager {
 
             if (targetFile.exists()) targetFile.delete()
             if (tempFile.renameTo(targetFile)) {
+                markModelVerified(context, targetFile, metadata.expectedSha256)
                 _modelStatus.value = OfflineModelStatus.INITIALIZING
                 _statusMessage.value = "Initializing LiteRT-LM runtime..."
 
@@ -490,6 +577,7 @@ object OfflineModelManager {
                     Result.success(targetFile)
                 } else {
                     targetFile.delete()
+                    clearModelVerificationRecord(context)
                     _modelStatus.value = OfflineModelStatus.FAILED
                     _statusMessage.value = "Imported model could not initialize in LiteRT-LM."
                     Result.failure(Exception("LiteRT-LM initialization failed"))
@@ -513,6 +601,7 @@ object OfflineModelManager {
      */
     fun deleteModel(context: Context): Boolean {
         OfflineInferenceEngine.getInstance(context).closeEngine()
+        clearModelVerificationRecord(context)
         val file = getModelFile(context)
         val temp = getTempFile(context)
         if (temp.exists()) temp.delete()
