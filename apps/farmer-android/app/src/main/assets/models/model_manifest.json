@@ -1,28 +1,24 @@
 {
-  "model_id": "agriparam-q4-edge",
-  "name": "AgriParam-Q4 Edge SLM",
-  "version": "1.0.4",
-  "architecture": "Transformer-Decoder-Quantized-INT4",
-  "runtime": "LiteRT-LM / GGUF Edge Runtime",
-  "parameters": "2.1 Billion",
-  "quantization": "INT4_AWQ (Activation-aware Weight Quantization)",
+  "model_id": "gemma-2b-it-mobile-q4",
+  "name": "Google Gemma 2B Mobile SLM (LiteRT-LM)",
+  "version": "2.1.0-q4",
+  "architecture": "Transformer-Decoder-INT4",
+  "runtime": "Google LiteRT-LM / MediaPipe GenAI Runtime",
+  "parameters": "2.0 Billion",
+  "quantization": "INT4_AWQ (Group 128)",
   "context_length": 2048,
-  "preinstalled": true,
-  "bundle_type": "embedded_apk_asset",
+  "preinstalled": false,
+  "bundle_type": "optional_in_app_download",
+  "download_size_bytes": 1374389534,
+  "required_storage_bytes": 1610612736,
+  "minimum_ram_gb": 4,
+  "recommended_ram_gb": 6,
   "supported_languages": [
-    { "code": "te", "name": "తెలుగు (Telugu)" },
-    { "code": "hi", "name": "हिन्दी (Hindi)" },
+    { "code": "te", "name": "Telugu" },
+    { "code": "hi", "name": "Hindi" },
     { "code": "en", "name": "English" }
-  ],
-  "supported_crops": [
-    "Cotton",
-    "Rice / Paddy",
-    "Chilli",
-    "Tomato",
-    "Wheat",
-    "Maize"
   ],
   "advisory_safety_standard": "CIBRC / ICAR 2024 Gazette Regulations",
   "fallback_mode": "Zero-OOM Room SQLite Deterministic Engine",
-  "build_timestamp": "2026-11-08T22:45:00Z"
+  "build_timestamp": "2026-11-09T01:00:00Z"
 }

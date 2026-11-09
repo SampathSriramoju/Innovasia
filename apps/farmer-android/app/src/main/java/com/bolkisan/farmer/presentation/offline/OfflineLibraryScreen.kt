@@ -20,11 +20,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.platform.LocalContext
 import com.bolkisan.farmer.data.local.entities.OfflineKnowledgeEntity
 import com.bolkisan.farmer.data.repository.BolKisanRepository
 import com.bolkisan.farmer.domain.EdgeRuntime
 import com.bolkisan.farmer.domain.OfflineInferenceEngine
-import com.bolkisan.farmer.domain.OfflineModelCandidate
+import com.bolkisan.farmer.domain.OfflineModelManager
+import com.bolkisan.farmer.domain.OfflineModelStatus
 import com.bolkisan.farmer.presentation.common.NetworkStatusBar
 import com.bolkisan.farmer.presentation.common.appStrings
 import com.bolkisan.farmer.presentation.common.canonicalCropName
@@ -51,8 +53,10 @@ fun OfflineLibraryScreen(
     var selectedCropFilter by remember { mutableStateOf("All") }
     var searchQuery by remember { mutableStateOf("") }
 
+    val context = LocalContext.current
     val (totalRamGb, freeRamMb) = remember { inferenceEngine.getDeviceRamInfo() }
-    val preinstalledModel = remember { inferenceEngine.getPreinstalledModelInfo() }
+    val modelMetadata = remember { OfflineModelManager.metadata }
+    val modelStatus by OfflineModelManager.modelStatus.collectAsState()
 
     val cropFilters = remember(currentLang) { cropFilterOptions(currentLang) }
 
@@ -74,17 +78,16 @@ fun OfflineLibraryScreen(
         coroutineScope.launch {
             val res = inferenceEngine.executeOfflineInference(
                 query = "Cotton pink bollworm chemical dose",
-                preferredCandidate = OfflineModelCandidate.AGRIPARAM_Q4,
-                runtime = EdgeRuntime.LITERT_LM
+                preferredRuntime = EdgeRuntime.LITERT_LM
             )
             isBenchmarking = false
             benchmarkResult = """
+                • Engine: ${res.engineUsed}
+                • Status: ${res.statusLabel}
                 • ${strings.benchmarkDeviceRam}: ${res.hardwareRamGb}GB (Free: ${res.freeRamMb}MB)
-                • ${strings.benchmarkModelEvaluated}: ${res.model} via ${res.runtime}
-                • ${strings.benchmarkFirstToken}: ${res.timeToFirstTokenMs}ms
-                • ${strings.benchmarkTotalInference}: ${res.totalInferenceMs}ms
+                • Execution Time: ${res.totalInferenceMs}ms
                 • ${strings.benchmarkVoiceLatency}: ${String.format("%.2f", res.voiceToVoiceLatencySeconds)}s (${strings.benchmarkTarget} < 6.0s)
-                • ${strings.benchmarkFallback}: ${if (res.didFallbackToVerifiedRules) strings.benchmarkFallbackYes else strings.benchmarkFallbackNo}
+                • Fallback: ${if (res.didFallbackToVerifiedRules) strings.benchmarkFallbackYes else strings.benchmarkFallbackNo}
                 • ${strings.benchmarkGroundedness}: ${res.groundednessScore * 100}%
             """.trimIndent()
         }
@@ -155,13 +158,23 @@ fun OfflineLibraryScreen(
                         )
                         Surface(
                             shape = RoundedCornerShape(8.dp),
-                            color = Color(0xFFDCFCE7)
+                            color = when (modelStatus) {
+                                OfflineModelStatus.READY -> Color(0xFFDCFCE7)
+                                OfflineModelStatus.DOWNLOADING -> Color(0xFFFEF3C7)
+                                OfflineModelStatus.UNSUPPORTED_DEVICE -> Color(0xFFFEE2E2)
+                                else -> Color(0xFFF3F4F6)
+                            }
                         ) {
                             Text(
-                                text = strings.preinstalledBadge,
+                                text = modelStatus.name,
                                 fontSize = 10.sp,
                                 fontWeight = FontWeight.Bold,
-                                color = Color(0xFF166534),
+                                color = when (modelStatus) {
+                                    OfflineModelStatus.READY -> Color(0xFF166534)
+                                    OfflineModelStatus.DOWNLOADING -> Color(0xFFB45309)
+                                    OfflineModelStatus.UNSUPPORTED_DEVICE -> HazardRed
+                                    else -> Color(0xFF4B5563)
+                                },
                                 modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
                             )
                         }
@@ -169,13 +182,13 @@ fun OfflineLibraryScreen(
 
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
-                        text = strings.modelLabel(preinstalledModel.name, preinstalledModel.parameters),
+                        text = "${modelMetadata.name} (${modelMetadata.parameterCount})",
                         fontSize = 12.sp,
                         fontWeight = FontWeight.SemiBold,
                         color = DarkEarthFg
                     )
                     Text(
-                        text = strings.architectureLabel(preinstalledModel.architecture, preinstalledModel.quantization),
+                        text = "${modelMetadata.architecture} • ${modelMetadata.quantization}",
                         fontSize = 11.sp,
                         color = MutedSlate
                     )

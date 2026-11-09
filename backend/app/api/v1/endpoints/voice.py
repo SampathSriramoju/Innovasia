@@ -18,9 +18,10 @@ router = APIRouter()
 class VoiceQueryRequest(BaseModel):
     query_text: str
     language: Optional[str] = "te" # 'te', 'hi', 'en'
-    crop_name: Optional[str] = None
+    crop_name: Optional[str] = None # Optional confirmed/inferred crop
     pest_or_disease: Optional[str] = None
     chemical_mentioned: Optional[str] = None
+    conversation_history: Optional[List[Dict[str, Any]]] = None # Multi-turn conversation context
     state: Optional[str] = "Telangana"
     district: Optional[str] = "Warangal"
     mandal: Optional[str] = "Geesugonda"
@@ -32,18 +33,49 @@ async def process_voice_query(
     db: Session = Depends(get_db)
 ):
     """
-    Core Voice & Agricultural Query Processing Pipeline.
+    Core Voice & Agricultural Conversational Query Processing Pipeline.
     Strictly enforces: NEVER GENERATE UNSUPPORTED AGRICULTURAL ADVICE.
     """
     user_id = current_user.get("sub")
     query_text = payload.query_text
     lang = payload.language or QueryUnderstanding.detect_language(query_text)
 
-    # Step 0: Intelligent Query Understanding & Entity Extraction
+    # Step 0: Intelligent Query Understanding & Entity Extraction with Conversation Context
     canonical_input_crop = QueryUnderstanding.canonical_crop(payload.crop_name)
-    analysis = QueryUnderstanding.analyze_query(query_text, context_crop=canonical_input_crop)
+    analysis = QueryUnderstanding.analyze_query(
+        query_text,
+        context_crop=canonical_input_crop,
+        conversation_history=payload.conversation_history
+    )
     crop = analysis.get("crop")
+    crop_source = analysis.get("crop_source", "unknown")
     target_entity = payload.pest_or_disease or analysis.get("target_entity")
+
+    # Ambiguity Gate: If farmer query requires a specific crop but none is identifiable
+    if analysis.get("is_ambiguous") and analysis.get("clarification_prompt"):
+        clarification_msg = analysis["clarification_prompt"]
+        return {
+            "status": "needs_clarification",
+            "is_safe": True,
+            "is_fallback": False,
+            "response_text": clarification_msg,
+            "language": lang,
+            "crop_identified": None,
+            "crop_source": "unknown",
+            "is_ambiguous": True,
+            "clarification_prompt": clarification_msg,
+            "topic_identified": analysis.get("intent"),
+            "model_used": "conversational-coordinator",
+            "provider": "query-understanding",
+            "citations": [],
+            "warnings": [],
+            "follow_up_suggestions": [
+                "పత్తి (Cotton)" if lang == "te" else ("कपास (Cotton)" if lang == "hi" else "Cotton"),
+                "వరి (Rice)" if lang == "te" else ("धान (Rice)" if lang == "hi" else "Rice / Paddy"),
+                "మిరప (Chilli)" if lang == "te" else ("मिर्च (Chilli)" if lang == "hi" else "Chilli"),
+                "టమోటా (Tomato)" if lang == "te" else ("टमाटर (Tomato)" if lang == "hi" else "Tomato")
+            ]
+        }
 
     # Step 1: Deterministic Safety Gate Evaluation
     safety_decision, meta = safety_gate.evaluate_query(
@@ -118,7 +150,8 @@ async def process_voice_query(
         retrieved_contexts=retrieved_chunks,
         language=lang,
         safety_context=safety_context,
-        query_analysis=analysis
+        query_analysis=analysis,
+        conversation_history=payload.conversation_history
     )
 
     generated_text = ai_result["text"]
@@ -146,6 +179,9 @@ async def process_voice_query(
         "response_text": generated_text,
         "language": lang,
         "crop_identified": crop,
+        "crop_source": crop_source,
+        "is_ambiguous": False,
+        "clarification_prompt": None,
         "topic_identified": analysis.get("intent"),
         "model_used": ai_result.get("model"),
         "provider": ai_result.get("provider"),
@@ -153,5 +189,6 @@ async def process_voice_query(
         "evidence_sufficient": ai_result.get("evidence_sufficient", True),
         "citations": [c.get("citation") for c in retrieved_chunks] if retrieved_chunks else [safety_decision.source_citation],
         "warnings": safety_decision.warnings,
+        "follow_up_suggestions": ai_result.get("follow_up_suggestions") or gemini_service._generate_default_followups(crop, lang),
         "tts_playback_url": f"/api/v1/voice/tts-stream?text_hash={hash(generated_text)}"
     }

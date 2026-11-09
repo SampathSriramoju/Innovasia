@@ -88,6 +88,47 @@ class AppStrings(val code: String) {
     )
     val onlineAiBadge get() = t("ఆన్‌లైన్ AI", "ऑनलाइन AI", "Online AI")
     val offlineIcarBadge get() = t("ఆఫ్‌లైన్ ICAR", "ऑफ़लाइन ICAR", "Offline ICAR")
+    val chatOnlineStatus get() = t("ONLINE", "ONLINE", "ONLINE")
+    val chatOfflineStatus get() = t("OFFLINE", "OFFLINE", "OFFLINE")
+    val chatComposerHint get() = t(
+        "వ్యవసాయ సందేహాన్ని టైప్ చేయండి...",
+        "अपना कृषि प्रश्न टाइप करें...",
+        "Type your farming question..."
+    )
+    val takePhotoSheet get() = t("ఫోటో తీయండి", "फोटो खींचें", "Take Photo")
+    val chooseGallerySheet get() = t("గ్యాలరీ నుండి ఎంచుకోండి", "गैलरी से चुनें", "Choose from Gallery")
+    val attachImageSheet get() = t("పంట తెగులు చిత్రాన్ని జతచేయండి", "फसल रोग का चित्र संलग्न करें", "Attach Crop Photo for Diagnosis")
+    val removeAttachment get() = t("తొలగించు", "हटाएं", "Remove")
+    val chatWelcomeTitle get() = t(
+        "నమస్కారం! బోల్ కిసాన్ కి స్వాగతం",
+        "नमस्ते! बोल किसान में आपका स्वागत है",
+        "Welcome to Bol Kisan!"
+    )
+    val chatWelcomeDesc get() = t(
+        "ఏ పంట గురించైనా, తెగుళ్లు, ఎరువులు లేదా వ్యవసాయ పద్ధతుల గురించి నేరుగా అడగండి. ఫోటో కూడా జతచేయవచ్చు.",
+        "किसी भी फसल, कीट, रोग, खाद या कृषि तकनीक के बारे में सीधे पूछें। फोटो भी संलग्न कर सकते हैं।",
+        "Ask anything about any crop, pest, disease, fertilizer, or organic practice. You can also attach photos."
+    )
+    val thinkingIndicator get() = t(
+        "సమాధానం సిద్ధం చేస్తున్నాము...",
+        "उत्तर तैयार किया जा रहा है...",
+        "Bol Kisan is thinking..."
+    )
+    val followUpHeader get() = t(
+        "సంబంధిత ప్రశ్నలు:",
+        "संबंधित प्रश्न:",
+        "Suggested Follow-ups:"
+    )
+    val tapToAskFollowUp get() = t(
+        "నొక్కి అడగండి",
+        "टैप करके पूछें",
+        "Tap to ask"
+    )
+    val clarificationHeader get() = t(
+        "స్పష్టత అవసరం:",
+        "स्पष्टीकरण आवश्यक:",
+        "Clarification Needed:"
+    )
     val diseaseCameraChip get() = t("తెగులు కెమెరా", "रोग कैमरा", "Disease Camera")
     val pesticidesChip get() = t("పురుగు మందులు (CIBRC)", "कीटनाशक (CIBRC)", "Pesticides (CIBRC)")
     val mandiChip get() = t("మండి ధరలు", "मंडी भाव", "Mandi Prices")

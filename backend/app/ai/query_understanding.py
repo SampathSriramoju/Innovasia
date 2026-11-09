@@ -62,6 +62,21 @@ class QueryUnderstanding:
             r"\bsoybean\b", r"\bsoya\b",
             "సోయాబీన్", "సోయా",
             "सोयाबीन", "सोया"
+        ],
+        "Turmeric": [
+            r"\bturmeric\b", r"\bcurcuma\b",
+            "పసుపు", "పసుపులో", "పసుపుకి",
+            "हल्दी"
+        ],
+        "Mango": [
+            r"\bmango\b", r"\bmangoes\b", r"\bmangifera\b",
+            "మామిడి", "మామిడిలో", "మామిడికి", "మామిడిచెట్టు",
+            "आम"
+        ],
+        "Onion": [
+            r"\bonion\b", r"\bonions\b", r"\ballium\b",
+            "ఉల్లి", "ఉల్లిపాయ", "ఉల్లిలో", "ఉల్లిగడ్డ",
+            "प्याज"
         ]
     }
 
@@ -143,6 +158,11 @@ class QueryUnderstanding:
             "rotation", "crop rotation", "intercropping", "next crop", "sequence",
             "పంట మార్పిడి", "అంతర పంట", "అనుకూల పంట", "పంటల మార్పిడి",
             "फसल चक्र", "अंतर्वर्ती फसल"
+        ],
+        "organic_farming": [
+            "organic", "natural farming", "jeevamrit", "beejamrit", "neemastram", "brahmastram", "panchagavya", "vermicompost", "biofertilizer", "desi cow",
+            "సేంద్రియ", "సేంద్రీయ", "జీవామృతం", "బీజామృతం", "నీమాస్త్రం", "బ్రహ్మాస్త్రం", "పంచగవ్య", "వర్మీ కంపోస్ట్", "ప్రకృతి వ్యవసాయం",
+            "जैविक", "प्राकृतिक खेती", "जीवामृत", "बीजामृत", "नीमास्त्र", "ब्रह्मास्त्र", "पंचगव्य", "वर्मीकंपोस्ट", "देसी गाय"
         ]
     }
 
@@ -182,30 +202,79 @@ class QueryUnderstanding:
     def analyze_query(
         cls,
         query_text: str,
-        context_crop: Optional[str] = None
+        context_crop: Optional[str] = None,
+        conversation_history: Optional[List[Dict[str, Any]]] = None
     ) -> Dict[str, Any]:
         """
-        Parses query, extracts crop, target entity, intent, and recommended KB collections.
+        Parses query, extracts crop entities, target entities, intent, and recommended KB collections.
+        Supports multi-turn conversational crop continuity and ambiguity detection.
         """
         lang = cls.detect_language(query_text)
         query_lower = query_text.lower()
 
-        # 1. Extract Crop
-        extracted_crop = None
+        # 1. Extract Crop Entities from current query
+        detected_crops: List[str] = []
         for crop_name, patterns in cls.CROP_PATTERNS.items():
             for pat in patterns:
+                matched = False
                 if pat.startswith("\\b"):
                     if re.search(pat, query_lower):
-                        extracted_crop = crop_name
-                        break
+                        matched = True
                 else:
                     if pat.lower() in query_lower:
-                        extracted_crop = crop_name
-                        break
-            if extracted_crop:
-                break
+                        matched = True
+                if matched:
+                    if crop_name not in detected_crops:
+                        detected_crops.append(crop_name)
+                    break
 
-        final_crop = extracted_crop or context_crop
+        final_crop: Optional[str] = None
+        crop_source = "unknown"
+
+        if len(detected_crops) == 1:
+            final_crop = detected_crops[0]
+            crop_source = "detected"
+        elif len(detected_crops) > 1:
+            final_crop = detected_crops[0]
+            crop_source = "detected_multiple"
+        else:
+            # Check conversation history for previously established crop
+            history_crop = None
+            if conversation_history:
+                # Traverse recent turns in reverse order
+                for turn in reversed(conversation_history[-6:]):
+                    t_crop = turn.get("crop") or turn.get("crop_name") or turn.get("crop_identified")
+                    if t_crop:
+                        c_canon = cls.canonical_crop(t_crop)
+                        if c_canon:
+                            history_crop = c_canon
+                            break
+                    # Also scan message text of recent turn
+                    t_text = (turn.get("text") or turn.get("query_text") or turn.get("query") or "").lower()
+                    if t_text:
+                        for crop_name, patterns in cls.CROP_PATTERNS.items():
+                            for pat in patterns:
+                                if pat.startswith("\\b"):
+                                    if re.search(pat, t_text):
+                                        history_crop = crop_name
+                                        break
+                                elif pat.lower() in t_text:
+                                    history_crop = crop_name
+                                    break
+                            if history_crop:
+                                break
+                    if history_crop:
+                        break
+
+            if history_crop:
+                final_crop = history_crop
+                crop_source = "history_inferred"
+            elif context_crop:
+                final_crop = context_crop
+                crop_source = "explicit"
+            else:
+                final_crop = None
+                crop_source = "unknown"
 
         # 2. Extract Intent / Topic
         matched_intents: List[Tuple[str, int]] = []
@@ -232,7 +301,7 @@ class QueryUnderstanding:
                 break
 
         # Check domain relevance
-        has_agri_evidence = bool(extracted_crop or target_entity or matched_intents)
+        has_agri_evidence = bool(detected_crops or target_entity or matched_intents)
         if has_agri_evidence:
             primary_intent = matched_intents[0][0] if matched_intents else "general_agri"
             recommended_collections = cls.INTENT_COLLECTIONS.get(primary_intent, ["KB21"])
@@ -240,14 +309,31 @@ class QueryUnderstanding:
             primary_intent = "out_of_domain"
             recommended_collections = []
 
+        # 4. Ambiguity Evaluation
+        # If intent is heavily crop-specific (disease, pest, pesticide dose, sowing, yield, spacing) but no crop was identified or in history
+        is_ambiguous = False
+        clarification_prompt = None
+        crop_dependent_intents = {"crop_disease", "pest_management", "sowing_cultivation", "harvesting", "pesticide_safety"}
+        if final_crop is None and primary_intent in crop_dependent_intents and not target_entity:
+            is_ambiguous = True
+            if lang == "te":
+                clarification_prompt = "మీరు ఏ పంట గురించి అడుగుతున్నారు? (ఉదా: పత్తి, వరి, మిరప, టమోటా, మొక్కజొన్న)"
+            elif lang == "hi":
+                clarification_prompt = "आप किस फसल के बारे में पूछ रहे हैं? (उदा: कपास, धान, मिर्च, टमाटर, मक्का)"
+            else:
+                clarification_prompt = "Which crop are you referring to? (e.g. Cotton, Rice, Chilli, Tomato, Maize)"
+
         return {
             "language": lang,
             "crop": final_crop,
-            "extracted_crop": extracted_crop,
+            "detected_crops": detected_crops,
+            "crop_source": crop_source,
             "intent": primary_intent,
             "target_entity": target_entity,
             "is_agricultural": has_agri_evidence,
-            "recommended_collections": recommended_collections
+            "recommended_collections": recommended_collections,
+            "is_ambiguous": is_ambiguous,
+            "clarification_prompt": clarification_prompt
         }
 
     @classmethod

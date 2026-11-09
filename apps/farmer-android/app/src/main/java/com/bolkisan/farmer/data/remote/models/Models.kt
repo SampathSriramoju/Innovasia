@@ -38,20 +38,26 @@ data class UserDto(
 data class VoiceQueryDto(
     @SerializedName("query_text") val queryText: String,
     @SerializedName("language") val language: String = "te",
-    @SerializedName("crop_name") val cropName: String = "Cotton",
+    @SerializedName("crop_name") val cropName: String? = null,
     @SerializedName("pest_or_disease") val pestOrDisease: String? = null,
-    @SerializedName("chemical_mentioned") val chemicalMentioned: String? = null
+    @SerializedName("chemical_mentioned") val chemicalMentioned: String? = null,
+    @SerializedName("conversation_history") val conversationHistory: List<Map<String, String>>? = null
 )
 
 data class VoiceAnswerDto(
-    @SerializedName("status") val status: String, // 'answered' or 'escalated'
+    @SerializedName("status") val status: String, // 'answered', 'escalated', 'needs_clarification', 'answered_offline_fallback'
     @SerializedName("is_safe") val isSafe: Boolean,
     @SerializedName("response_text") val responseText: String,
     @SerializedName("ticket_number") val ticketNumber: String? = null,
     @SerializedName("ticket_id") val ticketId: String? = null,
     @SerializedName("reason") val reason: String? = null,
+    @SerializedName("crop_identified") val cropIdentified: String? = null,
+    @SerializedName("crop_source") val cropSource: String? = null,
+    @SerializedName("is_ambiguous") val isAmbiguous: Boolean? = null,
+    @SerializedName("clarification_prompt") val clarificationPrompt: String? = null,
     @SerializedName("citations") val citations: List<String>? = null,
     @SerializedName("warnings") val warnings: List<String>? = null,
+    @SerializedName("follow_up_suggestions") val followUpSuggestions: List<String>? = null,
     @SerializedName("tts_playback_url") val ttsPlaybackUrl: String? = null
 )
 

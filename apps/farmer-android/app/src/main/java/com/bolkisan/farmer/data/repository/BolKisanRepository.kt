@@ -28,10 +28,13 @@ import java.util.UUID
 data class VoiceHistoryItem(
     val id: String = UUID.randomUUID().toString(),
     val query: String,
-    val crop: String,
+    val crop: String = "",
     val answer: String,
     val isSafe: Boolean = true,
     val citations: List<String> = emptyList(),
+    val attachedImagePath: String? = null,
+    val followUpSuggestions: List<String> = emptyList(),
+    val origin: String = "online", // "online", "offline_slm", "offline_rule", "escalated", "needs_clarification"
     val timestamp: Long = System.currentTimeMillis()
 )
 
@@ -110,10 +113,53 @@ class BolKisanRepository(private val context: Context) {
         prefs.edit().remove("jwt_token").apply()
     }
 
+    fun detectCropFromText(text: String): String? {
+        val lower = text.lowercase()
+        return when {
+            lower.contains("cotton") || lower.contains("పత్తి") || lower.contains("దూది") || lower.contains("कपास") || lower.contains("kapas") || lower.contains("patti") -> "Cotton"
+            lower.contains("chilli") || lower.contains("chili") || lower.contains("మిర్చి") || lower.contains("మిరప") || lower.contains("मिर्च") || lower.contains("mirchi") || lower.contains("mirapa") -> "Chilli"
+            lower.contains("rice") || lower.contains("paddy") || lower.contains("వరి") || lower.contains("ధాన్యం") || lower.contains("వడ్లు") || lower.contains("బియ్యం") || lower.contains("धान") || lower.contains("चावल") || lower.contains("dhaan") || lower.contains("vari") -> "Rice"
+            lower.contains("tomato") || lower.contains("టమోటా") || lower.contains("టమాట") || lower.contains("टमाटर") || lower.contains("tamatar") -> "Tomato"
+            lower.contains("groundnut") || lower.contains("peanut") || lower.contains("వేరుశనగ") || lower.contains("పల్లీ") || lower.contains("मूंगफली") || lower.contains("palli") -> "Groundnut"
+            lower.contains("maize") || lower.contains("corn") || lower.contains("మొక్కజొన్న") || lower.contains("జొన్న") || lower.contains("मक्का") || lower.contains("makka") || lower.contains("mokkajonna") -> "Maize"
+            lower.contains("wheat") || lower.contains("గోధుమ") || lower.contains("గేహూ") || lower.contains("गेहूं") || lower.contains("gehun") || lower.contains("godhuma") -> "Wheat"
+            lower.contains("turmeric") || lower.contains("పసుపు") || lower.contains("हल्दी") || lower.contains("haldi") || lower.contains("pasupu") -> "Turmeric"
+            lower.contains("mango") || lower.contains("మామిడి") || lower.contains("आम") || lower.contains("aam") || lower.contains("mamidi") -> "Mango"
+            lower.contains("onion") || lower.contains("ఉల్లి") || lower.contains("ఉల్లిపాయ") || lower.contains("प्याज") || lower.contains("pyaz") || lower.contains("ulli") -> "Onion"
+            lower.contains("sugarcane") || lower.contains("చెరకు") || lower.contains("गन्ना") || lower.contains("ganna") || lower.contains("cheraku") -> "Sugarcane"
+            lower.contains("pulses") || lower.contains("పప్పు") || lower.contains("కంది") || lower.contains("పెసర") || lower.contains("మినుము") || lower.contains("दाल") || lower.contains("चना") || lower.contains("arhar") || lower.contains("moong") || lower.contains("urad") || lower.contains("dal") -> "Pulses"
+            else -> null
+        }
+    }
+
+    private fun generateLocalFollowUps(crop: String, lang: String): List<String> = when (lang) {
+        "te" -> listOf(
+            "$crop లో సేంద్రీయ నివారణ మార్గాలు ఏమిటి?",
+            "$crop లో ఎరువుల మోతాదు ఎంత?",
+            "$crop మార్కెట్ ధరలు ఎలా ఉన్నాయి?"
+        )
+        "hi" -> listOf(
+            "$crop में जैविक नियंत्रण के उपाय?",
+            "$crop में खाद की सही मात्रा?",
+            "$crop का आज का मंडी भाव?"
+        )
+        else -> listOf(
+            "Organic practices for $crop?",
+            "Fertilizer dosage for $crop?",
+            "Latest market price for $crop"
+        )
+    }
+
     suspend fun escalateToHumanOfficer(
         questionText: String,
+        cropName: String? = null,
         reason: String = "Farmer requested human agricultural officer consultation"
     ): Result<TicketEscalateResponseDto> = withContext(Dispatchers.IO) {
+        val effectiveCrop = cropName 
+            ?: detectCropFromText(questionText) 
+            ?: _historyFlow.value.lastOrNull { it.crop.isNotBlank() }?.crop 
+            ?: selectedCrop
+
         var token = currentToken
         if (token == null) {
             // Auto-auth demo farmer if needed
@@ -136,7 +182,7 @@ class BolKisanRepository(private val context: Context) {
             val res = api.escalateTicket(
                 token = "Bearer $authToken",
                 ticket = TicketCreateDto(
-                    cropName = selectedCrop,
+                    cropName = effectiveCrop,
                     escalationReason = reason,
                     originalQuestionTranscript = questionText
                 )
@@ -180,8 +226,16 @@ class BolKisanRepository(private val context: Context) {
         }
     }
 
-    // Voice Query Online / Offline Fallback with Auto-History
-    suspend fun askQuestion(queryText: String): Result<VoiceAnswerDto> = withContext(Dispatchers.IO) {
+    // Voice Query Online / Offline Fallback with Auto-History and Multi-turn Context
+    suspend fun askQuestion(
+        queryText: String,
+        explicitCrop: String? = null,
+        attachedImagePath: String? = null
+    ): Result<VoiceAnswerDto> = withContext(Dispatchers.IO) {
+        val detectedCrop = explicitCrop
+            ?: detectCropFromText(queryText)
+            ?: _historyFlow.value.lastOrNull { it.crop.isNotBlank() }?.crop
+
         // Ensure farmer token if not yet authenticated
         var token = currentToken
         if (token == null) {
@@ -200,26 +254,47 @@ class BolKisanRepository(private val context: Context) {
             }
         }
 
-        // Try Online FastAPI with CIBRC / RAG
+        // Try Online FastAPI with CIBRC / RAG and Multi-turn History
         if (token != null) {
             try {
+                val historyPayload = _historyFlow.value.takeLast(6).map {
+                    mapOf(
+                        "query" to it.query,
+                        "answer" to it.answer,
+                        "crop" to it.crop
+                    )
+                }
+
                 val res = api.submitVoiceQuery(
                     token = "Bearer $token",
                     query = VoiceQueryDto(
                         queryText = queryText,
                         language = currentLanguage,
-                        cropName = selectedCrop
+                        cropName = explicitCrop ?: detectedCrop,
+                        conversationHistory = historyPayload
                     )
                 )
                 if (res.isSuccessful && res.body() != null) {
                     val answer = res.body()!!
+                    val finalCrop = answer.cropIdentified ?: detectedCrop ?: selectedCrop
+                    if (finalCrop.isNotBlank()) {
+                        selectedCrop = finalCrop
+                    }
+                    val historyOrigin = when (answer.status) {
+                        "needs_clarification" -> "needs_clarification"
+                        "escalated" -> "escalated"
+                        else -> "online"
+                    }
                     addHistoryItem(
                         VoiceHistoryItem(
                             query = queryText,
-                            crop = selectedCrop,
+                            crop = finalCrop,
                             answer = answer.responseText,
                             isSafe = answer.isSafe,
-                            citations = answer.citations ?: listOf("CIBRC & ICAR")
+                            citations = answer.citations ?: listOf("CIBRC & ICAR"),
+                            attachedImagePath = attachedImagePath,
+                            followUpSuggestions = answer.followUpSuggestions ?: emptyList(),
+                            origin = historyOrigin
                         )
                     )
                     return@withContext Result.success(answer)
@@ -248,9 +323,11 @@ class BolKisanRepository(private val context: Context) {
             else -> null
         }
 
-        val canonicalCrop = canonicalCropName(selectedCrop)
+        val targetCrop = detectedCrop ?: selectedCrop
+        val canonicalCrop = canonicalCropName(targetCrop)
         val cropCards = dao.getKnowledgeByCropSync(canonicalCrop, currentLanguage)
-        val allCards = if (cropCards.isNotEmpty()) cropCards else dao.getKnowledgeByCropSync(canonicalCrop, "en")
+        val fallbackCards = if (cropCards.isNotEmpty()) cropCards else dao.getKnowledgeByCropSync(canonicalCrop, "en")
+        val allCards = if (fallbackCards.isNotEmpty()) fallbackCards else dao.searchLocalKnowledge(queryText, currentLanguage)
 
         var bestCard: OfflineKnowledgeEntity? = null
         var highestScore = 0
@@ -286,7 +363,6 @@ class BolKisanRepository(private val context: Context) {
 
         // Defensible minimum relevance threshold:
         // Score must be at least 6 (requires category match + token match, or multiple title token matches)
-        // Strictly eliminate arbitrary first-card fallback (cropCards.firstOrNull())
         val finalMatch = if (highestScore >= 6) bestCard else null
 
         if (finalMatch != null) {
@@ -298,6 +374,8 @@ class BolKisanRepository(private val context: Context) {
                 }
             } else ""
 
+            val localFollowUps = generateLocalFollowUps(finalMatch.crop, currentLanguage)
+
             val fallbackAnswer = VoiceAnswerDto(
                 status = "answered_offline_fallback",
                 isSafe = true,
@@ -307,15 +385,21 @@ class BolKisanRepository(private val context: Context) {
                     else -> "Offline Agricultural Advisory:\n${finalMatch.content}$langNotice"
                 },
                 citations = listOf(finalMatch.sourceCitation),
-                warnings = listOf("Offline Local Knowledge Cache - Matches authentic ICAR / CIBRC standards.")
+                warnings = listOf("Offline Local Knowledge Cache - Matches authentic ICAR / CIBRC standards."),
+                cropIdentified = finalMatch.crop,
+                cropSource = "detected",
+                followUpSuggestions = localFollowUps
             )
             addHistoryItem(
                 VoiceHistoryItem(
                     query = queryText,
-                    crop = selectedCrop,
+                    crop = finalMatch.crop,
                     answer = fallbackAnswer.responseText,
                     isSafe = true,
-                    citations = fallbackAnswer.citations ?: listOf("ICAR Offline")
+                    citations = fallbackAnswer.citations ?: listOf("ICAR Offline"),
+                    attachedImagePath = attachedImagePath,
+                    followUpSuggestions = localFollowUps,
+                    origin = "offline_rule"
                 )
             )
             Result.success(fallbackAnswer)
@@ -326,9 +410,9 @@ class BolKisanRepository(private val context: Context) {
                 PendingSyncTicketEntity(
                     localId = ticketId,
                     queryText = queryText,
-                    cropName = selectedCrop,
+                    cropName = targetCrop,
                     audioPath = null,
-                    imagePath = null,
+                    imagePath = attachedImagePath,
                     timestamp = System.currentTimeMillis(),
                     isSynced = false
                 )
@@ -345,18 +429,105 @@ class BolKisanRepository(private val context: Context) {
                 isSafe = true,
                 responseText = fallbackNotice,
                 ticketNumber = ticketId,
-                citations = listOf("Local Room Queue (pending_sync_tickets)")
+                citations = listOf("Local Room Queue (pending_sync_tickets)"),
+                cropIdentified = targetCrop,
+                cropSource = "detected"
             )
             addHistoryItem(
                 VoiceHistoryItem(
                     query = queryText,
-                    crop = selectedCrop,
+                    crop = targetCrop,
                     answer = fallbackNotice,
                     isSafe = true,
-                    citations = listOf("Pending Officer Queue")
+                    citations = listOf("Pending Officer Queue"),
+                    attachedImagePath = attachedImagePath,
+                    origin = "offline_queued"
                 )
             )
             Result.success(queuedAnswer)
+        }
+    }
+
+    // Unified Chat + Attachment Flow (Submits attached photo to disease diagnosis and displays inline)
+    suspend fun askQuestionWithAttachment(
+        queryText: String,
+        photoFile: File?,
+        explicitCrop: String? = null
+    ): Result<VoiceAnswerDto> = withContext(Dispatchers.IO) {
+        if (photoFile == null) {
+            return@withContext askQuestion(queryText, explicitCrop)
+        }
+
+        val effectiveCrop = explicitCrop
+            ?: detectCropFromText(queryText)
+            ?: _historyFlow.value.lastOrNull { it.crop.isNotBlank() }?.crop
+            ?: "Crop"
+
+        val diagResult = diagnoseDisease(
+            imageFile = photoFile,
+            cropName = effectiveCrop,
+            plantPart = "leaf",
+            farmerNotes = queryText
+        )
+
+        if (diagResult.isSuccess) {
+            val diag = diagResult.getOrNull()!!
+            val formattedResponse = when (currentLanguage) {
+                "te" -> "🌱 పంట వ్యాధి విశ్లేషణ:\n• పంట: ${diag.cropName}\n• వ్యాధి / సమస్య: ${diag.diseaseName}\n• తీవ్రత: ${diag.severity}\n• లక్షణాలు: ${diag.symptoms}\n• నివారణ చర్యలు: ${diag.treatment}\n• ముందస్తు జాగ్రత్తలు: ${diag.prevention}"
+                "hi" -> "🌱 फसल रोग निदान:\n• फसल: ${diag.cropName}\n• रोग / समस्या: ${diag.diseaseName}\n• तीव्रता: ${diag.severity}\n• लक्षण: ${diag.symptoms}\n• उपचार: ${diag.treatment}\n• रोकथाम: ${diag.prevention}"
+                else -> "🌱 Crop Disease Diagnosis:\n• Crop: ${diag.cropName}\n• Disease / Issue: ${diag.diseaseName}\n• Severity: ${diag.severity}\n• Symptoms: ${diag.symptoms}\n• Treatment: ${diag.treatment}\n• Prevention: ${diag.prevention}"
+            }
+
+            val followUps = when (currentLanguage) {
+                "te" -> listOf(
+                    "${diag.cropName} లో సేంద్రీయ నివారణ మార్గాలు ఏమిటి?",
+                    "${diag.cropName} ఎరువుల మోతాదు ఎంత?",
+                    "విస్తరణ అధికారి సలహా పొందండి"
+                )
+                "hi" -> listOf(
+                    "${diag.cropName} में जैविक नियंत्रण के उपाय?",
+                    "${diag.cropName} में खाद की सही मात्रा?",
+                    "कृषि अधिकारी से परामर्श लें"
+                )
+                else -> listOf(
+                    "Organic treatment options for ${diag.cropName}?",
+                    "Recommended fertilizer dosage for ${diag.cropName}?",
+                    "Consult extension officer for ${diag.cropName}"
+                )
+            }
+
+            val answerDto = VoiceAnswerDto(
+                status = "answered_disease_diagnosis",
+                isSafe = diag.isSafe,
+                responseText = formattedResponse,
+                citations = diag.citations ?: listOf("ICAR Plant Pathology Guidelines 2024"),
+                warnings = listOf("CIBRC & ICAR Certified Diagnostic Protocol"),
+                cropIdentified = diag.cropName,
+                cropSource = "detected",
+                followUpSuggestions = followUps
+            )
+
+            val resolvedCropName = diag.cropName ?: effectiveCrop
+            addHistoryItem(
+                VoiceHistoryItem(
+                    query = if (queryText.isBlank()) "Attached Photo Diagnosis ($resolvedCropName)" else queryText,
+                    crop = resolvedCropName,
+                    answer = formattedResponse,
+                    isSafe = diag.isSafe,
+                    citations = answerDto.citations ?: listOf("ICAR"),
+                    attachedImagePath = photoFile.absolutePath,
+                    followUpSuggestions = followUps,
+                    origin = "online"
+                )
+            )
+
+            Result.success(answerDto)
+        } else {
+            askQuestion(
+                queryText = if (queryText.isBlank()) "Disease diagnosis query" else queryText,
+                explicitCrop = explicitCrop,
+                attachedImagePath = photoFile.absolutePath
+            )
         }
     }
 

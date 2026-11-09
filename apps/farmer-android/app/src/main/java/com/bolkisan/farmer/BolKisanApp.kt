@@ -19,8 +19,8 @@ class BolKisanApp : Application() {
         // Seed initial offline ICAR & CIBRC knowledge on IO thread
         CoroutineScope(Dispatchers.IO).launch {
             repository.seedOfflineKnowledgeIfEmpty()
-            // Verify and extract pre-installed offline SLM model
-            com.bolkisan.farmer.domain.OfflineModelManager.ensureModelExtracted(this@BolKisanApp)
+            // Evaluate device hardware capabilities and offline subsystem readiness
+            com.bolkisan.farmer.domain.OfflineModelManager.getOfflineCapabilities(this@BolKisanApp)
         }
 
         // Enqueue background sync worker to upload any pending tickets when connected

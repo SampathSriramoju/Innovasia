@@ -64,7 +64,8 @@ class GeminiService:
         retrieved_contexts: List[Dict[str, Any]],
         language: str = "te",
         safety_context: Optional[Dict[str, Any]] = None,
-        query_analysis: Optional[Dict[str, Any]] = None
+        query_analysis: Optional[Dict[str, Any]] = None,
+        conversation_history: Optional[List[Dict[str, Any]]] = None
     ) -> Dict[str, Any]:
         """
         Synthesizes agricultural answer strictly grounded in retrieved evidence.
@@ -103,6 +104,17 @@ class GeminiService:
 
         formatted_context = "\n".join(context_lines) if context_lines else "No verified documents available."
 
+        history_text = ""
+        if conversation_history:
+            turns = []
+            for h in conversation_history[-6:]:
+                role = "Farmer" if h.get("role") in ["user", "farmer"] else "Bol Kisan"
+                msg = h.get("text") or h.get("query_text") or h.get("response_text") or ""
+                if msg:
+                    turns.append(f"{role}: {msg[:300]}")
+            if turns:
+                history_text = "PREVIOUS CONVERSATION CONTEXT:\n" + "\n".join(turns) + "\n\n"
+
         system_instruction = (
             "You are BOL KISAN (बोल किसान / బోల్ కిసాన్), an intelligent, expert AI Agricultural Voice Assistant for Indian farmers.\n"
             "STRICT GROUNDING & NATURAL SPEECH MANDATE:\n"
@@ -124,6 +136,7 @@ class GeminiService:
             '      "source_ids": ["<Document ID from context>"]\n'
             '    }\n'
             '  ],\n'
+            '  "follow_up_suggestions": ["<Short relevant follow-up question 1>", "<Short relevant follow-up question 2>"],\n'
             '  "evidence_sufficient": true | false,\n'
             '  "safety_status": "verified" | "unverified",\n'
             '  "escalation_required": false | true,\n'
@@ -133,6 +146,7 @@ class GeminiService:
 
         user_prompt = (
             f"RETRIEVED CONTEXT DOCUMENTS:\n{formatted_context}\n\n"
+            f"{history_text}"
             f"FARMER QUESTION: {query}\n"
             f"REQUESTED LANGUAGE CODE: {language}"
         )
@@ -178,6 +192,7 @@ class GeminiService:
                             "topic": parsed.get("topic"),
                             "crop": parsed.get("crop"),
                             "claims": verified_claims,
+                            "follow_up_suggestions": parsed.get("follow_up_suggestions") or self._generate_default_followups(parsed.get("crop") or (query_analysis or {}).get("crop"), language),
                             "evidence_sufficient": parsed.get("evidence_sufficient", True),
                             "safety_status": parsed.get("safety_status", "verified"),
                             "escalation_required": parsed.get("escalation_required", False),
@@ -428,7 +443,8 @@ class GeminiService:
                         "topic": topic,
                         "crop": crop,
                         "evidence_sufficient": True,
-                        "claims": [{"claim": clean_content[:120], "source_ids": [doc_id]}]
+                        "claims": [{"claim": clean_content[:120], "source_ids": [doc_id]}],
+                        "follow_up_suggestions": self._generate_default_followups(crop, language)
                     }
 
         # Case 3: No valid, relevant documents found or low relevance — ABSTAIN
@@ -450,7 +466,87 @@ class GeminiService:
             "topic": topic,
             "crop": crop,
             "evidence_sufficient": False,
-            "claims": []
+            "claims": [],
+            "follow_up_suggestions": self._generate_default_followups(crop, language)
         }
+
+    def _generate_default_followups(self, crop: Optional[str], language: str) -> List[str]:
+        c = (crop or "").lower()
+        if "cotton" in c or "పత్తి" in c or "कपास" in c:
+            if language == "te":
+                return [
+                    "ఎకరాకు ఎంత మోతాదులో మందు పిచికారీ చేయాలి?",
+                    "జీవామృతం లేదా సేంద్రీయ పద్ధతులు పనిచేస్తాయా?",
+                    "పత్తికి ఏ ఎరువులు ఎప్పుడు వేయాలి?"
+                ]
+            elif language == "hi":
+                return [
+                    "प्रति एकड़ कीटनाशक की सही मात्रा क्या है?",
+                    "क्या प्राकृतिक खेती या जीवामृत से लाभ होगा?",
+                    "कपास में कौन सी खाद किस समय डालें?"
+                ]
+            else:
+                return [
+                    "What is the exact spray dosage per acre?",
+                    "Will natural farming or Jeevamrit help?",
+                    "What is the fertilizer schedule for cotton?"
+                ]
+        elif "rice" in c or "paddy" in c or "వరి" in c or "धान" in c:
+            if language == "te":
+                return [
+                    "నత్రజని ఎరువుల వాడకం తగ్గించాలా?",
+                    "సుడిదోమ మరియు కాండం తొలిచే పురుగు నివారణ ఎలా?",
+                    "వరి మండి ధర ఎంత ఉంది?"
+                ]
+            elif language == "hi":
+                return [
+                    "क्या यूरिया का प्रयोग रोक देना चाहिए?",
+                    "तना छेदक और भूरा फुदका कीट की रोकथाम कैसे करें?",
+                    "धान का वर्तमान मंडी भाव क्या है?"
+                ]
+            else:
+                return [
+                    "Should nitrogen application be reduced?",
+                    "How to control stem borer and BPH in paddy?",
+                    "What is the current mandi rate for paddy?"
+                ]
+        elif "chilli" in c or "మిరప" in c or "मिर्च" in c:
+            if language == "te":
+                return [
+                    "నల్ల తామర పురుగుల నివారణకు ఏ మందు వాడాలి?",
+                    "ఆకుముడత రాకుండా ఎలాంటి జాగ్రత్తలు తీసుకోవాలి?",
+                    "మిరప క్వింటాల్ ధర ఎంత ఉంది?"
+                ]
+            elif language == "hi":
+                return [
+                    "काली थ्रिप्स के नियंत्रण के लिए कौन सी दवा डालें?",
+                    "पत्ती मरोड़ रोग से बचाव के क्या उपाय हैं?",
+                    "मिर्च का वर्तमान मंडी भाव क्या है?"
+                ]
+            else:
+                return [
+                    "What chemical is recommended for black thrips?",
+                    "How to prevent leaf curl in chilli?",
+                    "What is the current market price of dry chilli?"
+                ]
+        else:
+            if language == "te":
+                return [
+                    "ఈ సమస్యకు సేంద్రీయ నివారణ ఉందా?",
+                    "ఎకరాకు ఎరువుల మోతాదు ఎంత?",
+                    "నీటిపారుదల ఎప్పుడు చేయాలి?"
+                ]
+            elif language == "hi":
+                return [
+                    "क्या इसके लिए कोई जैविक उपाय है?",
+                    "प्रति एकड़ संतुलित खाद की मात्रा क्या है?",
+                    "सिंचाई कब और कैसे करनी चाहिए?"
+                ]
+            else:
+                return [
+                    "Is there an organic remedy for this?",
+                    "What is the fertilizer dosage per acre?",
+                    "What is the recommended irrigation schedule?"
+                ]
 
 gemini_service = GeminiService()
