@@ -40,12 +40,14 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.bolkisan.farmer.R
 import com.bolkisan.farmer.data.remote.models.VoiceAnswerDto
 import com.bolkisan.farmer.data.repository.BolKisanRepository
 import com.bolkisan.farmer.data.repository.VoiceHistoryItem
@@ -320,6 +322,14 @@ fun HomeScreen(
                 ) {
                     // App Title & Connectivity Dot
                     Row(verticalAlignment = Alignment.CenterVertically) {
+                        Image(
+                            painter = painterResource(id = R.drawable.ic_bol_kisan_logo),
+                            contentDescription = "Bol Kisan Logo",
+                            modifier = Modifier
+                                .size(28.dp)
+                                .clip(CircleShape)
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
                         Text(
                             text = "BOL KISAN",
                             fontSize = 19.sp,

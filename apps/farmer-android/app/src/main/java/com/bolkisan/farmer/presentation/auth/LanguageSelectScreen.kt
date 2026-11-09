@@ -1,9 +1,11 @@
 package com.bolkisan.farmer.presentation.auth
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -11,9 +13,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.bolkisan.farmer.R
 import com.bolkisan.farmer.presentation.common.appStrings
 import com.bolkisan.farmer.theme.*
 
@@ -34,6 +38,14 @@ fun LanguageSelectScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
+            Image(
+                painter = painterResource(id = R.drawable.ic_bol_kisan_logo),
+                contentDescription = "Bol Kisan Logo",
+                modifier = Modifier
+                    .size(96.dp)
+                    .clip(CircleShape)
+            )
+            Spacer(modifier = Modifier.height(12.dp))
             Text(
                 text = "BOL KISAN",
                 style = Typography.headlineLarge,

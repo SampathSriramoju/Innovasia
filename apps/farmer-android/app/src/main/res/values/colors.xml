@@ -8,4 +8,5 @@
     <color name="sprout_border">#BBF7D0</color>
     <color name="hazard_red">#DC2626</color>
     <color name="card_white">#FFFFFF</color>
+    <color name="ic_launcher_background">#000000</color>
 </resources>
