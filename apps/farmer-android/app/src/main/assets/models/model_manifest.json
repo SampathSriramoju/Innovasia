@@ -1,25 +1,49 @@
 {
-  "model_id": "agriparam-q4-edge",
-  "name": "AgriParam-Q4 Edge SLM (LiteRT-LM / GGUF)",
-  "version": "2.1.0-q4",
-  "architecture": "Transformer-Decoder-INT4",
-  "runtime": "Google LiteRT-LM / MediaPipe GenAI Runtime",
-  "parameters": "2.1 Billion",
-  "quantization": "INT4_AWQ (Group 128)",
-  "context_length": 2048,
-  "preinstalled": true,
-  "bundle_type": "embedded_apk_asset",
-  "file_name": "agriparam_q4_edge.bin",
-  "download_size_bytes": 262144,
-  "required_storage_bytes": 1048576,
-  "minimum_ram_gb": 4,
-  "recommended_ram_gb": 6,
-  "supported_languages": [
-    { "code": "te", "name": "Telugu" },
-    { "code": "hi", "name": "Hindi" },
-    { "code": "en", "name": "English" }
-  ],
-  "advisory_safety_standard": "CIBRC / ICAR 2024 Gazette Regulations",
-  "fallback_mode": "Zero-OOM Room SQLite Deterministic Engine",
-  "build_timestamp": "2026-11-09T01:00:00Z"
+  "manifest_version": "1.0",
+  "default_model_id": "qwen3-0.6b-litertlm",
+  "runtime": {
+    "engine": "Google LiteRT-LM",
+    "version": "0.19.1",
+    "supported_backends": ["GPU", "CPU"],
+    "minimum_android_sdk": 26,
+    "target_android_sdk": 34
+  },
+  "models": [
+    {
+      "model_id": "qwen3-0.6b-litertlm",
+      "name": "Qwen3-0.6B Mobile SLM",
+      "huggingface_repo": "litert-community/Qwen3-0.6B",
+      "filename": "Qwen3-0.6B.litertlm",
+      "revision": "bd47201734a34f1eba8ed7d28289225b60152e9e",
+      "download_url": "https://huggingface.co/litert-community/Qwen3-0.6B/resolve/main/Qwen3-0.6B.litertlm",
+      "parameters": "0.6B",
+      "quantization": "Dynamic INT8",
+      "file_size_bytes": 613722264,
+      "sha256": "c5f39b4191926786c3e6668b62af4d6eb15248dfc7a5348252a9b406f33f2108",
+      "context_length": 4096,
+      "min_ram_gb": 4,
+      "recommended_ram_gb": 6,
+      "required_storage_bytes": 1073741824,
+      "license": "Apache-2.0",
+      "languages": ["te", "hi", "en"]
+    },
+    {
+      "model_id": "qwen3-0.6b-int4-litertlm",
+      "name": "Qwen3-0.6B Ultra-Compact INT4",
+      "huggingface_repo": "litert-community/Qwen3-0.6B",
+      "filename": "Qwen3-0.6B_dynamic_wi4b32_afp32.litertlm",
+      "revision": "bd47201734a34f1eba8ed7d28289225b60152e9e",
+      "download_url": "https://huggingface.co/litert-community/Qwen3-0.6B/resolve/main/Qwen3-0.6B_dynamic_wi4b32_afp32.litertlm",
+      "parameters": "0.6B",
+      "quantization": "Dynamic INT4 Block-32",
+      "file_size_bytes": 343490560,
+      "sha256": "bf1aba9ce8d963124407353c6aa4cbf72eba78db21ae133de983eac672ce83e0",
+      "context_length": 4096,
+      "min_ram_gb": 4,
+      "recommended_ram_gb": 4,
+      "required_storage_bytes": 629145600,
+      "license": "Apache-2.0",
+      "languages": ["te", "hi", "en"]
+    }
+  ]
 }

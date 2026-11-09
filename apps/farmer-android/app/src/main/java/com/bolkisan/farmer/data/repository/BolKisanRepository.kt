@@ -19,6 +19,9 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.bolkisan.farmer.domain.OfflineInferenceEngine
+import com.bolkisan.farmer.domain.OfflineModelManager
+import com.bolkisan.farmer.domain.OfflineModelStatus
 import com.bolkisan.farmer.presentation.common.canonicalCropName
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -351,6 +354,11 @@ class BolKisanRepository(private val context: Context) {
         // Score must be at least 6 (requires category match + token match, or multiple title token matches)
         val finalMatch = if (highestScore >= 6) bestCard else null
 
+        // Check if genuine on-device LiteRT-LM SLM is installed and ready
+        val inferenceEngine = OfflineInferenceEngine.getInstance(context)
+        val caps = OfflineModelManager.getOfflineCapabilities(context)
+        val canRunRealSlm = caps.modelStatus == OfflineModelStatus.READY && caps.totalRamGb >= 4 && caps.freeRamMb >= 800
+
         if (finalMatch != null) {
             val langNotice = if (finalMatch.language != currentLanguage) {
                 when (currentLanguage) {
@@ -362,6 +370,40 @@ class BolKisanRepository(private val context: Context) {
 
             val localFollowUps = generateLocalFollowUps(finalMatch.crop, currentLanguage)
 
+            // Real On-Device SLM Generation Path
+            if (canRunRealSlm) {
+                val slmRes = inferenceEngine.executeOfflineInference(
+                    query = queryText,
+                    retrievedContextText = finalMatch.content,
+                    retrievedCitation = finalMatch.sourceCitation,
+                    language = currentLanguage
+                )
+                val slmAnswer = VoiceAnswerDto(
+                    status = "answered_offline_slm",
+                    isSafe = true,
+                    responseText = "${slmRes.responseText}$langNotice",
+                    citations = listOf(finalMatch.sourceCitation, "Qwen3-0.6B LiteRT-LM"),
+                    warnings = listOf("Generated on-device via LiteRT-LM (${slmRes.runtime.name}) grounded in verified ICAR records."),
+                    cropIdentified = finalMatch.crop,
+                    cropSource = "detected",
+                    followUpSuggestions = localFollowUps
+                )
+                addHistoryItem(
+                    VoiceHistoryItem(
+                        query = queryText,
+                        crop = finalMatch.crop,
+                        answer = slmAnswer.responseText,
+                        isSafe = true,
+                        citations = slmAnswer.citations ?: listOf("ICAR Offline"),
+                        attachedImagePath = attachedImagePath,
+                        followUpSuggestions = localFollowUps,
+                        origin = "offline_slm"
+                    )
+                )
+                return@withContext Result.success(slmAnswer)
+            }
+
+            // Deterministic SQLite Fallback Path (when SLM is not installed or device is memory-constrained)
             val fallbackAnswer = VoiceAnswerDto(
                 status = "answered_offline_fallback",
                 isSafe = true,

@@ -499,6 +499,29 @@ class AppStrings(val code: String) {
         "हार्डवेयर स्थिति: ${ramGb}GB RAM (मुक्त मेमोरी: ${freeRamMb}MB)",
         "Hardware status: ${ramGb}GB RAM (free memory: ${freeRamMb}MB)"
     )
+    val offlineSubsystemsTitle get() = t(
+        "ఆఫ్‌లైన్ ఉపవ్యవస్థల స్థితి",
+        "ऑफ़लाइन सबसिस्टम स्थिति",
+        "Offline Subsystems Status"
+    )
+    val slmEngineLabel get() = t("SLM న్యూరల్ మోడల్", "SLM न्यूरल मॉडल", "Neural SLM Engine")
+    val runtimeLabel get() = t("ఎడ్జ్ రన్‌టైమ్", "एज रनटाइम", "Edge Runtime")
+    val storageLabel get() = t("మోడల్ నిల్వ", "मॉडल स्टोरेज", "Model Storage")
+    val speechRecognitionLabel get() = t("వాయిస్ గుర్తింపు (ASR)", "वॉयस पहचान (ASR)", "Speech-to-Text (ASR)")
+    val ttsLabel get() = t("వాయిస్ స్పీచ్ (TTS)", "वॉयस स्पीच (TTS)", "Voice Speech (TTS)")
+    val roomKnowledgeLabel get() = t("స్థానిక ICAR సమాచారం", "स्थानीय ICAR ज्ञानकोश", "Local ICAR Knowledge")
+    val activeBadge get() = t("క్రియాశీలం", "सक्रिय", "ACTIVE")
+    val unavailableBadge get() = t("అందుబాటులో లేదు", "अनुपलब्ध", "UNAVAILABLE")
+    val readyBadge get() = t("సిద్ధంగా ఉంది", "तैयार", "READY")
+    val downloadingBadge get() = t("డౌన్‌లోడ్ అవుతోంది", "डाउनलोड हो रहा है", "DOWNLOADING")
+    val verifyingBadge get() = t("ధృవీకరిస్తోంది", "सत्यापित कर रहा है", "VERIFYING")
+    val notInstalledBadge get() = t("ఇన్‌స్టాల్ కాలేదు", "इंस्टॉल नहीं है", "NOT INSTALLED")
+    val unsupportedBadge get() = t("మద్దతు లేదు (<4GB RAM)", "असमर्थित (<4GB RAM)", "UNSUPPORTED (<4GB)")
+    val downloadModelButton get() = t("మోడల్ డౌన్‌లోడ్ చేయండి", "मॉडल डाउनलोड करें", "Download Model (HF)")
+    val importModelButton get() = t("మోడల్ దిగుమతి చేయండి (.litertlm)", "मॉडल आयात करें (.litertlm)", "Import Model File")
+    val deleteModelButton get() = t("మోడల్ తొలగించండి", "मॉडल हटाएं", "Delete Model")
+    val testOfflineAiButton get() = t("ఆఫ్‌లైన్ AI పరీక్షించండి", "ऑफ़लाइन AI का परीक्षण करें", "Test Offline AI")
+    val verifyAndInitButton get() = t("ధృవీకరించి ప్రారంభించండి", "सत्यापित और प्रारंभ करें", "Verify & Initialize")
     val benchmarkRunning get() = t("రన్ అవుతోంది...", "चल रहा है...", "Running...")
     val benchmarkButton get() = t(
         "ఆఫ్‌లైన్ AI మోడల్ బెంచ్‌మార్క్ రన్ చేయండి",

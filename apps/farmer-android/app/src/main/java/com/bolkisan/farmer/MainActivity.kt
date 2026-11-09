@@ -7,7 +7,11 @@ import androidx.compose.runtime.*
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.lifecycle.lifecycleScope
 import com.bolkisan.farmer.domain.OfflineInferenceEngine
+import com.bolkisan.farmer.domain.OfflineModelManager
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import com.bolkisan.farmer.presentation.auth.LanguageSelectScreen
 import com.bolkisan.farmer.presentation.auth.LoginScreen
 import com.bolkisan.farmer.presentation.disease.DiseaseCameraScreen
@@ -25,7 +29,14 @@ class MainActivity : ComponentActivity() {
 
         val app = application as BolKisanApp
         val repository = app.repository
-        val offlineEngine = OfflineInferenceEngine(this)
+        val offlineEngine = OfflineInferenceEngine.getInstance(this)
+
+        // Asynchronously check and initialize the on-device engine in background without blocking UI
+        lifecycleScope.launch(Dispatchers.Default) {
+            if (OfflineModelManager.isGenuineModelInstalled(this@MainActivity)) {
+                offlineEngine.initializeEngine()
+            }
+        }
 
         setContent {
             BolKisanTheme {

@@ -36,6 +36,7 @@ android {
     }
     kotlinOptions {
         jvmTarget = "17"
+        freeCompilerArgs += listOf("-Xskip-metadata-version-check")
     }
     buildFeatures {
         compose = true
@@ -48,6 +49,15 @@ android {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
+    }
+}
+
+configurations.all {
+    resolutionStrategy {
+        force("org.jetbrains.kotlin:kotlin-stdlib:1.9.24")
+        force("org.jetbrains.kotlin:kotlin-reflect:1.9.24")
+        force("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0")
+        force("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.0")
     }
 }
 
@@ -84,6 +94,14 @@ dependencies {
 
     // WorkManager (Low-Connectivity Background Sync)
     implementation("androidx.work:work-runtime-ktx:2.9.1")
+
+    // Google LiteRT-LM Official On-Device SLM Runtime
+    implementation("com.google.ai.edge.litertlm:litertlm-android:0.19.1") {
+        exclude(group = "org.jetbrains.kotlin", module = "kotlin-reflect")
+        exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib")
+        exclude(group = "org.jetbrains.kotlinx", module = "kotlinx-coroutines-android")
+    }
+    implementation("org.jetbrains.kotlin:kotlin-reflect:1.9.24")
 
     // Testing
     testImplementation("junit:junit:4.13.2")
