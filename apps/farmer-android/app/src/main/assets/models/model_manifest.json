@@ -1,6 +1,6 @@
 {
-  "manifest_version": "1.0",
-  "default_model_id": "qwen3-0.6b-litertlm",
+  "manifest_version": "2.0",
+  "default_model_id": "qwen3-0.6b-int4-litertlm",
   "runtime": {
     "engine": "Google LiteRT-LM",
     "version": "0.19.1",
@@ -10,30 +10,13 @@
   },
   "models": [
     {
-      "model_id": "qwen3-0.6b-litertlm",
-      "name": "Qwen3-0.6B Mobile SLM",
-      "huggingface_repo": "litert-community/Qwen3-0.6B",
-      "filename": "Qwen3-0.6B.litertlm",
-      "revision": "bd47201734a34f1eba8ed7d28289225b60152e9e",
-      "download_url": "https://huggingface.co/litert-community/Qwen3-0.6B/resolve/main/Qwen3-0.6B.litertlm",
-      "parameters": "0.6B",
-      "quantization": "Dynamic INT8",
-      "file_size_bytes": 613722264,
-      "sha256": "c5f39b4191926786c3e6668b62af4d6eb15248dfc7a5348252a9b406f33f2108",
-      "context_length": 4096,
-      "min_ram_gb": 4,
-      "recommended_ram_gb": 6,
-      "required_storage_bytes": 1073741824,
-      "license": "Apache-2.0",
-      "languages": ["te", "hi", "en"]
-    },
-    {
       "model_id": "qwen3-0.6b-int4-litertlm",
       "name": "Qwen3-0.6B Ultra-Compact INT4",
       "huggingface_repo": "litert-community/Qwen3-0.6B",
-      "filename": "Qwen3-0.6B_dynamic_wi4b32_afp32.litertlm",
+      "filename": "bolkisan_qwen3_0_6b_int4.litertlm",
+      "source_filename": "Qwen3-0.6B_dynamic_wi4b32_afp32.litertlm",
       "revision": "bd47201734a34f1eba8ed7d28289225b60152e9e",
-      "download_url": "https://huggingface.co/litert-community/Qwen3-0.6B/resolve/main/Qwen3-0.6B_dynamic_wi4b32_afp32.litertlm",
+      "download_url": "https://huggingface.co/litert-community/Qwen3-0.6B/resolve/bd47201734a34f1eba8ed7d28289225b60152e9e/Qwen3-0.6B_dynamic_wi4b32_afp32.litertlm",
       "parameters": "0.6B",
       "quantization": "Dynamic INT4 Block-32",
       "file_size_bytes": 343490560,

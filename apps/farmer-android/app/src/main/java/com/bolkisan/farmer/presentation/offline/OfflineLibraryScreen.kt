@@ -250,6 +250,12 @@ fun OfflineLibraryScreen(
                     Spacer(modifier = Modifier.height(8.dp))
 
                     // Subsystem Details Grid
+                    val hasBundledAsset = remember { OfflineModelManager.isBundledModelAssetAvailable(context) }
+                    SubsystemRow(
+                        label = "APK Bundled Model",
+                        value = if (hasBundledAsset) "Embedded in Release APK (${modelMetadata.downloadSizeBytes / (1024 * 1024)} MB)" else "External Download Required",
+                        isHealthy = hasBundledAsset
+                    )
                     SubsystemRow(
                         label = strings.slmEngineLabel,
                         value = "${modelMetadata.name} (${modelMetadata.parameterCount}, ${modelMetadata.quantization})",
@@ -315,7 +321,7 @@ fun OfflineLibraryScreen(
                             }
                             Spacer(modifier = Modifier.height(4.dp))
                             LinearProgressIndicator(
-                                progress = downloadProgress,
+                                progress = { downloadProgress },
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .height(6.dp)
@@ -363,34 +369,61 @@ fun OfflineLibraryScreen(
                         }
                         OfflineModelStatus.NOT_INSTALLED, OfflineModelStatus.FAILED -> {
                             Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                                Row(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                                ) {
+                                if (hasBundledAsset) {
                                     Button(
                                         onClick = {
                                             coroutineScope.launch {
                                                 isActionInProgress = true
-                                                val res = OfflineModelManager.downloadModel(context)
+                                                val res = OfflineModelManager.provisionBundledModelOnFirstLaunch(context, force = true)
                                                 isActionInProgress = false
-                                                if (res.isFailure) {
-                                                    Toast.makeText(context, "Download failed: ${res.exceptionOrNull()?.message}", Toast.LENGTH_LONG).show()
+                                                if (res) {
+                                                    Toast.makeText(context, "Built-in model provisioned successfully!", Toast.LENGTH_SHORT).show()
+                                                } else {
+                                                    Toast.makeText(context, "Provisioning failed. Check storage.", Toast.LENGTH_LONG).show()
                                                 }
                                             }
                                         },
                                         enabled = !isActionInProgress && totalRamGb >= 4,
-                                        modifier = Modifier.weight(1f),
+                                        modifier = Modifier.fillMaxWidth(),
                                         shape = RoundedCornerShape(10.dp),
                                         colors = ButtonDefaults.buttonColors(containerColor = ForestGreenPrimary)
                                     ) {
-                                        Text(text = strings.downloadModelButton, fontSize = 11.sp, fontWeight = FontWeight.Bold)
+                                        Text(
+                                            text = if (isActionInProgress) "Provisioning Built-in Model..." else "Extract & Provision Built-in Model",
+                                            fontSize = 11.sp,
+                                            fontWeight = FontWeight.Bold
+                                        )
                                     }
-                                    OutlinedButton(
-                                        onClick = { importLauncher.launch("*/*") },
-                                        enabled = !isActionInProgress,
-                                        shape = RoundedCornerShape(10.dp)
+                                } else {
+                                    Row(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        horizontalArrangement = Arrangement.spacedBy(8.dp)
                                     ) {
-                                        Text(text = strings.importModelButton, fontSize = 11.sp)
+                                        Button(
+                                            onClick = {
+                                                coroutineScope.launch {
+                                                    isActionInProgress = true
+                                                    val res = OfflineModelManager.downloadModel(context)
+                                                    isActionInProgress = false
+                                                    if (res.isFailure) {
+                                                        Toast.makeText(context, "Download failed: ${res.exceptionOrNull()?.message}", Toast.LENGTH_LONG).show()
+                                                    }
+                                                }
+                                            },
+                                            enabled = !isActionInProgress && totalRamGb >= 4,
+                                            modifier = Modifier.weight(1f),
+                                            shape = RoundedCornerShape(10.dp),
+                                            colors = ButtonDefaults.buttonColors(containerColor = ForestGreenPrimary)
+                                        ) {
+                                            Text(text = strings.downloadModelButton, fontSize = 11.sp, fontWeight = FontWeight.Bold)
+                                        }
+                                        OutlinedButton(
+                                            onClick = { importLauncher.launch("*/*") },
+                                            enabled = !isActionInProgress,
+                                            shape = RoundedCornerShape(10.dp)
+                                        ) {
+                                            Text(text = strings.importModelButton, fontSize = 11.sp)
+                                        }
                                     }
                                 }
                                 if (totalRamGb < 4) {

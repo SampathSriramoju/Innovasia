@@ -70,3 +70,6 @@ current_user_prompt.txt
 test_res.json
 backend/app/api/static/uploads/
 live_test_result.txt
+*.litertlm
+.claude-flow/
+.swarm/

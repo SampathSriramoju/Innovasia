@@ -14,19 +14,7 @@ export const App: React.FC = () => {
   const [escalationTrigger, setEscalationTrigger] = useState(0);
 
   useEffect(() => {
-    const existingUser = api.getUser();
-    const token = api.getToken();
-    if (token && existingUser) {
-      setUser(existingUser);
-    } else {
-      // Auto-initialize demo officer so user immediately sees live data
-      api.login('AGRI-TS-042', '9123456789', '654321')
-        .then(() => {
-          setUser(api.getUser());
-        })
-        .catch(() => {});
-    }
-    setInitialized(true);
+    api.validateSession().then(setUser).catch(() => setUser(null)).finally(() => setInitialized(true));
   }, []);
 
   const handleLogout = () => {

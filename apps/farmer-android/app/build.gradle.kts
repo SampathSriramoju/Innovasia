@@ -1,3 +1,9 @@
+import java.io.File
+import java.io.InputStream
+import java.io.OutputStream
+import java.net.URL
+import java.security.MessageDigest
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -53,6 +59,90 @@ android {
     androidResources {
         noCompress += listOf("litertlm", "bin", "json")
     }
+
+    sourceSets {
+        getByName("main") {
+            assets.srcDirs("src/main/assets", layout.buildDirectory.dir("generated/model-assets"))
+        }
+    }
+}
+
+val generatedModelAssetsDir = layout.buildDirectory.dir("generated/model-assets")
+
+val prepareOfflineModelAsset by tasks.registering {
+    val modelDir = generatedModelAssetsDir.get().asFile.resolve("models")
+    val targetFile = modelDir.resolve("bolkisan_qwen3_0_6b_int4.litertlm")
+
+    outputs.file(targetFile)
+
+    doLast {
+        modelDir.mkdirs()
+        val expectedSha = "bf1aba9ce8d963124407353c6aa4cbf72eba78db21ae133de983eac672ce83e0"
+        val expectedSize = 343490560L
+        val downloadUrl = "https://huggingface.co/litert-community/Qwen3-0.6B/resolve/bd47201734a34f1eba8ed7d28289225b60152e9e/Qwen3-0.6B_dynamic_wi4b32_afp32.litertlm"
+
+        fun calculateSha256(f: File): String {
+            val digest = MessageDigest.getInstance("SHA-256")
+            f.inputStream().use { fis: InputStream ->
+                val buf = ByteArray(128 * 1024)
+                var read: Int
+                while (fis.read(buf).also { read = it } != -1) {
+                    digest.update(buf, 0, read)
+                }
+            }
+            return digest.digest().joinToString("") { b: Byte -> "%02x".format(b) }
+        }
+
+        // 1. Check local model path from Gradle property or environment variable
+        val customPath = project.findProperty("bolkisan.model.path") as? String
+            ?: System.getenv("BOLKISAN_MODEL_PATH")
+
+        val userCache = File(System.getProperty("user.home"), ".bolkisan/models/bolkisan_qwen3_0_6b_int4.litertlm")
+
+        val sourceFile: File = when {
+            customPath != null && File(customPath).exists() -> File(customPath)
+            userCache.exists() -> userCache
+            else -> {
+                println("Downloading pinned INT4 LiteRT-LM model to user cache: ${userCache.absolutePath}")
+                userCache.parentFile.mkdirs()
+                val tempDownload = File(userCache.parentFile, "bolkisan_qwen3_0_6b_int4.litertlm.tmp")
+                val url = URL(downloadUrl)
+                val conn = url.openConnection()
+                conn.setRequestProperty("User-Agent", "BolKisan-BuildTool/1.0")
+                conn.getInputStream().use { input: InputStream ->
+                    tempDownload.outputStream().use { output: OutputStream ->
+                        input.copyTo(output)
+                    }
+                }
+                tempDownload.renameTo(userCache)
+                userCache
+            }
+        }
+
+        if (!sourceFile.exists()) {
+            throw GradleException("Offline SLM model artifact not found: ${sourceFile.absolutePath}")
+        }
+
+        if (sourceFile.length() != expectedSize) {
+            throw GradleException("Offline SLM model size mismatch: expected $expectedSize bytes, found ${sourceFile.length()}")
+        }
+
+        val hash = calculateSha256(sourceFile)
+        if (!hash.equals(expectedSha, ignoreCase = true)) {
+            throw GradleException("Offline SLM model SHA-256 mismatch: expected $expectedSha, found $hash")
+        }
+
+        // Copy to generated assets directory
+        if (!targetFile.exists() || targetFile.length() != expectedSize) {
+            println("Packaging verified model artifact into assets: ${targetFile.absolutePath}")
+            sourceFile.copyTo(targetFile, overwrite = true)
+        }
+        println("Verified model ready for packaging: ${targetFile.name} (${targetFile.length()} bytes, SHA-256: $expectedSha)")
+    }
+}
+
+tasks.matching { it.name.startsWith("merge") && it.name.endsWith("Assets") }.configureEach {
+    dependsOn(prepareOfflineModelAsset)
 }
 
 configurations.all {

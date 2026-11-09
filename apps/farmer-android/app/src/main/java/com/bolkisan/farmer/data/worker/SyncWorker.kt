@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import androidx.work.*
 import com.bolkisan.farmer.data.local.AppDatabase
+import com.bolkisan.farmer.data.local.SecureTokenStorage
 import com.bolkisan.farmer.data.remote.ApiClient
 import com.bolkisan.farmer.data.remote.models.OfflineSyncItemDto
 import com.bolkisan.farmer.data.remote.models.OfflineSyncRequestDto
@@ -29,7 +30,7 @@ class SyncWorker(
         val db = AppDatabase.getDatabase(applicationContext)
         val dao = db.offlineKnowledgeDao()
         val prefs = applicationContext.getSharedPreferences("bolkisan_prefs", Context.MODE_PRIVATE)
-        val token = prefs.getString("jwt_token", null)
+        val token = SecureTokenStorage.getToken(applicationContext)
         val lang = prefs.getString("selected_lang", "te") ?: "te"
 
         val unsyncedTickets = dao.getUnsyncedTickets()

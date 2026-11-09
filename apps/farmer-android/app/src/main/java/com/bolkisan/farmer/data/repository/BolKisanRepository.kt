@@ -95,7 +95,7 @@ class BolKisanRepository(private val context: Context) {
     }
 
     var currentToken: String?
-        get() = com.bolkisan.farmer.data.local.SecureTokenStorage.getToken(context) ?: prefs.getString("jwt_token", null)
+        get() = com.bolkisan.farmer.data.local.SecureTokenStorage.getToken(context)
         set(value) {
             com.bolkisan.farmer.data.local.SecureTokenStorage.saveToken(context, value)
             if (value == null) {

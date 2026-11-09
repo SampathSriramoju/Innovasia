@@ -11,7 +11,7 @@ from app.core.security import get_current_user_payload
 router = APIRouter()
 
 def generate_ticket_number() -> str:
-    hex_suffix = uuid.uuid4().hex[:4].upper()
+    hex_suffix = uuid.uuid4().hex[:12].upper()
     return f"BK-2026-{hex_suffix}"
 
 class TicketCreate(BaseModel):
@@ -32,6 +32,13 @@ class TicketRespond(BaseModel):
     officer_notes: Optional[str] = None
     action_type: Optional[str] = "chemical"
     status: Optional[str] = "resolved" # 'resolved', 'RESPONDED', 'RESOLVED', 'WAITING_FOR_FARMER'
+
+    def normalized_status(self) -> str:
+        value = (self.status or "RESOLVED").strip().upper()
+        allowed = {"PENDING", "UNDER_REVIEW", "RESPONDED", "WAITING_FOR_FARMER", "RESOLVED", "CLOSED"}
+        if value not in allowed:
+            raise HTTPException(status_code=422, detail="Unsupported ticket status.")
+        return value
 
 class OfflineSyncItem(BaseModel):
     client_uuid: str
@@ -60,10 +67,16 @@ async def list_tickets(
         query = query.filter(AgriculturalTicket.farmer_id == user_id)
     elif role == "extension_officer":
         assigned_mandals = current_user.get("mandals") or []
+        assigned_district = current_user.get("district")
+        assigned_state = current_user.get("state")
         if not assigned_mandals:
             # Empty jurisdiction assignments must deny access, not allow access to all tickets
             return []
         query = query.filter(AgriculturalTicket.mandal.in_(assigned_mandals))
+        if assigned_district:
+            query = query.filter(AgriculturalTicket.district == assigned_district)
+        if assigned_state:
+            query = query.filter(AgriculturalTicket.state == assigned_state)
     elif role == "admin":
         pass
     else:
@@ -139,10 +152,12 @@ async def create_escalated_ticket(
     farmer_user = db.query(User).filter(User.id == user_id).first()
     farmer_profile = farmer_user.farmer_profile if farmer_user else None
 
-    state = payload.state or (farmer_profile.state if farmer_profile else "Telangana")
-    district = payload.district or (farmer_profile.district if farmer_profile else "Warangal")
-    mandal = payload.mandal or (farmer_profile.mandal if farmer_profile else "Geesugonda")
-    village = payload.village or (farmer_profile.village if farmer_profile else "Dharmaram")
+    # Routing is identity data.  A farmer cannot direct their ticket into a
+    # different officer's jurisdiction through request fields.
+    state = farmer_profile.state if farmer_profile else "Telangana"
+    district = farmer_profile.district if farmer_profile else "Warangal"
+    mandal = farmer_profile.mandal if farmer_profile else "Geesugonda"
+    village = farmer_profile.village if farmer_profile else "Dharmaram"
 
     ticket_num = generate_ticket_number()
 
@@ -155,7 +170,7 @@ async def create_escalated_ticket(
         mandal=mandal,
         village=village,
         status="PENDING",
-        priority=payload.priority or "high",
+        priority=(payload.priority or "high").lower() if (payload.priority or "high").lower() in {"low", "medium", "high", "emergency"} else "high",
         escalation_reason=payload.escalation_reason,
         original_question_transcript=payload.original_question_transcript,
         audio_recording_url=payload.audio_recording_url,
@@ -355,11 +370,11 @@ async def respond_to_ticket(
                 detail="Access denied: Extension officers can only respond to tickets within their assigned mandals and jurisdiction."
             )
 
-    new_status = payload.status if payload.status else "resolved"
-    ticket.status = new_status
+    new_status = payload.normalized_status()
+    ticket.status = new_status.lower()
     ticket.resolution_prescription = payload.prescription
     ticket.officer_response = payload.prescription
-    ticket.resolved_at = datetime.now(timezone.utc)
+    ticket.resolved_at = datetime.now(timezone.utc) if new_status in {"RESOLVED", "CLOSED"} else None
     ticket.assigned_officer_id = current_user.get("sub")
 
     # Save to TicketMessage
@@ -393,16 +408,16 @@ async def respond_to_ticket(
                 ticket_id=ticket.id
             )
             db.add(conv_msg)
-            conv.escalation_status = "RESOLVED" if new_status == "RESOLVED" else "ESCALATED"
+            conv.escalation_status = "RESOLVED" if new_status in {"RESOLVED", "CLOSED"} else "ESCALATED"
             conv.message_count += 1
             conv.updated_at = datetime.now(timezone.utc)
 
     db.commit()
 
     return {
-        "status": new_status,
+        "status": new_status.lower(),
         "ticket_id": ticket.id,
         "ticket_number": ticket.ticket_number,
-        "resolved_at": ticket.resolved_at.isoformat(),
+        "resolved_at": ticket.resolved_at.isoformat() if ticket.resolved_at else None,
         "message": f"Official response recorded. Status updated to {new_status}."
     }

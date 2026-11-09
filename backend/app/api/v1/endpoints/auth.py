@@ -489,6 +489,15 @@ async def officer_login(payload: OfficerLoginRequest, db: Session = Depends(get_
             detail="Invalid officer credentials or unverified officer code."
         )
 
+    # An OTP proves control of a phone number, not control of an officer code.
+    # Bind both credentials before issuing an officer token.
+    officer_phone = normalize_phone(officer.user.phone_number) if officer.user else None
+    if not officer_phone or officer_phone != phone:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Officer code is not registered to this mobile number."
+        )
+
     # Enforce Approval Status Invariant FIRST
     if officer.approval_status == "PENDING_APPROVAL":
         raise HTTPException(
@@ -503,8 +512,12 @@ async def officer_login(payload: OfficerLoginRequest, db: Session = Depends(get_
 
     # Enforce OTP verification
     record = LIVE_OTP_STORE.get(phone) or LIVE_OTP_STORE.get(raw_phone)
+    if not record and settings.ENVIRONMENT == "development" and settings.ENABLE_DEV_OTP and phone in DEV_SEED_OTPS:
+        # Test/demo convenience is scoped to the configured phone and still
+        # passes through the officer-phone binding above.
+        record = OTPRecord(DEV_SEED_OTPS[phone], datetime.now(timezone.utc) + timedelta(minutes=5))
     if settings.ENVIRONMENT == "development" and settings.ENABLE_DEV_OTP:
-        valid_dev = payload.otp in ["123456", "654321"] or (record and payload.otp == record.otp)
+        valid_dev = record and payload.otp == record.otp
         if not valid_dev:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
@@ -516,8 +529,9 @@ async def officer_login(payload: OfficerLoginRequest, db: Session = Depends(get_
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail="Invalid or expired OTP code for officer authentication."
             )
-        LIVE_OTP_STORE.pop(phone, None)
-        LIVE_OTP_STORE.pop(raw_phone, None)
+    # OTPs are single use in every environment.
+    LIVE_OTP_STORE.pop(phone, None)
+    LIVE_OTP_STORE.pop(raw_phone, None)
 
     token_data = {
         "sub": officer.user_id,

@@ -16,14 +16,12 @@ import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.InputStream
-import java.net.HttpURLConnection
-import java.net.URL
 import java.security.MessageDigest
-import java.util.Locale
 
 enum class OfflineModelStatus {
     NOT_INSTALLED,
     DOWNLOADING,
+    EXTRACTING,
     VERIFYING,
     INITIALIZING,
     READY,
@@ -33,20 +31,20 @@ enum class OfflineModelStatus {
 }
 
 data class OfflineModelMetadata(
-    val modelId: String = "qwen3-0.6b-litertlm",
-    val name: String = "Qwen3-0.6B Mobile Edge SLM",
+    val modelId: String = "qwen3-0.6b-int4-litertlm",
+    val name: String = "Qwen3-0.6B Ultra-Compact INT4",
     val version: String = "3.0.0",
     val architecture: String = "Qwen3-Transformer",
     val runtime: String = "Google LiteRT-LM 0.19.1",
     val parameterCount: String = "0.6 Billion",
-    val quantization: String = "Dynamic INT8",
-    val downloadSizeBytes: Long = 613_722_264L, // 585.3 MB exact HF weight
-    val requiredStorageBytes: Long = 1_073_741_824L, // 1 GB required
+    val quantization: String = "Dynamic INT4 Block-32",
+    val downloadSizeBytes: Long = 343_490_560L, // 327.58 MB exact HF weight
+    val requiredStorageBytes: Long = 629_145_600L, // 600 MB required
     val minRamGb: Int = 4,
-    val recommendedRamGb: Int = 6,
-    val officialSourceUrl: String = "https://huggingface.co/litert-community/Qwen3-0.6B/resolve/main/Qwen3-0.6B.litertlm",
-    val expectedSha256: String = "c5f39b4191926786c3e6668b62af4d6eb15248dfc7a5348252a9b406f33f2108",
-    val license: String = "Apache-2.0 / Qwen Open License (Permissive for Edge)"
+    val recommendedRamGb: Int = 4,
+    val officialSourceUrl: String = "https://huggingface.co/litert-community/Qwen3-0.6B/resolve/bd47201734a34f1eba8ed7d28289225b60152e9e/Qwen3-0.6B_dynamic_wi4b32_afp32.litertlm",
+    val expectedSha256: String = "bf1aba9ce8d963124407353c6aa4cbf72eba78db21ae133de983eac672ce83e0",
+    val license: String = "Apache-2.0"
 )
 
 data class OfflineCapabilities(
@@ -54,6 +52,9 @@ data class OfflineCapabilities(
     val modelStatus: OfflineModelStatus,
     val isOfflineAsrAvailable: Boolean,
     val isOfflineTtsAvailable: Boolean,
+    val isBundledAssetPresent: Boolean,
+    val isModelExtractedAndVerified: Boolean,
+    val isEngineInitialized: Boolean,
     val totalRamGb: Int,
     val freeRamMb: Long,
     val installedModelPath: String?,
@@ -64,19 +65,22 @@ object OfflineModelManager {
 
     private const val TAG = "OfflineModelManager"
     private const val MODEL_DIR = "models"
-    const val MODEL_BIN_NAME = "qwen3_0_6b.litertlm"
-    private const val DOWNLOAD_TEMP_NAME = "qwen3_0_6b.litertlm.download"
-    const val MIN_VALID_MODEL_BYTES = 300_000_000L // Genuine SLM weights >= 300MB
+    const val MODEL_BIN_NAME = "bolkisan_qwen3_0_6b_int4.litertlm"
+    const val MODEL_FILENAME = MODEL_BIN_NAME
+    const val MIN_VALID_MODEL_BYTES = 343_490_560L
+    const val EXPECTED_SHA256 = "bf1aba9ce8d963124407353c6aa4cbf72eba78db21ae133de983eac672ce83e0"
+    private const val EXTRACTION_TEMP_NAME = "bolkisan_qwen3_0_6b_int4.litertlm.tmp"
 
     val metadata = OfflineModelMetadata()
 
     private val _modelStatus = MutableStateFlow(OfflineModelStatus.NOT_INSTALLED)
     val modelStatus: StateFlow<OfflineModelStatus> = _modelStatus.asStateFlow()
 
-    private val _downloadProgress = MutableStateFlow(0f)
-    val downloadProgress: StateFlow<Float> = _downloadProgress.asStateFlow()
+    private val _extractionProgress = MutableStateFlow(0f)
+    val extractionProgress: StateFlow<Float> = _extractionProgress.asStateFlow()
+    val downloadProgress: StateFlow<Float> = _extractionProgress.asStateFlow()
 
-    private val _statusMessage = MutableStateFlow("On-device Qwen3 SLM not installed. Verified SQLite Knowledge Engine active.")
+    private val _statusMessage = MutableStateFlow("On-device Qwen3 SLM standby. Verified Room SQLite Knowledge active.")
     val statusMessage: StateFlow<String> = _statusMessage.asStateFlow()
 
     fun getModelFile(context: Context): File {
@@ -84,124 +88,39 @@ object OfflineModelManager {
         return File(dir, MODEL_BIN_NAME)
     }
 
-    private fun getTempDownloadFile(context: Context): File {
+    private fun getTempFile(context: Context): File {
         val dir = File(context.filesDir, MODEL_DIR).apply { mkdirs() }
-        return File(dir, DOWNLOAD_TEMP_NAME)
+        return File(dir, EXTRACTION_TEMP_NAME)
     }
 
     /**
-     * Checks whether a genuine model file exists on disk and meets size constraints.
-     * Automatically inspects potential sideload paths and bundled APK assets if not found.
+     * Checks if the built-in model asset exists in the APK assets.
      */
-    fun isGenuineModelInstalled(context: Context): Boolean {
-        val file = getModelFile(context)
-        if (file.exists() && file.length() >= MIN_VALID_MODEL_BYTES) {
-            return true
-        }
-        if (checkForSideloadedModel(context)) {
-            return true
-        }
-        return checkAndUnpackAssetModel(context)
-    }
-
-    /**
-     * Checks if the single standalone APK has bundled the model inside assets/models/.
-     * Unpacks and commits it to internal files directory on first launch.
-     */
-    fun checkAndUnpackAssetModel(context: Context): Boolean {
-        val targetFile = getModelFile(context)
-        if (targetFile.exists() && targetFile.length() >= MIN_VALID_MODEL_BYTES) {
-            return true
-        }
+    fun isBundledModelAssetAvailable(context: Context): Boolean {
         return try {
             val assetList = context.assets.list("models") ?: emptyArray()
-            val candidate = listOf(MODEL_BIN_NAME, "Qwen3-0.6B.litertlm", "qwen3_0_6b_dynamic_wi4b32_afp32.litertlm")
-                .firstOrNull { it in assetList }
-
-            if (candidate != null) {
-                Log.i(TAG, "Embedded standalone model detected in APK assets: models/$candidate. Unpacking...")
-                val tempFile = getTempDownloadFile(context)
-                context.assets.open("models/$candidate").use { input ->
-                    FileOutputStream(tempFile).use { output ->
-                        val buffer = ByteArray(64 * 1024)
-                        var read: Int
-                        while (input.read(buffer).also { read = it } != -1) {
-                            output.write(buffer, 0, read)
-                        }
-                        output.flush()
-                    }
-                }
-                if (tempFile.length() >= MIN_VALID_MODEL_BYTES) {
-                    if (targetFile.exists()) targetFile.delete()
-                    if (tempFile.renameTo(targetFile)) {
-                        _modelStatus.value = OfflineModelStatus.READY
-                        _statusMessage.value = "Embedded standalone model unpacked successfully."
-                        Log.i(TAG, "Embedded standalone model unpacked to ${targetFile.absolutePath}")
-                        return true
-                    }
-                }
-                tempFile.delete()
-                false
-            } else {
-                false
-            }
+            MODEL_BIN_NAME in assetList || "Qwen3-0.6B_dynamic_wi4b32_afp32.litertlm" in assetList
         } catch (e: Exception) {
-            Log.d(TAG, "No embedded asset model found: ${e.message}")
             false
         }
     }
 
     /**
-     * Inspects external storage and download directories for sideloaded model weights.
-     * Copies and provisions valid model files into app private storage for offline field use.
+     * Checks whether a genuine model file exists on disk, meets exact size, and matches SHA-256.
      */
-    fun checkForSideloadedModel(context: Context): Boolean {
-        val targetFile = getModelFile(context)
-        if (targetFile.exists() && targetFile.length() >= MIN_VALID_MODEL_BYTES) {
-            return true
-        }
-
-        val candidatePaths = listOf(
-            File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), MODEL_BIN_NAME),
-            File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "Qwen3-0.6B.litertlm"),
-            File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "qwen3_0_6b_dynamic_wi4b32_afp32.litertlm"),
-            File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), MODEL_BIN_NAME),
-            File(context.getExternalFilesDir(null), "models/$MODEL_BIN_NAME")
-        )
-
-        for (candidate in candidatePaths) {
-            if (candidate.exists() && candidate.length() >= MIN_VALID_MODEL_BYTES) {
-                Log.i(TAG, "Discovered sideloaded model artifact at ${candidate.absolutePath} (${candidate.length()} bytes)")
-                val verified = if (candidate.length() == metadata.downloadSizeBytes) {
-                    verifyChecksum(candidate, metadata.expectedSha256)
-                } else {
-                    candidate.length() >= MIN_VALID_MODEL_BYTES
-                }
-
-                if (verified) {
-                    try {
-                        candidate.copyTo(targetFile, overwrite = true)
-                        _modelStatus.value = OfflineModelStatus.READY
-                        _statusMessage.value = "Sideloaded Qwen3-0.6B model detected and provisioned."
-                        Log.i(TAG, "Successfully provisioned sideloaded model to ${targetFile.absolutePath}")
-                        return true
-                    } catch (e: Exception) {
-                        Log.e(TAG, "Failed to copy sideloaded model: ${e.message}", e)
-                    }
-                }
-            }
-        }
-        return false
+    fun isGenuineModelInstalled(context: Context): Boolean {
+        val file = getModelFile(context)
+        return file.exists() && file.length() == metadata.downloadSizeBytes && verifyChecksum(file, metadata.expectedSha256)
     }
 
     /**
-     * Verifies the cryptographic SHA-256 checksum of the installed model file.
+     * Verifies the cryptographic SHA-256 checksum of any model file.
      */
     fun verifyChecksum(file: File, expectedSha: String): Boolean {
         if (!file.exists() || file.length() == 0L) return false
         return try {
             val digest = MessageDigest.getInstance("SHA-256")
-            val buffer = ByteArray(64 * 1024)
+            val buffer = ByteArray(128 * 1024)
             FileInputStream(file).use { fis ->
                 var read: Int
                 while (fis.read(buffer).also { read = it } != -1) {
@@ -217,8 +136,8 @@ object OfflineModelManager {
     }
 
     /**
-     * Checks device hardware RAM and storage suitability.
-     * Enforces the hard 3GB / 4GB / 6GB threshold rule.
+     * Hardware memory and storage suitability check.
+     * Enforces the hard 4GB total RAM / 800MB free memory requirement.
      */
     fun checkHardwareSuitability(context: Context): Pair<Boolean, String> {
         val actManager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
@@ -227,41 +146,171 @@ object OfflineModelManager {
         val totalRamGb = Math.round(memInfo.totalMem.toDouble() / (1024.0 * 1024.0 * 1024.0)).toInt().coerceAtLeast(1)
         val freeRamMb = memInfo.availMem / (1024 * 1024)
 
-        if (totalRamGb < 4) {
+        if (totalRamGb < metadata.minRamGb) {
             return Pair(
                 false,
-                "Device has ${totalRamGb}GB RAM (< 4GB required for LiteRT-LM). Running in verified SQLite FTS5 RAG mode to guarantee zero OOM crashes."
+                "Device has ${totalRamGb}GB RAM (< ${metadata.minRamGb}GB required). Safe Room SQLite FTS5 active to prevent OOM."
             )
         }
 
         if (freeRamMb < 800) {
             return Pair(
                 false,
-                "Low available memory: ${freeRamMb}MB free (< 800MB threshold). Running in verified SQLite Knowledge mode."
+                "Low available memory: ${freeRamMb}MB free (< 800MB required). Safe Room SQLite Knowledge active."
             )
         }
 
-        // Storage Check
         val stat = StatFs(context.filesDir.path)
         val freeStorageBytes = stat.availableBlocksLong * stat.blockSizeLong
-        val freeStorageGb = freeStorageBytes / (1024 * 1024 * 1024.0)
+        val freeStorageMb = freeStorageBytes / (1024 * 1024)
 
         if (freeStorageBytes < metadata.requiredStorageBytes) {
             return Pair(
                 false,
-                "Insufficient storage: ${String.format("%.1f", freeStorageGb)}GB free (${String.format("%.1f", metadata.requiredStorageBytes / 1e9)}GB required)."
+                "Insufficient storage: ${freeStorageMb}MB free (${metadata.requiredStorageBytes / (1024 * 1024)}MB required)."
             )
         }
 
-        return Pair(true, "Hardware suitable: ${totalRamGb}GB RAM (Free: ${freeRamMb}MB), Storage: ${String.format("%.1f", freeStorageGb)}GB free.")
+        return Pair(true, "Hardware suitable: ${totalRamGb}GB RAM, ${freeRamMb}MB free RAM, ${freeStorageMb}MB storage.")
     }
 
     /**
-     * Evaluates independent offline subsystem statuses:
-     * 1. Offline knowledge (Room DB)
-     * 2. Offline SLM status
-     * 3. Offline speech recognition
-     * 4. Offline TTS
+     * First-launch model provisioning sequence:
+     * 1. Check if model is already extracted and verified
+     * 2. Validate hardware suitability (RAM & storage)
+     * 3. Extract bundled model asset into temporary file
+     * 4. Verify exact byte size and SHA-256 checksum
+     * 5. Atomically commit model to app private storage
+     * 6. Initialize LiteRT-LM runtime
+     * 7. Run genuine inference smoke test
+     * 8. Mark READY only after smoke test succeeds!
+     */
+    suspend fun provisionBundledModelOnFirstLaunch(context: Context, force: Boolean = false): Boolean = withContext(Dispatchers.IO) {
+        val targetFile = getModelFile(context)
+
+        // Step 1: Check if already provisioned & verified (skip if not forced)
+        if (!force && targetFile.exists() && targetFile.length() == metadata.downloadSizeBytes && verifyChecksum(targetFile, metadata.expectedSha256)) {
+            Log.i(TAG, "Model already provisioned and verified on disk. Initializing engine...")
+            val ready = OfflineInferenceEngine.getInstance(context).initializeEngine()
+            if (ready) {
+                _modelStatus.value = OfflineModelStatus.READY
+                _statusMessage.value = "${metadata.name} active on LiteRT-LM (${OfflineInferenceEngine.getInstance(context).getActiveRuntime()})."
+                return@withContext true
+            }
+        }
+
+        // Step 2: Hardware suitability check
+        val (suitable, reason) = checkHardwareSuitability(context)
+        if (!suitable) {
+            _modelStatus.value = if (reason.contains("RAM")) OfflineModelStatus.UNSUPPORTED_DEVICE else OfflineModelStatus.INSUFFICIENT_MEMORY
+            _statusMessage.value = reason
+            return@withContext false
+        }
+
+        // Step 3: Locate bundled asset in APK
+        val assetList = try { context.assets.list("models") ?: emptyArray() } catch (_: Exception) { emptyArray() }
+        val assetName = listOf(MODEL_BIN_NAME, "Qwen3-0.6B_dynamic_wi4b32_afp32.litertlm")
+            .firstOrNull { it in assetList }
+
+        if (assetName == null) {
+            Log.w(TAG, "Bundled model asset not found in APK package.")
+            _modelStatus.value = OfflineModelStatus.NOT_INSTALLED
+            _statusMessage.value = "Bundled model asset not found in APK package. Room SQLite knowledge active."
+            return@withContext false
+        }
+
+        val tempFile = getTempFile(context)
+        if (tempFile.exists()) tempFile.delete()
+
+        try {
+            _modelStatus.value = OfflineModelStatus.EXTRACTING
+            _statusMessage.value = "Extracting built-in offline SLM from APK..."
+            _extractionProgress.value = 0f
+
+            val digest = MessageDigest.getInstance("SHA-256")
+            var totalRead = 0L
+
+            context.assets.open("models/$assetName").use { input ->
+                FileOutputStream(tempFile).use { output ->
+                    val buffer = ByteArray(128 * 1024)
+                    var read: Int
+                    while (input.read(buffer).also { read = it } != -1) {
+                        output.write(buffer, 0, read)
+                        digest.update(buffer, 0, read)
+                        totalRead += read
+                        _extractionProgress.value = (totalRead.toFloat() / metadata.downloadSizeBytes).coerceIn(0f, 1f)
+                    }
+                    output.flush()
+                }
+            }
+
+            // Step 4: Verification of size and SHA-256
+            _modelStatus.value = OfflineModelStatus.VERIFYING
+            _statusMessage.value = "Verifying cryptographic SHA-256 checksum..."
+
+            val calcHash = digest.digest().joinToString("") { "%02x".format(it) }
+            if (totalRead != metadata.downloadSizeBytes || !calcHash.equals(metadata.expectedSha256, ignoreCase = true)) {
+                Log.e(TAG, "Checksum mismatch! Expected: ${metadata.expectedSha256}, Got: $calcHash (Size: $totalRead)")
+                tempFile.delete()
+                _modelStatus.value = OfflineModelStatus.FAILED
+                _statusMessage.value = "Model verification failed: Checksum or byte size mismatch."
+                return@withContext false
+            }
+
+            // Step 5: Atomic file rename
+            if (targetFile.exists()) targetFile.delete()
+            if (!tempFile.renameTo(targetFile)) {
+                Log.e(TAG, "Atomic rename of model file failed.")
+                tempFile.delete()
+                _modelStatus.value = OfflineModelStatus.FAILED
+                _statusMessage.value = "Failed to commit verified model file to app storage."
+                return@withContext false
+            }
+
+            // Step 6: Engine initialization
+            _modelStatus.value = OfflineModelStatus.INITIALIZING
+            _statusMessage.value = "Initializing LiteRT-LM runtime..."
+
+            val engineInit = OfflineInferenceEngine.getInstance(context).initializeEngine()
+            if (!engineInit) {
+                targetFile.delete()
+                _modelStatus.value = OfflineModelStatus.FAILED
+                _statusMessage.value = "LiteRT-LM runtime initialization failed on this device."
+                return@withContext false
+            }
+
+            // Step 7: Genuine inference smoke test
+            _statusMessage.value = "Executing on-device inference smoke test..."
+            val smokeTest = OfflineInferenceEngine.getInstance(context).executeOfflineInference(
+                query = "Bol Kisan model verification smoke test",
+                retrievedContextText = "ICAR agricultural knowledge verification.",
+                retrievedCitation = "ICAR-BolKisan",
+                language = "en"
+            )
+
+            if (smokeTest.didFallbackToVerifiedRules || smokeTest.responseText.isBlank()) {
+                Log.w(TAG, "Smoke test failed to produce real SLM output: ${smokeTest.statusLabel}")
+                _modelStatus.value = OfflineModelStatus.FAILED
+                _statusMessage.value = "Inference smoke test failed. Room SQLite fallback active."
+                return@withContext false
+            }
+
+            _modelStatus.value = OfflineModelStatus.READY
+            _statusMessage.value = "${metadata.name} verified and ready on ${smokeTest.engineUsed}."
+            Log.i(TAG, "Built-in offline SLM fully provisioned, verified, and smoke-tested!")
+            return@withContext true
+
+        } catch (e: Exception) {
+            Log.e(TAG, "Model provisioning error: ${e.message}", e)
+            if (tempFile.exists()) tempFile.delete()
+            _modelStatus.value = OfflineModelStatus.FAILED
+            _statusMessage.value = "Provisioning error: ${e.message}"
+            return@withContext false
+        }
+    }
+
+    /**
+     * Evaluates independent offline subsystem statuses for the UI dashboard.
      */
     fun getOfflineCapabilities(context: Context, hasRoomRecords: Boolean = true): OfflineCapabilities {
         val actManager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
@@ -272,14 +321,17 @@ object OfflineModelManager {
 
         val modelFile = getModelFile(context)
         val hasGenuine = isGenuineModelInstalled(context)
+        val isEngineReady = OfflineInferenceEngine.getInstance(context).isEngineReady()
+        val isAssetBundled = isBundledModelAssetAvailable(context)
 
         val status = when {
-            totalRamGb < 4 -> OfflineModelStatus.UNSUPPORTED_DEVICE
+            totalRamGb < metadata.minRamGb -> OfflineModelStatus.UNSUPPORTED_DEVICE
             freeRamMb < 800 && !hasGenuine -> OfflineModelStatus.INSUFFICIENT_MEMORY
-            hasGenuine -> OfflineModelStatus.READY
-            _modelStatus.value == OfflineModelStatus.DOWNLOADING -> OfflineModelStatus.DOWNLOADING
+            hasGenuine && isEngineReady -> OfflineModelStatus.READY
+            _modelStatus.value == OfflineModelStatus.EXTRACTING -> OfflineModelStatus.EXTRACTING
             _modelStatus.value == OfflineModelStatus.VERIFYING -> OfflineModelStatus.VERIFYING
             _modelStatus.value == OfflineModelStatus.INITIALIZING -> OfflineModelStatus.INITIALIZING
+            hasGenuine -> OfflineModelStatus.INITIALIZING
             else -> OfflineModelStatus.NOT_INSTALLED
         }
 
@@ -295,6 +347,9 @@ object OfflineModelManager {
             modelStatus = status,
             isOfflineAsrAvailable = asrAvailable,
             isOfflineTtsAvailable = true,
+            isBundledAssetPresent = isAssetBundled,
+            isModelExtractedAndVerified = hasGenuine,
+            isEngineInitialized = isEngineReady,
             totalRamGb = totalRamGb,
             freeRamMb = freeRamMb,
             installedModelPath = if (hasGenuine) modelFile.absolutePath else null,
@@ -303,168 +358,125 @@ object OfflineModelManager {
     }
 
     /**
-     * Resumable HTTP model download with range requests, atomic rename, and cryptographic verification.
+     * Downloads model from official repository if not bundled.
      */
-    suspend fun downloadModel(
-        context: Context,
-        onProgress: (Float) -> Unit = {}
-    ): Result<File> = withContext(Dispatchers.IO) {
+    suspend fun downloadModel(context: Context): Result<File> = withContext(Dispatchers.IO) {
+        val targetFile = getModelFile(context)
+        val tempFile = getTempFile(context)
+
         val (suitable, reason) = checkHardwareSuitability(context)
         if (!suitable) {
-            val status = if (reason.contains("RAM")) OfflineModelStatus.UNSUPPORTED_DEVICE else OfflineModelStatus.INSUFFICIENT_MEMORY
-            _modelStatus.value = status
+            _modelStatus.value = if (reason.contains("RAM")) OfflineModelStatus.UNSUPPORTED_DEVICE else OfflineModelStatus.INSUFFICIENT_MEMORY
             _statusMessage.value = reason
             return@withContext Result.failure(Exception(reason))
         }
 
-        val targetFile = getModelFile(context)
-        val tempFile = getTempDownloadFile(context)
-
         try {
             _modelStatus.value = OfflineModelStatus.DOWNLOADING
-            _statusMessage.value = "Connecting to LiteRT-LM model repository..."
-            _downloadProgress.value = 0f
+            _statusMessage.value = "Downloading ${metadata.name}..."
+            _extractionProgress.value = 0f
 
-            val url = URL(metadata.officialSourceUrl)
-            val connection = url.openConnection() as HttpURLConnection
-            connection.connectTimeout = 15000
-            connection.readTimeout = 30000
+            val url = java.net.URL(metadata.officialSourceUrl)
+            val conn = url.openConnection() as java.net.HttpURLConnection
+            conn.connectTimeout = 30000
+            conn.readTimeout = 30000
+            conn.connect()
 
-            val existingLength = if (tempFile.exists()) tempFile.length() else 0L
-            if (existingLength > 0) {
-                connection.setRequestProperty("Range", "bytes=$existingLength-")
-            }
+            val digest = MessageDigest.getInstance("SHA-256")
+            var totalRead = 0L
 
-            connection.connect()
-            val responseCode = connection.responseCode
-            val isPartial = responseCode == HttpURLConnection.HTTP_PARTIAL
-            val isOk = responseCode == HttpURLConnection.HTTP_OK
-
-            if (!isOk && !isPartial) {
-                _modelStatus.value = OfflineModelStatus.FAILED
-                val errMsg = "Model repository returned HTTP $responseCode"
-                _statusMessage.value = errMsg
-                return@withContext Result.failure(Exception(errMsg))
-            }
-
-            val append = isPartial && existingLength > 0
-            val totalBytes = if (isPartial) {
-                existingLength + connection.contentLengthLong
-            } else {
-                connection.contentLengthLong
-            }
-
-            val inputStream = connection.inputStream
-            val outputStream = FileOutputStream(tempFile, append)
-
-            val buffer = ByteArray(64 * 1024)
-            var bytesRead: Int
-            var totalRead = if (append) existingLength else 0L
-
-            while (inputStream.read(buffer).also { bytesRead = it } != -1) {
-                outputStream.write(buffer, 0, bytesRead)
-                totalRead += bytesRead
-                if (totalBytes > 0) {
-                    val prog = (totalRead.toFloat() / totalBytes).coerceIn(0f, 1f)
-                    _downloadProgress.value = prog
-                    onProgress(prog)
+            conn.inputStream.use { input ->
+                FileOutputStream(tempFile).use { output ->
+                    val buffer = ByteArray(128 * 1024)
+                    var read: Int
+                    while (input.read(buffer).also { read = it } != -1) {
+                        output.write(buffer, 0, read)
+                        digest.update(buffer, 0, read)
+                        totalRead += read
+                        _extractionProgress.value = (totalRead.toFloat() / metadata.downloadSizeBytes).coerceIn(0f, 1f)
+                    }
+                    output.flush()
                 }
             }
 
-            outputStream.flush()
-            outputStream.close()
-            inputStream.close()
-            connection.disconnect()
-
-            // Cryptographic Verification
             _modelStatus.value = OfflineModelStatus.VERIFYING
-            _statusMessage.value = "Verifying SHA-256 checksum..."
+            _statusMessage.value = "Verifying downloaded SHA-256..."
+            val calcHash = digest.digest().joinToString("") { "%02x".format(it) }
 
-            val matchesChecksum = verifyChecksum(tempFile, metadata.expectedSha256)
-            if (!matchesChecksum && tempFile.length() != metadata.downloadSizeBytes) {
+            if (totalRead != metadata.downloadSizeBytes || !calcHash.equals(metadata.expectedSha256, ignoreCase = true)) {
                 tempFile.delete()
                 _modelStatus.value = OfflineModelStatus.FAILED
-                _statusMessage.value = "Model verification failed: SHA-256 or size mismatch."
+                _statusMessage.value = "Download failed: Checksum or byte size mismatch."
                 return@withContext Result.failure(Exception("Checksum verification failed"))
             }
 
-            // Atomic Finalization
             if (targetFile.exists()) targetFile.delete()
             if (tempFile.renameTo(targetFile)) {
                 _modelStatus.value = OfflineModelStatus.INITIALIZING
-                _statusMessage.value = "Initializing LiteRT-LM Engine..."
-
-                // Trigger genuine engine initialization
-                val initSuccess = OfflineInferenceEngine.getInstance(context).initializeEngine()
-                if (initSuccess) {
+                _statusMessage.value = "Initializing LiteRT-LM runtime..."
+                if (OfflineInferenceEngine.getInstance(context).initializeEngine()) {
                     _modelStatus.value = OfflineModelStatus.READY
-                    _statusMessage.value = "${metadata.name} installed and ready for edge inference."
+                    _statusMessage.value = "${metadata.name} ready on ${OfflineInferenceEngine.getInstance(context).getActiveRuntime()}."
                     Result.success(targetFile)
                 } else {
-                    _modelStatus.value = OfflineModelStatus.READY
-                    _statusMessage.value = "${metadata.name} installed. Runtime ready on first question."
-                    Result.success(targetFile)
+                    targetFile.delete()
+                    _modelStatus.value = OfflineModelStatus.FAILED
+                    _statusMessage.value = "Initialization failed on device."
+                    Result.failure(Exception("Engine init failed"))
                 }
             } else {
                 _modelStatus.value = OfflineModelStatus.FAILED
-                _statusMessage.value = "Failed to finalize model file on disk."
-                Result.failure(Exception("Atomic file rename failed"))
+                _statusMessage.value = "Failed to commit downloaded file."
+                Result.failure(Exception("Rename failed"))
             }
-
         } catch (e: Exception) {
-            Log.e(TAG, "Model download error: ${e.message}", e)
+            Log.e(TAG, "Download error: ${e.message}", e)
+            if (tempFile.exists()) tempFile.delete()
             _modelStatus.value = OfflineModelStatus.FAILED
-            _statusMessage.value = "Download interrupted: ${e.message}"
+            _statusMessage.value = "Download failed: ${e.message}"
             Result.failure(e)
         }
     }
 
     /**
-     * Imports a pre-downloaded genuine .litertlm model file from local storage or stream.
-     * Essential for offline bundle sideloading without internet.
+     * Strictly verified developer sideload/import for testing.
      */
     suspend fun importModelFromStream(
         context: Context,
         inputStream: InputStream,
         expectedSize: Long = metadata.downloadSizeBytes,
-        expectedSha: String = metadata.expectedSha256,
-        onProgress: (Float) -> Unit = {}
+        expectedSha: String = metadata.expectedSha256
     ): Result<File> = withContext(Dispatchers.IO) {
         val targetFile = getModelFile(context)
-        val tempFile = getTempDownloadFile(context)
+        val tempFile = getTempFile(context)
 
         try {
-            _modelStatus.value = OfflineModelStatus.DOWNLOADING
-            _statusMessage.value = "Importing offline model bundle..."
+            _modelStatus.value = OfflineModelStatus.EXTRACTING
+            _statusMessage.value = "Importing offline model artifact..."
 
-            val outputStream = FileOutputStream(tempFile)
-            val buffer = ByteArray(64 * 1024)
-            var bytesRead: Int
+            val digest = MessageDigest.getInstance("SHA-256")
             var totalRead = 0L
 
-            while (inputStream.read(buffer).also { bytesRead = it } != -1) {
-                outputStream.write(buffer, 0, bytesRead)
-                totalRead += bytesRead
-                if (expectedSize > 0) {
-                    val prog = (totalRead.toFloat() / expectedSize).coerceIn(0f, 1f)
-                    _downloadProgress.value = prog
-                    onProgress(prog)
+            tempFile.outputStream().use { output ->
+                val buffer = ByteArray(128 * 1024)
+                var read: Int
+                while (inputStream.read(buffer).also { read = it } != -1) {
+                    output.write(buffer, 0, read)
+                    digest.update(buffer, 0, read)
+                    totalRead += read
                 }
+                output.flush()
             }
 
-            outputStream.flush()
-            outputStream.close()
-            inputStream.close()
-
             _modelStatus.value = OfflineModelStatus.VERIFYING
-            _statusMessage.value = "Verifying imported model integrity..."
+            _statusMessage.value = "Verifying cryptographic checksum..."
 
-            val matches = if (expectedSha.isNotBlank()) verifyChecksum(tempFile, expectedSha) else (tempFile.length() >= MIN_VALID_MODEL_BYTES)
-            if (!matches && tempFile.length() < MIN_VALID_MODEL_BYTES) {
+            val calcHash = digest.digest().joinToString("") { "%02x".format(it) }
+            if (totalRead != expectedSize || !calcHash.equals(expectedSha, ignoreCase = true)) {
                 tempFile.delete()
                 _modelStatus.value = OfflineModelStatus.FAILED
-                _statusMessage.value = "Imported file rejected: Invalid model format or size."
-                return@withContext Result.failure(Exception("Invalid model file"))
+                _statusMessage.value = "Import rejected: Size or SHA-256 checksum mismatch."
+                return@withContext Result.failure(Exception("Checksum verification failed"))
             }
 
             if (targetFile.exists()) targetFile.delete()
@@ -472,10 +484,16 @@ object OfflineModelManager {
                 _modelStatus.value = OfflineModelStatus.INITIALIZING
                 _statusMessage.value = "Initializing LiteRT-LM runtime..."
 
-                OfflineInferenceEngine.getInstance(context).initializeEngine()
-                _modelStatus.value = OfflineModelStatus.READY
-                _statusMessage.value = "Import successful. Offline SLM ready."
-                Result.success(targetFile)
+                if (OfflineInferenceEngine.getInstance(context).initializeEngine()) {
+                    _modelStatus.value = OfflineModelStatus.READY
+                    _statusMessage.value = "Import successful. Offline SLM ready."
+                    Result.success(targetFile)
+                } else {
+                    targetFile.delete()
+                    _modelStatus.value = OfflineModelStatus.FAILED
+                    _statusMessage.value = "Imported model could not initialize in LiteRT-LM."
+                    Result.failure(Exception("LiteRT-LM initialization failed"))
+                }
             } else {
                 _modelStatus.value = OfflineModelStatus.FAILED
                 _statusMessage.value = "Failed to commit imported model to app storage."
@@ -483,6 +501,7 @@ object OfflineModelManager {
             }
         } catch (e: Exception) {
             Log.e(TAG, "Import error: ${e.message}", e)
+            if (tempFile.exists()) tempFile.delete()
             _modelStatus.value = OfflineModelStatus.FAILED
             _statusMessage.value = "Import failed: ${e.message}"
             Result.failure(e)
@@ -490,18 +509,18 @@ object OfflineModelManager {
     }
 
     /**
-     * Uninstalls the model and frees local flash storage.
+     * Deletes the extracted model to free storage.
      */
     fun deleteModel(context: Context): Boolean {
         OfflineInferenceEngine.getInstance(context).closeEngine()
         val file = getModelFile(context)
-        val temp = getTempDownloadFile(context)
+        val temp = getTempFile(context)
         if (temp.exists()) temp.delete()
         val deleted = if (file.exists()) file.delete() else true
         _modelStatus.value = OfflineModelStatus.NOT_INSTALLED
-        _downloadProgress.value = 0f
-        _statusMessage.value = "Model uninstalled. Storage freed."
-        Log.i(TAG, "Offline SLM model uninstalled by farmer.")
+        _extractionProgress.value = 0f
+        _statusMessage.value = "Extracted model deleted. Storage freed."
+        Log.i(TAG, "Model uninstalled from app private storage.")
         return deleted
     }
 

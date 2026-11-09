@@ -132,6 +132,10 @@ export const CibrcPrescriptionBuilder: React.FC<CibrcPrescriptionBuilderProps> =
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!Object.values(equipment).every(Boolean)) {
+      alert('All mandatory PPE and environmental safety acknowledgements are required before dispatch.');
+      return;
+    }
     setSubmitting(true);
     try {
       const finalPrescription = generatePrescriptionText();
@@ -190,7 +194,7 @@ export const CibrcPrescriptionBuilder: React.FC<CibrcPrescriptionBuilderProps> =
             1. Select CIBRC-Approved Active Ingredient & Trade Name
           </label>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {CIBRC_DATABASE.map((record) => {
+            {CIBRC_DATABASE.filter(record => record.target_crop.toLowerCase().includes(cropLower) || cropLower.includes(record.target_crop.toLowerCase())).map((record) => {
               const isSelected = selectedPesticideId === record.id;
               const isCropMatch = record.target_crop.toLowerCase().includes(cropLower);
 

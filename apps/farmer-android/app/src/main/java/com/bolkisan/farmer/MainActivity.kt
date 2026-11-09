@@ -31,8 +31,9 @@ class MainActivity : ComponentActivity() {
         val repository = app.repository
         val offlineEngine = OfflineInferenceEngine.getInstance(this)
 
-        // Asynchronously check and initialize the on-device engine in background without blocking UI
+        // Asynchronously provision bundled offline SLM on first launch and initialize engine
         lifecycleScope.launch(Dispatchers.Default) {
+            OfflineModelManager.provisionBundledModelOnFirstLaunch(this@MainActivity)
             if (OfflineModelManager.isGenuineModelInstalled(this@MainActivity)) {
                 offlineEngine.initializeEngine()
             }

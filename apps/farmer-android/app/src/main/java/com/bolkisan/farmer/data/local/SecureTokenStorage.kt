@@ -56,7 +56,8 @@ object SecureTokenStorage {
                 .putString(KEY_IV, Base64.encodeToString(iv, Base64.NO_WRAP))
                 .apply()
         } catch (e: Exception) {
-            prefs.edit().putString(KEY_ENCRYPTED_TOKEN, Base64.encodeToString(token.toByteArray(), Base64.NO_WRAP)).apply()
+            // Never silently downgrade a bearer token to reversible storage.
+            prefs.edit().remove(KEY_ENCRYPTED_TOKEN).remove(KEY_IV).apply()
         }
     }
 
@@ -65,11 +66,7 @@ object SecureTokenStorage {
         val encTokenStr = prefs.getString(KEY_ENCRYPTED_TOKEN, null) ?: return null
         val ivStr = prefs.getString(KEY_IV, null)
 
-        if (ivStr == null) {
-            return try {
-                String(Base64.decode(encTokenStr, Base64.NO_WRAP), StandardCharsets.UTF_8)
-            } catch (e: Exception) { null }
-        }
+        if (ivStr == null) return null
 
         return try {
             val secretKey = getOrCreateKey()

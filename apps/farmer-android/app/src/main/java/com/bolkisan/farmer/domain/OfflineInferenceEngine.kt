@@ -109,7 +109,7 @@ class OfflineInferenceEngine(private val context: Context) {
                     val gpuConfig = EngineConfig(
                         modelPath = modelFile.absolutePath,
                         backend = Backend.GPU(),
-                        maxNumTokens = 1024
+                        maxNumTokens = 512
                     )
                     val newEngine = Engine(gpuConfig)
                     newEngine.initialize()
@@ -132,7 +132,7 @@ class OfflineInferenceEngine(private val context: Context) {
                 val cpuConfig = EngineConfig(
                     modelPath = modelFile.absolutePath,
                     backend = Backend.CPU(threadCount = 4),
-                    maxNumTokens = 1024
+                    maxNumTokens = 512
                 )
                 val newEngine = Engine(cpuConfig)
                 newEngine.initialize()
@@ -209,14 +209,15 @@ class OfflineInferenceEngine(private val context: Context) {
             )
         }
 
+        // Initialize before taking the inference lock. Mutex is deliberately
+        // non-reentrant; initializing while holding it deadlocked first use.
+        if (!isEngineReady()) {
+            initializeEngine(forceCpu = preferredRuntime == EdgeRuntime.LITERT_LM_CPU)
+        }
+
         // 2. GENUINE NEURAL SLM INFERENCE PATH
         mutex.withLock {
             var activeEng = engine
-            if (activeEng == null || !isEngineInitialized) {
-                val forceCpu = preferredRuntime == EdgeRuntime.LITERT_LM_CPU
-                initializeEngine(forceCpu = forceCpu)
-                activeEng = engine
-            }
 
             if (activeEng == null || !isEngineInitialized) {
                 // If engine initialization fails, cleanly return SQLite fallback without crashing
@@ -227,11 +228,9 @@ class OfflineInferenceEngine(private val context: Context) {
             }
 
             try {
-                var conv = conversation
-                if (conv == null) {
-                    conv = activeEng.createConversation()
-                    conversation = conv
-                }
+                // A new conversation per question prevents prior prompts and
+                // generated text from contaminating later answers.
+                val conv = activeEng.createConversation()
 
                 val prompt = buildGroundedPrompt(query, retrievedContextText, language)
                 val genStart = SystemClock.elapsedRealtime()
@@ -239,16 +238,20 @@ class OfflineInferenceEngine(private val context: Context) {
                 var tokenCount = 0
                 val responseBuilder = StringBuilder()
 
-                val tokenFlow = conv.sendMessageAsync(prompt)
-                tokenFlow.collect { message ->
-                    val textChunks = message.contents.contents.filterIsInstance<Content.Text>().joinToString("") { it.text }
-                    if (textChunks.isNotEmpty()) {
-                        if (tokenCount == 0) {
-                            firstTokenMs = SystemClock.elapsedRealtime() - genStart
+                try {
+                    val tokenFlow = conv.sendMessageAsync(prompt)
+                    tokenFlow.collect { message ->
+                        val textChunks = message.contents.contents.filterIsInstance<Content.Text>().joinToString("") { it.text }
+                        if (textChunks.isNotEmpty()) {
+                            if (tokenCount == 0) {
+                                firstTokenMs = SystemClock.elapsedRealtime() - genStart
+                            }
+                            tokenCount++
+                            responseBuilder.append(textChunks)
                         }
-                        tokenCount++
-                        responseBuilder.append(textChunks)
                     }
+                } finally {
+                    conv.close()
                 }
 
                 val totalGenMs = (SystemClock.elapsedRealtime() - genStart).coerceAtLeast(1L)
@@ -256,14 +259,30 @@ class OfflineInferenceEngine(private val context: Context) {
                 val tokensPerSec = if (totalGenMs > 0) (tokenCount * 1000.0) / totalGenMs else 0.0
                 val totalVoiceSec = (totalGenMs / 1000.0) + 0.45
 
-                val finalAnswer = responseBuilder.toString().trim().ifBlank {
+                val rawAnswer = responseBuilder.toString()
+                val cleanedAnswer = cleanModelResponse(rawAnswer)
+                val finalAnswer = cleanedAnswer.ifBlank {
                     if (retrievedContextText.isNotBlank()) retrievedContextText else "ధృవీకరించిన వ్యవసాయ సలహా అందుబాటులో ఉంది."
                 }
 
                 val engineLabel = if (activeRuntime == EdgeRuntime.LITERT_LM_GPU) {
-                    "Qwen3-0.6B Mobile SLM (LiteRT-LM GPU)"
+                    "Qwen3-0.6B Ultra-Compact INT4 (LiteRT-LM GPU)"
                 } else {
-                    "Qwen3-0.6B Mobile SLM (LiteRT-LM CPU)"
+                    "Qwen3-0.6B Ultra-Compact INT4 (LiteRT-LM CPU)"
+                }
+
+                // Dynamically evaluate factual grounding against retrieved ICAR context
+                val dynamicGroundedness = if (retrievedContextText.isNotBlank()) {
+                    val contextWords = retrievedContextText.lowercase().split(Regex("\\W+")).filter { it.length > 3 }.toSet()
+                    val answerWords = finalAnswer.lowercase().split(Regex("\\W+")).filter { it.length > 3 }.toSet()
+                    val overlap = contextWords.intersect(answerWords).size
+                    if (contextWords.isNotEmpty() && overlap > 0) {
+                        (0.65 + (overlap.toDouble() / 15.0).coerceAtMost(0.35))
+                    } else {
+                        0.60
+                    }
+                } else {
+                    0.50
                 }
 
                 return@withContext OfflineBenchmarkResult(
@@ -277,7 +296,7 @@ class OfflineInferenceEngine(private val context: Context) {
                     tokenCount = tokenCount,
                     tokensPerSecond = tokensPerSec,
                     voiceToVoiceLatencySeconds = totalVoiceSec,
-                    groundednessScore = 0.98,
+                    groundednessScore = dynamicGroundedness,
                     didFallbackToVerifiedRules = false,
                     statusLabel = "Real On-Device LiteRT-LM Neural Inference Active (${activeRuntime.name})",
                     responseText = finalAnswer,
@@ -292,6 +311,16 @@ class OfflineInferenceEngine(private val context: Context) {
                 )
             }
         }
+    }
+
+    private fun cleanModelResponse(raw: String): String {
+        // Strip <think>...</think> reasoning blocks from Qwen3
+        var cleaned = raw.replace(Regex("<think>[\\s\\S]*?</think>", RegexOption.DOT_MATCHES_ALL), "")
+        // Clean unclosed <think> tag if generation was cut off mid-thought
+        cleaned = cleaned.replace(Regex("<think>[\\s\\S]*$"), "")
+        // Strip special chat tokens
+        cleaned = cleaned.replace(Regex("<\\|.*?\\|>"), "")
+        return cleaned.trim()
     }
 
     private fun buildGroundedPrompt(query: String, contextText: String, language: String): String {

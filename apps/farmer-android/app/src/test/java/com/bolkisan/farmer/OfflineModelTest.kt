@@ -12,18 +12,18 @@ class OfflineModelTest {
     @Test
     fun testOfflineModelMetadataHonesty() {
         val metadata = OfflineModelManager.metadata
-        assertEquals("qwen3-0.6b-litertlm", metadata.modelId)
+        assertEquals("qwen3-0.6b-int4-litertlm", metadata.modelId)
         assertTrue("Model parameter count must be 0.6B", metadata.parameterCount.contains("0.6"))
         assertTrue("Runtime must be Google LiteRT-LM", metadata.runtime.contains("LiteRT-LM"))
-        assertTrue("Quantization must be Dynamic INT8", metadata.quantization.contains("INT8"))
-        assertEquals("Exact Hugging Face model weight size", 613_722_264L, metadata.downloadSizeBytes)
+        assertTrue("Quantization must be INT4", metadata.quantization.contains("INT4"))
+        assertEquals("Exact Hugging Face model weight size", 343_490_560L, metadata.downloadSizeBytes)
         assertEquals(
-            "c5f39b4191926786c3e6668b62af4d6eb15248dfc7a5348252a9b406f33f2108",
+            "bf1aba9ce8d963124407353c6aa4cbf72eba78db21ae133de983eac672ce83e0",
             metadata.expectedSha256
         )
-        assertTrue("Required storage must be at least 1GB", metadata.requiredStorageBytes >= 1_000_000_000L)
+        assertTrue("Required storage must be at least 600MB", metadata.requiredStorageBytes >= 600_000_000L)
         assertEquals(4, metadata.minRamGb)
-        assertEquals(6, metadata.recommendedRamGb)
+        assertEquals(4, metadata.recommendedRamGb)
     }
 
     @Test
@@ -80,5 +80,15 @@ class OfflineModelTest {
         // Reset to default
         OfflineModelManager.setStatusForTesting(OfflineModelStatus.NOT_INSTALLED, "Reset")
         assertEquals(OfflineModelStatus.NOT_INSTALLED, OfflineModelManager.modelStatus.value)
+    }
+
+    @Test
+    fun testOfflineModelManagerConstants() {
+        assertEquals("bolkisan_qwen3_0_6b_int4.litertlm", OfflineModelManager.MODEL_FILENAME)
+        assertEquals(343_490_560L, OfflineModelManager.MIN_VALID_MODEL_BYTES)
+        assertEquals(
+            "bf1aba9ce8d963124407353c6aa4cbf72eba78db21ae133de983eac672ce83e0",
+            OfflineModelManager.EXPECTED_SHA256
+        )
     }
 }

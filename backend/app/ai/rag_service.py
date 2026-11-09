@@ -1,4 +1,5 @@
 import json
+import hashlib
 import math
 import re
 from pathlib import Path
@@ -172,12 +173,15 @@ class DenseMultilingual384Embedder:
                     vec[(pos + 1) % 128] += 1.2
                     vec[(pos + 2) % 128] += 0.8
 
-            h = abs(hash(token)) % 128
+            # Python's hash is salted per process.  Retrieval vectors must be
+            # stable across restarts or the same question returns different RAG
+            # evidence after a deployment.
+            h = self._stable_slot(token)
             vec[128 + h] += 1.0
             if len(token) >= 3:
                 for j in range(len(token) - 2):
                     sub = token[j:j+3]
-                    h_sub = abs(hash(sub)) % 128
+                    h_sub = self._stable_slot(sub)
                     vec[128 + h_sub] += 0.4
 
             for char in token:
@@ -189,6 +193,13 @@ class DenseMultilingual384Embedder:
         if norm > 0:
             vec = [x / norm for x in vec]
         return vec
+
+    @staticmethod
+    def _stable_slot(value: str) -> int:
+        return int.from_bytes(
+            hashlib.blake2b(value.encode("utf-8"), digest_size=8).digest(),
+            byteorder="big",
+        ) % 128
 
     @staticmethod
     def cosine_similarity(v1: List[float], v2: List[float]) -> float:
