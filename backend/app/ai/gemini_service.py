@@ -28,8 +28,14 @@ class GeminiService:
             self.primary_model,
             "gemini-flash-latest"
         ]
-        # Dedicated vision/multimodal model kept separate from text cascade
-        self.vision_model = "gemini-3.1-flash-image"
+        # Dedicated vision/multimodal model cascade
+        self.vision_models_cascade = [
+            "gemini-3.5-flash-lite",
+            "gemini-flash-lite-latest",
+            "gemini-3.1-flash-lite",
+            self.primary_model
+        ]
+        self.vision_model = self.vision_models_cascade[0]
         
         self.client = None
         if settings.GEMINI_API_KEY:
@@ -593,5 +599,118 @@ class GeminiService:
                     "What is the fertilizer dosage per acre?",
                     "What is the recommended irrigation schedule?"
                 ]
+
+    async def analyze_crop_image(
+        self,
+        image_bytes: bytes,
+        mime_type: str = "image/jpeg",
+        crop_name: Optional[str] = None,
+        affected_part: Optional[str] = "leaf",
+        farmer_notes: Optional[str] = None,
+        language: str = "te"
+    ) -> Dict[str, Any]:
+        """
+        Multimodal agricultural image analysis using vision-capable Gemini models.
+        Distinguishes non-plant images, healthy foliage, and specific plant pathologies.
+        Enforces structured JSON differential diagnostics with confidence and follow-ups.
+        """
+        if not self.client:
+            logger.warning("Gemini Client not initialized for vision. Falling back to heuristic vision.")
+            return {
+                "success": False,
+                "error": "No Gemini API client configured"
+            }
+
+        from google.genai import types
+
+        system_instruction = (
+            "You are Bol Kisan's Senior Plant Pathology and Multimodal Agricultural Vision Expert.\n"
+            "Your highest mandate is ABSOLUTE BOTANICAL AND PATHOLOGICAL ACCURACY.\n"
+            "Rules:\n"
+            "1. You evaluate all agricultural crop leaf specimens, field captures, macro close-ups, diagnostic leaf charts, and leaf specimens.\n"
+            "2. Treat ALL leaf specimens, plant foliage, and botanical diagnostic depictions as crop plants (set is_plant_or_crop: true). Both real field photographs and botanical diagnostic leaf specimens must be evaluated for plant health and pathology.\n"
+            "3. Classify as is_plant_or_crop: false ONLY if the image depicts completely non-botanical subjects (such as barren soil, dry dirt, gravel, tools, tractors, machines, animals, human portraits, or blank surfaces).\n"
+            "4. Distinguish clearly between:\n"
+            "   a) Healthy crop foliage (clean green leaves, intact tissue, no necrotic lesions, no chlorosis, no curling, no chewing) -> set is_healthy: true, is_plant_or_crop: true.\n"
+            "   b) Diseased or pest-damaged foliage -> detail observed visual symptoms (lesion shapes, colors, margins, halo, vein boundaries, insect stippling, curling).\n"
+            "5. Accurately separate different crop diseases based on specific visual hallmarks:\n"
+            "   - Cotton Bacterial Blight / Angular Leaf Spot: dark brown to black angular water-soaked spots strictly bounded by leaf veinlets.\n"
+            "   - Cotton Sucking Pests / Thrips / Aphids / Mites: downward or upward curling, bronzing, silvery stippling dots.\n"
+            "   - Cotton Grey Mildew: angular pale spots with frosty white powdery growth on lower surface.\n"
+            "   - Tomato Early Blight: characteristic concentric rings ('target board' pattern) with chlorotic yellow halo.\n"
+            "   - Rice Blast: spindle-shaped / diamond-shaped necrotic lesions with dark brown borders and greyish-white ash centers.\n"
+            "   - Chilli Spider Mite / Yellow Mite: downward curling into an inverted boat shape, bronzing, and silky webbing.\n"
+            "   - Chilli Leaf Curl Virus: upward cupping, enations on underside, severely stunted bushy plant habit.\n"
+            "6. State calibrated confidence (0.0 to 1.0). If symptoms are ambiguous or incomplete, set is_ambiguous: true and provide 2-3 specific follow-up questions.\n"
+            "7. Output ONLY valid JSON."
+        )
+
+        user_prompt = (
+            f"FARMER CROP HINT: {crop_name or 'Not specified'}\n"
+            f"AFFECTED PLANT PART: {affected_part or 'leaf'}\n"
+            f"FARMER NOTES: {farmer_notes or 'None'}\n"
+            f"PREFERRED LANGUAGE: {language}\n\n"
+            "Carefully analyze this crop photograph. Return JSON with the exact structure:\n"
+            "{\n"
+            '  "is_plant_or_crop": true | false,\n'
+            '  "detected_crop": "<Crop name, e.g. Cotton, Rice / Paddy, Chilli, Tomato, Maize, or Unknown>",\n'
+            '  "is_healthy": true | false,\n'
+            '  "plant_part": "<leaf | stem | fruit | flower | whole_plant>",\n'
+            '  "visual_observations": "<Detailed description of observed visual symptoms, lesion shape, color, pattern, pest activity>",\n'
+            '  "primary_diagnosis": "<Specific disease, pest name, Healthy Crop, or Non-Plant>",\n'
+            '  "pathology_type": "Bacterial" | "Fungal" | "Viral" | "Pest Damage" | "Nutrient Deficiency" | "Healthy" | "Non-Plant" | "Indeterminate",\n'
+            '  "pathogen_or_pest": "<Scientific name or organism if identifiable, else null>",\n'
+            '  "confidence": 0.0 to 1.0,\n'
+            '  "distinguishing_features": "<Key visual diagnostic features that distinguish this diagnosis>",\n'
+            '  "differential_candidates": [\n'
+            '    {\n'
+            '      "disease_name": "<Candidate disease name>",\n'
+            '      "probability": 0.0 to 1.0,\n'
+            '      "pathology_type": "<Bacterial | Fungal | Viral | Pest Damage | Nutrient Deficiency>",\n'
+            '      "distinguishing_features": "<How to distinguish from primary>"\n'
+            '    }\n'
+            '  ],\n'
+            '  "is_ambiguous": true | false,\n'
+            '  "uncertainty_reason": null | "<Reason if confidence is low or diagnosis is ambiguous>",\n'
+            '  "follow_up_questions": ["<Follow-up question 1>", "<Follow-up question 2>"]\n'
+            "}"
+        )
+
+        part = types.Part.from_bytes(data=image_bytes, mime_type=mime_type)
+
+        for candidate_model in self.vision_models_cascade:
+            try:
+                logger.info(f"Invoking Gemini Vision model: {candidate_model}")
+                response = await asyncio.to_thread(
+                    self.client.models.generate_content,
+                    model=candidate_model,
+                    contents=[part, system_instruction, user_prompt],
+                    config={
+                        "response_mime_type": "application/json",
+                        "temperature": 0.1,
+                        "max_output_tokens": 1024
+                    }
+                )
+                raw_text = response.text or ""
+                # Strip code markdown fences if any
+                clean_json_str = re.sub(r"^```(?:json)?\s*", "", raw_text.strip(), flags=re.MULTILINE)
+                clean_json_str = re.sub(r"\s*```$", "", clean_json_str.strip(), flags=re.MULTILINE)
+                parsed = json.loads(clean_json_str)
+                # If parsed is list, take first element
+                if isinstance(parsed, list) and len(parsed) > 0:
+                    parsed = parsed[0]
+
+                parsed["model_used"] = candidate_model
+                parsed["success"] = True
+                return parsed
+            except Exception as e:
+                logger.warning(f"Gemini Vision candidate ({candidate_model}) failed: {str(e)[:120]}. Trying next...")
+                continue
+
+        logger.error("All Gemini Vision cascade models failed.")
+        return {
+            "success": False,
+            "error": "All vision models failed or unavailable"
+        }
 
 gemini_service = GeminiService()

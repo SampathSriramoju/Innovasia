@@ -264,10 +264,10 @@ async def diagnose_crop_disease(
 
     image_url = f"/api/v1/disease/images/{sanitized_filename}"
 
-    # Step 2: Computer Vision & Diagnostic Analysis
+    # Step 2: Multimodal Computer Vision & Diagnostic Analysis
     combined_notes = f"{file.filename or ''} {farmer_notes or ''}".strip()
     
-    diag_res, quality = crop_vision_engine.analyze_image(
+    diag_res, quality = await crop_vision_engine.analyze_image(
         image_bytes=sanitized_bytes,
         crop_name=crop_name,
         affected_part=plant_part or "leaf",
@@ -276,7 +276,7 @@ async def diagnose_crop_disease(
     )
 
     # Handle Quality Gate Rejection
-    if not quality.is_acceptable:
+    if not quality.is_acceptable or diag_res.status == "quality_rejected":
         guidance = {
             "te": quality.farmer_guidance_te,
             "hi": quality.farmer_guidance_hi,
@@ -298,7 +298,7 @@ async def diagnose_crop_disease(
             "is_escalated": False,
             "confidence": 0.0,
             "disease_name": rej_disease,
-            "symptoms": guidance,
+            "symptoms": guidance or diag_res.visible_symptoms,
             "treatment": rej_treatment,
             "citations": ["Bol Kisan Image Quality Gate (Laplacian Variance / Foliage Ratio)"],
             "error_code": quality.error_code,
@@ -308,6 +308,46 @@ async def diagnose_crop_disease(
             "message": guidance,
             "image_url": image_url,
             "crop_name": crop_name or "Unspecified"
+        }
+
+    # Handle Non-Plant Image Rejection (Soil, Tools, Indoors, Blank, Non-Crop)
+    if diag_res.status == "non_plant_rejected":
+        return {
+            "status": "non_plant_rejected",
+            "is_escalated": False,
+            "confidence": 0.0,
+            "disease_name": diag_res.primary_diagnosis,
+            "symptoms": diag_res.visible_symptoms,
+            "treatment": "దయచేసి వ్యాధి సోకిన పంట ఆకును దగ్గరగా ఉంచి స్పష్టంగా ఫోటో తీయండి." if user_lang == "te" else ("कृपया प्रभावित फसल की पत्ती की पास से स्पष्ट तस्वीर लें।" if user_lang == "hi" else "Please capture a clear close-up photo of the affected crop leaf."),
+            "citations": [],
+            "follow_up_questions": diag_res.follow_up_questions or [],
+            "message": diag_res.farmer_explanation,
+            "image_url": image_url,
+            "crop_name": "None"
+        }
+
+    # Handle Healthy Crop Foliage
+    if diag_res.status == "healthy_crop":
+        formatted_citations = []
+        for c in diag_res.citations:
+            if isinstance(c, dict):
+                formatted_citations.append(f"{c.get('collection_id', 'KB04')} - {c.get('source_org', 'ICAR/PJTSAU')}")
+            else:
+                formatted_citations.append(str(c))
+        return {
+            "status": "healthy_crop",
+            "is_escalated": False,
+            "confidence": diag_res.confidence,
+            "disease_name": diag_res.primary_diagnosis,
+            "symptoms": diag_res.visible_symptoms,
+            "treatment": diag_res.farmer_explanation,
+            "cultural_remedies": diag_res.cultural_remedies,
+            "biological_remedies": diag_res.biological_remedies,
+            "citations": formatted_citations or ["KB04 - ICAR Package of Practices"],
+            "message": diag_res.farmer_explanation,
+            "image_url": image_url,
+            "crop_name": diag_res.crop_name,
+            "follow_up_questions": diag_res.follow_up_questions or []
         }
 
     # Handle Unknown Crop / Needs Clarification (without creating an escalation ticket)

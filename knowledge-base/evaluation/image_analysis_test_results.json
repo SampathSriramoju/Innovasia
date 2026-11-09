@@ -1,0 +1,221 @@
+[
+  {
+    "test_id": "case_1",
+    "name": "Cotton Bacterial Blight 1",
+    "file_name": "case1_cotton_bacterial_blight_1.jpg",
+    "sha256": "fbd8b4fbb733ede3cdbae8df155e79a699e718f1136d6bf72c35783cc907e00f",
+    "dimensions": "600x600",
+    "mime_type": "image/jpeg",
+    "file_size_bytes": 20150,
+    "http_status": 200,
+    "returned_status": "diagnosed",
+    "status_pass": true,
+    "detected_crop": "Cotton",
+    "primary_diagnosis": "Cotton Bacterial Blight / Angular Leaf Spot",
+    "confidence": 0.95,
+    "symptoms_observed": "The image depicts a schematic diagram representing a cotton leaf with angular, dark brown to black spots strictly bounded by veinlets, characteristic ",
+    "citations": [
+      "KB04 - ICAR-CICR Nagpur Disease Guide 2025",
+      "KB04 - ICAR-CICR Nagpur Technical Bulletin on Cotton Pathogens & ANGRAU 2024"
+    ],
+    "follow_up_questions": [],
+    "rejection_handled": true
+  },
+  {
+    "test_id": "case_2",
+    "name": "Cotton Healthy Leaf",
+    "file_name": "case2_cotton_healthy_leaf.jpg",
+    "sha256": "16230a1ac77fc39ddf6c0dc8306756ce817004d58fa9f2d2bad9bc1988525a5e",
+    "dimensions": "600x600",
+    "mime_type": "image/jpeg",
+    "file_size_bytes": 145753,
+    "http_status": 200,
+    "returned_status": "healthy_crop",
+    "status_pass": true,
+    "detected_crop": "Cotton",
+    "primary_diagnosis": "ఆరోగ్యకరమైన పంట ఆకు",
+    "confidence": 0.95,
+    "symptoms_observed": "The image depicts a schematic diagram representing a healthy cotton leaf structure with clear veins and symmetry, showing no signs of necrosis, chloro",
+    "citations": [
+      "KB21 - PJTSAU Vyavasaya Panchangam & KCC 2025",
+      "KB21 - Kisan Call Center (KCC) Query Resolution Corpus & PJTSAU 2025"
+    ],
+    "follow_up_questions": [
+      "పంటలో నీటిపారుదల లేదా పోషక లోపాలు ఉన్నాయా?"
+    ],
+    "rejection_handled": true
+  },
+  {
+    "test_id": "case_3",
+    "name": "Cotton Sucking Pest Damage",
+    "file_name": "case3_cotton_sucking_pest.jpg",
+    "sha256": "82e2a7cf513feb75575b52cbfb2961dd113db5964468a902da19822e5ac69b84",
+    "dimensions": "600x600",
+    "mime_type": "image/jpeg",
+    "file_size_bytes": 180966,
+    "http_status": 200,
+    "returned_status": "diagnosed",
+    "status_pass": true,
+    "detected_crop": "Cotton",
+    "primary_diagnosis": "Cotton Sucking Pests Damage (Thrips / Aphids / Mites)",
+    "confidence": 0.85,
+    "symptoms_observed": "The image presents a schematic representation of a cotton leaf infested with sucking pests. Yellow dots indicate stippling and feeding punctures acros",
+    "citations": [
+      "KB06 - ICAR-CICR Sucking Pest Advisory 2025",
+      "KB05 - ICAR-CICR Whitefly Management Strategy 2025"
+    ],
+    "follow_up_questions": [],
+    "rejection_handled": true
+  },
+  {
+    "test_id": "case_4",
+    "name": "Tomato Early Blight",
+    "file_name": "case4_tomato_early_blight.jpg",
+    "sha256": "c7d35f4a40a739e12c7bdad8442dbc03886259e909e6695748f6863f6c354c7d",
+    "dimensions": "600x600",
+    "mime_type": "image/jpeg",
+    "file_size_bytes": 161516,
+    "http_status": 200,
+    "returned_status": "diagnosed",
+    "status_pass": true,
+    "detected_crop": "Tomato",
+    "primary_diagnosis": "Early Blight",
+    "confidence": 0.98,
+    "symptoms_observed": "టమోటా ఆకులపై నల్లటి వలయాకారపు మచ్చలు (టార్గెట్ బోర్డు నమూనా) స్పష్టంగా కనిపిస్తున్నాయి. ఇది ఎర్లీ బ్లైట్ (Early Blight) లక్షణం.",
+    "citations": [
+      "KB04 - ICAR-CPRI & ICAR-IIHR Advisory 2025",
+      "KB04 - ICAR-IIHR Bengaluru Tomato Pathology Manual 2025"
+    ],
+    "follow_up_questions": [],
+    "rejection_handled": true
+  },
+  {
+    "test_id": "case_5",
+    "name": "Chilli Spider Mite / Curling",
+    "file_name": "case5_chilli_mite_curling.jpg",
+    "sha256": "8d0eee05cd506eb2cafa3c573faea74b5ecb507c7e5ddc0a4d0fb8b00cb674f3",
+    "dimensions": "600x600",
+    "mime_type": "image/jpeg",
+    "file_size_bytes": 169215,
+    "http_status": 200,
+    "returned_status": "diagnosed",
+    "status_pass": true,
+    "detected_crop": "Chilli",
+    "primary_diagnosis": "Chilli Spider Mite / Yellow Mite",
+    "confidence": 0.95,
+    "symptoms_observed": "The diagnostic schematic/model illustrates chilli leaves showing downward curling (inverted boat shape) accompanied by bronzing and yellow mite infest",
+    "citations": [
+      "KB04 - ICAR-Indian Institute of Horticultural Research (IIHR) Bengaluru Advisory 2024",
+      "KB05 - PJTSAU Spices Entomology 2025"
+    ],
+    "follow_up_questions": [],
+    "rejection_handled": true
+  },
+  {
+    "test_id": "case_6",
+    "name": "Rice Leaf Blast",
+    "file_name": "case6_rice_blast.jpg",
+    "sha256": "6f86c87c1d64341eace4041ce8a83534c421097882153925213325e9ca399449",
+    "dimensions": "600x600",
+    "mime_type": "image/jpeg",
+    "file_size_bytes": 152376,
+    "http_status": 200,
+    "returned_status": "diagnosed",
+    "status_pass": true,
+    "detected_crop": "Rice / Paddy",
+    "primary_diagnosis": "Rice Blast",
+    "confidence": 0.98,
+    "symptoms_observed": "వరి ఆకులపై కండె ఆకారపు మచ్చలు (spindle-shaped / diamond-shaped necrotic lesions with dark brown borders and greyish-white centers).",
+    "citations": [
+      "KB04 - ICAR-IIRR Hyderabad & DPPQS Disease Compendium 2025",
+      "KB06 - ICAR-IIRR Blast Management SOP 2025"
+    ],
+    "follow_up_questions": [],
+    "rejection_handled": true
+  },
+  {
+    "test_id": "case_7",
+    "name": "Barren Soil (Non-Plant)",
+    "file_name": "case7_soil_barren_ground.jpg",
+    "sha256": "d0cabb95648b9ff15109db81cd83e0f5e601aa2a64cd98fe0c81c3cf697bce79",
+    "dimensions": "600x600",
+    "mime_type": "image/jpeg",
+    "file_size_bytes": 30119,
+    "http_status": 200,
+    "returned_status": "quality_rejected",
+    "status_pass": true,
+    "detected_crop": "Unspecified",
+    "primary_diagnosis": "చిత్రం సరిగ్గా లేదు / నాణ్యత ఆమోదించబడలేదు",
+    "confidence": 0.0,
+    "symptoms_observed": "పంట ఆకు లేదా మొక్క భాగాలు స్పష్టంగా గుర్తించబడలేదు. దయచేసి వ్యాధి సోకిన ఆకును దగ్గరగా ఫోటో తీయండి.",
+    "citations": [
+      "Bol Kisan Image Quality Gate (Laplacian Variance / Foliage Ratio)"
+    ],
+    "follow_up_questions": [],
+    "rejection_handled": true
+  },
+  {
+    "test_id": "case_8",
+    "name": "Unrelated Machine/Tool (Non-Plant)",
+    "file_name": "case8_unrelated_tractor_tool.jpg",
+    "sha256": "ebec2b5055e88d46716f04fc1cb079b8d31f5c9fad1be146543d9efbd397f47a",
+    "dimensions": "600x600",
+    "mime_type": "image/jpeg",
+    "file_size_bytes": 11234,
+    "http_status": 200,
+    "returned_status": "quality_rejected",
+    "status_pass": true,
+    "detected_crop": "Unspecified",
+    "primary_diagnosis": "చిత్రం సరిగ్గా లేదు / నాణ్యత ఆమోదించబడలేదు",
+    "confidence": 0.0,
+    "symptoms_observed": "పంట ఆకు లేదా మొక్క భాగాలు స్పష్టంగా గుర్తించబడలేదు. దయచేసి వ్యాధి సోకిన ఆకును దగ్గరగా ఫోటో తీయండి.",
+    "citations": [
+      "Bol Kisan Image Quality Gate (Laplacian Variance / Foliage Ratio)"
+    ],
+    "follow_up_questions": [],
+    "rejection_handled": true
+  },
+  {
+    "test_id": "case_9",
+    "name": "Blurred Crop Photo (Unusable Quality)",
+    "file_name": "case9_blurred_crop_photo.jpg",
+    "sha256": "9cc4e02de63df111ae926011f3653ce770d5da449a965426298f3436cade06c6",
+    "dimensions": "600x600",
+    "mime_type": "image/jpeg",
+    "file_size_bytes": 9010,
+    "http_status": 200,
+    "returned_status": "quality_rejected",
+    "status_pass": true,
+    "detected_crop": "Cotton",
+    "primary_diagnosis": "చిత్రం సరిగ్గా లేదు / నాణ్యత ఆమోదించబడలేదు",
+    "confidence": 0.0,
+    "symptoms_observed": "ఫోటో అస్పష్టంగా (Blurry) ఉంది. దయచేసి కెమెరాను కదలకుండా నిశ్చలంగా ఉంచి ఆకుపై ఫోకస్ చేసి మళ్లీ తీయండి.",
+    "citations": [
+      "Bol Kisan Image Quality Gate (Laplacian Variance / Foliage Ratio)"
+    ],
+    "follow_up_questions": [],
+    "rejection_handled": true
+  },
+  {
+    "test_id": "case_10",
+    "name": "Cotton Bacterial Blight 2 (Distinct Photograph)",
+    "file_name": "case10_cotton_bacterial_blight_2.jpg",
+    "sha256": "d29d6a72d9ec07bc5158453b369c624fd43251d56ee2f0dcac6f9388e5c6e78a",
+    "dimensions": "600x600",
+    "mime_type": "image/jpeg",
+    "file_size_bytes": 156422,
+    "http_status": 200,
+    "returned_status": "diagnosed",
+    "status_pass": true,
+    "detected_crop": "Cotton",
+    "primary_diagnosis": "Cotton Bacterial Blight / Angular Leaf Spot",
+    "confidence": 0.95,
+    "symptoms_observed": "The diagnostic schematic leaf of cotton shows dark brown to black angular lesions strictly bounded by leaf veinlets, characteristic of bacterial bligh",
+    "citations": [
+      "KB04 - ICAR-CICR Nagpur Disease Guide 2025",
+      "KB04 - ICAR-CICR Nagpur Technical Bulletin on Cotton Pathogens & ANGRAU 2024"
+    ],
+    "follow_up_questions": [],
+    "rejection_handled": true
+  }
+]

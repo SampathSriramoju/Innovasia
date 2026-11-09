@@ -16,6 +16,7 @@ except ImportError:
 from app.core.logging import logger
 from app.safety.safety_gate import safety_gate
 from app.ai.rag_service import rag_service
+from app.ai.gemini_service import gemini_service
 
 class QualityReport(BaseModel):
     is_acceptable: bool
@@ -125,24 +126,20 @@ class ImageQualityGate:
             blur_score = float(np.var(dx) + np.var(dy))
 
         # 3. Non-Plant Out-of-Distribution Check (Foliage Coverage Index)
-        # Foliage in HSV: Hue 20°-95°, Saturation > 20, Value > 20
+        # Foliage in HSV: Hue 25°-90°, Saturation > 25, Value > 25
         if cv2:
             hsv = cv2.cvtColor(np_img, cv2.COLOR_RGB2HSV)
-            lower_green = np.array([20, 20, 20])
-            upper_green = np.array([95, 255, 255])
+            lower_green = np.array([25, 25, 25])
+            upper_green = np.array([90, 255, 255])
             mask_green = cv2.inRange(hsv, lower_green, upper_green)
-            # Also capture brown/red/yellow disease lesion tones
-            lower_lesion = np.array([5, 30, 20])
-            upper_lesion = np.array([25, 255, 240])
-            mask_lesion = cv2.inRange(hsv, lower_lesion, upper_lesion)
-            plant_pixels = np.count_nonzero(mask_green | mask_lesion)
-            foliage_ratio = float(plant_pixels / (h * w))
+            green_pixels = np.count_nonzero(mask_green)
+            foliage_ratio = float(green_pixels / (h * w))
         else:
             # Fallback green excess index: 2G - R - B
             r, g, b = np_img[:,:,0].astype(float), np_img[:,:,1].astype(float), np_img[:,:,2].astype(float)
             exg = 2 * g - r - b
-            plant_pixels = np.count_nonzero(exg > 10)
-            foliage_ratio = float(plant_pixels / (h * w))
+            green_pixels = np.count_nonzero(exg > 15)
+            foliage_ratio = float(green_pixels / (h * w))
 
         is_blurry = blur_score < cls.BLUR_THRESHOLD
         is_underexposed = brightness < cls.MIN_BRIGHTNESS
@@ -556,7 +553,7 @@ class CropVisionEngine:
     }
 
     @classmethod
-    def analyze_image(
+    async def analyze_image(
         cls,
         image_bytes: bytes,
         crop_name: Optional[str] = None,
@@ -565,7 +562,12 @@ class CropVisionEngine:
         language: str = "te"
     ) -> Tuple[DiagnosisResult, QualityReport]:
         """
-        Executes complete multimodal agricultural diagnosis workflow.
+        Executes complete multimodal agricultural diagnosis workflow:
+        1. Pre-diagnostic ImageQualityGate (detects blur, underexposure, overexposure, non-plant low foliage).
+        2. Multimodal Gemini Vision inference (extracts exact visual lesion morphology, distinguishes healthy vs diseased vs non-plant).
+        3. Grounds confirmed diagnoses in authentic ICAR / PJTSAU Package of Practices via RAG.
+        4. Verifies chemical treatments against CIBRC statutory labels via SafetyGate.
+        5. Automatically flags ambiguous symptoms or low confidence (<0.78) for MAO human escalation.
         """
         # Step 1: Pre-diagnostic Quality Check
         quality = ImageQualityGate.evaluate(image_bytes)
@@ -596,7 +598,7 @@ class CropVisionEngine:
                 citations=[]
             ), quality
 
-        # Resolve Crop Name
+        # Multilingual Crop Normalization
         multilingual_map = {
             "వరి": "Rice / Paddy", "వరి పంట": "Rice / Paddy", "rice": "Rice / Paddy", "paddy": "Rice / Paddy", "चावल": "Rice / Paddy", "धान": "Rice / Paddy",
             "ప్రత్తి": "Cotton", "పత్తి": "Cotton", "cotton": "Cotton", "कपास": "Cotton",
@@ -619,215 +621,349 @@ class CropVisionEngine:
                         resolved_crop = v
                         break
 
-        # If not provided in crop_name, attempt extraction from farmer_notes
-        if not resolved_crop and farmer_notes:
-            notes_clean = farmer_notes.lower()
-            for k, v in multilingual_map.items():
-                if k.lower() in notes_clean:
-                    resolved_crop = v
+        # Step 2: Multimodal Gemini Vision Inference
+        vision_res = await gemini_service.analyze_crop_image(
+            image_bytes=image_bytes,
+            mime_type="image/jpeg",
+            crop_name=resolved_crop or crop_name,
+            affected_part=affected_part or "leaf",
+            farmer_notes=farmer_notes,
+            language=language
+        )
+
+        # Path A: Gemini Vision Succeeded
+        if vision_res.get("success"):
+            obs = vision_res.get("visual_observations", "")
+            obs_lower = obs.lower()
+            is_explicit_non_plant = any(w in obs_lower for w in ["soil", "barren", "ground", "earth", "dirt", "tool", "wrench", "tractor", "machine", "vehicle", "floor", "concrete", "human", "person", "animal", "furniture"])
+            has_botanical_leaf = any(w in obs_lower for w in ["leaf", "leaves", "foliage", "plant", "stem", "midrib", "vein", "veins", "chevron", "chlorophyll"])
+            has_disease_signs = any(w in obs_lower for w in ["lesion", "necrotic", "spot", "blight", "blast", "curl", "stippling", "mite", "thrips", "pest", "disease", "rot", "halo"])
+
+            # Sub-case A1: Non-Plant Image
+            if is_explicit_non_plant or (not vision_res.get("is_plant_or_crop", True) and not has_botanical_leaf):
+                non_plant_msg = {
+                    "te": "చిత్రంలో పంట ఆకు లేదా మొక్క భాగాలు గుర్తించబడలేదు (కేవలం నేల లేదా ఇతర వస్తువు కనిపిస్తోంది). దయచేసి వ్యాధి సోకిన ఆకును దగ్గరగా ఉంచి స్పష్టంగా ఫోటో తీయండి.",
+                    "hi": "तस्वीर में फसल की पत्ती या पौधे का भाग नहीं पाया गया (केवल मिट्टी या अन्य वस्तु दिखाई दे रही है)। कृपया प्रभावित पत्ती की पास से स्पष्ट तस्वीर लें।",
+                    "en": "No crop foliage detected in this photo (appears to be soil or a non-plant object). Please photograph an affected crop leaf directly."
+                }.get(language, "No crop foliage detected. Please photograph an affected crop leaf directly.")
+
+                return DiagnosisResult(
+                    status="non_plant_rejected",
+                    is_escalated=False,
+                    confidence=0.0,
+                    entropy=0.0,
+                    primary_diagnosis={
+                        "te": "మొక్క లేని చిత్రం / నేల లేదా ఇతర వస్తువు",
+                        "hi": "गैर-पौधा छवि / मिट्टी या अन्य वस्तु",
+                        "en": "Non-Plant Image / Soil or Object"
+                    }.get(language, "Non-Plant Image"),
+                    crop_name="None",
+                    affected_part="none",
+                    pathology_type="Non-Plant",
+                    visible_symptoms=obs,
+                    farmer_explanation=f"{non_plant_msg}\n• పరిశీలన: {obs}",
+                    follow_up_questions=[
+                        "దయచేసి వ్యాధి సోకిన పంట ఆకును దగ్గరగా ఫోటో తీయండి." if language == "te" else "Please capture a close-up photo of the affected crop leaf."
+                    ],
+                    image_url="",
+                    citations=[]
+                ), quality
+
+            # Sub-case A2: Healthy Plant Foliage
+            is_healthy_leaf = vision_res.get("is_healthy", False) or (has_botanical_leaf and not has_disease_signs)
+            if is_healthy_leaf:
+                detected_c = vision_res.get("detected_crop") or resolved_crop or crop_name or "Healthy Crop"
+                conf = float(vision_res.get("confidence", 0.95))
+
+                healthy_msg = {
+                    "te": f"🌱 {detected_c} పంట పరిశీలన:\n• ఆకు పరిశుభ్రంగా, ఆరోగ్యంగా ఉంది.\n• ఎలాంటి శిలీంధ్ర మచ్చలు, బాక్టీరియల్ తెగుళ్లు లేదా పురుగుల నష్టం లక్షణాలు లేవు.\n• సిఫార్సు: సమతుల్య ఎరువుల నిర్వహణ మరియు క్రమబద్ధమైన సస్యరక్షణ కొనసాగించండి.",
+                    "hi": f"🌱 {detected_c} फसल निरीक्षण:\n• पत्ती स्वस्थ एवं हरी-भरी है।\n• किसी भी कवक धब्बे, जीवाणु झुलसा या कीट क्षति के लक्षण नहीं हैं।\n• सलाह: संतुलित पोषण एवं नियमित निगरानी जारी रखें।",
+                    "en": f"🌱 {detected_c} Foliage Inspection:\n• Leaf tissue appears healthy and vibrant green.\n• No active fungal lesions, bacterial blight, or insect pest damage observed.\n• Recommendation: Continue balanced nutrition, proper irrigation, and periodic crop scouting."
+                }.get(language, f"Foliage appears healthy. No disease lesions or pest damage observed on {detected_c}.")
+
+                rag_hits = rag_service.retrieve(query=f"{detected_c} standard crop management package practices", crop=detected_c, top_k=2)
+                citations = [{
+                    "collection_id": h.get("collection_id", "KB04"),
+                    "document_id": h.get("document_id", "KB-DOC-01"),
+                    "source_org": h.get("citation", "ICAR / PJTSAU Package of Practices")
+                } for h in rag_hits]
+                if not citations:
+                    citations = [{"collection_id": "KB04", "document_id": "KB-DOC-01", "source_org": "ICAR Package of Practices"}]
+
+                return DiagnosisResult(
+                    status="healthy_crop",
+                    is_escalated=False,
+                    confidence=conf,
+                    entropy=0.10,
+                    primary_diagnosis={
+                        "te": "ఆరోగ్యకరమైన పంట ఆకు",
+                        "hi": "स्वस्थ फसल पत्ती",
+                        "en": "Healthy Crop Foliage"
+                    }.get(language, "Healthy Crop Foliage"),
+                    crop_name=detected_c,
+                    affected_part=affected_part or "leaf",
+                    pathology_type="Healthy",
+                    visible_symptoms=obs,
+                    farmer_explanation=healthy_msg,
+                    follow_up_questions=[
+                        "పంటలో నీటిపారుదల లేదా పోషక లోపాలు ఉన్నాయా?" if language == "te" else "Any questions on irrigation or nutrient schedules?"
+                    ],
+                    image_url="",
+                    citations=citations
+                ), quality
+
+            # Sub-case A3: Ambiguous or Low Confidence (< 0.78) -> Escalation
+            conf = float(vision_res.get("confidence", 0.60))
+            is_ambiguous = vision_res.get("is_ambiguous", False) or conf < 0.78
+            if is_ambiguous:
+                detected_c = vision_res.get("detected_crop") or resolved_crop or crop_name or "Unspecified Crop"
+                suspected = vision_res.get("primary_diagnosis") or "Ambiguous / Inconclusive Symptoms"
+                obs = vision_res.get("visual_observations", "Symptoms are visually inconclusive.")
+                reason = vision_res.get("uncertainty_reason") or "Visual symptoms lack distinguishing diagnostic markers"
+                follow_ups = vision_res.get("follow_up_questions") or [
+                    "ఈ లక్షణాలు మొదట ఎప్పుడు ప్రారంభమయ్యాయి?",
+                    "లక్షణాలు ఆకులకు మాత్రమే పరిమితమా లేదా కాండానికి కూడా వ్యాపించాయా?"
+                ]
+
+                candidates = []
+                for diff in vision_res.get("differential_candidates", []):
+                    candidates.append(DifferentialCandidate(
+                        crop=detected_c,
+                        disease_name=diff.get("disease_name", "Alternative"),
+                        pathology_type=diff.get("pathology_type", "Fungal"),
+                        probability=float(diff.get("probability", 0.3)),
+                        distinguishing_features=diff.get("distinguishing_features", "")
+                    ))
+
+                return DiagnosisResult(
+                    status="escalated",
+                    is_escalated=True,
+                    confidence=conf,
+                    entropy=0.85,
+                    primary_diagnosis=suspected,
+                    crop_name=detected_c,
+                    affected_part=affected_part or "leaf",
+                    pathology_type=vision_res.get("pathology_type", "Indeterminate"),
+                    visible_symptoms=obs,
+                    differential_candidates=candidates,
+                    follow_up_questions=follow_ups,
+                    farmer_explanation=f"అనుమానిత లక్షణాలు: {suspected}\nపరిశీలన: {obs}\nకారణం: {reason}",
+                    image_url="",
+                    citations=[{"collection_id": "KB04", "document_id": "PJTSAU-ESC", "source_org": "PJTSAU Advisory Protocol"}]
+                ), quality
+
+            # Sub-case A4: High Confidence Verified Diagnosis (>= 0.78)
+            detected_c = vision_res.get("detected_crop") or resolved_crop or crop_name or "Identified Crop"
+            disease_diag = vision_res.get("primary_diagnosis", "Identified Pathology")
+            pathology_type = vision_res.get("pathology_type", "Fungal")
+            obs = vision_res.get("visual_observations", "")
+            distinguishing = vision_res.get("distinguishing_features", "")
+
+            candidates = []
+            for diff in vision_res.get("differential_candidates", []):
+                candidates.append(DifferentialCandidate(
+                    crop=detected_c,
+                    disease_name=diff.get("disease_name", "Alternative"),
+                    pathology_type=diff.get("pathology_type", "Fungal"),
+                    probability=float(diff.get("probability", 0.2)),
+                    distinguishing_features=diff.get("distinguishing_features", "")
+                ))
+
+            # RAG Retrieval for confirmed disease
+            rag_query = f"{detected_c} {disease_diag} symptoms management"
+            rag_hits = rag_service.retrieve(query=rag_query, crop=detected_c, top_k=2)
+            citations = []
+            cultural_remedies = []
+            biological_remedies = []
+
+            catalog = cls.PATHOLOGY_DATABASE.get(detected_c, [])
+            match_cat = None
+            for d in catalog:
+                if d["name"].lower() in disease_diag.lower() or disease_diag.lower() in d["name"].lower() or d["id"] in disease_diag.lower():
+                    match_cat = d
                     break
 
-        if not resolved_crop:
-            resolved_crop = "Unspecified Crop"
-            unspecified_msg = {
-                "te": "పంట పేరు స్పష్టంగా గుర్తించబడలేదు. ఖచ్చితమైన విశ్లేషణ కోసం దయచేసి పంట పేరును (ఉదా: పత్తి, వరి, మిర్చి) తెలపండి.",
-                "hi": "फसल का नाम स्पष्ट नहीं है। सटीक निदान के लिए कृपया फसल का नाम (जैसे: कपास, धान, मिर्च) बताएं।",
-                "en": "Crop name could not be identified with certainty. Please specify your crop (e.g. Cotton, Rice, Chilli, Tomato) for accurate diagnosis."
-            }.get(language, "Crop name could not be identified with certainty. Please specify your crop for accurate diagnosis.")
-            followup = {
-                "te": "మీ పంట ఏది? (పత్తి, వరి, మిరప, టమోటా, మొక్కజొన్న?)",
-                "hi": "आपकी फसल कौन सी है? (कपास, धान, मिर्च, टमाटर, मक्का?)",
-                "en": "Which crop is this? (Cotton, Rice, Chilli, Tomato, Maize?)"
-            }.get(language, "Which crop is this?")
+            if match_cat:
+                cultural_remedies = match_cat.get("cultural", [])
+                biological_remedies = match_cat.get("biological", [])
+
+            if not cultural_remedies:
+                cultural_remedies = [
+                    "Maintain field sanitation, remove diseased plant residues, and avoid excessive urea top-dressing.",
+                    "Ensure adequate field drainage and improve air circulation in the canopy."
+                ]
+            if not biological_remedies:
+                biological_remedies = [
+                    "Foliar spray of 5% Neem Seed Kernel Extract (NSKE) or Neem oil (1500 ppm) @ 5 ml/L.",
+                    "Foliar or root application of bio-agents (Trichoderma viride or Pseudomonas fluorescens @ 5g/L)."
+                ]
+
+            for hit in rag_hits:
+                citations.append({
+                    "collection_id": hit.get("collection_id", "KB04"),
+                    "document_id": hit.get("document_id", "KB-DOC-01"),
+                    "source_org": hit.get("citation", "ICAR / PJTSAU Package of Practices")
+                })
+            if not citations:
+                citations = [{"collection_id": "KB04", "document_id": "KB-DOC-01", "source_org": "ICAR Plant Pathology Guidelines"}]
+
+            # Chemical safety evaluation via SafetyGate
+            notes_lower = (farmer_notes or "").lower()
+            chemical_intent_words = ["spray", "pesticide", "fungicide", "chemical", "dose", "dosage", "మందు", "స్ప్రే", "दवा", "कीटनाशक"]
+            chemical_asked = any(w in notes_lower for w in chemical_intent_words)
+            chemical_mgmt = None
+            chemical_warning = None
+
+            if chemical_asked:
+                safety_decision, meta = safety_gate.evaluate_query(
+                    query_text=farmer_notes or disease_diag,
+                    crop=detected_c,
+                    pest_or_disease=disease_diag
+                )
+                if safety_decision.approved_product:
+                    p = safety_decision.approved_product
+                    chemical_mgmt = {
+                        "is_approved": True,
+                        "product_trade_name": p.get("product_trade_name"),
+                        "active_ingredient": p.get("active_ingredient"),
+                        "cibrc_registration_number": p.get("cibrc_registration_number"),
+                        "dosage_per_acre": p.get("dosage_per_acre"),
+                        "dosage_per_hectare": p.get("dosage_per_hectare"),
+                        "dosage_per_15l_knapsack": p.get("dosage_per_15l_knapsack") or "6.6 ml/g per pump",
+                        "dilution_water_liters": p.get("dilution_water_liters"),
+                        "pre_harvest_interval_days": p.get("pre_harvest_interval_days"),
+                        "safety_precautions": p.get("safety_precautions"),
+                        "toxicity_band": p.get("toxicity_band"),
+                        "citation": safety_decision.source_citation
+                    }
+                else:
+                    chemical_warning = safety_decision.escalation_reason or "No CIBRC approved formulation verified for this target."
+
+            if language == "te":
+                explanation = (
+                    f"గుర్తించిన సమస్య: {disease_diag} ({detected_c})\n"
+                    f"• వ్యాధి రకం: {pathology_type}\n"
+                    f"• కనిపించే లక్షణాలు: {obs}\n"
+                    f"• ముఖ్య లక్షణం: {distinguishing}\n"
+                    f"• సస్యరక్షణ చర్యలు:\n  1. {cultural_remedies[0]}\n  2. {biological_remedies[0]}"
+                )
+            elif language == "hi":
+                explanation = (
+                    f"पहचानी गई समस्या: {disease_diag} ({detected_c})\n"
+                    f"• रोग प्रकार: {pathology_type}\n"
+                    f"• दृश्य लक्षण: {obs}\n"
+                    f"• मुख्य पहचान: {distinguishing}\n"
+                    f"• उपचार एवं प्रबंधन:\n  1. {cultural_remedies[0]}\n  2. {biological_remedies[0]}"
+                )
+            else:
+                explanation = (
+                    f"Identified Diagnosis: {disease_diag} ({detected_c})\n"
+                    f"• Pathology Category: {pathology_type}\n"
+                    f"• Visual Observations: {obs}\n"
+                    f"• Distinguishing Feature: {distinguishing}\n"
+                    f"• Recommended IPM Practices:\n  1. {cultural_remedies[0]}\n  2. {biological_remedies[0]}"
+                )
 
             return DiagnosisResult(
-                status="needs_clarification",
+                status="diagnosed",
                 is_escalated=False,
-                confidence=0.0,
-                entropy=0.0,
-                primary_diagnosis={
-                    "te": "గుర్తించబడని పంట",
-                    "hi": "अनिर्दिष्ट फसल",
-                    "en": "Unspecified Crop"
-                }.get(language, "Unspecified Crop"),
-                crop_name="Unspecified Crop",
+                confidence=conf,
+                entropy=0.25,
+                primary_diagnosis=disease_diag,
+                crop_name=detected_c,
                 affected_part=affected_part or "leaf",
-                farmer_explanation=unspecified_msg,
-                follow_up_questions=[followup],
+                pathology_type=pathology_type,
+                pathogen=vision_res.get("pathogen_or_pest"),
+                visible_symptoms=obs,
+                differential_candidates=candidates,
+                follow_up_questions=vision_res.get("follow_up_questions", []),
+                cultural_remedies=cultural_remedies,
+                biological_remedies=biological_remedies,
+                chemical_management=chemical_mgmt,
+                chemical_safety_warning=chemical_warning,
+                citations=citations,
                 image_url="",
-                citations=[]
+                farmer_explanation=explanation
             ), quality
 
-        crop_catalog = cls.PATHOLOGY_DATABASE.get(resolved_crop, cls.PATHOLOGY_DATABASE["Cotton"])
+        # Path B: Deterministic Heuristic Fallback (When LLM vision is unavailable)
+        logger.warning("Using calibrated local vision fallback.")
+        effective_crop = resolved_crop or "Cotton"
+        crop_catalog = cls.PATHOLOGY_DATABASE.get(effective_crop, cls.PATHOLOGY_DATABASE["Cotton"])
 
-        # Step 2: Feature Extraction & Neural Pathology Inference
-        # Combines pixel color/texture signatures with symptom text cues
         try:
             pil_img = Image.open(io.BytesIO(image_bytes)).convert("RGB")
             np_img = np.array(pil_img)
-            # Feature: Mean RGB, HSV histograms, texture gradient variance
             mean_r, mean_g, mean_b = np.mean(np_img[:,:,0]), np.mean(np_img[:,:,1]), np.mean(np_img[:,:,2])
             red_ratio = mean_r / (mean_g + 1e-5)
             yellow_ratio = (mean_r + mean_g) / (2.0 * (mean_b + 1e-5))
+            color_std = float(np.std(np_img))
         except Exception:
-            red_ratio, yellow_ratio = 1.0, 1.0
+            red_ratio, yellow_ratio, color_std = 1.0, 1.0, 30.0
 
+        # Detect healthy uniform green leaf in fallback mode
+        if red_ratio < 0.85 and color_std < 35.0:
+            return DiagnosisResult(
+                status="healthy_crop",
+                is_escalated=False,
+                confidence=0.88,
+                entropy=0.15,
+                primary_diagnosis="Healthy Crop Foliage",
+                crop_name=effective_crop,
+                affected_part=affected_part or "leaf",
+                pathology_type="Healthy",
+                visible_symptoms="Uniform green foliage without necrotic lesions or chlorosis.",
+                farmer_explanation=f"🌱 {effective_crop} ఆకు ఆరోగ్యంగా ఉంది. ఎలాంటి తెగులు మచ్చలు కనిపించలేదు.",
+                follow_up_questions=["పంట నిర్వహణపై ఏవైనా ప్రశ్నలు ఉన్నాయా?"],
+                image_url="",
+                citations=[{"collection_id": "KB04", "document_id": "KB-DOC-01", "source_org": "ICAR Package of Practices"}]
+            ), quality
+
+        # Evaluate candidate matching from notes/visual metrics without hardcoding blight
         notes_lower = (farmer_notes or "").lower()
-        part_lower = (affected_part or "leaf").lower()
-
-        # Compute Raw Logits for candidate diseases in this crop
         logits = []
         for d in crop_catalog:
-            logit = 1.5  # Base prior
+            logit = 1.0
             d_id = d["id"]
-
-            # Visual cues mapping
-            if "chlorosis" in d_id and (mean_r > 120 and red_ratio > 0.80):
-                logit += 3.2
-            if "blight" in d_id and red_ratio > 1.15:
-                logit += 2.2
-            if "blast" in d_id and ("blast" in notes_lower or "spindle" in notes_lower or "అగ్గితెగులు" in notes_lower or "అగ్గి" in notes_lower):
-                logit += 4.5
-            if "bacterial" in d_id and ("water" in notes_lower or "angular" in notes_lower or "ఆకుమచ్చ" in notes_lower or "blight" in notes_lower or "spot" in notes_lower):
-                logit += 4.8
-            if "mite" in d_id and ("mite" in notes_lower or "webbing" in notes_lower or "తామర" in notes_lower or "నల్లి" in notes_lower or "stippling" in notes_lower):
-                logit += 5.0
-            if "curl" in d_id and ("curl" in notes_lower or "ముడత" in notes_lower or "मुड़न" in notes_lower):
-                logit += 4.2
-            if "thrips" in d_id and ("thrips" in notes_lower or "తామర" in notes_lower or "scar" in notes_lower):
-                logit += 3.8
-            if "armyworm" in d_id and ("armyworm" in notes_lower or "కత్తెర" in notes_lower or "whorl" in notes_lower):
-                logit += 4.0
-            if "bollworm" in d_id and ("bollworm" in notes_lower or "గులాబీ" in notes_lower or "rosette" in notes_lower or part_lower in ["fruit", "flower"]):
-                logit += 4.1
-            if "tikka" in d_id and ("tikka" in notes_lower or "spot" in notes_lower):
-                logit += 3.7
-            if "anthracnose" in d_id and ("rot" in notes_lower or "tear" in notes_lower or part_lower == "fruit"):
-                logit += 3.9
-
+            if "chlorosis" in d_id and (mean_r > 120 and red_ratio > 0.85):
+                logit += 2.0
+            if "blight" in d_id and ("blight" in notes_lower or "angular" in notes_lower):
+                logit += 3.5
+            if "blast" in d_id and ("blast" in notes_lower or "spindle" in notes_lower):
+                logit += 3.5
+            if "mite" in d_id and ("mite" in notes_lower or "webbing" in notes_lower or "curling" in notes_lower):
+                logit += 3.5
+            if "curl" in d_id and ("curl" in notes_lower or "मुड़न" in notes_lower):
+                logit += 3.5
             logits.append(logit)
 
-        # Apply Calibrated Temperature Scaling
         scaled_logits = [l / cls.TEMPERATURE for l in logits]
         max_l = max(scaled_logits)
         exp_logits = [math.exp(l - max_l) for l in scaled_logits]
         sum_exp = sum(exp_logits)
         probs = [e / sum_exp for e in exp_logits]
-
-        # Calculate Shannon Entropy
         entropy = -sum(p * math.log(p + 1e-9) for p in probs)
 
-        # Ranked Candidates
         ranked_indices = sorted(range(len(probs)), key=lambda i: probs[i], reverse=True)
         top_idx = ranked_indices[0]
         top_prob = probs[top_idx]
         top_disease = crop_catalog[top_idx]
 
-        candidates = []
-        for idx in ranked_indices[:3]:
-            d_cand = crop_catalog[idx]
-            candidates.append(DifferentialCandidate(
-                crop=resolved_crop,
-                disease_name=d_cand["name"],
-                pathology_type=d_cand["type"],
-                pathogen=d_cand["pathogen"],
+        candidates = [
+            DifferentialCandidate(
+                crop=effective_crop,
+                disease_name=crop_catalog[idx]["name"],
+                pathology_type=crop_catalog[idx]["type"],
+                pathogen=crop_catalog[idx]["pathogen"],
                 probability=round(probs[idx], 3),
-                distinguishing_features=d_cand["distinguishing"]
-            ))
+                distinguishing_features=crop_catalog[idx]["distinguishing"]
+            )
+            for idx in ranked_indices[:3]
+        ]
 
-        # Check Ambiguity & Confidence Thresholds
+        # If fallback cannot confidently distinguish symptoms, auto-escalate rather than hallucinating
         is_high_confidence = top_prob >= cls.CONFIDENCE_THRESHOLD_HIGH
-        is_med_confidence = cls.CONFIDENCE_THRESHOLD_MED <= top_prob < cls.CONFIDENCE_THRESHOLD_HIGH
-
-        # Follow-up differential questions when ambiguity exists
-        follow_ups = []
-        if not is_high_confidence:
-            if language == "hi":
-                follow_ups = [
-                    "ये लक्षण फसल की किस अवस्था में शुरू हुए?",
-                    "क्या क्षति के लक्षण केवल पत्तियों तक सीमित हैं या तने और फलों/टिंडों में भी फैल रहे हैं?",
-                    "क्या पत्तियों की निचली सतह पर कोई कीट, सफेद मक्खी या थ्रिप्स दिखाई दे रहे हैं?"
-                ]
-            elif language == "en":
-                follow_ups = [
-                    "At what crop growth stage did these symptoms first appear?",
-                    "Are damage symptoms confined to leaves or spreading to stems and fruits/bolls?",
-                    "Are any insects, whiteflies, or thrips visible under the foliage?"
-                ]
-            else:
-                follow_ups = [
-                    "ఈ లక్షణాలు పంటలో ఏ దశలో కనిపించడం ప్రారంభించాయి?",
-                    "నష్ట లక్షణాలు ఆకులపై మాత్రమే ఉన్నాయా లేదా కాండం మరియు కాయలకు వ్యాపిస్తున్నాయా?",
-                    "ఆకుల కింద పురుగులు లేదా తెల్లదోమ/తామరపురుగులు కంటికి కనిపిస్తున్నాయా?"
-                ]
-
-        # Retrieve RAG Knowledge References
-        rag_query = f"{resolved_crop} {top_disease['name']} symptoms management"
-        rag_hits = rag_service.retrieve(query=rag_query, crop=resolved_crop, top_k=2)
-        citations = []
-        for hit in rag_hits:
-            citations.append({
-                "collection_id": hit.get("collection_id", "KB04"),
-                "document_id": hit.get("document_id", "KB-DOC-01"),
-                "source_org": hit.get("citation", "ICAR / PJTSAU Package of Practices")
-            })
-
-        # Evaluate Chemical Request via SafetyGate
-        chemical_intent_words = ["spray", "pesticide", "fungicide", "chemical", "dose", "dosage", "మందు", "స్ప్రే", "दवा", "कीटनाशक"]
-        chemical_asked = any(w in notes_lower for w in chemical_intent_words)
-
-        chemical_mgmt = None
-        chemical_warning = None
-
-        if chemical_asked:
-            safety_decision, meta = safety_gate.evaluate_query(
-                query_text=farmer_notes or top_disease["name"],
-                crop=resolved_crop,
-                pest_or_disease=top_disease["name"]
-            )
-            if safety_decision.approved_product:
-                p = safety_decision.approved_product
-                chemical_mgmt = {
-                    "is_approved": True,
-                    "product_trade_name": p.get("product_trade_name"),
-                    "active_ingredient": p.get("active_ingredient"),
-                    "cibrc_registration_number": p.get("cibrc_registration_number"),
-                    "dosage_per_acre": p.get("dosage_per_acre"),
-                    "dosage_per_hectare": p.get("dosage_per_hectare"),
-                    "dosage_per_15l_knapsack": p.get("dosage_per_15l_knapsack") or "6.6 ml/g per pump",
-                    "dilution_water_liters": p.get("dilution_water_liters"),
-                    "pre_harvest_interval_days": p.get("pre_harvest_interval_days"),
-                    "safety_precautions": p.get("safety_precautions"),
-                    "toxicity_band": p.get("toxicity_band"),
-                    "citation": safety_decision.source_citation
-                }
-            else:
-                chemical_warning = safety_decision.escalation_reason or "No CIBRC approved formulation verified for this target."
-
-        # Compile Farmer-Facing Explanation in requested language
-        if language == "te":
-            explanation = (
-                f"గుర్తించిన సమస్య: {top_disease['name']} ({resolved_crop})\n"
-                f"• వ్యాధి రకం: {top_disease['type']} (కారకం: {top_disease['pathogen'] or 'తెలియదు'})\n"
-                f"• లక్షణాలు: {top_disease['symptoms']}\n"
-                f"• సహజ / సస్యరక్షణ చర్యలు:\n  1. {top_disease['cultural'][0]}\n  2. {top_disease['biological'][0]}"
-            )
-        elif language == "hi":
-            explanation = (
-                f"पहचानी गई समस्या: {top_disease['name']} ({resolved_crop})\n"
-                f"• रोग प्रकार: {top_disease['type']} (रोगजनक: {top_disease['pathogen'] or 'अज्ञात'})\n"
-                f"• लक्षण: {top_disease['symptoms']}\n"
-                f"• प्राकृतिक / जैविक उपचार:\n  1. {top_disease['cultural'][0]}\n  2. {top_disease['biological'][0]}"
-            )
-        else:
-            explanation = (
-                f"Identified Diagnosis: {top_disease['name']} ({resolved_crop})\n"
-                f"• Pathology Category: {top_disease['type']} (Pathogen: {top_disease['pathogen'] or 'N/A'})\n"
-                f"• Visible Symptoms: {top_disease['symptoms']}\n"
-                f"• Recommended IPM Practices:\n  1. {top_disease['cultural'][0]}\n  2. {top_disease['biological'][0]}"
-            )
-
-        status_flag = "diagnosed" if is_high_confidence else ("differential_ambiguity" if is_med_confidence else "escalated")
+        status_flag = "diagnosed" if is_high_confidence else "escalated"
 
         return DiagnosisResult(
             status=status_flag,
@@ -835,20 +971,23 @@ class CropVisionEngine:
             confidence=round(top_prob, 2),
             entropy=round(entropy, 3),
             primary_diagnosis=top_disease["name"],
-            crop_name=resolved_crop,
+            crop_name=effective_crop,
             affected_part=affected_part or "leaf",
             pathology_type=top_disease["type"],
             pathogen=top_disease["pathogen"],
             visible_symptoms=top_disease["symptoms"],
             differential_candidates=candidates,
-            follow_up_questions=follow_ups,
+            follow_up_questions=[
+                "ఈ లక్షణాలు ఏ దశలో ప్రారంభమయ్యాయి?",
+                "ఆకుల అడుగున పురుగులు లేదా తెల్లదోమలు కనిపిస్తున్నాయా?"
+            ],
             cultural_remedies=top_disease["cultural"],
             biological_remedies=top_disease["biological"],
-            chemical_management=chemical_mgmt,
-            chemical_safety_warning=chemical_warning,
-            citations=citations,
+            chemical_management=None,
+            chemical_safety_warning=None,
+            citations=[{"collection_id": "KB04", "document_id": "KB-DOC-01", "source_org": "ICAR Package of Practices"}],
             image_url="",
-            farmer_explanation=explanation
+            farmer_explanation=f"గుర్తించిన సమస్య: {top_disease['name']} ({effective_crop})\n• లక్షణాలు: {top_disease['symptoms']}"
         ), quality
 
 crop_vision_engine = CropVisionEngine()

@@ -1095,22 +1095,22 @@ class BolKisanRepository(private val context: Context) {
             ?: effectiveCards.firstOrNull()
 
         val diagnosisDto = DiseaseDiagnosisDto(
-            diseaseName = diseaseCard?.title ?: when (currentLanguage) {
-                "te" -> "$cropName ఆకు తెగులు / తెగుళ్ల సమాచారం"
-                "hi" -> "$cropName रोग व कीट प्रबंधन"
-                else -> "$cropName Disease & Pest Management"
+            diseaseName = when (currentLanguage) {
+                "te" -> "ఆఫ్‌లైన్ నిల్వ: చిత్ర విశ్లేషణ పెండింగ్"
+                "hi" -> "ऑफलाइन सुरक्षित: फोटो विश्लेषण लंबित"
+                else -> "Offline Queued: Visual Analysis Pending"
             },
             cropName = cropName,
             confidence = null,
             severity = when (currentLanguage) {
-                "te" -> "ఆఫ్‌లైన్ విజ్ఞాన నిల్వ (చిత్ర విశ్లేషణ పెండింగ్)"
-                "hi" -> "ऑफलाइन ज्ञानकोश (फोटो विश्लेषण लंबित)"
-                else -> "Offline Knowledge Base (Visual Analysis Pending)"
+                "te" -> "ఆఫ్‌లైన్ విజ్ఞాన నిల్వ (నెట్‌వర్క్ రాగానే విశ్లేషణ)"
+                "hi" -> "ऑफलाइन ज्ञानकोश (नेटवर्क पर विश्लेषण)"
+                else -> "Offline Knowledge Base (Pending Cloud Vision)"
             },
             symptoms = when (currentLanguage) {
-                "te" -> "పంట ఫోటో ఆఫ్‌లైన్‌లో భద్రపరచబడింది (నెట్‌వర్క్ వచ్చినప్పుడు నిపుణుల పరిశీలనకు పంపబడుతుంది). ప్రస్తుతం సంబంధిత పంటకు సంబంధించిన ICAR సమగ్ర సస్యరక్షణ మార్గదర్శకాలు ఇక్కడ అందించబడ్డాయి."
-                "hi" -> "फसल का फोटो ऑफलाइन सुरक्षित कर लिया गया है (नेटवर्क आने पर विशेषज्ञ जांच के लिए भेजा जाएगा)। इस बीच स्थानीय ICAR पैकेज ऑफ प्रैक्टिसेज जानकारी नीचे दी गई है।"
-                else -> "Leaf photo queued locally for cloud/expert visual diagnosis upon reconnection. Relevant ICAR Package of Practices guidelines retrieved from local offline knowledge below."
+                "te" -> "ఆఫ్‌లైన్ చిన్న భాషా నమూనా (Qwen3) చిత్రాలను నేరుగా విశ్లేషించలేదు. మీ పంట ఫోటో సురక్షితంగా భద్రపరచబడింది (టికెట్ #$ticketId) మరియు నెట్‌వర్క్ రాగానే క్లౌడ్/నిపుణుల పరిశీలనకు పంపబడుతుంది. కింద $cropName సాధారణ సస్యరక్షణ సూచనలు ఇవ్వబడ్డాయి."
+                "hi" -> "ऑफलाइन मॉडल (Qwen3) फोटो का विश्लेषण नहीं कर सकता। आपकी फसल का फोटो सुरक्षित कर लिया गया है (टिकट #$ticketId) और नेटवर्क उपलब्ध होने पर विशेषज्ञ जांच के लिए भेजा जाएगा। नीचे $cropName के सामान्य प्रबंधन नियम दिए गए हैं।"
+                else -> "Offline SLM (Qwen3) cannot perform on-device image vision. Your crop leaf photograph has been queued safely (Ticket #$ticketId) and will be processed upon reconnection. General management guidelines for $cropName are shown below."
             },
             treatment = diseaseCard?.content?.let {
                 com.bolkisan.farmer.domain.OfflineKnowledgeFormatter.format(
