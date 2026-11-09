@@ -827,13 +827,15 @@ fun HomeScreen(
                                             Spacer(modifier = Modifier.width(6.dp))
 
                                             // Crop identified chip (if present)
-                                            if (item.crop.isNotBlank()) {
+                                            val itemCrop = item.crop ?: ""
+                                            val itemOrigin = item.origin ?: "online"
+                                            if (itemCrop.isNotBlank()) {
                                                 Surface(
                                                     shape = RoundedCornerShape(6.dp),
                                                     color = Color(0xFF14532D)
                                                 ) {
                                                     Text(
-                                                        text = localizedCropName(item.crop, currentLang),
+                                                        text = localizedCropName(itemCrop, currentLang),
                                                         fontSize = 10.5.sp,
                                                         fontWeight = FontWeight.Bold,
                                                         color = CardWhite,
@@ -846,7 +848,7 @@ fun HomeScreen(
                                             // Origin Badge
                                             Surface(
                                                 shape = RoundedCornerShape(6.dp),
-                                                color = when (item.origin) {
+                                                color = when (itemOrigin) {
                                                     "offline_slm" -> Color(0xFFFEF3C7)
                                                     "offline_rule" -> Color(0xFFF3F4F6)
                                                     "needs_clarification" -> Color(0xFFFEE2E2)
@@ -854,7 +856,7 @@ fun HomeScreen(
                                                 }
                                             ) {
                                                 Text(
-                                                    text = when (item.origin) {
+                                                    text = when (itemOrigin) {
                                                         "offline_slm" -> "⚡ Offline SLM"
                                                         "offline_rule" -> "📦 Verified ICAR"
                                                         "needs_clarification" -> "❓ Clarification"
@@ -862,7 +864,7 @@ fun HomeScreen(
                                                     },
                                                     fontSize = 10.sp,
                                                     fontWeight = FontWeight.Bold,
-                                                    color = when (item.origin) {
+                                                    color = when (itemOrigin) {
                                                         "offline_slm" -> Color(0xFF92400E)
                                                         "offline_rule" -> Color(0xFF374151)
                                                         "needs_clarification" -> HazardRed

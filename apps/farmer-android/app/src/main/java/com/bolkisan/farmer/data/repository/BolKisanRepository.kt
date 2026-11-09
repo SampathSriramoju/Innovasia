@@ -57,7 +57,18 @@ class BolKisanRepository(private val context: Context) {
         val json = prefs.getString("voice_history", "[]") ?: "[]"
         return try {
             val type = object : TypeToken<List<VoiceHistoryItem>>() {}.type
-            Gson().fromJson<List<VoiceHistoryItem>>(json, type) ?: emptyList()
+            val rawList: List<VoiceHistoryItem>? = Gson().fromJson(json, type)
+            rawList?.map { item ->
+                item.copy(
+                    id = item.id ?: UUID.randomUUID().toString(),
+                    query = item.query ?: "",
+                    crop = item.crop ?: "",
+                    answer = item.answer ?: "",
+                    citations = item.citations ?: emptyList(),
+                    followUpSuggestions = item.followUpSuggestions ?: emptyList(),
+                    origin = item.origin ?: "online"
+                )
+            } ?: emptyList()
         } catch (e: Exception) {
             emptyList()
         }
