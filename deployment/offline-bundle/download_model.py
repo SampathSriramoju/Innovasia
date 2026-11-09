@@ -23,13 +23,13 @@ def download_with_progress(url, dest_path, expected_size):
     temp_path = dest_path + ".download"
     print(f"Connecting to: {url}")
     
-    headers = {'User-Agent': 'BolKisan-ModelDownloader/1.0'}
+    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) BolKisan/1.0'}
     req = urllib.request.Request(url, headers=headers)
     
     with urllib.request.urlopen(req) as response, open(temp_path, 'wb') as out_file:
         total_size = int(response.info().get('Content-Length', expected_size))
         downloaded = 0
-        chunk_size = 64 * 1024
+        chunk_size = 128 * 1024
         
         print(f"Downloading {format_bytes(total_size)}...")
         while True:
@@ -47,7 +47,7 @@ def download_with_progress(url, dest_path, expected_size):
 def verify_checksum(file_path, expected_hash):
     sha = hashlib.sha256()
     with open(file_path, 'rb') as f:
-        while chunk := f.read(64 * 1024):
+        while chunk := f.read(128 * 1024):
             sha.update(chunk)
     calculated = sha.hexdigest().lower()
     return calculated == expected_hash.lower(), calculated
@@ -60,31 +60,30 @@ def main():
     with open(MANIFEST_PATH, 'r', encoding='utf-8') as f:
         manifest = json.load(f)
         
-    default_model_id = manifest.get("default_model", "qwen3-0.6b-litertlm")
+    default_model_id = manifest.get("default_model_id", "qwen3-0.6b-litertlm")
     models = manifest.get("models", [])
     model_entry = next((m for m in models if m.get("model_id") == default_model_id), models[0])
     
     print("=" * 60)
     print("  Bol Kisan Offline Model Downloader")
     print(f"  Model:        {model_entry.get('name')}")
-    print(f"  Architecture: {model_entry.get('architecture')}")
-    print(f"  Runtime:      {model_entry.get('runtime')}")
-    print(f"  Expected:     {format_bytes(model_entry.get('download_size_bytes', 0))}")
+    print(f"  Parameters:   {model_entry.get('parameters')}")
+    print(f"  Quantization: {model_entry.get('quantization')}")
+    print(f"  Expected:     {format_bytes(model_entry.get('file_size_bytes', 0))}")
     print("=" * 60)
     
-    url = model_entry["official_source_url"]
-    expected_sha = model_entry["sha256_checksum"]
-    expected_size = model_entry["download_size_bytes"]
-    filename = model_entry.get("filename", "qwen3_0_6b.litertlm")
-    dest_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), filename)
+    url = model_entry["download_url"]
+    expected_sha = model_entry["sha256"]
+    expected_size = model_entry["file_size_bytes"]
+    dest_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "qwen3_0_6b.litertlm")
     
     if os.path.exists(dest_path):
         print(f"Existing model file found at: {dest_path}")
         print("Verifying integrity...")
         valid, calc_hash = verify_checksum(dest_path, expected_sha)
         if valid:
-            print(f"[OK] Existing model is verified (SHA-256: {calc_hash}). Ready for sideloading!")
-            sys.exit(0)
+            print(f"[OK] Existing model is verified (SHA-256: {calc_hash}). Ready for packaging!")
+            return dest_path
         else:
             print("[WARN] Existing file checksum mismatch. Re-downloading...")
             os.remove(dest_path)
@@ -96,6 +95,7 @@ def main():
         os.rename(temp_file, dest_path)
         print(f"[SUCCESS] SHA-256 Verified: {calc_hash}")
         print(f"Saved verified model to: {dest_path}")
+        return dest_path
     else:
         if os.path.exists(temp_file):
             os.remove(temp_file)

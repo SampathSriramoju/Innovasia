@@ -91,14 +91,64 @@ object OfflineModelManager {
 
     /**
      * Checks whether a genuine model file exists on disk and meets size constraints.
-     * Automatically inspects potential sideload paths if not found in app private storage.
+     * Automatically inspects potential sideload paths and bundled APK assets if not found.
      */
     fun isGenuineModelInstalled(context: Context): Boolean {
         val file = getModelFile(context)
         if (file.exists() && file.length() >= MIN_VALID_MODEL_BYTES) {
             return true
         }
-        return checkForSideloadedModel(context)
+        if (checkForSideloadedModel(context)) {
+            return true
+        }
+        return checkAndUnpackAssetModel(context)
+    }
+
+    /**
+     * Checks if the single standalone APK has bundled the model inside assets/models/.
+     * Unpacks and commits it to internal files directory on first launch.
+     */
+    fun checkAndUnpackAssetModel(context: Context): Boolean {
+        val targetFile = getModelFile(context)
+        if (targetFile.exists() && targetFile.length() >= MIN_VALID_MODEL_BYTES) {
+            return true
+        }
+        return try {
+            val assetList = context.assets.list("models") ?: emptyArray()
+            val candidate = listOf(MODEL_BIN_NAME, "Qwen3-0.6B.litertlm", "qwen3_0_6b_dynamic_wi4b32_afp32.litertlm")
+                .firstOrNull { it in assetList }
+
+            if (candidate != null) {
+                Log.i(TAG, "Embedded standalone model detected in APK assets: models/$candidate. Unpacking...")
+                val tempFile = getTempDownloadFile(context)
+                context.assets.open("models/$candidate").use { input ->
+                    FileOutputStream(tempFile).use { output ->
+                        val buffer = ByteArray(64 * 1024)
+                        var read: Int
+                        while (input.read(buffer).also { read = it } != -1) {
+                            output.write(buffer, 0, read)
+                        }
+                        output.flush()
+                    }
+                }
+                if (tempFile.length() >= MIN_VALID_MODEL_BYTES) {
+                    if (targetFile.exists()) targetFile.delete()
+                    if (tempFile.renameTo(targetFile)) {
+                        _modelStatus.value = OfflineModelStatus.READY
+                        _statusMessage.value = "Embedded standalone model unpacked successfully."
+                        Log.i(TAG, "Embedded standalone model unpacked to ${targetFile.absolutePath}")
+                        return true
+                    }
+                }
+                tempFile.delete()
+                false
+            } else {
+                false
+            }
+        } catch (e: Exception) {
+            Log.d(TAG, "No embedded asset model found: ${e.message}")
+            false
+        }
     }
 
     /**
