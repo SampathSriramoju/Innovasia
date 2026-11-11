@@ -5,6 +5,8 @@ import android.os.SystemClock
 import android.util.Log
 import com.bolkisan.farmer.data.local.AppDatabase
 import com.bolkisan.farmer.data.local.KnowledgePrepopulator
+import com.bolkisan.farmer.data.local.MandiPrepopulator
+import com.bolkisan.farmer.data.local.entities.MandiPriceEntity
 import com.bolkisan.farmer.data.local.entities.OfflineKnowledgeEntity
 import com.bolkisan.farmer.data.local.entities.PendingSyncTicketEntity
 import com.bolkisan.farmer.data.remote.ApiClient
@@ -25,6 +27,7 @@ import com.bolkisan.farmer.domain.OfflineInferenceEngine
 import com.bolkisan.farmer.domain.OfflineModelManager
 import com.bolkisan.farmer.domain.OfflineModelStatus
 import com.bolkisan.farmer.presentation.common.canonicalCropName
+import com.bolkisan.farmer.presentation.common.localizedCropName
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import java.io.File
@@ -39,21 +42,42 @@ data class VoiceHistoryItem(
     val citations: List<String> = emptyList(),
     val attachedImagePath: String? = null,
     val followUpSuggestions: List<String> = emptyList(),
-    val origin: String = "online", // "online", "offline_slm", "offline_rule", "escalated", "needs_clarification"
-    val timestamp: Long = System.currentTimeMillis()
+    val origin: String = "online", // "online", "offline_slm", "offline_rule", "escalated", "needs_clarification", "offline_queued"
+    val timestamp: Long = System.currentTimeMillis(),
+    val ticketId: String? = null
 )
 
 class BolKisanRepository(private val context: Context) {
+
+    init {
+        activeInstance = this
+    }
 
     private val api: com.bolkisan.farmer.data.remote.BolKisanApiService
         get() = ApiClient.getApiService(context)
     private val db = AppDatabase.getDatabase(context)
     val dao = db.offlineKnowledgeDao()
+    val mandiDao = db.mandiPriceDao()
+    val ticketMessageDao = db.ticketMessageDao()
+    val smsDao = db.smsMessageDao()
     private val prefs = context.getSharedPreferences("bolkisan_prefs", Context.MODE_PRIVATE)
 
-    // Network Connectivity Observer
+    // Network Connectivity Observer (Device physical connectivity)
     private val networkObserver = NetworkObserver(context)
     val isOnline: StateFlow<Boolean> = networkObserver.isOnline
+
+    // Separated Connectivity States (Task 3):
+    // 1. Backend Server Reachability (via GET /health)
+    private val _isServerReachable = MutableStateFlow(false)
+    val isServerReachable: StateFlow<Boolean> = _isServerReachable.asStateFlow()
+
+    // 2. Multimodal Gemini Vision Availability (explicitly decoupled from raw network isOnline)
+    // Do not display a generic ONLINE badge as proof that Gemini Vision is available!
+    private val _isGeminiVisionAvailable = MutableStateFlow(false)
+    val isGeminiVisionAvailable: StateFlow<Boolean> = _isGeminiVisionAvailable.asStateFlow()
+
+    // 3. Outbox Sync Status (reactive count of unsynced pending tickets)
+    val outboxPendingCount: Flow<Int> = dao.getUnsyncedCount()
 
     // Conversation History StateFlow
     private val _historyFlow = MutableStateFlow<List<VoiceHistoryItem>>(loadHistoryFromPrefs())
@@ -62,6 +86,44 @@ class BolKisanRepository(private val context: Context) {
     // Offline Voice-to-Voice Latency Benchmark Telemetry StateFlow
     private val _latestBenchmarkResult = MutableStateFlow<com.bolkisan.farmer.domain.OfflineBenchmarkResult?>(null)
     val latestBenchmarkResult: StateFlow<com.bolkisan.farmer.domain.OfflineBenchmarkResult?> = _latestBenchmarkResult.asStateFlow()
+
+    fun reloadHistory() {
+        _historyFlow.value = loadHistoryFromPrefs()
+    }
+
+    fun updateHistoryItemForTicket(
+        ticketId: String,
+        imagePath: String?,
+        updatedAnswer: String,
+        updatedCrop: String,
+        citations: List<String>,
+        isSafe: Boolean,
+        origin: String = "online"
+    ) {
+        val current = _historyFlow.value.toMutableList()
+        var updated = false
+        for (i in current.indices) {
+            val item = current[i]
+            val matchByTicket = (item.ticketId == ticketId || item.id == ticketId)
+            val matchByImage = (imagePath != null && item.attachedImagePath == imagePath)
+            if (matchByTicket || matchByImage) {
+                current[i] = item.copy(
+                    answer = updatedAnswer,
+                    crop = updatedCrop,
+                    citations = citations,
+                    isSafe = isSafe,
+                    origin = origin,
+                    ticketId = ticketId
+                )
+                updated = true
+                break
+            }
+        }
+        if (updated) {
+            _historyFlow.value = current
+            saveHistoryToPrefs(current)
+        }
+    }
 
     private fun loadHistoryFromPrefs(): List<VoiceHistoryItem> {
         val json = prefs.getString("voice_history", "[]") ?: "[]"
@@ -76,7 +138,8 @@ class BolKisanRepository(private val context: Context) {
                     answer = item.answer ?: "",
                     citations = item.citations ?: emptyList(),
                     followUpSuggestions = item.followUpSuggestions ?: emptyList(),
-                    origin = item.origin ?: "online"
+                    origin = item.origin ?: "online",
+                    ticketId = item.ticketId
                 )
             } ?: emptyList()
         } catch (e: Exception) {
@@ -243,8 +306,13 @@ class BolKisanRepository(private val context: Context) {
         }
     }
 
-    suspend fun checkBackendConnection(candidateUrl: String? = null): com.bolkisan.farmer.data.remote.BackendConnectionResult =
-        ApiClient.checkConnection(candidateUrl, context)
+    suspend fun checkBackendConnection(candidateUrl: String? = null): com.bolkisan.farmer.data.remote.BackendConnectionResult {
+        val res = ApiClient.checkConnection(candidateUrl, context)
+        val isConnected = res.status == com.bolkisan.farmer.data.remote.ConnectionStatus.CONNECTED
+        _isServerReachable.value = isConnected
+        _isGeminiVisionAvailable.value = isConnected && (res.healthInfo?.aiProvider?.isGeminiReady == true)
+        return res
+    }
 
     suspend fun quickLoginDemo(): Result<AuthTokenResponseDto> = withContext(Dispatchers.IO) {
         try {
@@ -603,7 +671,8 @@ class BolKisanRepository(private val context: Context) {
         val fallbackCards = if (cropCards.isNotEmpty()) cropCards else if (canonicalCrop.isNotBlank()) dao.getKnowledgeByCropSync(canonicalCrop, "en") else emptyList()
         val allCards = when {
             fallbackCards.isNotEmpty() -> fallbackCards
-            canonicalCrop.isBlank() -> dao.searchLocalKnowledge(queryText, currentLanguage)
+            canonicalCrop.isBlank() && queryText.isNotBlank() -> dao.searchLocalKnowledge(queryText, currentLanguage)
+            canonicalCrop.isBlank() -> dao.getGeneralFarmingCards(currentLanguage)
             else -> emptyList() // If crop is identified but has no card, strictly prevent cross-crop retrieval!
         }
 
@@ -940,49 +1009,87 @@ class BolKisanRepository(private val context: Context) {
             return@withContext askQuestion(queryText, explicitCrop)
         }
 
-        val effectiveCrop = explicitCrop
-            ?: detectCropFromText(queryText)
-            ?: _historyFlow.value.lastOrNull { it.crop.isNotBlank() }?.crop
-            ?: "Crop"
+        // Do not force an inferred historical crop; allow Gemini Vision to identify the crop from the image
+        val cropHint = explicitCrop ?: detectCropFromText(queryText) ?: ""
 
         val diagResult = diagnoseDisease(
             imageFile = photoFile,
-            cropName = effectiveCrop,
+            cropName = cropHint,
             plantPart = "leaf",
             farmerNotes = queryText
         )
 
         if (diagResult.isSuccess) {
             val diag = diagResult.getOrNull()!!
-            val citationBox = com.bolkisan.farmer.domain.OfflineKnowledgeFormatter.buildCitationBox(
-                institution = "ICAR & CIBRC",
-                documentCitation = "${diag.cropName}: ${diag.diseaseName} Diagnostic & Treatment Protocol 2024",
-                language = currentLanguage
-            )
-            val baseFormattedResponse = when (currentLanguage) {
-                "te" -> "🌱 పంట వ్యాధి విశ్లేషణ:\n• పంట: ${diag.cropName}\n• వ్యాధి / సమస్య: ${diag.diseaseName}\n• తీవ్రత: ${diag.severity}\n• లక్షణాలు: ${diag.symptoms}\n• నివారణ చర్యలు: ${diag.treatment}\n• ముందస్తు జాగ్రత్తలు: ${diag.prevention}"
-                "hi" -> "🌱 फसल रोग निदान:\n• फसल: ${diag.cropName}\n• रोग / समस्या: ${diag.diseaseName}\n• तीव्रता: ${diag.severity}\n• लक्षण: ${diag.symptoms}\n• उपचार: ${diag.treatment}\n• रोकथाम: ${diag.prevention}"
-                else -> "🌱 Crop Disease Diagnosis:\n• Crop: ${diag.cropName}\n• Disease / Issue: ${diag.diseaseName}\n• Severity: ${diag.severity}\n• Symptoms: ${diag.symptoms}\n• Treatment: ${diag.treatment}\n• Prevention: ${diag.prevention}"
+
+            // CASE 2: Offline / Pending Image Flow
+            if (diag.status == "offline_queued") {
+                val localizedNotice = when (currentLanguage) {
+                    "te" -> "మీ పంట ఫోటో భద్రపరచబడింది. ఇంటర్నెట్ కనెక్షన్ పునరుద్ధరించబడే వరకు చిత్ర విశ్లేషణ పెండింగ్‌లో ఉంది."
+                    "hi" -> "आपकी फसल का फोटो सुरक्षित कर लिया गया है। इंटरनेट कनेक्टिविटी बहाल होने तक फोटो विश्लेषण लंबित है।"
+                    else -> "Your photograph has been saved. Image analysis is pending until internet connectivity returns."
+                }
+                val syncStatusLine = when (currentLanguage) {
+                    "te" -> "\n• టికెట్ సంఖ్య: ${diag.ticketNumber}\n• సమకాలీకరణ స్థితి: అవుట్‌బాక్స్ పెండింగ్ (ఆఫ్‌లైన్ నిల్వ)"
+                    "hi" -> "\n• टिकट संख्या: ${diag.ticketNumber}\n• सिंक स्थिति: आउटबॉक्स लंबित (ऑफ़लाइन सुरक्षित)"
+                    else -> "\n• Ticket ID: ${diag.ticketNumber}\n• Sync Status: Outbox Pending (Offline Queued)"
+                }
+                val fullText = "$localizedNotice$syncStatusLine"
+                val resolvedCropName = diag.cropName ?: when (currentLanguage) {
+                    "te" -> "వ్యాధి గుర్తింపు పెండింగ్"
+                    "hi" -> "पहचान लंबित"
+                    else -> "Pending Identification"
+                }
+
+                val answerDto = VoiceAnswerDto(
+                    status = "offline_queued",
+                    isSafe = true,
+                    responseText = fullText,
+                    ticketNumber = diag.ticketNumber,
+                    ticketId = diag.ticketNumber,
+                    citations = emptyList(),
+                    warnings = listOf("Multimodal vision pending internet connectivity."),
+                    cropIdentified = resolvedCropName,
+                    cropSource = "pending",
+                    followUpSuggestions = emptyList()
+                )
+
+                addHistoryItem(
+                    VoiceHistoryItem(
+                        id = diag.ticketNumber ?: UUID.randomUUID().toString(),
+                        query = if (queryText.isBlank()) "Attached Photo Diagnosis ($resolvedCropName)" else queryText,
+                        crop = resolvedCropName,
+                        answer = fullText,
+                        isSafe = true,
+                        citations = emptyList(),
+                        attachedImagePath = photoFile.absolutePath,
+                        followUpSuggestions = emptyList(),
+                        origin = "offline_queued",
+                        ticketId = diag.ticketNumber
+                    )
+                )
+
+                return@withContext Result.success(answerDto)
             }
-            val formattedResponse = if (!com.bolkisan.farmer.domain.OfflineKnowledgeFormatter.hasCitationBox(baseFormattedResponse)) {
-                "$baseFormattedResponse\n\n$citationBox"
-            } else baseFormattedResponse
+
+            // CASE 1: Online Multimodal Diagnosis Success
+            val (formattedResponse, resolvedCropName) = formatDiagnosisResponseStatic(diag, currentLanguage, cropHint)
 
             val followUps = when (currentLanguage) {
                 "te" -> listOf(
-                    "${diag.cropName} లో సేంద్రీయ నివారణ మార్గాలు ఏమిటి?",
-                    "${diag.cropName} ఎరువుల మోతాదు ఎంత?",
+                    "${resolvedCropName} లో సేంద్రీయ నివారణ మార్గాలు ఏమిటి?",
+                    "${resolvedCropName} ఎరువుల మోతాదు ఎంత?",
                     "విస్తరణ అధికారి సలహా పొందండి"
                 )
                 "hi" -> listOf(
-                    "${diag.cropName} में जैविक नियंत्रण के उपाय?",
-                    "${diag.cropName} में खाद की सही मात्रा?",
+                    "${resolvedCropName} में जैविक नियंत्रण के उपाय?",
+                    "${resolvedCropName} में खाद की सही मात्रा?",
                     "कृषि अधिकारी से परामर्श लें"
                 )
                 else -> listOf(
-                    "Organic treatment options for ${diag.cropName}?",
-                    "Recommended fertilizer dosage for ${diag.cropName}?",
-                    "Consult extension officer for ${diag.cropName}"
+                    "Organic treatment options for ${resolvedCropName}?",
+                    "Recommended fertilizer dosage for ${resolvedCropName}?",
+                    "Consult extension officer for ${resolvedCropName}"
                 )
             }
 
@@ -993,17 +1100,16 @@ class BolKisanRepository(private val context: Context) {
             }
 
             val answerDto = VoiceAnswerDto(
-                status = "answered_disease_diagnosis",
+                status = diag.status ?: "answered_disease_diagnosis",
                 isSafe = diag.isSafe,
                 responseText = formattedResponse,
                 citations = answerCitations,
                 warnings = listOf("CIBRC & ICAR Certified Diagnostic Protocol"),
-                cropIdentified = diag.cropName,
+                cropIdentified = resolvedCropName,
                 cropSource = "detected",
                 followUpSuggestions = followUps
             )
 
-            val resolvedCropName = diag.cropName ?: effectiveCrop
             addHistoryItem(
                 VoiceHistoryItem(
                     query = if (queryText.isBlank()) "Attached Photo Diagnosis ($resolvedCropName)" else queryText,
@@ -1019,11 +1125,72 @@ class BolKisanRepository(private val context: Context) {
 
             Result.success(answerDto)
         } else {
-            askQuestion(
-                queryText = if (queryText.isBlank()) "Disease diagnosis query" else queryText,
-                explicitCrop = explicitCrop,
-                attachedImagePath = photoFile.absolutePath
+            // Online call failed unexpectedly: guarantee fallback to offline outbox queue
+            val ticketId = "TKT-DIAG-${UUID.randomUUID().toString().take(8).uppercase()}"
+            val permanentDir = File(context.filesDir, "disease_diagnoses").apply { mkdirs() }
+            val permanentFile = File(permanentDir, "diag_${System.currentTimeMillis()}_${photoFile.name}")
+            photoFile.copyTo(permanentFile, overwrite = true)
+
+            val fallbackCrop = if (cropHint.isNotBlank() && cropHint != "Pending Identification") cropHint else "Pending Identification"
+
+            dao.enqueuePendingSyncTicket(
+                PendingSyncTicketEntity(
+                    localId = ticketId,
+                    queryText = if (queryText.isNotBlank()) queryText else "Disease diagnosis photo",
+                    cropName = fallbackCrop,
+                    audioPath = null,
+                    imagePath = permanentFile.absolutePath,
+                    timestamp = System.currentTimeMillis(),
+                    isSynced = false
+                )
             )
+            SyncWorker.enqueue(context)
+
+            val localizedNotice = when (currentLanguage) {
+                "te" -> "మీ పంట ఫోటో భద్రపరచబడింది. ఇంటర్నెట్ కనెక్షన్ పునరుద్ధరించబడే వరకు చిత్ర విశ్లేషణ పెండింగ్‌లో ఉంది."
+                "hi" -> "आपकी फसल का फोटो सुरक्षित कर लिया गया है। इंटरनेट कनेक्टिविटी बहाल होने तक फोटो विश्लेषण लंबित है।"
+                else -> "Your photograph has been saved. Image analysis is pending until internet connectivity returns."
+            }
+            val syncStatusLine = when (currentLanguage) {
+                "te" -> "\n• టికెట్ సంఖ్య: $ticketId\n• సమకాలీకరణ స్థితి: అవుట్‌బాక్స్ పెండింగ్ (ఆఫ్‌లైన్ నిల్వ)"
+                "hi" -> "\n• टिकट संख्या: $ticketId\n• सिंक स्थिति: आउटबॉक्स लंबित (ऑफ़लाइन सुरक्षित)"
+                else -> "\n• Ticket ID: $ticketId\n• Sync Status: Outbox Pending (Offline Queued)"
+            }
+            val pendingCropName = when (currentLanguage) {
+                "te" -> "వ్యాధి గుర్తింపు పెండింగ్"
+                "hi" -> "पहचान लंबित"
+                else -> "Pending Identification"
+            }
+            val fullText = "$localizedNotice$syncStatusLine"
+
+            val fallbackDto = VoiceAnswerDto(
+                status = "offline_queued",
+                isSafe = true,
+                responseText = fullText,
+                ticketNumber = ticketId,
+                ticketId = ticketId,
+                citations = emptyList(),
+                cropIdentified = pendingCropName,
+                cropSource = "pending",
+                followUpSuggestions = emptyList()
+            )
+
+            addHistoryItem(
+                VoiceHistoryItem(
+                    id = ticketId,
+                    query = if (queryText.isBlank()) "Attached Photo Diagnosis ($pendingCropName)" else queryText,
+                    crop = pendingCropName,
+                    answer = fullText,
+                    isSafe = true,
+                    citations = emptyList(),
+                    attachedImagePath = photoFile.absolutePath,
+                    followUpSuggestions = emptyList(),
+                    origin = "offline_queued",
+                    ticketId = ticketId
+                )
+            )
+
+            Result.success(fallbackDto)
         }
     }
 
@@ -1041,7 +1208,11 @@ class BolKisanRepository(private val context: Context) {
             try {
                 val reqFile = imageFile.asRequestBody("image/jpeg".toMediaTypeOrNull())
                 val body = MultipartBody.Part.createFormData("file", imageFile.name, reqFile)
-                val cropBody = cropName.toRequestBody("text/plain".toMediaTypeOrNull())
+                val cleanCrop = if (cropName == "Pending Identification" || 
+                    cropName == "వ్యాధి గుర్తింపు పెండింగ్" || 
+                    cropName == "पहचान लंबित" || 
+                    cropName.startsWith("TKT-")) "" else cropName
+                val cropBody = cleanCrop.toRequestBody("text/plain".toMediaTypeOrNull())
                 val partBody = plantPart.toRequestBody("text/plain".toMediaTypeOrNull())
                 val notesBody = farmerNotes.toRequestBody("text/plain".toMediaTypeOrNull())
                 val langBody = currentLanguage.toRequestBody("text/plain".toMediaTypeOrNull())
@@ -1057,14 +1228,17 @@ class BolKisanRepository(private val context: Context) {
                 )
 
                 if (response.isSuccessful && response.body() != null) {
+                    _isServerReachable.value = true
+                    _isGeminiVisionAvailable.value = true
                     return@withContext Result.success(response.body()!!)
                 }
             } catch (e: Exception) {
                 // Online request failed, smoothly drop into offline persistence
+                Log.w("BolKisanRepo", "Online disease diagnosis failed: ${e.message}")
             }
         }
 
-        // OFFLINE FLOW:
+        // OFFLINE FLOW (CASE 2):
         // 1. Save image permanently in app's internal files directory
         val permanentDir = File(context.filesDir, "disease_diagnoses").apply { mkdirs() }
         val permanentFile = File(permanentDir, "diag_${System.currentTimeMillis()}_${imageFile.name}")
@@ -1072,10 +1246,16 @@ class BolKisanRepository(private val context: Context) {
 
         // 2. Enqueue ticket in Room pending_sync_tickets
         val ticketId = "TKT-DIAG-${UUID.randomUUID().toString().take(8).uppercase()}"
+        val canonical = if (cropName.isNotBlank() && cropName != "None" && cropName != "Unspecified" && 
+            cropName != "Pending Identification" && cropName != "వ్యాధి గుర్తింపు పెండింగ్" && cropName != "पहचान लंबित") {
+            canonicalCropName(cropName)
+        } else ""
+        val effectiveCropForTicket = if (canonical.isNotBlank()) canonical else "Pending Identification"
+
         val pendingTicket = PendingSyncTicketEntity(
             localId = ticketId,
-            queryText = "Disease diagnosis image for crop: $cropName",
-            cropName = cropName,
+            queryText = if (farmerNotes.isNotBlank()) farmerNotes else "Disease diagnosis image for: $effectiveCropForTicket",
+            cropName = effectiveCropForTicket,
             audioPath = null,
             imagePath = permanentFile.absolutePath,
             timestamp = System.currentTimeMillis(),
@@ -1086,62 +1266,48 @@ class BolKisanRepository(private val context: Context) {
         // 3. Schedule WorkManager for background sync
         SyncWorker.enqueue(context)
 
-        // 4. Retrieve local verified ICAR knowledge for this crop
-        val canonicalCrop = canonicalCropName(cropName)
-        val localCropCards = dao.getKnowledgeByCropSync(canonicalCrop, currentLanguage)
-        val effectiveCards = if (localCropCards.isNotEmpty()) localCropCards else dao.getKnowledgeByCropSync(canonicalCrop, "en")
-        val diseaseCard = effectiveCards.firstOrNull { it.category == "disease" }
-            ?: effectiveCards.firstOrNull { it.category == "pest_management" }
-            ?: effectiveCards.firstOrNull()
+        // 4. Strict Offline/Pending Image Flow (CASE 2):
+        // When an image analysis cannot be completed online (network unavailable, server unreachable, or vision unavailable):
+        // - DO NOT query offline_knowledge or invent a crop or disease!
+        // - DO NOT attach any treatment, prevention, or agricultural recommendation!
+        // - In DiseaseDiagnosisDto and VoiceAnswerDto:
+        //   - status = "offline_queued"
+        //   - Display ONLY: "Your photograph has been saved. Image analysis is pending until internet connectivity returns."
+        //   - Show Ticket ID and sync status.
+        //   - Never invent crop or disease; if unknown, set cropName = "Pending Identification" / "వ్యాధి గుర్తింపు పెండింగ్".
+        //   - treatment = null, prevention = null, citations = emptyList().
+        val localizedPendingCrop = when (currentLanguage) {
+            "te" -> if (canonical.isNotBlank()) localizedCropName(canonical, "te") else "వ్యాధి గుర్తింపు పెండింగ్"
+            "hi" -> if (canonical.isNotBlank()) localizedCropName(canonical, "hi") else "पहचान लंबित"
+            else -> if (canonical.isNotBlank()) canonical else "Pending Identification"
+        }
+
+        val localizedNotice = when (currentLanguage) {
+            "te" -> "మీ పంట ఫోటో భద్రపరచబడింది. ఇంటర్నెట్ కనెక్షన్ పునరుద్ధరించబడే వరకు చిత్ర విశ్లేషణ పెండింగ్‌లో ఉంది."
+            "hi" -> "आपकी फसल का फोटो सुरक्षित कर लिया गया है। इंटरनेट कनेक्टिविटी बहाल होने तक फोटो विश्लेषण लंबित है।"
+            else -> "Your photograph has been saved. Image analysis is pending until internet connectivity returns."
+        }
+
+        val syncStatusText = when (currentLanguage) {
+            "te" -> "టికెట్ ID: $ticketId\nసమకాలీకరణ స్థితి: అవుట్‌బాక్స్ పెండింగ్ (ఆఫ్‌లైన్ నిల్వ)"
+            "hi" -> "टिकट ID: $ticketId\nसिंक स्थिति: आउटबॉक्स लंबित (ऑफ़लाइन सुरक्षित)"
+            else -> "Ticket ID: $ticketId\nSync Status: Outbox Pending (Offline Queued)"
+        }
 
         val diagnosisDto = DiseaseDiagnosisDto(
-            diseaseName = when (currentLanguage) {
-                "te" -> "ఆఫ్‌లైన్ నిల్వ: చిత్ర విశ్లేషణ పెండింగ్"
-                "hi" -> "ऑफलाइन सुरक्षित: फोटो विश्लेषण लंबित"
-                else -> "Offline Queued: Visual Analysis Pending"
-            },
-            cropName = cropName,
+            status = "offline_queued",
+            diseaseName = localizedPendingCrop,
+            cropName = localizedPendingCrop,
             confidence = null,
-            severity = when (currentLanguage) {
-                "te" -> "ఆఫ్‌లైన్ విజ్ఞాన నిల్వ (నెట్‌వర్క్ రాగానే విశ్లేషణ)"
-                "hi" -> "ऑफलाइन ज्ञानकोश (नेटवर्क पर विश्लेषण)"
-                else -> "Offline Knowledge Base (Pending Cloud Vision)"
-            },
-            symptoms = when (currentLanguage) {
-                "te" -> "ఆఫ్‌లైన్ చిన్న భాషా నమూనా (Qwen3) చిత్రాలను నేరుగా విశ్లేషించలేదు. మీ పంట ఫోటో సురక్షితంగా భద్రపరచబడింది (టికెట్ #$ticketId) మరియు నెట్‌వర్క్ రాగానే క్లౌడ్/నిపుణుల పరిశీలనకు పంపబడుతుంది. కింద $cropName సాధారణ సస్యరక్షణ సూచనలు ఇవ్వబడ్డాయి."
-                "hi" -> "ऑफलाइन मॉडल (Qwen3) फोटो का विश्लेषण नहीं कर सकता। आपकी फसल का फोटो सुरक्षित कर लिया गया है (टिकट #$ticketId) और नेटवर्क उपलब्ध होने पर विशेषज्ञ जांच के लिए भेजा जाएगा। नीचे $cropName के सामान्य प्रबंधन नियम दिए गए हैं।"
-                else -> "Offline SLM (Qwen3) cannot perform on-device image vision. Your crop leaf photograph has been queued safely (Ticket #$ticketId) and will be processed upon reconnection. General management guidelines for $cropName are shown below."
-            },
-            treatment = diseaseCard?.content?.let {
-                com.bolkisan.farmer.domain.OfflineKnowledgeFormatter.format(
-                    rawText = it,
-                    crop = cropName,
-                    language = currentLanguage,
-                    sourceCitation = diseaseCard.sourceCitation,
-                    documentTitle = diseaseCard.title
-                )
-            } ?: when (currentLanguage) {
-                "te" -> "తక్షణమే నత్రజని ఎరువుల వాడకం ఆపండి. సేంద్రీయ వేప నూనె 5 మి.లీ/లీటర్ లేదా సిఫార్సు చేసిన మందును పిచికారీ చేయండి."
-                "hi" -> "यूरिया का प्रयोग रोकें। 5% नीम अर्क या अनुशंसित कीटनाशक का उचित मात्रा में छिड़काव करें।"
-                else -> "Avoid excess nitrogen. Apply 5% NSKE or recommended standard spray per ICAR package."
-            },
-            prevention = when (currentLanguage) {
-                "te" -> "పొలంలో నీరు నిల్వ ఉండకుండా చూడండి మరియు క్రమం తప్పక సర్వేక్షణ చేయండి."
-                "hi" -> "उचित जल निकासी रखें और नियमित रूप से खेत की निगरानी करें।"
-                else -> "Ensure proper field drainage and regular crop scouting."
-            },
-            citations = if (diseaseCard != null) {
-                com.bolkisan.farmer.domain.OfflineKnowledgeFormatter.resolveCitationsForCard(
-                    card = diseaseCard,
-                    adviceText = diseaseCard.content,
-                    language = currentLanguage
-                )
-            } else {
-                listOf("ICAR Plant Pathology Guidelines 2024", "CIBRC Approved Disease Management Schedule")
-            },
+            severity = null,
+            symptoms = "$localizedNotice\n\n$syncStatusText",
+            treatment = null,
+            prevention = null,
+            citations = emptyList(),
             isSafe = true,
             ticketNumber = ticketId,
-            isOfflineSyncPending = true
+            isOfflineSyncPending = true,
+            message = localizedNotice
         )
 
         Result.success(diagnosisDto)
@@ -1156,6 +1322,140 @@ class BolKisanRepository(private val context: Context) {
                 Result.success(res.body()!!)
             } else {
                 Result.failure(Exception("Error fetching tickets: ${res.code()}"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    suspend fun getTicketMessages(ticketId: String): Result<List<TicketMessageDto>> = withContext(Dispatchers.IO) {
+        val cachedEntities = ticketMessageDao.getMessagesForTicket(ticketId)
+        val token = currentToken
+        val bearerToken = if (!token.isNullOrBlank()) "Bearer $token" else null
+
+        try {
+            val response = api.getTicketMessages(ticketId, bearerToken)
+            if (response.isSuccessful && response.body() != null) {
+                val dtoList = response.body()!!
+                if (dtoList.isNotEmpty()) {
+                    val entities = dtoList.map { com.bolkisan.farmer.data.local.entities.TicketMessageEntity.fromDto(it) }
+                    ticketMessageDao.insertMessages(entities)
+                    return@withContext Result.success(dtoList)
+                }
+            }
+        } catch (e: Exception) {
+            Log.w("BolKisanRepository", "Network fetch failed for ticket $ticketId messages: ${e.message}")
+        }
+
+        // Fallback to locally cached messages if available
+        if (cachedEntities.isNotEmpty()) {
+            return@withContext Result.success(cachedEntities.map { it.toDto() })
+        }
+
+        // Synthesize initial messages from ticket info if neither server nor cache returned messages
+        val localTickets = runCatching { getTickets().getOrNull() }.getOrNull()
+        val matchingTicket = localTickets?.firstOrNull { it.id == ticketId || it.ticketNumber == ticketId }
+        if (matchingTicket != null) {
+            val syntheticList = mutableListOf<TicketMessageDto>()
+            val nowStr = java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", java.util.Locale.US).format(java.util.Date())
+            if (matchingTicket.transcript.isNotBlank()) {
+                val initMsg = TicketMessageDto(
+                    id = "msg-init-$ticketId",
+                    ticket_id = ticketId,
+                    sender_id = "farmer",
+                    sender_type = "FARMER",
+                    sender_name = "Farmer",
+                    msg_type = "text",
+                    content = matchingTicket.transcript,
+                    media_url = null,
+                    created_at = matchingTicket.createdAt ?: nowStr
+                )
+                syntheticList.add(initMsg)
+                ticketMessageDao.insertMessage(com.bolkisan.farmer.data.local.entities.TicketMessageEntity.fromDto(initMsg))
+            }
+            val rx = matchingTicket.officerResponse ?: matchingTicket.resolutionPrescription
+            if (!rx.isNullOrBlank()) {
+                val rxMsg = TicketMessageDto(
+                    id = "msg-rx-$ticketId",
+                    ticket_id = ticketId,
+                    sender_id = "officer",
+                    sender_type = "OFFICER",
+                    sender_name = "Agricultural Officer (MAO)",
+                    msg_type = "prescription",
+                    content = rx,
+                    media_url = null,
+                    created_at = matchingTicket.resolvedAt ?: matchingTicket.createdAt ?: nowStr
+                )
+                syntheticList.add(rxMsg)
+                ticketMessageDao.insertMessage(com.bolkisan.farmer.data.local.entities.TicketMessageEntity.fromDto(rxMsg))
+            }
+            if (syntheticList.isNotEmpty()) {
+                return@withContext Result.success(syntheticList)
+            }
+        }
+
+        Result.success(emptyList())
+    }
+
+    suspend fun sendTicketMessage(
+        ticketId: String,
+        content: String,
+        mediaUrl: String? = null
+    ): Result<TicketMessageDto> = withContext(Dispatchers.IO) {
+        val cleanContent = content.trim()
+        if (cleanContent.isBlank() && mediaUrl.isNullOrBlank()) {
+            return@withContext Result.failure(IllegalArgumentException("Message content cannot be blank"))
+        }
+
+        val token = currentToken
+        val bearerToken = if (!token.isNullOrBlank()) "Bearer $token" else null
+        val request = SendTicketMessageRequest(
+            content = cleanContent,
+            msg_type = if (!mediaUrl.isNullOrBlank()) "image" else "text",
+            media_url = mediaUrl
+        )
+
+        try {
+            val response = api.sendTicketMessage(ticketId, request, bearerToken)
+            if (response.isSuccessful && response.body() != null) {
+                val created = response.body()!!
+                ticketMessageDao.insertMessage(com.bolkisan.farmer.data.local.entities.TicketMessageEntity.fromDto(created))
+                return@withContext Result.success(created)
+            }
+        } catch (e: Exception) {
+            Log.w("BolKisanRepository", "Network send message failed for ticket $ticketId: ${e.message}")
+        }
+
+        // Offline / fallback optimistic local insertion
+        val localId = "local-${UUID.randomUUID()}"
+        val nowIso = java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", java.util.Locale.US).format(java.util.Date())
+        val localDto = TicketMessageDto(
+            id = localId,
+            ticket_id = ticketId,
+            sender_id = "farmer",
+            sender_type = "FARMER",
+            sender_name = "Farmer",
+            msg_type = request.msg_type,
+            content = cleanContent,
+            media_url = mediaUrl,
+            created_at = nowIso
+        )
+        ticketMessageDao.insertMessage(com.bolkisan.farmer.data.local.entities.TicketMessageEntity.fromDto(localDto))
+        Result.success(localDto)
+    }
+
+    suspend fun updateTicketStatus(
+        ticketId: String,
+        status: String
+    ): Result<Map<String, Any>> = withContext(Dispatchers.IO) {
+        val token = currentToken
+        val bearerToken = if (!token.isNullOrBlank()) "Bearer $token" else null
+        try {
+            val res = api.updateTicketStatus(ticketId, mapOf("status" to status), bearerToken)
+            if (res.isSuccessful && res.body() != null) {
+                Result.success(res.body()!!)
+            } else {
+                Result.failure(Exception("Failed to update ticket status: ${res.code()}"))
             }
         } catch (e: Exception) {
             Result.failure(e)
@@ -1247,9 +1547,77 @@ class BolKisanRepository(private val context: Context) {
         }
     }
 
-    // Seed Offline Knowledge
+    // Mandi Market Prices Synchronization & Offline Cache Access
+    suspend fun syncMarketPrices(
+        state: String? = null,
+        district: String? = null,
+        commodity: String? = null,
+        market: String? = null
+    ): Result<Int> = withContext(Dispatchers.IO) {
+        try {
+            val response = api.getMarketPrices(
+                commodity = commodity?.takeIf { it.isNotBlank() },
+                district = district?.takeIf { it.isNotBlank() },
+                state = state?.takeIf { it.isNotBlank() },
+                market = market?.takeIf { it.isNotBlank() },
+                limit = 200
+            )
+            if (response.isSuccessful && response.body() != null) {
+                val body = response.body()!!
+                val records = body.records
+                if (records.isNotEmpty()) {
+                    val now = System.currentTimeMillis()
+                    val entities = records.map { it.toEntity(lastSyncedAt = now) }
+                    mandiDao.insertAll(entities)
+                    prefs.edit().putLong("last_mandi_sync_time", now).apply()
+                    Result.success(entities.size)
+                } else {
+                    Result.success(0)
+                }
+            } else {
+                Result.failure(Exception("Failed to fetch market prices: HTTP ${response.code()}"))
+            }
+        } catch (e: Exception) {
+            // Preserve existing offline cache intact when network fails
+            Result.failure(e)
+        }
+    }
+
+    fun getOfflineMarketPrices(
+        state: String? = null,
+        district: String? = null,
+        commodity: String? = null,
+        market: String? = null
+    ): Flow<List<MandiPriceEntity>> {
+        return mandiDao.getFilteredPrices(
+            state = state?.takeIf { it.isNotBlank() },
+            district = district?.takeIf { it.isNotBlank() },
+            commodity = commodity?.takeIf { it.isNotBlank() },
+            market = market?.takeIf { it.isNotBlank() }
+        )
+    }
+
+    fun getAllOfflineMarketPrices(): Flow<List<MandiPriceEntity>> = mandiDao.getAllPrices()
+
+    suspend fun getLastMandiSyncTime(): Long? = withContext(Dispatchers.IO) {
+        val prefTime = prefs.getLong("last_mandi_sync_time", 0L)
+        val dbTime = mandiDao.getLastSyncedTimestamp()
+        when {
+            prefTime > 0L -> prefTime
+            dbTime != null && dbTime > 0L -> dbTime
+            else -> null
+        }
+    }
+
+    fun getMandiStates(): Flow<List<String>> = mandiDao.getUniqueStates()
+    fun getMandiDistricts(state: String? = null): Flow<List<String>> = mandiDao.getUniqueDistricts(state?.takeIf { it.isNotBlank() })
+    fun getMandiCommodities(): Flow<List<String>> = mandiDao.getUniqueCommodities()
+    fun getMandiMarkets(district: String? = null): Flow<List<String>> = mandiDao.getUniqueMarkets(district?.takeIf { it.isNotBlank() })
+
+    // Seed Offline Knowledge and Mandi Prices
     suspend fun seedOfflineKnowledgeIfEmpty() = withContext(Dispatchers.IO) {
         KnowledgePrepopulator.seedDatabase(dao)
+        MandiPrepopulator.seedMandiPricesIfEmpty(mandiDao)
     }
 
     /**
@@ -1288,5 +1656,117 @@ class BolKisanRepository(private val context: Context) {
         )
         _latestBenchmarkResult.value = result
         result
+    }
+
+    companion object {
+        @Volatile
+        var activeInstance: BolKisanRepository? = null
+
+        fun formatDiagnosisResponseStatic(
+            diag: DiseaseDiagnosisDto,
+            language: String,
+            fallbackCropHint: String = ""
+        ): Pair<String, String> {
+            val resolvedCropName = diag.cropName?.takeIf {
+                it.isNotBlank() && it != "None" && it != "Unspecified" &&
+                    it != "Pending Identification" && it != "వ్యాధి గుర్తింపు పెండింగ్" && it != "पहचान लंबित"
+            } ?: fallbackCropHint.ifBlank { "Crop" }
+
+            val citationBox = com.bolkisan.farmer.domain.OfflineKnowledgeFormatter.buildCitationBox(
+                institution = "ICAR & CIBRC",
+                documentCitation = "${resolvedCropName}: ${diag.diseaseName} Diagnostic & Treatment Protocol 2024",
+                language = language
+            )
+
+            val formattedResponse = when (diag.status) {
+                "quality_rejected" -> {
+                    when (language) {
+                        "te" -> "⚠️ ఫోటో నాణ్యత ఆమోదించబడలేదు:\n${diag.symptoms ?: diag.message}\n\nదయచేసి మంచి వెలుతురులో ఆకును దగ్గరగా ఉంచి స్థిరంగా మళ్లీ ఫోటో తీయండి."
+                        "hi" -> "⚠️ फोटो गुणवत्ता अस्वीकृत:\n${diag.symptoms ?: diag.message}\n\nकृपया पर्याप्त रोशनी में पत्ती के पास से स्थिर और स्पष्ट फोटो लें।"
+                        else -> "⚠️ Image Quality Rejected:\n${diag.symptoms ?: diag.message}\n\nPlease retake a clear, steady close-up photo in good daylight."
+                    }
+                }
+                "non_plant_rejected" -> {
+                    when (language) {
+                        "te" -> "⚠️ చిత్రంలో పంట ఆకు లేదా మొక్క భాగాలు గుర్తించబడలేదు:\n${diag.symptoms ?: diag.message}\n\nదయచేసి పంట ఆకును స్పష్టంగా ఫోటో తీయండి."
+                        "hi" -> "⚠️ तस्वीर में फसल की पत्ती या पौधे का भाग नहीं पाया गया:\n${diag.symptoms ?: diag.message}\n\nकृपया प्रभावित फसल की पत्ती की पास से स्पष्ट तस्वीर लें।"
+                        else -> "⚠️ No crop foliage detected:\n${diag.symptoms ?: diag.message}\n\nPlease capture a close-up photo of the affected crop leaf directly."
+                    }
+                }
+                "healthy_crop" -> {
+                    val body = diag.treatment ?: diag.farmerExplanation ?: diag.symptoms ?: "ఆకు ఆరోగ్యంగా ఉంది."
+                    if (!com.bolkisan.farmer.domain.OfflineKnowledgeFormatter.hasCitationBox(body)) {
+                        "$body\n\n$citationBox"
+                    } else body
+                }
+                "escalated" -> {
+                    val fallbackTicket = "MAO-INSPECT"
+                    val body = when (language) {
+                        "te" -> "🔍 అనుమానిత లక్షణాలు (${resolvedCropName}):\n• సమస్య: ${diag.diseaseName}\n• పరిశీలన: ${diag.symptoms}\n• మార్గదర్శకం: ${diag.treatment}\n• మండల వ్యవసాయ అధికారి (MAO) టికెట్ సంఖ్య: ${diag.ticketNumber ?: fallbackTicket}"
+                        "hi" -> "🔍 संदिग्ध लक्षण (${resolvedCropName}):\n• समस्या: ${diag.diseaseName}\n• निरीक्षण: ${diag.symptoms}\n• सलाह: ${diag.treatment}\n• कृषि अधिकारी (MAO) टिकट संख्या: ${diag.ticketNumber ?: fallbackTicket}"
+                        else -> "🔍 Suspected Pathology (${resolvedCropName}):\n• Diagnosis: ${diag.diseaseName}\n• Observations: ${diag.symptoms}\n• Guidance: ${diag.treatment}\n• Agricultural Officer Inspection Ticket: ${diag.ticketNumber ?: fallbackTicket}"
+                    }
+                    if (!com.bolkisan.farmer.domain.OfflineKnowledgeFormatter.hasCitationBox(body)) {
+                        "$body\n\n$citationBox"
+                    } else body
+                }
+                else -> {
+                    val severityLine = if (!diag.severity.isNullOrBlank()) "• తీవ్రత: ${diag.severity}\n" else ""
+                    val preventionLine = if (!diag.prevention.isNullOrBlank()) "• ముందస్తు జాగ్రత్తలు: ${diag.prevention}\n" else ""
+                    val defaultSymptoms = if (language == "te") "మచ్చలు" else if (language == "hi") "धब्बे" else "Lesions"
+                    val defaultTreatment = if (language == "te") "సమతుల్య పోషణ" else if (language == "hi") "संतुलित पोषण" else "Balanced IPM"
+                    val base = when (language) {
+                        "te" -> "🌱 పంట వ్యాధి విశ్లేషణ:\n• పంట: ${resolvedCropName}\n• వ్యాధి / సమస్య: ${diag.diseaseName}\n${severityLine}• కనిపించే లక్షణాలు: ${diag.symptoms ?: defaultSymptoms}\n• నివారణ చర్యలు:\n${diag.treatment ?: defaultTreatment}\n${preventionLine}".trimEnd()
+                        "hi" -> "🌱 फसल रोग निदान:\n• फसल: ${resolvedCropName}\n• रोग / समस्या: ${diag.diseaseName}\n${severityLine}• लक्षण: ${diag.symptoms ?: defaultSymptoms}\n• उपचार:\n${diag.treatment ?: defaultTreatment}\n${preventionLine}".trimEnd()
+                        else -> "🌱 Crop Disease Diagnosis:\n• Crop: ${resolvedCropName}\n• Disease / Issue: ${diag.diseaseName}\n${severityLine}• Visual Symptoms: ${diag.symptoms ?: defaultSymptoms}\n• Recommended Actions:\n${diag.treatment ?: defaultTreatment}\n${preventionLine}".trimEnd()
+                    }
+                    if (!com.bolkisan.farmer.domain.OfflineKnowledgeFormatter.hasCitationBox(base)) {
+                        "$base\n\n$citationBox"
+                    } else base
+                }
+            }
+
+            return Pair(formattedResponse, resolvedCropName)
+        }
+
+        fun updateHistoryItemInPrefs(
+            context: Context,
+            ticketId: String,
+            imagePath: String?,
+            updatedAnswer: String,
+            updatedCrop: String,
+            citations: List<String>,
+            isSafe: Boolean,
+            origin: String = "online"
+        ) {
+            val prefs = context.getSharedPreferences("bolkisan_prefs", Context.MODE_PRIVATE)
+            val json = prefs.getString("voice_history", "[]") ?: "[]"
+            try {
+                val type = object : TypeToken<List<VoiceHistoryItem>>() {}.type
+                val rawList: List<VoiceHistoryItem>? = Gson().fromJson(json, type)
+                if (rawList != null) {
+                    val updatedList = rawList.map { item ->
+                        val matchByTicket = (item.ticketId == ticketId || item.id == ticketId)
+                        val matchByImage = (imagePath != null && item.attachedImagePath == imagePath)
+                        if (matchByTicket || matchByImage) {
+                            item.copy(
+                                answer = updatedAnswer,
+                                crop = updatedCrop,
+                                citations = citations,
+                                isSafe = isSafe,
+                                origin = origin,
+                                ticketId = ticketId
+                            )
+                        } else {
+                            item
+                        }
+                    }
+                    prefs.edit().putString("voice_history", Gson().toJson(updatedList)).apply()
+                }
+            } catch (e: Exception) {
+                Log.e("BolKisanRepository", "Error updating history in prefs: ${e.message}")
+            }
+            activeInstance?.reloadHistory()
+        }
     }
 }

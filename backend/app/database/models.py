@@ -1,7 +1,7 @@
 import uuid
 from datetime import datetime, timezone
 from sqlalchemy import (
-    Column, String, Boolean, DateTime, ForeignKey, Integer, Numeric, Text, JSON
+    Column, String, Boolean, DateTime, ForeignKey, Integer, Numeric, Text, JSON, UniqueConstraint
 )
 from sqlalchemy.orm import relationship
 from app.database.base import Base
@@ -477,21 +477,69 @@ class AgriculturalAdvisory(Base):
 
 class MandiPriceRecord(Base):
     __tablename__ = "mandi_price_records"
+    __table_args__ = (
+        UniqueConstraint("market", "commodity", "variety", "grade", "arrival_date", name="uq_mandi_price_records_market_commodity_date"),
+    )
 
     id = Column(String(36), primary_key=True, default=generate_uuid)
-    mandi_id = Column(String(60), index=True, nullable=False)
-    mandi_name = Column(String(150), index=True, nullable=False)
-    district = Column(String(60), index=True, nullable=False)
-    state = Column(String(60), index=True, nullable=False)
-    commodity_name = Column(String(80), index=True, nullable=False)
-    variety = Column(String(80))
-    min_price_per_q = Column(Numeric(10, 2), nullable=False)
-    max_price_per_q = Column(Numeric(10, 2), nullable=False)
-    modal_price_per_q = Column(Numeric(10, 2), nullable=False)
+    state = Column(String(100), index=True, nullable=False)
+    district = Column(String(100), index=True, nullable=False)
+    market = Column(String(150), index=True, nullable=False)
+    commodity = Column(String(100), index=True, nullable=False)
+    variety = Column(String(100), default="Standard", nullable=False)
+    grade = Column(String(50), default="FAQ", nullable=False)
+    arrival_date = Column(String(40), index=True, nullable=False)
+    min_price = Column(Numeric(10, 2), nullable=False)
+    max_price = Column(Numeric(10, 2), nullable=False)
+    modal_price = Column(Numeric(10, 2), nullable=False)
     arrival_quantity_tonnes = Column(Numeric(10, 2), default=0.0)
-    price_date = Column(String(40), index=True, nullable=False)
-    source_portal = Column(String(100), default="Agmarknet", nullable=False)
+    source_portal = Column(String(100), default="data.gov.in / Agmarknet", nullable=False)
+    last_synced_at = Column(DateTime(timezone=True), default=utc_now, nullable=False)
     created_at = Column(DateTime(timezone=True), default=utc_now, nullable=False)
+
+    # Aliases / properties for backward compatibility
+    @property
+    def mandi_id(self):
+        return f"{self.market}_{self.commodity}"
+
+    @property
+    def mandi_name(self):
+        return self.market
+
+    @property
+    def commodity_name(self):
+        return self.commodity
+
+    @property
+    def min_price_per_q(self):
+        return self.min_price
+
+    @property
+    def max_price_per_q(self):
+        return self.max_price
+
+    @property
+    def modal_price_per_q(self):
+        return self.modal_price
+
+    @property
+    def price_date(self):
+        return self.arrival_date
+
+
+class MandiSyncLog(Base):
+    __tablename__ = "mandi_sync_logs"
+
+    id = Column(String(36), primary_key=True, default=generate_uuid)
+    sync_type = Column(String(30), default="manual", nullable=False)  # 'scheduled', 'manual'
+    status = Column(String(30), default="IN_PROGRESS", nullable=False)  # 'IN_PROGRESS', 'SUCCESS', 'FAILED'
+    records_fetched = Column(Integer, default=0, nullable=False)
+    records_inserted = Column(Integer, default=0, nullable=False)
+    records_updated = Column(Integer, default=0, nullable=False)
+    latest_arrival_date = Column(String(40), nullable=True)
+    started_at = Column(DateTime(timezone=True), default=utc_now, nullable=False)
+    completed_at = Column(DateTime(timezone=True), nullable=True)
+    error_message = Column(Text, nullable=True)
 
 
 class MultilingualTerm(Base):

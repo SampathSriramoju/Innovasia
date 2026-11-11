@@ -71,6 +71,8 @@ fun DiseaseCameraScreen(
     val coroutineScope = rememberCoroutineScope()
 
     val isOnline by repository.isOnline.collectAsState()
+    val isVisionAvailable by repository.isGeminiVisionAvailable.collectAsState()
+    val outboxCount by repository.outboxPendingCount.collectAsState(initial = 0)
     val currentLang by repository.languageFlow.collectAsState()
     val strings = appStrings(currentLang)
 
@@ -198,33 +200,6 @@ fun DiseaseCameraScreen(
         } else null
     }
 
-    fun createSampleFallbackLeafFile(ctx: Context, crop: String): File {
-        val sampleFile = File(ctx.cacheDir, "sample_leaf_${System.currentTimeMillis()}.jpg")
-        val bitmap = Bitmap.createBitmap(600, 600, Bitmap.Config.ARGB_8888)
-        val canvas = Canvas(bitmap)
-        val paint = Paint().apply {
-            color = android.graphics.Color.rgb(46, 125, 50)
-            isAntiAlias = true
-        }
-        canvas.drawCircle(300f, 300f, 260f, paint)
-        paint.color = android.graphics.Color.rgb(139, 69, 19)
-        paint.strokeWidth = 14f
-        canvas.drawLine(300f, 60f, 300f, 540f, paint)
-        paint.strokeWidth = 6f
-        canvas.drawLine(300f, 180f, 140f, 260f, paint)
-        canvas.drawLine(300f, 300f, 460f, 380f, paint)
-        canvas.drawLine(300f, 400f, 160f, 480f, paint)
-        // Add disease lesion spots
-        paint.color = android.graphics.Color.rgb(180, 50, 20)
-        canvas.drawCircle(220f, 240f, 35f, paint)
-        canvas.drawCircle(380f, 340f, 42f, paint)
-
-        FileOutputStream(sampleFile).use { out ->
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out)
-        }
-        return sampleFile
-    }
-
     fun triggerPhotoCapture() {
         val photoFile = File(
             context.cacheDir,
@@ -248,22 +223,12 @@ fun DiseaseCameraScreen(
 
                     override fun onError(exception: ImageCaptureException) {
                         Log.e("DiseaseCameraScreen", "Camera capture error: ${exception.message}", exception)
-                        val fallback = createSampleFallbackLeafFile(context, selectedCrop)
-                        capturedPhotoFile = fallback
-                        val bm = BitmapFactory.decodeFile(fallback.absolutePath)
-                        rawBitmapForQuality = bm
-                        previewBitmap = bm?.asImageBitmap()
-                        diagnosisResult = null
+                        galleryLauncher.launch("image/*")
                     }
                 }
             )
         } else {
-            val fallback = createSampleFallbackLeafFile(context, selectedCrop)
-            capturedPhotoFile = fallback
-            val bm = BitmapFactory.decodeFile(fallback.absolutePath)
-            rawBitmapForQuality = bm
-            previewBitmap = bm?.asImageBitmap()
-            diagnosisResult = null
+            galleryLauncher.launch("image/*")
         }
     }
 
@@ -355,10 +320,12 @@ fun DiseaseCameraScreen(
                 }
             }
 
-            // Real-Time Network State Strip
+            // Real-Time Network & Vision State Strip (Decoupled Gemini Vision)
             NetworkStatusBar(
                 isOnline = isOnline,
                 language = currentLang,
+                isVisionAvailable = isVisionAvailable,
+                outboxCount = outboxCount,
                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
             )
 
@@ -732,18 +699,13 @@ fun DiseaseCameraScreen(
                                 }
                             }
 
-                            // Sample Leaf Demo Button
+                            // Gallery Leaf Selection Button
                             IconButton(onClick = {
-                                val fallback = createSampleFallbackLeafFile(context, selectedCrop)
-                                capturedPhotoFile = fallback
-                                val bm = BitmapFactory.decodeFile(fallback.absolutePath)
-                                rawBitmapForQuality = bm
-                                previewBitmap = bm?.asImageBitmap()
-                                diagnosisResult = null
+                                galleryLauncher.launch("image/*")
                             }) {
                                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                                    Icon(Icons.Default.Science, contentDescription = "Sample Leaf", tint = HarvestGoldAccent, modifier = Modifier.size(28.dp))
-                                    Text(strings.demoLeaf, color = Color.LightGray, fontSize = 10.sp)
+                                    Icon(Icons.Default.PhotoLibrary, contentDescription = "Choose Photo", tint = HarvestGoldAccent, modifier = Modifier.size(28.dp))
+                                    Text(strings.gallery, color = Color.LightGray, fontSize = 10.sp)
                                 }
                             }
                         }

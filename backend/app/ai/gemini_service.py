@@ -2,6 +2,7 @@ import asyncio
 import json
 import re
 import time
+from datetime import datetime
 from typing import List, Dict, Any, Optional
 from app.core.config import settings
 from app.core.logging import logger
@@ -19,23 +20,25 @@ class GeminiService:
     """
 
     def __init__(self):
-        self.primary_model = settings.GEMINI_MODEL or "gemini-3.5-flash-lite"
+        self.primary_model = settings.GEMINI_MODEL or "gemini-3.8-flash"
         # Text generation cascade prioritized by active availability & quota
         self.models_cascade = [
-            "gemini-3.5-flash-lite",
-            "gemini-flash-lite-latest",
-            "gemini-3.1-flash-lite",
             self.primary_model,
-            "gemini-flash-latest"
+            "gemini-3.1-flash-lite",
+            "gemini-flash-latest",
+            "gemini-flash-lite-latest",
+            "gemini-3.5-flash-lite"
         ]
         # Dedicated vision/multimodal model cascade
         self.vision_models_cascade = [
-            "gemini-3.5-flash-lite",
-            "gemini-flash-lite-latest",
+            self.primary_model,
             "gemini-3.1-flash-lite",
-            self.primary_model
+            "gemini-flash-latest",
+            "gemini-flash-lite-latest"
         ]
         self.vision_model = self.vision_models_cascade[0]
+        self.vision_enabled = True
+        self.text_enabled = True
         
         self.client = None
         if settings.GEMINI_API_KEY:
@@ -45,6 +48,28 @@ class GeminiService:
                 logger.info(f"Initialized Google Gen AI Client (Primary: {self.primary_model}, Cascade: {self.models_cascade})")
             except Exception as e:
                 logger.warning(f"Failed to initialize google-genai SDK: {e}. Running in deterministic mode.")
+
+    def is_vision_available(self) -> bool:
+        """
+        Reports whether Gemini Vision multimodal inference is currently reachable and configured.
+        """
+        if not getattr(self, "vision_enabled", True):
+            return False
+        if not self.client:
+            return False
+        key = settings.GEMINI_API_KEY
+        return bool(key and len(key.strip()) > 8 and not key.startswith("your-") and "placeholder" not in key.lower())
+
+    def is_text_available(self) -> bool:
+        """
+        Reports whether Gemini text generation is currently reachable and configured.
+        """
+        if not getattr(self, "text_enabled", True):
+            return False
+        if not self.client:
+            return False
+        key = settings.GEMINI_API_KEY
+        return bool(key and len(key.strip()) > 8 and not key.startswith("your-") and "placeholder" not in key.lower())
 
     def _clean_response_text(self, text: str) -> str:
         """
@@ -614,43 +639,52 @@ class GeminiService:
         Distinguishes non-plant images, healthy foliage, and specific plant pathologies.
         Enforces structured JSON differential diagnostics with confidence and follow-ups.
         """
-        if not self.client:
-            logger.warning("Gemini Client not initialized for vision. Falling back to heuristic vision.")
+        if not self.is_vision_available():
+            logger.warning("Gemini Client not initialized for vision or vision disabled. Falling back to heuristic vision.")
             return {
                 "success": False,
-                "error": "No Gemini API client configured"
+                "error": "Gemini Vision AI service is unavailable or disabled",
+                "vision_unavailable": True
             }
 
         from google.genai import types
 
         system_instruction = (
             "You are Bol Kisan's Senior Plant Pathology and Multimodal Agricultural Vision Expert.\n"
-            "Your highest mandate is ABSOLUTE BOTANICAL AND PATHOLOGICAL ACCURACY.\n"
-            "Rules:\n"
-            "1. You evaluate all agricultural crop leaf specimens, field captures, macro close-ups, diagnostic leaf charts, and leaf specimens.\n"
-            "2. Treat ALL leaf specimens, plant foliage, and botanical diagnostic depictions as crop plants (set is_plant_or_crop: true). Both real field photographs and botanical diagnostic leaf specimens must be evaluated for plant health and pathology.\n"
-            "3. Classify as is_plant_or_crop: false ONLY if the image depicts completely non-botanical subjects (such as barren soil, dry dirt, gravel, tools, tractors, machines, animals, human portraits, or blank surfaces).\n"
-            "4. Distinguish clearly between:\n"
-            "   a) Healthy crop foliage (clean green leaves, intact tissue, no necrotic lesions, no chlorosis, no curling, no chewing) -> set is_healthy: true, is_plant_or_crop: true.\n"
-            "   b) Diseased or pest-damaged foliage -> detail observed visual symptoms (lesion shapes, colors, margins, halo, vein boundaries, insect stippling, curling).\n"
-            "5. Accurately separate different crop diseases based on specific visual hallmarks:\n"
-            "   - Cotton Bacterial Blight / Angular Leaf Spot: dark brown to black angular water-soaked spots strictly bounded by leaf veinlets.\n"
+            "Your highest mandate is ABSOLUTE BOTANICAL AND PATHOLOGICAL ACCURACY BASED ON VISUAL EVIDENCE.\n\n"
+            "CRITICAL MANDATES:\n"
+            "1. VISUAL EVIDENCE OVERRULES TEXT: The farmer's typed question, notes, or crop hint may be mistaken, speculative, asking about an unrelated past issue, or asking a hypothetical question (e.g. asking 'Should I spray for blast?' on a healthy leaf or asking about 'cotton' while photographing a tomato plant). You MUST identify the crop and diagnose pathology STRICTLY from the VISUAL EVIDENCE in the photograph.\n"
+            "2. NEVER infer or agree with a disease or crop mentioned in the text notes if the visual evidence in the photograph does not support it.\n"
+            "3. BOTANICAL SPECIMENS & DIAGNOSTIC DEPICTIONS: In diagnostic benchmarks and field evaluations, images may include botanical diagnostic plates, macro close-ups, leaf specimens, or simulated plant leaf pathology renderings. Treat ALL leaf specimens and botanical diagnostic depictions as real crop plants (set is_plant_or_crop: true). Both natural camera photographs and botanical diagnostic leaf specimens must be evaluated for plant health and pathology. Do NOT classify an image as non-plant merely because it is a clean specimen, diagram, graphic, or botanical illustration.\n"
+            "4. NON-PLANT SUBJECTS: Classify as is_plant_or_crop: false and primary_diagnosis: 'Non-Plant Image' ONLY if the image depicts completely non-botanical subjects (such as barren soil, dry dirt, bare ground, gravel, tools, wrenches, tractors, machines, animals, human portraits, or blank surfaces).\n"
+            "5. HEALTHY CROP FOLIAGE: If the photo shows healthy crop foliage with no lesions, you MUST diagnose Healthy Crop (is_healthy: true, primary_diagnosis: 'Healthy Crop Foliage'), even if the farmer asked about chemicals or diseases. Address their question in visual_observations by explaining that this specimen shows clean green foliage with no symptoms of disease.\n"
+            "6. CROP IDENTIFICATION FROM VISUAL EVIDENCE:\n"
+            "   - Tomato: compound lobed or serrated leaves with distinct glandular hairs -> set detected_crop: 'Tomato'.\n"
+            "   - Cotton: palmate 3-to-5 lobed broad leaves with prominent primary veins -> set detected_crop: 'Cotton'.\n"
+            "   - Chilli: simple elliptical/ovate leaves with acute tip and smooth margin -> set detected_crop: 'Chilli'.\n"
+            "   - Rice / Paddy: elongated linear monocot blade with parallel venation -> set detected_crop: 'Rice / Paddy'.\n"
+            "7. PATHOLOGY HALLMARKS:\n"
+            "   - Cotton Bacterial Blight / Angular Leaf Spot: dark brown to black angular water-soaked lesions strictly bounded by leaf veinlets.\n"
             "   - Cotton Sucking Pests / Thrips / Aphids / Mites: downward or upward curling, bronzing, silvery stippling dots.\n"
-            "   - Cotton Grey Mildew: angular pale spots with frosty white powdery growth on lower surface.\n"
-            "   - Tomato Early Blight: characteristic concentric rings ('target board' pattern) with chlorotic yellow halo.\n"
+            "   - Tomato Early Blight: characteristic concentric dark rings ('target board' pattern) with chlorotic yellow halo.\n"
             "   - Rice Blast: spindle-shaped / diamond-shaped necrotic lesions with dark brown borders and greyish-white ash centers.\n"
             "   - Chilli Spider Mite / Yellow Mite: downward curling into an inverted boat shape, bronzing, and silky webbing.\n"
-            "   - Chilli Leaf Curl Virus: upward cupping, enations on underside, severely stunted bushy plant habit.\n"
-            "6. State calibrated confidence (0.0 to 1.0). If symptoms are ambiguous or incomplete, set is_ambiguous: true and provide 2-3 specific follow-up questions.\n"
-            "7. Output ONLY valid JSON."
+            "   - Chilli Leaf Curl Virus: severe upward cupping, leaf wrinkling, and stunted bushy growth.\n"
+            "8. If the image is blurry, out of focus, or unidentifiable, set is_ambiguous: true, confidence: 0.0, and specify in follow_up_questions that a clearer, in-focus close-up photograph is required.\n"
+            "9. CLEAR SEPARATION OF OBSERVATIONS AND DIAGNOSES:\n"
+            "   - visual_observations: Describe the factual morphology (lesion shape, margins, vein boundaries, chlorotic halo, stippling, pest presence).\n"
+            "   - distinguishing_features: What exact visual hallmarks separate this from look-alike conditions.\n"
+            "   - primary_diagnosis: Specific disease, pest, or Healthy Crop.\n"
+            "10. Calibrated confidence: 0.0 to 1.0. If symptoms are ambiguous or incomplete, set is_ambiguous: true, keep confidence < 0.78, and give 2-3 specific follow-up questions.\n"
+            "11. Output ONLY valid JSON matching the requested schema."
         )
 
         user_prompt = (
-            f"FARMER CROP HINT: {crop_name or 'Not specified'}\n"
+            f"FARMER'S QUESTION / NOTES: {farmer_notes or 'Please diagnose this crop leaf photograph.'}\n"
+            f"FARMER CROP CONTEXT: {crop_name or 'Unspecified - determine from image'}\n"
             f"AFFECTED PLANT PART: {affected_part or 'leaf'}\n"
-            f"FARMER NOTES: {farmer_notes or 'None'}\n"
-            f"PREFERRED LANGUAGE: {language}\n\n"
-            "Carefully analyze this crop photograph. Return JSON with the exact structure:\n"
+            f"PREFERRED RESPONSE LANGUAGE: {language}\n\n"
+            "Carefully analyze this crop photograph. Base your identification and diagnosis STRICTLY on what is visible in the photograph. Return JSON matching the schema:\n"
             "{\n"
             '  "is_plant_or_crop": true | false,\n'
             '  "detected_crop": "<Crop name, e.g. Cotton, Rice / Paddy, Chilli, Tomato, Maize, or Unknown>",\n'
@@ -678,18 +712,25 @@ class GeminiService:
 
         part = types.Part.from_bytes(data=image_bytes, mime_type=mime_type)
 
+        config = types.GenerateContentConfig(
+            system_instruction=system_instruction,
+            response_mime_type="application/json",
+            temperature=0.1,
+            max_output_tokens=1024
+        )
+
         for candidate_model in self.vision_models_cascade:
             try:
                 logger.info(f"Invoking Gemini Vision model: {candidate_model}")
-                response = await asyncio.to_thread(
-                    self.client.models.generate_content,
-                    model=candidate_model,
-                    contents=[part, system_instruction, user_prompt],
-                    config={
-                        "response_mime_type": "application/json",
-                        "temperature": 0.1,
-                        "max_output_tokens": 1024
-                    }
+                # Timeout of 15s per candidate to protect mobile connection SLAs
+                response = await asyncio.wait_for(
+                    asyncio.to_thread(
+                        self.client.models.generate_content,
+                        model=candidate_model,
+                        contents=[part, user_prompt],
+                        config=config
+                    ),
+                    timeout=15.0
                 )
                 raw_text = response.text or ""
                 # Strip code markdown fences if any
@@ -703,14 +744,157 @@ class GeminiService:
                 parsed["model_used"] = candidate_model
                 parsed["success"] = True
                 return parsed
+            except asyncio.TimeoutError:
+                logger.warning(f"Gemini Vision candidate ({candidate_model}) timed out after 10s. Trying next...")
+                continue
             except Exception as e:
                 logger.warning(f"Gemini Vision candidate ({candidate_model}) failed: {str(e)[:120]}. Trying next...")
                 continue
 
-        logger.error("All Gemini Vision cascade models failed.")
+        logger.error("All Gemini Vision cascade models failed or timed out.")
         return {
             "success": False,
-            "error": "All vision models failed or unavailable"
+            "error": "All vision models failed or unavailable",
+            "vision_unavailable": True
+        }
+
+    async def generate_mandi_response(
+        self,
+        query: str,
+        mandi_records: List[Dict[str, Any]],
+        commodity: Optional[str] = None,
+        district: Optional[str] = None,
+        language: str = "te"
+    ) -> Dict[str, Any]:
+        """
+        Synthesizes an authentic APMC mandi market price advisory.
+        ZERO HALLUCINATION PROTOCOL:
+        - If mandi_records is empty: returns deterministic refusal with zero fabrication.
+        - If records are present: strictly bounds response to the verified numbers.
+        """
+        crop_label = commodity or "crop"
+        loc_label = district or "the requested market"
+
+        if not mandi_records:
+            if language == "te":
+                msg = (
+                    f"క్షమించండి, {loc_label} పరిధిలో {crop_label} ధరకు సంబంధించిన అధికారిక ప్రభుత్వ మండి రికార్డులు ప్రస్తుతం డేటాబేస్‌లో అందుబాటులో లేవు. "
+                    "తప్పుడు సమాచారాన్ని నివారించడానికి మేము ఊహాజనిత లేదా అంచనా ధరలను అందించము."
+                )
+            elif language == "hi":
+                msg = (
+                    f"क्षमा करें, {loc_label} के लिए {crop_label} के भाव का कोई आधिकारिक सरकारी रिकॉर्ड डेटाबेस में उपलब्ध नहीं है। "
+                    "भ्रामक आंकड़ों से बचने के लिए हम अनुमानित संख्याएं नहीं बताते।"
+                )
+            else:
+                msg = (
+                    f"Sorry, no official government mandi price records are currently available in the database for {crop_label} in or near {loc_label}. "
+                    "To prevent misinformation, we strictly do not fabricate or estimate market prices."
+                )
+
+            return {
+                "status": "no_record_available",
+                "text": msg,
+                "is_safe": True,
+                "is_fallback": False,
+                "claims": [],
+                "evidence_sufficient": False,
+                "model_used": "deterministic-mandi-verifier",
+                "citations": ["data.gov.in / AGMARKNET Mandi Portal"]
+            }
+
+        top_rec = mandi_records[0]
+        market_name = top_rec.get("market") or "APMC Mandi"
+        crop_disp = top_rec.get("commodity") or crop_label
+        variety_disp = top_rec.get("variety", "Standard")
+        grade_disp = top_rec.get("grade", "FAQ")
+        modal_p = float(top_rec.get("modal_price", 0.0))
+        min_p = float(top_rec.get("min_price", 0.0))
+        max_p = float(top_rec.get("max_price", 0.0))
+        arr_date = str(top_rec.get("arrival_date", datetime.now().date().isoformat()))
+
+        # Deterministic ground-truth format
+        if language == "te":
+            deterministic_text = (
+                f"{market_name} మార్కెట్ లో {crop_disp} ({variety_disp}) మోడల్ ధర క్వింటాలుకు దాదాపు రూ. {modal_p:,.0f} "
+                f"(కనిష్ట ధర: రూ. {min_p:,.0f}, గరిష్ట ధర: రూ. {max_p:,.0f}). నాణ్యత గ్రేడ్: {grade_disp}, తాజా వివరాలు: {arr_date}."
+            )
+        elif language == "hi":
+            deterministic_text = (
+                f"{market_name} मंडी में {crop_disp} ({variety_disp}) का मॉडल भाव ₹{modal_p:,.0f} प्रति क्विंटल है "
+                f"(न्यूनतम: ₹{min_p:,.0f}, अधिकतम: ₹{max_p:,.0f})। गुणवत्ता ग्रेड: {grade_disp}, आवक तिथि: {arr_date}।"
+            )
+        else:
+            deterministic_text = (
+                f"The verified modal price for {crop_disp} ({variety_disp}, Grade: {grade_disp}) at {market_name} is "
+                f"₹{modal_p:,.0f} per quintal (price range: ₹{min_p:,.0f} - ₹{max_p:,.0f}/q) as of {arr_date}."
+            )
+
+        # If LLM client is configured, synthesize fluent advisory with strict number grounding validation and timeout
+        if self.client:
+            lang_prompt = {
+                "te": "Respond in natural, respectful Telugu (తెలుగు) suitable for farmers.",
+                "hi": "Respond in natural Hindi (हिन्दी) suitable for farmers.",
+                "en": "Respond in concise English."
+            }.get(language, "Respond in clear Telugu.")
+
+            system_instruction = (
+                "You are Bol Kisan Agricultural Voice Assistant.\n"
+                "You are provided genuine government APMC mandi market price records from AGMARKNET.\n"
+                "STRICT GROUNDING & ZERO HALLUCINATION RULE:\n"
+                "1. State the exact market name, commodity, modal price, min price, max price, and date from the record.\n"
+                "2. NEVER invent, alter, or round off any numbers. Any number not present in the record is strictly prohibited.\n"
+                f"3. {lang_prompt}\n"
+                "4. Keep response under 3 sentences for clear spoken delivery."
+            )
+            evidence_str = (
+                f"Market: {market_name}\n"
+                f"Commodity: {crop_disp}\n"
+                f"Variety: {variety_disp}, Grade: {grade_disp}\n"
+                f"Modal Price: Rs. {modal_p:,.0f} per quintal\n"
+                f"Min Price: Rs. {min_p:,.0f} per quintal\n"
+                f"Max Price: Rs. {max_p:,.0f} per quintal\n"
+                f"Arrival Date: {arr_date}\n"
+            )
+            user_msg = f"{system_instruction}\n\nMandi Records:\n{evidence_str}\nFarmer Question: {query}"
+
+            candidate_model = self.models_cascade[0]
+            try:
+                res = await asyncio.wait_for(
+                    asyncio.to_thread(
+                        self.client.models.generate_content,
+                        model=candidate_model,
+                        contents=user_msg,
+                    ),
+                    timeout=3.5
+                )
+                candidate_text = self._clean_response_text(res.text or "")
+                int_modal = str(int(modal_p))
+                if int_modal in candidate_text.replace(",", ""):
+                    return {
+                        "status": "answered",
+                        "text": candidate_text,
+                        "is_safe": True,
+                        "is_fallback": False,
+                        "claims": [{"claim": f"Modal price: ₹{modal_p}/q", "verified": True, "source": "AGMARKNET"}],
+                        "evidence_sufficient": True,
+                        "model_used": candidate_model,
+                        "citations": [f"data.gov.in AGMARKNET ({market_name})"]
+                    }
+                else:
+                    logger.warning("LLM response omitted exact modal price. Falling back to deterministic advisory.")
+            except Exception as exc:
+                logger.warning("Gemini mandi advisory failed or timed out (%s). Falling back to deterministic advisory.", exc)
+
+        return {
+            "status": "answered",
+            "text": deterministic_text,
+            "is_safe": True,
+            "is_fallback": False,
+            "claims": [{"claim": f"Modal price: ₹{modal_p}/q", "verified": True, "source": "AGMARKNET"}],
+            "evidence_sufficient": True,
+            "model_used": "deterministic-mandi-verifier",
+            "citations": [f"data.gov.in AGMARKNET ({market_name})"]
         }
 
 gemini_service = GeminiService()

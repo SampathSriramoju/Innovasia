@@ -43,6 +43,26 @@ interface BolKisanApiService {
         @Body request: OfflineSyncRequestDto
     ): Response<OfflineSyncResponseDto>
 
+    @GET("tickets/{ticket_id}/messages")
+    suspend fun getTicketMessages(
+        @Path("ticket_id") ticketId: String,
+        @Header("Authorization") token: String? = null
+    ): Response<List<TicketMessageDto>>
+
+    @POST("tickets/{ticket_id}/messages")
+    suspend fun sendTicketMessage(
+        @Path("ticket_id") ticketId: String,
+        @Body body: SendTicketMessageRequest,
+        @Header("Authorization") token: String? = null
+    ): Response<TicketMessageDto>
+
+    @POST("tickets/{ticket_id}/status")
+    suspend fun updateTicketStatus(
+        @Path("ticket_id") ticketId: String,
+        @Body body: Map<String, String>,
+        @Header("Authorization") token: String? = null
+    ): Response<Map<String, Any>>
+
     @Multipart
     @POST("disease/diagnose")
     suspend fun diagnoseDisease(
@@ -78,4 +98,34 @@ interface BolKisanApiService {
         @Path("conversation_id") conversationId: String,
         @Body message: MessagePostDto
     ): Response<MessagePostResponseDto>
+
+    // MANDI MARKET PRICES API
+    @GET("market-prices")
+    suspend fun getMarketPrices(
+        @Query("commodity") commodity: String? = null,
+        @Query("district") district: String? = null,
+        @Query("state") state: String? = null,
+        @Query("market") market: String? = null,
+        @Query("limit") limit: Int = 100
+    ): Response<MandiPricesResponseDto>
+
+    @GET("market-prices/sync-status")
+    suspend fun getMarketPricesSyncStatus(): Response<MandiSyncStatusDto>
+
+    // SMS INTEGRATION API
+    @POST("sms/incoming")
+    suspend fun sendSMSIncoming(
+        @Body request: SMSIncomingRequestDto
+    ): Response<SMSIncomingResponseDto>
+
+    @GET("sms/history")
+    suspend fun getSMSHistory(
+        @Query("phone_number") phoneNumber: String
+    ): Response<SMSHistoryResponseDto>
+
+    @GET("sms/segment-calc")
+    suspend fun calculateSMSSegments(
+        @Query("text") text: String
+    ): Response<SMSSegmentCalcResponseDto>
 }
+

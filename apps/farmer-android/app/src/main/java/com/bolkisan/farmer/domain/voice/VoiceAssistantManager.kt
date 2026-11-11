@@ -1,7 +1,9 @@
 package com.bolkisan.farmer.domain.voice
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -13,6 +15,7 @@ import android.speech.SpeechRecognizer
 import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
 import android.util.Log
+import androidx.core.content.ContextCompat
 import com.bolkisan.farmer.util.NetworkObserver
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -279,6 +282,16 @@ class VoiceAssistantManager(
         currentLanguage = language
         _liveTranscription.value = ""
         _errorMessage.value = null
+
+        // Check microphone permission
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+            val permMsg = IvrAudioPrompts.getMicPermissionRequiredPrompt(IvrLanguage.fromCode(language))
+            _errorMessage.value = permMsg
+            _assistantState.value = AssistantState.ERROR
+            Log.w(tag, "RECORD_AUDIO permission not granted")
+            return
+        }
+
         _assistantState.value = AssistantState.LISTENING
 
         val langCode = when (language) {
@@ -371,13 +384,9 @@ class VoiceAssistantManager(
             tts.language = Locale.US
         }
 
-        // Clean text of markdown, brackets, and citations for clean spoken speech
-        val speechClean = text
-            .replace(Regex("\\[.*?\\]"), "")
-            .replace("*", "")
-            .replace("#", "")
-            .replace(Regex("(?m)^\\s*(?:ఆధారం|మూలం|स्रोत|Source|Citation)\\s*:.*$"), "")
-            .trim()
+        // Clean text of markdown, bracketed citations, and raw Latin names
+        val speechClean = OfflineSpeechService.cleanSpokenText(text, language)
+        if (speechClean.isBlank()) return
 
         val utteranceId = "bolkisan_voice_${System.currentTimeMillis()}"
         ttsStartTimeMs = SystemClock.elapsedRealtime()
@@ -385,6 +394,18 @@ class VoiceAssistantManager(
         _assistantState.value = AssistantState.SPEAKING
         // Operates fully offline on Android with standard built-in voice data
         tts.speak(speechClean, TextToSpeech.QUEUE_FLUSH, null, utteranceId)
+    }
+
+    fun checkOfflineAsrReadiness(): OfflineAsrStatus = OfflineSpeechService.checkOfflineAsrReadiness(context)
+
+    fun checkOfflineTtsReadiness(): OfflineTtsStatus = OfflineSpeechService.checkOfflineTtsReadiness(context, ttsEngine)
+
+    companion object {
+        fun checkOfflineAsrReadiness(context: Context): OfflineAsrStatus =
+            OfflineSpeechService.checkOfflineAsrReadiness(context)
+
+        fun checkOfflineTtsReadiness(context: Context, ttsEngine: TextToSpeech? = null): OfflineTtsStatus =
+            OfflineSpeechService.checkOfflineTtsReadiness(context, ttsEngine)
     }
 
     fun getLastAsrLatencyMs(): Long = lastAsrLatencyMs

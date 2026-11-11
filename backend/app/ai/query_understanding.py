@@ -292,8 +292,9 @@ class QueryUnderstanding:
                         if c_canon:
                             history_crop = c_canon
                             break
-                    # Also scan message text of recent turn
-                    t_text = (turn.get("text") or turn.get("query_text") or turn.get("query") or "").lower()
+                    # Also scan message text of recent farmer query
+                    t_role = turn.get("role", "user")
+                    t_text = (turn.get("text") or turn.get("query_text") or turn.get("query") or "").lower() if t_role not in ["assistant", "system"] else ""
                     if t_text:
                         for crop_name, patterns in cls.CROP_PATTERNS.items():
                             for pat in patterns:

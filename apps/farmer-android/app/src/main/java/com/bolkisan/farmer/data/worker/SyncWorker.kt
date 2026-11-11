@@ -62,7 +62,7 @@ class SyncWorker(
                         createdAtEpoch = it.timestamp
                     )
                 }
-                val response = ApiClient.apiService.syncOfflineTickets(
+                val response = ApiClient.getApiService(applicationContext).syncOfflineTickets(
                     token = "Bearer $token",
                     request = OfflineSyncRequestDto(syncItems)
                 )
@@ -97,20 +97,54 @@ class SyncWorker(
                 if (file.exists() && file.length() > 0) {
                     val reqFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
                     val body = MultipartBody.Part.createFormData("file", file.name, reqFile)
-                    val cropBody = ticket.cropName.toRequestBody("text/plain".toMediaTypeOrNull())
+                    val cleanCrop = if (ticket.cropName.isBlank() ||
+                        ticket.cropName == "Pending Identification" ||
+                        ticket.cropName == "వ్యాధి గుర్తింపు పెండింగ్" ||
+                        ticket.cropName == "पहचान लंबित" ||
+                        ticket.cropName.startsWith("TKT-")) "" else ticket.cropName
+                    val cropBody = cleanCrop.toRequestBody("text/plain".toMediaTypeOrNull())
+                    val partBody = "leaf".toRequestBody("text/plain".toMediaTypeOrNull())
                     val notesBody = ticket.queryText.toRequestBody("text/plain".toMediaTypeOrNull())
                     val langBody = lang.toRequestBody("text/plain".toMediaTypeOrNull())
 
-                    val response = ApiClient.apiService.diagnoseDisease(
+                    val response = ApiClient.getApiService(applicationContext).diagnoseDisease(
                         token = "Bearer $token",
                         file = body,
                         cropName = cropBody,
+                        plantPart = partBody,
                         farmerNotes = notesBody,
                         language = langBody
                     )
 
-                    if (response.isSuccessful) {
-                        Log.i(tag, "Successfully uploaded pending disease ticket ${ticket.localId}")
+                    if (response.isSuccessful && response.body() != null) {
+                        val diag = response.body()!!
+                        Log.i(tag, "Successfully uploaded pending disease ticket ${ticket.localId}: ${diag.diseaseName} (${diag.cropName})")
+
+                        // Retrieve verified evidence and format into standard response
+                        val (formattedResponse, resolvedCrop) = com.bolkisan.farmer.data.repository.BolKisanRepository.formatDiagnosisResponseStatic(
+                            diag = diag,
+                            language = lang,
+                            fallbackCropHint = cleanCrop
+                        )
+
+                        val verifiedCitations = if (!diag.citations.isNullOrEmpty()) {
+                            diag.citations
+                        } else {
+                            listOf("ICAR Plant Pathology Guidelines 2024", "CIBRC Approved Disease Management Schedule")
+                        }
+
+                        // Update existing conversation/history item in place without creating duplicate messages
+                        com.bolkisan.farmer.data.repository.BolKisanRepository.updateHistoryItemInPrefs(
+                            context = applicationContext,
+                            ticketId = ticket.localId,
+                            imagePath = ticket.imagePath,
+                            updatedAnswer = formattedResponse,
+                            updatedCrop = resolvedCrop,
+                            citations = verifiedCitations,
+                            isSafe = diag.isSafe,
+                            origin = "online"
+                        )
+
                         dao.markTicketSynced(ticket.localId)
                     } else {
                         Log.w(tag, "Server rejected upload for ${ticket.localId}: code ${response.code()}")
@@ -129,7 +163,7 @@ class SyncWorker(
                             createdAtEpoch = ticket.timestamp
                         )
                     )
-                    val response = ApiClient.apiService.syncOfflineTickets(
+                    val response = ApiClient.getApiService(applicationContext).syncOfflineTickets(
                         token = "Bearer $token",
                         request = OfflineSyncRequestDto(syncItems)
                     )

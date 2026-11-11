@@ -87,8 +87,8 @@ class OfflineInferenceEngine(private val context: Context) {
             // Strip special chat tokens
             cleaned = cleaned.replace(Regex("<\\|.*?\\|>"), "")
             // Clean markdown code blocks if present
-            cleaned = cleaned.replace(Regex("^```(?:markdown)?\\s*", RegexOption.IGNORE_CASE), "")
-            cleaned = cleaned.replace(Regex("\\s*```$"), "")
+            cleaned = cleaned.replace(Regex("```(?:[a-zA-Z0-9_-]+)?"), "")
+            cleaned = cleaned.replace("```", "")
             return cleaned.trim()
         }
 

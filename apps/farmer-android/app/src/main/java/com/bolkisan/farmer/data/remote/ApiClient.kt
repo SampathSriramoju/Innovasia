@@ -71,10 +71,27 @@ object ApiClient {
     }
 
     val okHttpClient: OkHttpClient = OkHttpClient.Builder()
+        .addInterceptor { chain ->
+            val orig = chain.request()
+            val origUrlStr = orig.url.toString()
+            val newUrlStr = if (origUrlStr.contains("/api/v1/api/v1/")) {
+                origUrlStr.replace("/api/v1/api/v1/", "/api/v1/")
+            } else {
+                origUrlStr
+            }
+            val builder = orig.newBuilder().url(newUrlStr)
+            if (orig.header("Authorization") == null) {
+                val token = com.bolkisan.farmer.data.repository.BolKisanRepository.activeInstance?.currentToken
+                if (!token.isNullOrBlank()) {
+                    builder.header("Authorization", "Bearer $token")
+                }
+            }
+            chain.proceed(builder.build())
+        }
         .addInterceptor(logging)
-        .connectTimeout(5, TimeUnit.SECONDS)
-        .readTimeout(15, TimeUnit.SECONDS)
-        .writeTimeout(15, TimeUnit.SECONDS)
+        .connectTimeout(15, TimeUnit.SECONDS)
+        .readTimeout(45, TimeUnit.SECONDS)
+        .writeTimeout(45, TimeUnit.SECONDS)
         .build()
 
     fun getDevBackendIp(): String = BuildConfig.DEV_BACKEND_IP

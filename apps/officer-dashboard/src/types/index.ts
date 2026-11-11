@@ -56,6 +56,18 @@ export interface AttachedPhoto {
   annotations?: PhotoAnnotation[];
 }
 
+export interface TicketChatMessage {
+  id: string;
+  ticket_id: string;
+  sender_id: string;
+  sender_type: 'FARMER' | 'OFFICER' | 'AI';
+  sender_name: string;
+  msg_type: 'text' | 'image' | 'prescription';
+  content: string;
+  media_url?: string;
+  created_at: string;
+}
+
 export interface AudioTranscriptSegment {
   start_ms: number;
   end_ms: number;
@@ -146,3 +158,142 @@ export interface TicketDetail {
   created_at: string;
   resolved_at?: string;
 }
+
+export interface SmsMessage {
+  id: string;
+  sender_number: string;
+  recipient_number?: string;
+  direction: 'inbound' | 'outbound';
+  message_text: string;
+  language?: string;
+  char_count?: number;
+  segments?: number;
+  delivery_status: 'SIMULATED' | 'DELIVERED' | 'FAILED' | 'PENDING' | string;
+  created_at: string;
+  safety_warning?: boolean;
+  ticket_escalated?: boolean;
+  ticket_id?: string;
+}
+
+export interface SmsIncomingPayload {
+  sender_number: string;
+  message_text: string;
+  language?: string;
+  message_id?: string;
+  idempotency_key?: string;
+  simulate_failure?: boolean;
+}
+
+export interface SmsIncomingResponse {
+  success?: boolean;
+  status?: string;
+  reply_text?: string;
+  reply?: any;
+  inbound?: any;
+  inbound_message?: SmsMessage;
+  outbound_message?: SmsMessage;
+  delivery_status?: string;
+  safety_alert?: boolean;
+  ticket_escalated?: boolean;
+  ticket_id?: string;
+  is_demo?: boolean;
+  is_simulated?: boolean;
+  is_duplicate?: boolean;
+  error?: string;
+}
+
+export interface SmsHistoryResponse {
+  phone_number: string;
+  total_messages: number;
+  messages: SmsMessage[];
+}
+
+export interface SmsGatewayStatus {
+  status: string;
+  short_code: string;
+  mock_mode: boolean;
+  supported_languages: string[];
+  total_messages_processed?: number;
+}
+
+// ==========================================
+// IVR Fallback Telephony Interfaces
+// ==========================================
+
+export interface IvrTranscriptTurn {
+  id: string;
+  timestamp: string;
+  speaker: 'system' | 'farmer';
+  text: string;
+  language?: 'te' | 'hi' | 'en' | string;
+  dtmf_key?: string;
+  turn_type?: 'greeting' | 'dtmf_selection' | 'voice_query' | 'ai_response' | 'safety_warning' | 'escalation' | 'error_recovery' | 'goodbye';
+  is_safety_flagged?: boolean;
+  safety_alert?: string;
+  ticket_escalated?: boolean;
+  ticket_id?: string;
+  confidence?: number;
+  audio_url?: string;
+}
+
+export interface IvrCallSession {
+  call_id: string;
+  caller_number: string;
+  farmer_name?: string;
+  farmer_location?: string;
+  language: 'te' | 'hi' | 'en' | string;
+  status: 'ringing' | 'connected' | 'in_call' | 'escalated' | 'ended' | string;
+  started_at: string;
+  duration_seconds: number;
+  current_menu?: string;
+  last_prompt?: string;
+  last_user_speech?: string;
+  dtmf_history: string[];
+  transcript_turns: IvrTranscriptTurn[];
+  ticket_id?: string;
+  is_safety_flagged?: boolean;
+  created_at?: string;
+  ended_at?: string;
+}
+
+export interface IvrCallResponse {
+  success: boolean;
+  call_id: string;
+  status: 'ringing' | 'connected' | 'in_call' | 'escalated' | 'ended' | string;
+  spoken_prompt: string;
+  prompt_audio_url?: string;
+  language: 'te' | 'hi' | 'en' | string;
+  current_menu?: string;
+  ticket_escalated?: boolean;
+  ticket_id?: string;
+  safety_alert?: boolean;
+  safety_warning?: string;
+  error?: string;
+  is_simulated?: boolean;
+  session?: IvrCallSession;
+  transcript_turn?: IvrTranscriptTurn;
+}
+
+export interface IvrDtmfPayload {
+  call_id: string;
+  digit: string;
+  caller_number?: string;
+}
+
+export interface IvrVoicePayload {
+  call_id: string;
+  speech_text: string;
+  language?: 'te' | 'hi' | 'en' | string;
+  confidence?: number;
+  is_simulated_transcript?: boolean;
+  caller_number?: string;
+}
+
+export interface IvrErrorPayload {
+  call_id: string;
+  error_type: 'speech_recognition_failure' | 'timeout_silence' | 'backend_failure' | string;
+  language?: 'te' | 'hi' | 'en' | string;
+  caller_number?: string;
+}
+
+

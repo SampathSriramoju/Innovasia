@@ -2,6 +2,7 @@ package com.bolkisan.farmer
 
 import android.app.Application
 import com.bolkisan.farmer.data.repository.BolKisanRepository
+import com.bolkisan.farmer.data.worker.MandiSyncWorker
 import com.bolkisan.farmer.data.worker.SyncWorker
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -24,7 +25,8 @@ class BolKisanApp : Application() {
             com.bolkisan.farmer.domain.OfflineModelManager.getOfflineCapabilities(this@BolKisanApp)
         }
 
-        // Enqueue background sync worker to upload any pending tickets when connected
+        // Enqueue background sync workers
         SyncWorker.enqueue(this)
+        MandiSyncWorker.enqueuePeriodic(this)
     }
 }

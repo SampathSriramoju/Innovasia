@@ -12,9 +12,15 @@ class SafetyGate:
     """
     def __init__(self, data_path: Optional[str] = None):
         if not data_path:
-            # Look in knowledge-base/pesticide-labels/
-            default_path = Path(__file__).resolve().parent.parent.parent.parent / "knowledge-base" / "pesticide-labels" / "cibrc_approved_pesticides_kb07_kb08.json"
-            data_path = str(default_path)
+            candidate_paths = [
+                Path(__file__).resolve().parent.parent.parent.parent / "knowledge-base" / "pesticide-labels" / "cibrc_approved_pesticides_kb07_kb08.json",
+                Path.cwd() / "knowledge-base" / "pesticide-labels" / "cibrc_approved_pesticides_kb07_kb08.json",
+                Path.cwd().parent / "knowledge-base" / "pesticide-labels" / "cibrc_approved_pesticides_kb07_kb08.json"
+            ]
+            for p in candidate_paths:
+                if p.exists():
+                    data_path = str(p)
+                    break
 
         seed_data = []
         try:
@@ -34,7 +40,10 @@ class SafetyGate:
         query_text: str,
         crop: Optional[str] = None,
         pest_or_disease: Optional[str] = None,
-        chemical: Optional[str] = None
+        chemical: Optional[str] = None,
+        application_method: Optional[str] = None,
+        growth_stage: Optional[str] = None,
+        plant_part: Optional[str] = None
     ) -> Tuple[SafetyDecision, Dict[str, Any]]:
         """
         Evaluates a farmer/user query prior to LLM generation.
@@ -44,6 +53,13 @@ class SafetyGate:
         analysis = QueryUnderstanding.analyze_query(query_text, context_crop=crop)
         effective_crop = crop or analysis.get("crop")
         effective_pest_or_disease = pest_or_disease or analysis.get("target_entity")
+
+        target_method, target_stage = self.validator.infer_application_context(
+            application_method=application_method,
+            growth_stage=growth_stage,
+            plant_part=plant_part,
+            text_context=f"{query_text} {pest_or_disease or ''} {chemical or ''}"
+        )
 
         # Step 1: Scan for Banned / Restricted Agrochemicals in query or chemical name
         banned_decision = self.validator.check_banned_chemical(chemical or query_text, crop=effective_crop)
@@ -167,17 +183,20 @@ class SafetyGate:
 
         # Step 4: Identify explicit chemical recommendation query vs general agronomic/symptom query
         explicit_chemical_intent = any(word in query_lower for word in [
-            "spray", "pesticide", "fungicide", "insecticide", "dose", "dosage", "chemical",
-            "పురుగు మందు", "తెగులు మందు", "రసాయన", "పిచికారీ మోతాదు", "మందు కొట్టాలి", "మందు స్ప్రే",
-            "कीटनाशक", "छिड़काव मात्रा", "दवा की मात्रा", "रासायनिक दवा"
-        ])
+            "spray", "pesticide", "fungicide", "insecticide", "dose", "dosage", "chemical", "seed treatment", "seed dressing",
+            "పురుగు మందు", "తెగులు మందు", "రసాయన", "పిచికారీ మోతాదు", "మందు కొట్టాలి", "మందు స్ప్రే", "విత్తన శుద్ధి", "బీజోపచార్",
+            "कीटनाशक", "छिड़काव मात्रा", "दवा की मात्रा", "रासायनिक दवा", "बीज उपचार", "बीजोपचार"
+        ]) or (target_method in ["seed_treatment", "foliar_spray"] and effective_pest_or_disease)
 
         if target_chem or explicit_chemical_intent:
             # Strictly validate through CIBRC 8-parameter engine
             decision = self.validator.validate_pesticide_use(
                 crop=effective_crop,
                 pest_or_disease=effective_pest_or_disease,
-                product_or_chemical=target_chem
+                product_or_chemical=target_chem,
+                application_method=target_method,
+                growth_stage=target_stage,
+                plant_part=plant_part
             )
             return decision, {
                 "query_type": "pesticide_chemical",

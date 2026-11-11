@@ -50,10 +50,19 @@ export const OfficerDashboard: React.FC = () => {
   };
 
   // Metrics
+  const isTicketOpen = (t: TicketSummary) => {
+    const s = (t.status || '').toLowerCase();
+    return s !== 'resolved' && s !== 'closed';
+  };
+  const isTicketResolved = (t: TicketSummary) => {
+    const s = (t.status || '').toLowerCase();
+    return s === 'resolved' || s === 'closed';
+  };
+
   const totalCount = tickets.length;
-  const urgentCount = tickets.filter(t => t.priority === 'high' || t.priority === 'emergency').length;
-  const openCount = tickets.filter(t => t.status === 'open').length;
-  const resolvedCount = tickets.filter(t => t.status === 'resolved').length;
+  const urgentCount = tickets.filter(t => (t.priority || '').toLowerCase() === 'high' || (t.priority || '').toLowerCase() === 'emergency').length;
+  const openCount = tickets.filter(isTicketOpen).length;
+  const resolvedCount = tickets.filter(isTicketResolved).length;
 
   const filteredTickets = selectedMandal === 'all' 
     ? tickets 
@@ -193,6 +202,9 @@ export const OfficerDashboard: React.FC = () => {
           ticket={selectedTicketDetail}
           onClose={() => setSelectedTicketDetail(null)}
           onResolve={handleResolve}
+          onStatusChange={async () => {
+            await loadTickets();
+          }}
         />
       )}
     </div>

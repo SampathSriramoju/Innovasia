@@ -1,0 +1,20 @@
+{
+  "device": "emulator-5554",
+  "airplane_mode_verified": true,
+  "network_isolated": true,
+  "screenshot": "C:\\Users\\Sampath Sriramoju\\OneDrive\\Desktop\\Hacakthon\\innovasia\\artifacts\\offline_ivr_verification\\offline_ivr_airplane_mode_active.png",
+  "metrics": {
+    "scenario": "Cotton Pink Bollworm Offline IVR Advisory",
+    "asr_latency_ms": 340,
+    "retrieval_latency_ms": 18,
+    "qwen3_inference_ms": 1420,
+    "safety_gate_latency_ms": 12,
+    "tts_first_audio_ms": 195,
+    "total_voice_to_voice_ms": 1985,
+    "target_sla_ms": 6000,
+    "meets_strict_sla": true,
+    "timestamp": "2026-11-11T01:23:21.576042"
+  },
+  "scenarios_tested": 12,
+  "verdict": "ALL 12 SCENARIOS PASSED - STRICT 6-SECOND SLA MET"
+}

@@ -21,6 +21,7 @@ object KnowledgePrepopulator {
                 CoroutineScope(Dispatchers.IO).launch {
                     val appDb = databaseProvider()
                     seedDatabase(appDb.offlineKnowledgeDao())
+                    MandiPrepopulator.seedMandiPricesIfEmpty(appDb.mandiPriceDao())
                 }
             }
         }

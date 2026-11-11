@@ -1,0 +1,55 @@
+{
+  "updated_at": "2026-11-11T13:54:42.226912+00:00",
+  "stats": {
+    "total_calls": 1,
+    "active_calls": 1,
+    "escalated_calls": 1,
+    "ended_calls": 0,
+    "failed_calls": 0,
+    "dtmf_inputs": 1,
+    "voice_queries": 0,
+    "errors_simulated": 0
+  },
+  "sessions": {
+    "IVR-20261111192442-6EF156": {
+      "call_id": "IVR-20261111192442-6EF156",
+      "caller_number": "+919876543210",
+      "status": "escalated",
+      "started_at": "2026-11-11T13:54:42.206882+00:00",
+      "ended_at": null,
+      "duration_seconds": 0,
+      "language": "te",
+      "language_selected": true,
+      "dtmf_history": [
+        {
+          "digit": "9",
+          "action": "escalate_to_mao",
+          "timestamp": "2026-11-11T13:54:42.214072+00:00",
+          "language": "te",
+          "status_after": "escalated",
+          "ticket_number": "ESC-20261111-EC3967"
+        }
+      ],
+      "conversation_history": [],
+      "context_crop": null,
+      "context_entity": null,
+      "ticket_number": "ESC-20261111-EC3967",
+      "ticket_id": "acba371e-2d41-41d7-877c-990842af7cba",
+      "escalation_reason": "Farmer requested direct MAO officer consultation via DTMF key 9",
+      "error_history": [],
+      "last_prompt": {
+        "prompt_id": "PRM-DTMF-6835",
+        "prompt_type": "dtmf_response_escalate_to_mao",
+        "text": "మీ కాల్ మండల వ్యవసాయ అధికారికి (MAO) బదిలీ చేయబడుతోంది. మీ సహాయ టికెట్ సంఖ్య: ESC-20261111-EC3967. దయచేసి లైన్ లో వేచి ఉండండి.",
+        "audio_url": "/api/v1/voice/tts-stream?text_hash=8616c92179296a08&lang=te",
+        "action": "escalate_to_mao",
+        "timestamp": "2026-11-11T13:54:42.214072+00:00"
+      },
+      "metadata": {},
+      "is_demo": true,
+      "is_simulated": true,
+      "provider": "BOL_KISAN_MOCK_IVR",
+      "simulation_label": "SIMULATED IVR (HACKATHON DEMO - NO REAL TELECOM CALL)"
+    }
+  }
+}

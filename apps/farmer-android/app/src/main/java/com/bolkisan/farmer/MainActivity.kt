@@ -17,7 +17,9 @@ import com.bolkisan.farmer.presentation.auth.LoginScreen
 import com.bolkisan.farmer.presentation.disease.DiseaseCameraScreen
 import com.bolkisan.farmer.presentation.home.HomeScreen
 import com.bolkisan.farmer.presentation.navigation.Screen
+import com.bolkisan.farmer.presentation.offline.OfflineIVRScreen
 import com.bolkisan.farmer.presentation.offline.OfflineLibraryScreen
+import com.bolkisan.farmer.presentation.sms.SMSFallbackScreen
 import com.bolkisan.farmer.presentation.tickets.OfficerTicketsScreen
 import com.bolkisan.farmer.presentation.voice.VoiceAssistantScreen
 import com.bolkisan.farmer.theme.BolKisanTheme
@@ -91,9 +93,40 @@ class MainActivity : ComponentActivity() {
                             onNavigateToOfficerTickets = {
                                 navController.navigate(Screen.OfficerTickets.route)
                             },
+                            onNavigateToMarketPrices = {
+                                navController.navigate(Screen.MarketPrices.route)
+                            },
+                            onNavigateToOfflineIVR = {
+                                navController.navigate(Screen.OfflineIVR.route)
+                            },
+                            onNavigateToSMSFallback = {
+                                navController.navigate(Screen.SMSFallback.route)
+                            },
                             onSwitchLanguage = {
                                 navController.navigate(Screen.LanguageSelect.route)
                             }
+                        )
+                    }
+
+                    composable(Screen.OfflineIVR.route) {
+                        OfflineIVRScreen(
+                            repository = repository,
+                            inferenceEngine = offlineEngine,
+                            onBack = { navController.popBackStack() }
+                        )
+                    }
+
+                    composable(Screen.SMSFallback.route) {
+                        SMSFallbackScreen(
+                            repository = repository,
+                            onBack = { navController.popBackStack() }
+                        )
+                    }
+
+                    composable(Screen.MarketPrices.route) {
+                        com.bolkisan.farmer.presentation.mandi.MarketPricesScreen(
+                            repository = repository,
+                            onBack = { navController.popBackStack() }
                         )
                     }
 

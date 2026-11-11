@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bol Kisan • Rural SMS Fallback Gateway Simulator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #f1f5f9; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+  </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen py-8 px-4">
+  <div class="max-w-6xl mx-auto">
+    <!-- Top Header -->
+    <header class="flex flex-col md:flex-row md:items-center justify-between pb-6 mb-8 border-b border-slate-800 gap-4">
+      <div>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center font-bold text-xl">
+            🌾
+          </div>
+          <div>
+            <h1 class="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
+              Bol Kisan <span class="text-emerald-400">SMS Fallback Gateway</span>
+              <span class="text-xs uppercase bg-emerald-950 text-emerald-400 border border-emerald-800 px-2 py-0.5 rounded-full font-mono">SIMULATED DEMO</span>
+            </h1>
+            <p class="text-sm text-slate-400">Ultra-resilient 2G/EDGE plain-text advisory pipeline with CIBRC statutory safety gate</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Status Badges -->
+      <div class="flex items-center gap-3">
+        <div id="carrierStatusBadge" class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs font-mono">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span>GATEWAY: OPERATIONAL</span>
+        </div>
+        <button id="toggleFailureBtn" onclick="toggleFailureMode()" class="px-3 py-1.5 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 text-rose-300 text-xs font-medium transition flex items-center gap-1.5">
+          <span>⚡</span>
+          <span id="failureBtnText">Simulate Failure</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <!-- Left Column: Controls & Presets & Telemetry -->
+      <div class="lg:col-span-5 space-y-6">
+        <!-- Configuration Card -->
+        <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-5 shadow-xl">
+          <h2 class="text-sm font-semibold uppercase tracking-wider text-slate-400 mb-4 flex items-center gap-2">
+            <span>⚙️</span> Handset & Carrier Settings
+          </h2>
+          <div class="space-y-4">
+            <div>
+              <label class="block text-xs font-medium text-slate-300 mb-1.5">Farmer Phone Number</label>
+              <div class="relative">
+                <input type="text" id="phoneInput" value="+919876543210" onchange="loadHistory()"
+                  class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-white font-mono focus:outline-none focus:border-emerald-500 transition">
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-medium text-slate-300 mb-1.5">Language Target</label>
+              <select id="langSelect" class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500 transition">
+                <option value="">Auto-Detect from Text</option>
+                <option value="te">Telugu (తెలుగు)</option>
+                <option value="hi">Hindi (हिन्दी)</option>
+                <option value="en">English (Official)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scenario Presets -->
+        <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-5 shadow-xl">
+          <h2 class="text-sm font-semibold uppercase tracking-wider text-slate-400 mb-3 flex items-center justify-between">
+            <span class="flex items-center gap-2"><span>🎯</span> Quick Test Scenarios</span>
+            <span class="text-[10px] text-slate-400 font-mono">1-Click Test</span>
+          </h2>
+          <div class="flex flex-col gap-2">
+            <button onclick="applyPreset('Cotton pink bollworm control and pesticide spray', 'en')"
+              class="text-left px-3 py-2 rounded-xl bg-slate-900/70 hover:bg-slate-700/60 border border-slate-700/60 text-xs text-slate-200 hover:text-emerald-300 transition flex items-center justify-between group">
+              <span>🌾 <strong>Cotton Pink Bollworm</strong> (English)</span>
+              <span class="text-[10px] text-slate-400 group-hover:text-emerald-400 font-mono">CIBRC</span>
+            </button>
+
+            <button onclick="applyPreset('వరిలో అగ్గితెగులు వచ్చింది ఏ మందు స్ప్రే చేయాలి?', 'te')"
+              class="text-left px-3 py-2 rounded-xl bg-slate-900/70 hover:bg-slate-700/60 border border-slate-700/60 text-xs text-slate-200 hover:text-emerald-300 transition flex items-center justify-between group">
+              <span>🌿 <strong>వరి అగ్గితెగులు నివారణ</strong> (Telugu)</span>
+              <span class="text-[10px] text-slate-400 group-hover:text-emerald-400 font-mono">Telugu</span>
+            </button>
+
+            <button onclick="applyPreset('टमाटर में लेट ब्लाइट रोग के लिए क्या स्प्रे करें?', 'hi')"
+              class="text-left px-3 py-2 rounded-xl bg-slate-900/70 hover:bg-slate-700/60 border border-slate-700/60 text-xs text-slate-200 hover:text-emerald-300 transition flex items-center justify-between group">
+              <span>🍅 <strong>टमाटर लेट ब्लाइट</strong> (Hindi)</span>
+              <span class="text-[10px] text-slate-400 group-hover:text-emerald-400 font-mono">Hindi</span>
+            </button>
+
+            <button onclick="applyPreset('What about its dosage?', 'en')"
+              class="text-left px-3 py-2 rounded-xl bg-amber-950/30 hover:bg-amber-900/40 border border-amber-800/40 text-xs text-amber-200 hover:text-amber-100 transition flex items-center justify-between group">
+              <span>🔄 <strong>Follow-up: "What about its dosage?"</strong></span>
+              <span class="text-[10px] text-amber-400 font-mono">Continuity</span>
+            </button>
+
+            <button onclick="applyPreset('Can I mix Chlorpyrifos and Copper Oxychloride in one tank?', 'en')"
+              class="text-left px-3 py-2 rounded-xl bg-rose-950/30 hover:bg-rose-900/40 border border-rose-800/40 text-xs text-rose-200 hover:text-rose-100 transition flex items-center justify-between group">
+              <span>⚠️ <strong>Unapproved Tank Mix Cocktail</strong></span>
+              <span class="text-[10px] text-rose-400 font-mono">Escalate</span>
+            </button>
+
+            <button onclick="applyPreset('Can I spray Endosulfan for stem borer?', 'en')"
+              class="text-left px-3 py-2 rounded-xl bg-red-950/30 hover:bg-red-900/40 border border-red-800/40 text-xs text-red-200 hover:text-red-100 transition flex items-center justify-between group">
+              <span>🚫 <strong>Banned Agrochemical Check</strong></span>
+              <span class="text-[10px] text-red-400 font-mono">Banned</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Telemetry Stats -->
+        <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-5 shadow-xl">
+          <div class="flex items-center justify-between mb-3">
+            <h2 class="text-sm font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-2">
+              <span>📊</span> Gateway Telemetry
+            </h2>
+            <button onclick="fetchStatus()" class="text-xs text-emerald-400 hover:underline font-mono">Refresh</button>
+          </div>
+          <div class="grid grid-cols-2 gap-3 text-center">
+            <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-700/60">
+              <div id="statInbound" class="text-lg font-bold text-white font-mono">0</div>
+              <div class="text-[11px] text-slate-400">Total Inbound</div>
+            </div>
+            <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-700/60">
+              <div id="statOutbound" class="text-lg font-bold text-emerald-400 font-mono">0</div>
+              <div class="text-[11px] text-slate-400">Total Outbound</div>
+            </div>
+            <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-700/60">
+              <div id="statFailed" class="text-lg font-bold text-rose-400 font-mono">0</div>
+              <div class="text-[11px] text-slate-400">Carrier Drops</div>
+            </div>
+            <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-700/60">
+              <div id="statDuplicates" class="text-lg font-bold text-amber-400 font-mono">0</div>
+              <div class="text-[11px] text-slate-400">Deduplicated</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Smartphone Mockup Frame -->
+      <div class="lg:col-span-7 flex justify-center">
+        <div class="w-full max-w-md bg-slate-950 rounded-[44px] p-3.5 border-4 border-slate-700 shadow-2xl relative">
+          <!-- Inner Phone Screen -->
+          <div class="bg-slate-900 rounded-[36px] overflow-hidden flex flex-col h-[700px] border border-slate-800">
+            <!-- Phone Status Bar -->
+            <div class="bg-slate-950/80 px-6 py-2.5 flex items-center justify-between text-[11px] text-slate-400 font-mono border-b border-slate-800 select-none">
+              <div class="flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                <span>BOL KISAN 2G</span>
+              </div>
+              <div class="w-20 h-4 bg-slate-900 rounded-full mx-auto"></div>
+              <div class="flex items-center gap-1">
+                <span id="clockDisplay">12:30</span>
+                <span>🔋 85%</span>
+              </div>
+            </div>
+
+            <!-- Handset SMS App Header -->
+            <div class="bg-slate-900 px-5 py-3 border-b border-slate-800 flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 flex items-center justify-center font-bold text-sm">
+                  BK
+                </div>
+                <div>
+                  <h3 class="text-sm font-semibold text-white">57575 • Bol Kisan</h3>
+                  <p class="text-[10px] text-emerald-400 flex items-center gap-1">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block"></span>
+                    <span>Toll-Free Agricultural SMS</span>
+                  </p>
+                </div>
+              </div>
+              <button onclick="clearHistory()" title="Clear Conversation"
+                class="text-xs text-slate-400 hover:text-rose-400 px-2 py-1 rounded-lg hover:bg-slate-800 transition">
+                🗑️ Clear
+              </button>
+            </div>
+
+            <!-- Message Thread Container -->
+            <div id="messagesContainer" class="flex-1 p-4 overflow-y-auto space-y-3.5 bg-slate-950/50">
+              <!-- Welcome SMS Notice -->
+              <div class="flex justify-center">
+                <div class="bg-slate-800/80 border border-slate-700/60 rounded-xl px-3 py-1.5 text-center max-w-[85%]">
+                  <p class="text-[11px] text-slate-300">
+                    Welcome to <strong>Bol Kisan SMS Gateway</strong>.<br>
+                    Send any crop, pest, or dosage query in Telugu, Hindi, or English.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Handset Composer Footer -->
+            <div class="bg-slate-900 p-3.5 border-t border-slate-800">
+              <div class="flex items-center justify-between text-[11px] text-slate-400 mb-1.5 px-1 font-mono">
+                <span id="charCountDisplay">0 / 320 chars</span>
+                <span id="segmentDisplay">1 segment</span>
+              </div>
+              <form onsubmit="sendSMS(event)" class="flex gap-2">
+                <input type="text" id="smsInput" oninput="updateCharCount()" placeholder="Type crop query or question..." autocomplete="off"
+                  class="flex-1 bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 transition">
+                <button type="submit" id="sendBtn"
+                  class="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-semibold px-4 py-2.5 rounded-xl text-xs transition flex items-center justify-center gap-1 shadow-md">
+                  <span>Send</span>
+                  <span>📤</span>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Live Clock
+    function updateClock() {
+      const now = new Date();
+      const hrs = String(now.getHours()).padStart(2, '0');
+      const mins = String(now.getMinutes()).padStart(2, '0');
+      document.getElementById('clockDisplay').innerText = `${hrs}:${mins}`;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    let isFailureModeActive = false;
+
+    // Telecom standard segment accounting
+    function computeSegments(text) {
+      if (!text) return { segments: 1, chars: 0 };
+      const hasUnicode = Array.from(text).some(c => c.charCodeAt(0) > 127);
+      const len = text.length;
+      let segments = 1;
+      if (hasUnicode) {
+        segments = len <= 70 ? 1 : Math.ceil(len / 67);
+      } else {
+        segments = len <= 160 ? 1 : Math.ceil(len / 153);
+      }
+      return { segments, chars: len, hasUnicode };
+    }
+
+    function updateCharCount() {
+      const text = document.getElementById('smsInput').value;
+      const { segments, chars, hasUnicode } = computeSegments(text);
+      const charDisplay = document.getElementById('charCountDisplay');
+      charDisplay.innerText = `${chars} / 320 chars ${hasUnicode ? '(Unicode)' : '(GSM)'}`;
+      if (chars > 320) {
+        charDisplay.classList.add('text-rose-400');
+        charDisplay.classList.remove('text-slate-400');
+      } else {
+        charDisplay.classList.remove('text-rose-400');
+        charDisplay.classList.add('text-slate-400');
+      }
+      document.getElementById('segmentDisplay').innerText = `${segments} segment${segments > 1 ? 's' : ''}`;
+    }
+
+    function applyPreset(text, lang) {
+      document.getElementById('smsInput').value = text;
+      if (lang) {
+        document.getElementById('langSelect').value = lang;
+      }
+      updateCharCount();
+    }
+
+    async function fetchStatus() {
+      try {
+        const res = await fetch('/api/v1/sms/status');
+        const data = await res.json();
+        isFailureModeActive = !!data.simulate_failure;
+        
+        const badge = document.getElementById('carrierStatusBadge');
+        const btnText = document.getElementById('failureBtnText');
+        if (isFailureModeActive) {
+          badge.className = "flex items-center gap-2 px-3 py-1.5 rounded-lg bg-rose-500/20 border border-rose-500/40 text-rose-300 text-xs font-mono";
+          badge.innerHTML = '<span class="w-2 h-2 rounded-full bg-rose-400 animate-ping"></span><span>GATEWAY: SIMULATED CARRIER FAILURE</span>';
+          btnText.innerText = "Restore Gateway";
+        } else {
+          badge.className = "flex items-center gap-2 px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs font-mono";
+          badge.innerHTML = '<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span><span>GATEWAY: OPERATIONAL</span>';
+          btnText.innerText = "Simulate Failure";
+        }
+
+        if (data.stats) {
+          document.getElementById('statInbound').innerText = data.stats.total_inbound;
+          document.getElementById('statOutbound').innerText = data.stats.total_outbound;
+          document.getElementById('statFailed').innerText = data.stats.total_failed;
+          document.getElementById('statDuplicates').innerText = data.stats.total_duplicates || 0;
+        }
+      } catch (err) {
+        console.error("Failed to fetch gateway status:", err);
+      }
+    }
+
+    async function toggleFailureMode() {
+      try {
+        const res = await fetch('/api/v1/sms/toggle-failure', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({})
+        });
+        await fetchStatus();
+      } catch (err) {
+        alert("Failed to toggle gateway failure mode: " + err);
+      }
+    }
+
+    async function loadHistory() {
+      const phone = document.getElementById('phoneInput').value.trim();
+      if (!phone) return;
+      try {
+        const res = await fetch(`/api/v1/sms/history?phone_number=${encodeURIComponent(phone)}`);
+        const data = await res.json();
+        renderMessages(data.messages || []);
+      } catch (err) {
+        console.error("Failed to load history:", err);
+      }
+    }
+
+    async function clearHistory() {
+      const phone = document.getElementById('phoneInput').value.trim();
+      if (!phone) return;
+      try {
+        await fetch(`/api/v1/sms/history?phone_number=${encodeURIComponent(phone)}`, { method: 'DELETE' });
+        renderMessages([]);
+        fetchStatus();
+      } catch (err) {
+        alert("Error clearing history: " + err);
+      }
+    }
+
+    function renderMessages(messages) {
+      const container = document.getElementById('messagesContainer');
+      container.innerHTML = `
+        <div class="flex justify-center">
+          <div class="bg-slate-800/80 border border-slate-700/60 rounded-xl px-3 py-1.5 text-center max-w-[85%]">
+            <p class="text-[11px] text-slate-300">
+              Welcome to <strong>Bol Kisan SMS Gateway</strong>.<br>
+              Send any crop, pest, or dosage query in Telugu, Hindi, or English.
+            </p>
+          </div>
+        </div>
+      `;
+
+      messages.forEach(msg => {
+        appendMessageBubble(msg);
+      });
+      container.scrollTop = container.scrollHeight;
+    }
+
+    function appendMessageBubble(msg) {
+      const container = document.getElementById('messagesContainer');
+      const isOutbound = msg.direction === 'outbound' || msg.recipient_number;
+      const bubbleDiv = document.createElement('div');
+      
+      const timeStr = msg.timestamp ? new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '';
+
+      if (!isOutbound) {
+        // Inbound message (from farmer, right-aligned)
+        bubbleDiv.className = "flex justify-end";
+        bubbleDiv.innerHTML = `
+          <div class="max-w-[85%] bg-emerald-700 text-white rounded-2xl rounded-tr-sm px-3.5 py-2.5 shadow-md">
+            <div class="flex items-center justify-between gap-2 mb-1">
+              <span class="text-[10px] text-emerald-200 font-mono">Farmer Handset</span>
+              <span class="text-[9px] bg-emerald-950 text-emerald-200 border border-emerald-500/50 px-1 rounded font-mono">SIMULATED</span>
+            </div>
+            <p class="text-xs leading-relaxed whitespace-pre-wrap">${escapeHtml(msg.message_text)}</p>
+            <div class="flex items-center justify-end gap-1.5 mt-1 text-[10px] text-emerald-200 font-mono">
+              <span>${msg.segments || 1} seg</span>
+              <span>•</span>
+              <span>${timeStr}</span>
+              <span>✓✓</span>
+            </div>
+          </div>
+        `;
+      } else {
+        // Outbound reply (from gateway, left-aligned)
+        const isFailed = msg.delivery_status === 'FAILED';
+        const isEscalated = msg.is_safe === false;
+        
+        let statusBadge = '<span class="text-[9px] bg-emerald-950 text-emerald-300 border border-emerald-700 px-1.5 py-0.2 rounded font-mono font-bold">SIMULATED</span>';
+        if (isFailed) {
+          statusBadge = '<span class="text-[9px] bg-rose-950 text-rose-300 border border-rose-700 px-1.5 py-0.2 rounded font-mono font-bold">SIMULATED (FAILED)</span>';
+        } else if (isEscalated) {
+          statusBadge = '<span class="text-[9px] bg-amber-950 text-amber-300 border border-amber-700 px-1.5 py-0.2 rounded font-mono font-bold">SIMULATED (ESCALATED)</span>';
+        }
+
+        bubbleDiv.className = "flex justify-start";
+        bubbleDiv.innerHTML = `
+          <div class="max-w-[88%] ${isFailed ? 'bg-rose-950/40 border-rose-800/80 text-rose-100' : 'bg-slate-800 border-slate-700/80 text-slate-100'} border rounded-2xl rounded-tl-sm px-3.5 py-2.5 shadow-md">
+            <div class="flex items-center justify-between gap-2 mb-1">
+              <span class="text-[10px] font-semibold text-emerald-400 font-mono">56161 • BOL_KISAN</span>
+              <div class="flex items-center gap-1">${statusBadge}</div>
+            </div>
+            <p class="text-xs leading-relaxed whitespace-pre-wrap">${escapeHtml(msg.message_text || msg.error || 'Simulated carrier delivery failed.')}</p>
+            <div class="flex items-center justify-between gap-2 mt-2 pt-1 border-t border-slate-700/40 text-[10px] text-slate-400 font-mono">
+              <span>${msg.char_count || (msg.message_text ? msg.message_text.length : 0)} chars (${msg.segments || 1} seg)</span>
+              <span>${timeStr}</span>
+            </div>
+          </div>
+        `;
+      }
+
+      container.appendChild(bubbleDiv);
+      container.scrollTop = container.scrollHeight;
+    }
+
+    async function sendSMS(e) {
+      e.preventDefault();
+      const input = document.getElementById('smsInput');
+      const text = input.value.trim();
+      const phone = document.getElementById('phoneInput').value.trim();
+      const lang = document.getElementById('langSelect').value || null;
+
+      if (!text || !phone) return;
+
+      const sendBtn = document.getElementById('sendBtn');
+      sendBtn.disabled = true;
+      sendBtn.innerHTML = '<span>...</span>';
+
+      try {
+        const payload = {
+          sender_number: phone,
+          message_text: text,
+          language: lang
+        };
+
+        const res = await fetch('/api/v1/sms/incoming', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await res.json();
+        if (data.inbound) {
+          appendMessageBubble(data.inbound);
+        }
+        if (data.reply) {
+          appendMessageBubble(data.reply);
+        }
+
+        input.value = '';
+        updateCharCount();
+        fetchStatus();
+      } catch (err) {
+        alert("Failed to send simulated SMS: " + err);
+      } finally {
+        sendBtn.disabled = false;
+        sendBtn.innerHTML = '<span>Send</span><span>📤</span>';
+      }
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+
+    // Initial Load
+    fetchStatus();
+    loadHistory();
+  </script>
+</body>
+</html>

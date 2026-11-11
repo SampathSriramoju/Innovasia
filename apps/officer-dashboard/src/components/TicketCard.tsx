@@ -17,8 +17,8 @@ interface TicketCardProps {
 }
 
 export const TicketCard: React.FC<TicketCardProps> = ({ ticket, onSelect }) => {
-  const isEmergency = ticket.priority === 'high' || ticket.priority === 'emergency';
-  const isResolved = ticket.status === 'resolved';
+  const isEmergency = ticket.priority?.toLowerCase() === 'high' || ticket.priority?.toLowerCase() === 'emergency';
+  const isResolved = ticket.status?.toLowerCase() === 'resolved' || ticket.status?.toLowerCase() === 'closed';
 
   const photoThumbnail = ticket.photo_url || (ticket.attached_image_urls && ticket.attached_image_urls[0]);
 

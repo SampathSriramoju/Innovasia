@@ -15,7 +15,10 @@ class SafetyDecision(BaseModel):
     dosage_per_15l_knapsack: Optional[str] = None
     banned_chemical_detected: Optional[str] = None
     off_label_detected: bool = False
+    off_label_method_detected: bool = False
     tank_mixture_detected: bool = False
+    application_method: Optional[str] = None
+    growth_stage: Optional[str] = None
 
 # Explicit Blacklist of Banned & Restricted Agrochemicals in India
 BANNED_AGROCHEMICALS: List[Dict[str, Any]] = [
@@ -225,7 +228,17 @@ CHEMICAL_CANONICAL_MAP: Dict[str, str] = {
     "tracer": "spinosad",
     "spinosad": "spinosad",
     "saaf": "saaf_premix",
-    "amistar": "amistar_premix"
+    "amistar": "amistar_premix",
+    "azoxystrobin": "amistar_premix",
+    "difenoconazole": "amistar_premix",
+    "blitox": "copper_oxychloride",
+    "copper": "copper_oxychloride",
+    "streptocycline": "streptocycline",
+    "ridomil": "ridomil_premix",
+    "metalaxyl": "ridomil_premix",
+    "carboxin": "carboxin",
+    "thiram": "thiram",
+    "trichoderma": "trichoderma"
 }
 
 class PesticideValidator:
@@ -252,14 +265,138 @@ class PesticideValidator:
             self.records = self._load_default_records()
 
     def _load_default_records(self) -> List[Dict[str, Any]]:
-        default_path = Path(__file__).resolve().parent.parent.parent.parent / "knowledge-base" / "pesticide-labels" / "cibrc_approved_pesticides_kb07_kb08.json"
-        if default_path.exists():
-            try:
-                with open(default_path, "r", encoding="utf-8") as f:
-                    return json.load(f)
-            except Exception:
-                pass
+        candidate_paths = [
+            Path(__file__).resolve().parent.parent.parent.parent / "knowledge-base" / "pesticide-labels" / "cibrc_approved_pesticides_kb07_kb08.json",
+            Path.cwd() / "knowledge-base" / "pesticide-labels" / "cibrc_approved_pesticides_kb07_kb08.json",
+            Path.cwd().parent / "knowledge-base" / "pesticide-labels" / "cibrc_approved_pesticides_kb07_kb08.json"
+        ]
+        for p in candidate_paths:
+            if p.exists():
+                try:
+                    with open(p, "r", encoding="utf-8") as f:
+                        return json.load(f)
+                except Exception:
+                    pass
         return []
+
+    @staticmethod
+    def normalize_application_method(method: Optional[str]) -> Optional[str]:
+        if not method:
+            return None
+        m = method.lower().strip().replace("-", "_").replace(" ", "_")
+        if any(k in m for k in ["foliar", "spray", "foliar_spray", "leaf", "canopy"]):
+            if "soil_spray" in m or "pre_emergence" in m:
+                return "soil_application"
+            return "foliar_spray"
+        if any(k in m for k in ["seed_treatment", "seed_dressing", "seed", "beej"]):
+            return "seed_treatment"
+        if any(k in m for k in ["sett", "sett_treatment", "sett_dip"]):
+            return "sett_treatment"
+        if any(k in m for k in ["rhizome", "rhizome_dip", "rhizome_treatment"]):
+            return "rhizome_treatment"
+        if any(k in m for k in ["drench", "drenching", "soil_drench"]):
+            return "soil_drench"
+        if any(k in m for k in ["broadcast", "soil_application", "furrow"]):
+            return "soil_application"
+        return m
+
+    @staticmethod
+    def infer_application_context(
+        application_method: Optional[str] = None,
+        growth_stage: Optional[str] = None,
+        plant_part: Optional[str] = None,
+        text_context: Optional[str] = None
+    ) -> Tuple[Optional[str], Optional[str]]:
+        """
+        Infers canonical (target_method, target_stage).
+        Returns (method, stage).
+        """
+        method = PesticideValidator.normalize_application_method(application_method)
+        stage = (growth_stage or "").lower().strip().replace("-", "_").replace(" ", "_") or None
+
+        part = (plant_part or "").lower().strip()
+        text = (text_context or "").lower()
+
+        foliar_parts = [
+            "leaf", "leaves", "stem", "stems", "fruit", "fruits", "flower", "flowers",
+            "foliage", "canopy", "pod", "pods", "panicle", "earhead", "whorl", "shoot", "shoots", "branch", "branches"
+        ]
+        seed_parts = ["seed", "seeds"]
+        sett_parts = ["sett", "setts"]
+        rhizome_parts = ["rhizome", "rhizomes"]
+
+        seed_keywords = [
+            "seed treatment", "seed dressing", "seed soak", "seeds", "seed",
+            "విత్తన శుద్ధి", "విత్తనాల", "బీజోపచార్", "బీజ శుద్ధి",
+            "बीज उपचार", "बीजोपचार", "बीज", "before sowing", "pre-sowing", "pre sowing"
+        ]
+        sett_keywords = ["sett dipping", "sett treatment", "sett dip", "చెరకు ముక్కల శుద్ధి", "गन्ना सेट उपचार"]
+        drench_keywords = ["soil drench", "root drench", "drenching", "పాదుల్లో", "డ్రెంచింగ్", "ड्रेंचिंग"]
+        foliar_keywords = ["foliar", "spray", "spraying", "పిచికారీ", "స్ప్రే", "కొట్టాలి", "छिड़काव", "स्प्रे"]
+
+        if not method:
+            if part in foliar_parts:
+                method = "foliar_spray"
+            elif part in seed_parts:
+                method = "seed_treatment"
+            elif part in sett_parts:
+                method = "sett_treatment"
+            elif part in rhizome_parts:
+                method = "rhizome_treatment"
+            elif any(k in text for k in seed_keywords):
+                method = "seed_treatment"
+            elif any(k in text for k in sett_keywords):
+                method = "sett_treatment"
+            elif any(k in text for k in drench_keywords):
+                method = "soil_drench"
+            elif any(k in text for k in foliar_keywords):
+                method = "foliar_spray"
+
+        if not stage:
+            standing_stages = ["standing_crop", "vegetative", "flowering", "fruiting", "tillering", "booting", "heading", "pod_formation", "mature", "maturity"]
+            if method == "foliar_spray" or part in foliar_parts or any(s in (growth_stage or "").lower() for s in standing_stages):
+                stage = "standing_crop"
+            elif method in ["seed_treatment", "sett_treatment", "rhizome_treatment"] or part in seed_parts or any(k in text for k in seed_keywords):
+                stage = "pre_sowing"
+
+        return method, stage
+
+    @staticmethod
+    def get_record_methods(record: Dict[str, Any]) -> List[str]:
+        methods = []
+        cat = record.get("method_category")
+        if cat:
+            if isinstance(cat, list):
+                methods.extend([PesticideValidator.normalize_application_method(c) for c in cat if c])
+            elif isinstance(cat, str):
+                methods.append(PesticideValidator.normalize_application_method(cat))
+
+        app_m = (record.get("application_method") or "").lower()
+        if "foliar" in app_m or "spray" in app_m:
+            if "soil spray" in app_m or "pre-emergence" in app_m:
+                methods.append("soil_application")
+            else:
+                methods.append("foliar_spray")
+        if "seed" in app_m or "/kg seed" in record.get("dosage_per_acre", ""):
+            methods.append("seed_treatment")
+        if "sett" in app_m:
+            methods.append("sett_treatment")
+        if "rhizome" in app_m:
+            methods.append("rhizome_treatment")
+        if "drench" in app_m:
+            methods.append("soil_drench")
+        if "broadcast" in app_m:
+            methods.append("soil_application")
+
+        unique_methods = []
+        for m in methods:
+            if m and m not in unique_methods:
+                unique_methods.append(m)
+
+        if not unique_methods:
+            unique_methods = ["foliar_spray"]
+
+        return unique_methods
 
     @staticmethod
     def normalize_unit(unit: str) -> str:
@@ -455,6 +592,14 @@ class PesticideValidator:
         if "saaf_premix" in canonical_chems:
             canonical_chems.discard("carbendazim")
             canonical_chems.discard("mancozeb")
+        if "ridomil_premix" in canonical_chems:
+            canonical_chems.discard("mancozeb")
+        if "copper_oxychloride" in canonical_chems and "streptocycline" in canonical_chems:
+            # Authorized combination for bacterial blight on cotton
+            canonical_chems.discard("streptocycline")
+        if "carboxin" in canonical_chems and "thiram" in canonical_chems:
+            # Authorized pre-mix seed treatment
+            canonical_chems.discard("thiram")
 
         if len(canonical_chems) >= 2:
             return {
@@ -468,12 +613,22 @@ class PesticideValidator:
         self,
         crop: Optional[str],
         pest_or_disease: Optional[str],
-        product_or_chemical: Optional[str] = None
+        product_or_chemical: Optional[str] = None,
+        application_method: Optional[str] = None,
+        growth_stage: Optional[str] = None,
+        plant_part: Optional[str] = None
     ) -> SafetyDecision:
         # Step 0: Check for Banned / Restricted Agrochemicals first
         banned_decision = self.check_banned_chemical(product_or_chemical, crop=crop)
         if banned_decision:
             return banned_decision
+
+        target_method, target_stage = self.infer_application_context(
+            application_method=application_method,
+            growth_stage=growth_stage,
+            plant_part=plant_part,
+            text_context=f"{pest_or_disease or ''} {product_or_chemical or ''}"
+        )
 
         if not crop:
             return SafetyDecision(
@@ -488,16 +643,17 @@ class PesticideValidator:
             )
 
         if not pest_or_disease and not product_or_chemical:
-            return SafetyDecision(
-                is_safe=False,
-                needs_escalation=True,
-                severity="MEDIUM",
-                escalation_reason="Crop or target pest/disease could not be unambiguously identified.",
-                warnings=[
-                    "Both crop name and target pest/disease must be specified for chemical safety validation.",
-                    "Escalating case to Regional Agricultural Extension Officer."
-                ]
-            )
+            if not target_method or target_method not in ["seed_treatment", "sett_treatment"]:
+                return SafetyDecision(
+                    is_safe=False,
+                    needs_escalation=True,
+                    severity="MEDIUM",
+                    escalation_reason="Crop or target pest/disease could not be unambiguously identified.",
+                    warnings=[
+                        "Both crop name and target pest/disease must be specified for chemical safety validation.",
+                        "Escalating case to Regional Agricultural Extension Officer."
+                    ]
+                )
 
         # Step 0.5: Check for unapproved tank mixtures in chemical input
         if product_or_chemical:
@@ -526,7 +682,7 @@ class PesticideValidator:
         pest_clean = pest_or_disease.lower().strip() if pest_or_disease else None
         chemical_clean = product_or_chemical.lower().strip() if product_or_chemical else None
 
-        # Search for exact 8-parameter match in CIBRC registry
+        # Search for exact match in CIBRC registry
         matched_records = []
         for rec in self.records:
             rec_crop = rec.get("target_crop", "").lower()
@@ -547,6 +703,8 @@ class PesticideValidator:
                 p_m = (pest_clean in rec_pest or rec_pest in pest_clean) if rec_pest else False
                 d_m = (pest_clean in rec_disease or rec_disease in pest_clean) if rec_disease else False
                 pest_match = p_m or d_m
+            elif target_method in ["seed_treatment", "sett_treatment"]:
+                pest_match = True
 
             # Chemical match (if chemical specified)
             chem_match = True
@@ -561,10 +719,73 @@ class PesticideValidator:
             if crop_match and pest_match and chem_match:
                 matched_records.append(rec)
 
+        # Application method & growth stage verification
+        if matched_records:
+            if chemical_clean:
+                # Chemical was explicitly requested
+                if target_method:
+                    valid_method_records = [r for r in matched_records if target_method in self.get_record_methods(r)]
+                    if not valid_method_records:
+                        # Off-label application method violation
+                        rec = matched_records[0]
+                        rec_methods = self.get_record_methods(rec)
+                        rec_methods_str = ", ".join(rec_methods)
+                        return SafetyDecision(
+                            is_safe=False,
+                            needs_escalation=True,
+                            severity="HIGH",
+                            off_label_detected=True,
+                            off_label_method_detected=True,
+                            application_method=target_method,
+                            growth_stage=target_stage,
+                            escalation_reason=(
+                                f"Off-label application method detected (Off-label application method violation): '{product_or_chemical}' is approved under CIBRC strictly for "
+                                f"{rec_methods_str} (e.g. seed/sett treatment), and is NOT approved for '{target_method}' on standing crops. "
+                                f"Foliar application of seed treatment formulations causes severe phytotoxicity, illegal residues, and environmental hazards."
+                            ),
+                            warnings=[
+                                f"Off-Label Application Method Warning: '{product_or_chemical}' is approved only for {rec_methods_str}.",
+                                "NEVER apply seed treatment or sett dipping formulations as foliar sprays on standing crops.",
+                                "Foliar spraying of seed dressings risks severe crop scorch, chemical toxicity, and statutory residue violations.",
+                                "Escalating case to Agricultural Extension Officer for CIBRC-approved foliar alternatives."
+                            ],
+                            source_citation=rec.get("cibrc_registration_number") or "CIBRC Official Approved Formulations Registry"
+                        )
+                    matched_records = valid_method_records
+            else:
+                # System finding approved formulation for crop & pest
+                if target_method:
+                    valid_method_records = [r for r in matched_records if target_method in self.get_record_methods(r)]
+                    if not valid_method_records:
+                        rec = matched_records[0]
+                        rec_methods = self.get_record_methods(rec)
+                        rec_methods_str = ", ".join(rec_methods)
+                        return SafetyDecision(
+                            is_safe=False,
+                            needs_escalation=True,
+                            severity="HIGH",
+                            off_label_detected=True,
+                            off_label_method_detected=True,
+                            application_method=target_method,
+                            growth_stage=target_stage,
+                            escalation_reason=(
+                                f"No CIBRC approved {target_method} formulation registered for crop '{crop}' and target '{pest_or_disease}'. "
+                                f"Existing registrations for this disease are strictly for {rec_methods_str} and cannot be applied as foliar sprays on standing crops. "
+                                f"Escalating to Agricultural Officer."
+                            ),
+                            warnings=[
+                                f"No CIBRC approved {target_method} formulation registered for '{pest_or_disease}' on standing '{crop}'.",
+                                f"Available treatments are restricted to {rec_methods_str}. Never spray seed/sett treatments onto crop foliage.",
+                                "Escalating case to Agricultural Extension Officer for IPM and cultural management advice."
+                            ]
+                        )
+                    matched_records = valid_method_records
+
         if not matched_records:
             # Check for Off-label use: Is this chemical registered for OTHER crops?
             if chemical_clean:
                 other_crop_registrations = []
+                other_crop_methods = []
                 for rec in self.records:
                     rec_prod = rec.get("product_trade_name", "").lower()
                     rec_ai = rec.get("active_ingredient", "").lower()
@@ -573,41 +794,79 @@ class PesticideValidator:
                         rec_prod in chemical_clean or 
                         rec_ai.split()[0].lower() in chemical_clean):
                         other_crop_registrations.append(rec.get("target_crop", "Other Crop"))
+                        other_crop_methods.extend(self.get_record_methods(rec))
 
                 if other_crop_registrations:
                     registered_crops_str = ", ".join(sorted(set(other_crop_registrations)))
-                    return SafetyDecision(
-                        is_safe=False,
-                        needs_escalation=True,
-                        severity="HIGH",
-                        off_label_detected=True,
-                        escalation_reason=(
-                            f"Off-label chemical use detected: '{product_or_chemical}' is registered under CIBRC only for "
-                            f"{registered_crops_str}, and is NOT approved for '{crop}'. "
-                            f"No CIBRC approved pesticide label found for this crop. "
-                            f"Off-label application violates the Insecticides Act, 1968 and risks crop damage and unapproved pesticide residues."
-                        ),
-                        warnings=[
-                            f"Off-label Warning: '{product_or_chemical}' has NO approved dosage or label claim for '{crop}'.",
-                            "Applying off-label chemicals causes illegal residue violations, potential harvest rejection, and crop phytotoxicity.",
-                            "Escalating case to Regional Agricultural Extension Officer for crop-authorized alternatives."
-                        ],
-                        source_citation="CIBRC Official Crop-Pest Registered Formulations Registry"
-                    )
+                    is_seed_only = all(m in ["seed_treatment", "sett_treatment"] for m in other_crop_methods)
+                    if target_method == "foliar_spray" and is_seed_only:
+                        return SafetyDecision(
+                            is_safe=False,
+                            needs_escalation=True,
+                            severity="HIGH",
+                            off_label_detected=True,
+                            off_label_method_detected=True,
+                            application_method=target_method,
+                            growth_stage=target_stage,
+                            escalation_reason=(
+                                f"Off-label application method detected (Off-label application method violation): '{product_or_chemical}' is registered under CIBRC only as a "
+                                f"seed/sett treatment for {registered_crops_str}, and is NOT approved for foliar spraying on '{crop}'. "
+                                f"No CIBRC approved foliar label found. Seed dressings must never be sprayed on standing crops."
+                            ),
+                            warnings=[
+                                f"Off-label Warning: '{product_or_chemical}' has NO approved foliar claim for '{crop}'.",
+                                "Applying seed treatment chemicals as foliar sprays causes severe crop phytotoxicity and illegal residues.",
+                                "Escalating case to Regional Agricultural Extension Officer."
+                            ],
+                            source_citation="CIBRC Official Crop-Pest Registered Formulations Registry"
+                        )
+                    else:
+                        return SafetyDecision(
+                            is_safe=False,
+                            needs_escalation=True,
+                            severity="HIGH",
+                            off_label_detected=True,
+                            application_method=target_method,
+                            growth_stage=target_stage,
+                            escalation_reason=(
+                                f"Off-label chemical use detected: '{product_or_chemical}' is registered under CIBRC only for "
+                                f"{registered_crops_str}, and is NOT approved for '{crop}'. "
+                                f"No CIBRC approved pesticide label found for this crop. "
+                                f"Off-label application violates the Insecticides Act, 1968 and risks crop damage and unapproved pesticide residues."
+                            ),
+                            warnings=[
+                                f"Off-label Warning: '{product_or_chemical}' has NO approved dosage or label claim for '{crop}'.",
+                                "Applying off-label chemicals causes illegal residue violations, potential harvest rejection, and crop phytotoxicity.",
+                                "Escalating case to Regional Agricultural Extension Officer for crop-authorized alternatives."
+                            ],
+                            source_citation="CIBRC Official Crop-Pest Registered Formulations Registry"
+                        )
 
+            is_off_label = bool(chemical_clean)
+            esc_msg = (
+                f"Off-label / Unregistered chemical use detected: '{product_or_chemical}' has no CIBRC approved label for crop '{crop}' and target '{pest_or_disease}'."
+                if chemical_clean else
+                f"No CIBRC approved pesticide label found for crop '{crop}' and target '{pest_or_disease}'."
+            )
             return SafetyDecision(
                 is_safe=False,
                 needs_escalation=True,
                 severity="HIGH",
-                escalation_reason=f"No CIBRC approved pesticide label found for crop '{crop}' and target '{pest_or_disease}'.",
+                off_label_detected=is_off_label,
+                off_label_method_detected=is_off_label and (target_method == "foliar_spray"),
+                application_method=target_method,
+                growth_stage=target_stage,
+                escalation_reason=esc_msg,
                 warnings=[
-                    "Unregistered or unverified chemical treatment. Self-medication of crops risks crop burn and chemical poisoning.",
+                    f"Off-label Warning: '{product_or_chemical or 'Requested chemical'}' has no approved label claim for '{crop}'.",
+                    "Unregistered or off-label chemical use risks severe crop burn, phytotoxicity, and illegal residues.",
                     "Escalating case to Regional Agricultural Extension Officer."
                 ]
             )
 
         # Authoritative registered record
         record = matched_records[0]
+        rec_methods = self.get_record_methods(record)
 
         # Verify 8 mandatory parameters
         mandatory_fields = [
@@ -615,7 +874,7 @@ class PesticideValidator:
             "dosage_per_hectare", "dosage_per_acre", "dilution_water_liters",
             "pre_harvest_interval_days", "safety_precautions"
         ]
-        missing_fields = [f for f in mandatory_fields if not record.get(f)]
+        missing_fields = [f for f in mandatory_fields if record.get(f) is None or record.get(f) == ""]
         if missing_fields:
             return SafetyDecision(
                 is_safe=False,
@@ -625,14 +884,25 @@ class PesticideValidator:
                 warnings=["CIBRC label missing required safety parameters. Escalating to human officer."]
             )
 
-        # Precise knapsack sprayer dosage verification
-        knapsack_dose = record.get("dosage_per_15l_knapsack")
-        if not knapsack_dose:
-            knapsack_dose = self.calculate_knapsack_dosage(
-                dosage_per_acre=record.get("dosage_per_acre", ""),
-                dilution_liters=record.get("dilution_water_liters", "")
-            )
+        # Precise knapsack sprayer dosage verification vs verified refusal
+        is_seed_treatment = "seed_treatment" in rec_methods or (target_method == "seed_treatment")
+        is_sett_treatment = "sett_treatment" in rec_methods or (target_method == "sett_treatment")
+
+        if is_seed_treatment:
+            seed_rate = record.get("dosage_per_acre", "")
+            knapsack_dose = f"Refuse knapsack conversion: Seed treatment formulation must be applied as seed dressing ({seed_rate}), not in a knapsack sprayer."
             record["dosage_per_15l_knapsack"] = knapsack_dose
+        elif is_sett_treatment:
+            knapsack_dose = record.get("dosage_per_15l_knapsack") or "Refuse naive knapsack conversion: Sett dipping must be performed before planting."
+            record["dosage_per_15l_knapsack"] = knapsack_dose
+        else:
+            knapsack_dose = record.get("dosage_per_15l_knapsack")
+            if not knapsack_dose:
+                knapsack_dose = self.calculate_knapsack_dosage(
+                    dosage_per_acre=record.get("dosage_per_acre", ""),
+                    dilution_liters=record.get("dilution_water_liters", "")
+                )
+                record["dosage_per_15l_knapsack"] = knapsack_dose
 
         # Personal Protective Equipment (PPE) requirements
         ppe_list = record.get("ppe_requirements")
@@ -652,9 +922,12 @@ class PesticideValidator:
             approved_product=record,
             source_citation=citation,
             dosage_per_15l_knapsack=knapsack_dose,
+            application_method=target_method or (rec_methods[0] if rec_methods else "foliar_spray"),
+            growth_stage=target_stage or ("standing_crop" if (target_method == "foliar_spray") else "pre_sowing"),
             warnings=[
                 f"Toxicity: {record.get('toxicity_band', 'Standard Agricultural Formulation')}",
                 f"Waiting Period (PHI): {record.get('pre_harvest_interval_days')} days before harvest.",
+                f"Application Method: {record.get('application_method', target_method or 'foliar_spray')}",
                 f"Knapsack Sprayer Dose: {knapsack_dose}.",
                 f"Mandatory PPE: {ppe_str}",
                 f"Precautions: {record.get('safety_precautions')}"
@@ -692,8 +965,11 @@ class PesticideValidator:
         approved_acre_nums = extract_nums(approved_acre_str.split('(')[0])
         approved_ha_nums = extract_nums(approved_ha_str.split('(')[0])
         
-        knapsack_chem_match = re.search(r'(\d+(?:\.\d+)?)\s*(g|gm|gms|grams?|kg|ml)\b', approved_knapsack_str.split('(')[0], re.I)
-        approved_knapsack_nums = [float(knapsack_chem_match.group(1))] if knapsack_chem_match else []
+        knapsack_split = approved_knapsack_str.split('per 15')[0]
+        approved_knapsack_nums = [float(x) for x in re.findall(r'\b\d+(?:\.\d+)?\b', knapsack_split)]
+        if not approved_knapsack_nums:
+            knapsack_chem_match = re.search(r'(\d+(?:\.\d+)?)\s*(g|gm|gms|grams?|kg|ml)\b', approved_knapsack_str.split('(')[0], re.I)
+            approved_knapsack_nums = [float(knapsack_chem_match.group(1))] if knapsack_chem_match else []
         
         dilution_nums = extract_nums(dilution_str)
         phi_nums = extract_nums(phi_str)

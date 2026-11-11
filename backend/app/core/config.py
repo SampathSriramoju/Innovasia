@@ -3,7 +3,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 from pydantic import Field, model_validator
 
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
+    model_config = SettingsConfigDict(env_file=(".env", "backend/.env", "../backend/.env"), env_file_encoding="utf-8", extra="ignore")
 
     PROJECT_NAME: str = "Bol Kisan Agricultural AI Assistant"
     API_V1_STR: str = "/api/v1"
@@ -25,6 +25,9 @@ class Settings(BaseSettings):
     SMS_GATEWAY_API_KEY: Optional[str] = None
     SMS_GATEWAY_PROVIDER: Optional[str] = None
 
+    # Government Data API (data.gov.in)
+    DATA_GOV_IN_API_KEY: Optional[str] = None
+
     # Database
     DATABASE_URL: str = "sqlite+aiosqlite:///./bolkisan.db"
     SYNC_DATABASE_URL: str = "sqlite:///./bolkisan.db"
@@ -34,6 +37,9 @@ class Settings(BaseSettings):
     GEMINI_MODEL: str = "gemini-3.8-flash"
     GEMINI_TEMPERATURE: float = 0.1
     GEMINI_MAX_OUTPUT_TOKENS: int = 1024
+
+    # Government Data APIs (data.gov.in)
+    DATA_GOV_IN_API_KEY: Optional[str] = None
 
     # Speech Services
     BHASHINI_USER_ID: Optional[str] = None

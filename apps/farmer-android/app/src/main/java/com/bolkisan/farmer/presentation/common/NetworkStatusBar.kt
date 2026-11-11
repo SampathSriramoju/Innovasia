@@ -37,7 +37,9 @@ fun NetworkStatusBar(
     isOnline: Boolean,
     language: String = "te",
     modifier: Modifier = Modifier,
-    engineState: NetworkEngineState? = null
+    engineState: NetworkEngineState? = null,
+    isVisionAvailable: Boolean? = null,
+    outboxCount: Int = 0
 ) {
     val context = LocalContext.current
     val modelStatus by OfflineModelManager.modelStatus.collectAsState()
@@ -58,14 +60,26 @@ fun NetworkStatusBar(
     val stateConfig = when (currentEngineState) {
         NetworkEngineState.ONLINE -> {
             val title = when (language) {
-                "te" -> "ONLINE (FastAPI Cloud/LAN)"
-                "hi" -> "ONLINE (FastAPI Cloud/LAN)"
-                else -> "ONLINE (FastAPI Cloud/LAN)"
+                "te" -> "NETWORK: ONLINE (FastAPI Cloud/LAN)"
+                "hi" -> "NETWORK: ONLINE (FastAPI Cloud/LAN)"
+                else -> "NETWORK: ONLINE (FastAPI Cloud/LAN)"
             }
-            val subtitle = when (language) {
-                "te" -> "క్లౌడ్ & AI నెట్‌వర్క్ అనుసంధానించబడింది • త్వరిత ప్రత్యుత్తరం"
-                "hi" -> "क्लाउड व AI नेटवर्क से जुड़ा है • तत्काल समाधान"
-                else -> "Cloud & AI Server Connected • Fast Live RAG"
+            val subtitle = when {
+                isVisionAvailable == true -> when (language) {
+                    "te" -> "క్లౌడ్ నెట్‌వర్క్ & Gemini Vision అందుబాటులో ఉన్నాయి"
+                    "hi" -> "क्लाउड नेटवर्क और जेमिनी विज़न उपलब्ध हैं"
+                    else -> "Cloud Network & Gemini Vision verified available"
+                }
+                isVisionAvailable == false -> when (language) {
+                    "te" -> "నెట్‌వర్క్ కనెక్ట్ అయింది • ఫోటో విశ్లేషణ ఆఫ్‌లైన్ నిల్వలో ఉంది"
+                    "hi" -> "नेटवर्क कनेक्टेड • फोटो विश्लेषण ऑफ़लाइन कतारबद्ध है"
+                    else -> "Network connected • Vision analysis queued in Outbox"
+                }
+                else -> when (language) {
+                    "te" -> "క్లౌడ్ & AI నెట్‌వర్క్ అనుసంధానించబడింది"
+                    "hi" -> "क्लाउड व AI नेटवर्क से जुड़ा है"
+                    else -> "Cloud & AI Server Connected"
+                }
             }
             StateConfig(
                 bgColor = Color(0xFFDCFCE7),
@@ -84,9 +98,9 @@ fun NetworkStatusBar(
                 else -> "OFFLINE SLM (Qwen3-0.6B On-Device AI)"
             }
             val subtitle = when (language) {
-                "te" -> "పరికరంలో నడిచే నరాల నెట్‌వర్క్ మోడల్ (నెట్ అవసరం లేదు)"
-                "hi" -> "ऑन-डिवाइस न्यूरल AI मॉडल सक्रिय (इंटरनेट रहित)"
-                else -> "Edge Neural Model active on-device (Zero Internet)"
+                "te" -> "పరికరంలో నడిచే మోడల్ (టెక్స్ట్ మాత్రమే • ఫోటోలు అవుట్‌బాక్స్‌లో నిల్వ)"
+                "hi" -> "ऑन-डिवाइस मॉडल (केवल टेक्स्ट • फोटो आउटबॉक्स में कतारबद्ध)"
+                else -> "Edge SLM active (Text only • Photos queued in Outbox)"
             }
             StateConfig(
                 bgColor = Color(0xFFF5F3FF),
@@ -131,49 +145,143 @@ fun NetworkStatusBar(
             .border(1.dp, animatedBorder, RoundedCornerShape(12.dp)),
         color = animatedBg
     ) {
-        Row(
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 12.dp, vertical = 8.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
+                .padding(horizontal = 12.dp, vertical = 8.dp)
         ) {
             Row(
+                modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.weight(1f)
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                // Status indicator pulse dot
-                Box(
-                    modifier = Modifier
-                        .size(10.dp)
-                        .clip(CircleShape)
-                        .background(stateConfig.dotColor)
-                )
-
-                Spacer(modifier = Modifier.width(8.dp))
-
-                Column {
-                    Text(
-                        text = stateConfig.title,
-                        fontSize = 12.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = stateConfig.textColor
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.weight(1f)
+                ) {
+                    // Status indicator pulse dot
+                    Box(
+                        modifier = Modifier
+                            .size(10.dp)
+                            .clip(CircleShape)
+                            .background(stateConfig.dotColor)
                     )
 
-                    Text(
-                        text = stateConfig.subtitle,
-                        fontSize = 10.sp,
-                        color = stateConfig.textColor.copy(alpha = 0.85f)
-                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+
+                    Column {
+                        Text(
+                            text = stateConfig.title,
+                            fontSize = 11.5.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = stateConfig.textColor
+                        )
+
+                        Text(
+                            text = stateConfig.subtitle,
+                            fontSize = 10.sp,
+                            color = stateConfig.textColor.copy(alpha = 0.85f)
+                        )
+                    }
                 }
+
+                Icon(
+                    imageVector = stateConfig.icon,
+                    contentDescription = stateConfig.title,
+                    tint = stateConfig.dotColor,
+                    modifier = Modifier.size(20.dp)
+                )
             }
 
-            Icon(
-                imageVector = stateConfig.icon,
-                contentDescription = stateConfig.title,
-                tint = stateConfig.dotColor,
-                modifier = Modifier.size(20.dp)
-            )
+            // Separated Status Badges (Task 3):
+            // Shows distinct badges for Gemini Vision availability and Outbox Queue Status
+            if (isVisionAvailable != null || outboxCount > 0) {
+                Spacer(modifier = Modifier.height(6.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(6.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    // Vision Status Badge (Never display generic ONLINE as proof that Gemini Vision is available!)
+                    val visionReady = isVisionAvailable == true
+                    val visionBadgeBg = if (visionReady) Color(0xFFDCFCE7) else Color(0xFFFEF3C7)
+                    val visionBadgeBorder = if (visionReady) Color(0xFF86EFAC) else Color(0xFFFCD34D)
+                    val visionBadgeFg = if (visionReady) Color(0xFF14532D) else Color(0xFF92400E)
+                    val visionDot = if (visionReady) Color(0xFF16A34A) else Color(0xFFD97706)
+                    val visionText = if (visionReady) {
+                        "👁️ Vision: Cloud Active"
+                    } else {
+                        "📷 Vision: Offline Queued"
+                    }
+
+                    Surface(
+                        shape = RoundedCornerShape(6.dp),
+                        color = visionBadgeBg,
+                        border = androidx.compose.foundation.BorderStroke(1.dp, visionBadgeBorder)
+                    ) {
+                        Row(
+                            modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .size(6.dp)
+                                    .clip(CircleShape)
+                                    .background(visionDot)
+                            )
+                            Spacer(modifier = Modifier.width(4.dp))
+                            Text(
+                                text = visionText,
+                                fontSize = 9.5.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = visionBadgeFg
+                            )
+                        }
+                    }
+
+                    // Outbox Sync Status Badge
+                    if (outboxCount > 0) {
+                        Surface(
+                            shape = RoundedCornerShape(6.dp),
+                            color = Color(0xFFFFFBEB),
+                            border = androidx.compose.foundation.BorderStroke(1.dp, Color(0xFFFCD34D))
+                        ) {
+                            Row(
+                                modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Box(
+                                    modifier = Modifier
+                                        .size(6.dp)
+                                        .clip(CircleShape)
+                                        .background(Color(0xFFD97706))
+                                )
+                                Spacer(modifier = Modifier.width(4.dp))
+                                Text(
+                                    text = "⏳ Outbox: $outboxCount Pending",
+                                    fontSize = 9.5.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    color = Color(0xFF92400E)
+                                )
+                            }
+                        }
+                    } else {
+                        Surface(
+                            shape = RoundedCornerShape(6.dp),
+                            color = Color(0xFFF0FDF4),
+                            border = androidx.compose.foundation.BorderStroke(1.dp, Color(0xFFBBF7D0))
+                        ) {
+                            Text(
+                                text = "✓ Outbox: Synced",
+                                fontSize = 9.5.sp,
+                                fontWeight = FontWeight.SemiBold,
+                                color = Color(0xFF166534),
+                                modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
+                            )
+                        }
+                    }
+                }
+            }
         }
     }
 }

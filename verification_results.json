@@ -1,0 +1,74 @@
+[
+  {
+    "step": 1,
+    "name": "Farmer Authentication",
+    "status": "PASSED",
+    "details": "Farmer ID: a7933d82-9219-4560-9ec7-154d7754383a, Phone: 9876543210, Role: farmer"
+  },
+  {
+    "step": 2,
+    "name": "Farmer Asks Agricultural Question",
+    "status": "PASSED",
+    "details": "Conversation ID: ec6c439b-7f7d-4ce7-9f3f-e8555047ba6e, Query: 'మిరప తోటలో ఆకులు ముడుచుకుపోయి పసుపు మచ్చలు వచ్చాయి, ఏ మందు కొట్టాలి?'"
+  },
+  {
+    "step": 3,
+    "name": "Contact Agricultural Officer (Escalate)",
+    "status": "PASSED",
+    "details": "Ticket Number: BK-2026-F1AE121C7E1B, ID: 0e440e98-1eee-493c-9c05-517f20574763, Linked Conv: ec6c439b-7f7d-4ce7-9f3f-e8555047ba6e"
+  },
+  {
+    "step": 4,
+    "name": "Ticket Appears in Officer Dashboard",
+    "status": "PASSED",
+    "details": "Ticket BK-2026-F1AE121C7E1B discovered in mandal jurisdiction queue (Geesugonda)"
+  },
+  {
+    "step": 5,
+    "name": "Extension Officer Authentication",
+    "status": "PASSED",
+    "details": "Officer ID: e9f8cd9b-fa0e-4043-ba9e-ced4a9395f76, Code: AGRI-TS-042, Designation: MAO, Jurisdiction: Geesugonda"
+  },
+  {
+    "step": 6,
+    "name": "Officer Inspects Ticket & History",
+    "status": "PASSED",
+    "details": "Officer retrieved full history including attached images: ['https://storage.bolkisan.gov.in/chilli_leaf_curl_sample.jpg']"
+  },
+  {
+    "step": 7,
+    "name": "Officer Sends Advisory Reply",
+    "status": "PASSED",
+    "details": "Message ID: 984c6c7e-d9e6-4dfe-a69d-f5b0e169e96c, Status transitioned to RESPONDED"
+  },
+  {
+    "step": 8,
+    "name": "Farmer Receives Advisory in Real-Time",
+    "status": "PASSED",
+    "details": "Verified synchronization: Officer message synced to Conversation ec6c439b-7f7d-4ce7-9f3f-e8555047ba6e and Ticket 0e440e98-1eee-493c-9c05-517f20574763"
+  },
+  {
+    "step": 9,
+    "name": "Farmer Follow-up with Image",
+    "status": "PASSED",
+    "details": "Message ID: 0bcb142d-ecf5-402f-8b42-512eaae2a8bd, Image attached: https://storage.bolkisan.gov.in/farmer_uploads/chilli_leaf_closeup_02.jpg"
+  },
+  {
+    "step": 10,
+    "name": "Officer Receives Farmer Follow-up & Image",
+    "status": "PASSED",
+    "details": "Officer received follow-up text and image thumbnail within 4-second polling interval"
+  },
+  {
+    "step": 11,
+    "name": "Chat History Persistence Across Restarts",
+    "status": "PASSED",
+    "details": "Verified 4 messages persisted in relational DB + Room cache with exact timestamps"
+  },
+  {
+    "step": 12,
+    "name": "Resolution Synchronization",
+    "status": "PASSED",
+    "details": "Ticket status updated to RESOLVED, conv.escalation_status updated to RESOLVED in real-time"
+  }
+]

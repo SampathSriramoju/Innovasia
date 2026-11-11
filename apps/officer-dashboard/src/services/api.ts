@@ -1,4 +1,8 @@
-import { TicketSummary, TicketDetail, OfficerUser } from '../types';
+import {
+  TicketSummary, TicketDetail, TicketChatMessage, OfficerUser,
+  SmsIncomingResponse, SmsHistoryResponse, SmsGatewayStatus,
+  IvrCallSession, IvrCallResponse, IvrDtmfPayload, IvrVoicePayload, IvrErrorPayload
+} from '../types';
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8000/api/v1';
 
@@ -102,6 +106,178 @@ export const api = {
         })
       });
     if (!res.ok) throw new Error((await res.json().catch(() => null))?.detail || `Ticket resolution failed (HTTP ${res.status}).`);
+    return await res.json();
+  },
+
+  async getTicketMessages(ticketId: string): Promise<TicketChatMessage[]> {
+    const token = this.getToken();
+    const res = await fetch(`${API_BASE}/tickets/${ticketId}/messages`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => null);
+      throw new Error(err?.detail || `Failed to fetch ticket messages (HTTP ${res.status})`);
+    }
+    return await res.json();
+  },
+
+  async sendTicketMessage(ticketId: string, content: string, mediaUrl?: string): Promise<TicketChatMessage> {
+    const token = this.getToken();
+    const res = await fetch(`${API_BASE}/tickets/${ticketId}/messages`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        content,
+        media_url: mediaUrl,
+        msg_type: mediaUrl ? 'image' : 'text'
+      })
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => null);
+      throw new Error(err?.detail || `Failed to send ticket message (HTTP ${res.status})`);
+    }
+    return await res.json();
+  },
+
+  async updateTicketStatus(ticketId: string, status: string): Promise<any> {
+    const token = this.getToken();
+    const res = await fetch(`${API_BASE}/tickets/${ticketId}/status`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({ status })
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => null);
+      throw new Error(err?.detail || `Failed to update ticket status (HTTP ${res.status})`);
+    }
+    return await res.json();
+  },
+
+  async sendSms(data: { sender_number: string; message_text: string; language?: string; message_id?: string; idempotency_key?: string; simulate_failure?: boolean }): Promise<SmsIncomingResponse> {
+    const res = await fetch(`${API_BASE}/sms/incoming`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => null);
+      throw new Error(err?.detail || `SMS gateway request failed (HTTP ${res.status})`);
+    }
+    return await res.json();
+  },
+
+  async getSmsHistory(phoneNumber: string): Promise<SmsHistoryResponse> {
+    const res = await fetch(`${API_BASE}/sms/history?phone_number=${encodeURIComponent(phoneNumber)}`);
+    if (!res.ok) {
+      const err = await res.json().catch(() => null);
+      throw new Error(err?.detail || `Failed to fetch SMS history (HTTP ${res.status})`);
+    }
+    return await res.json();
+  },
+
+  async clearSmsHistory(phoneNumber: string): Promise<{ success: boolean; cleared_count: number }> {
+    const res = await fetch(`${API_BASE}/sms/history?phone_number=${encodeURIComponent(phoneNumber)}`, {
+      method: 'DELETE'
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => null);
+      throw new Error(err?.detail || `Failed to clear SMS history (HTTP ${res.status})`);
+    }
+    return await res.json();
+  },
+
+  async getSmsStatus(): Promise<SmsGatewayStatus> {
+    const res = await fetch(`${API_BASE}/sms/status`);
+    if (!res.ok) {
+      const err = await res.json().catch(() => null);
+      throw new Error(err?.detail || `Failed to query SMS gateway status (HTTP ${res.status})`);
+    }
+    return await res.json();
+  },
+
+  // ==========================================
+  // IVR Telephony Fallback API Methods
+  // ==========================================
+
+  async startIvrCall(data: { caller_number: string; language?: string; farmer_name?: string }): Promise<IvrCallResponse> {
+    const res = await fetch(`${API_BASE}/ivr/call/start`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => null);
+      throw new Error(err?.detail || `Failed to initiate IVR call (HTTP ${res.status})`);
+    }
+    return await res.json();
+  },
+
+  async sendIvrDtmf(data: IvrDtmfPayload): Promise<IvrCallResponse> {
+    const res = await fetch(`${API_BASE}/ivr/call/dtmf`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => null);
+      throw new Error(err?.detail || `Failed to process DTMF input (HTTP ${res.status})`);
+    }
+    return await res.json();
+  },
+
+  async sendIvrVoice(data: IvrVoicePayload): Promise<IvrCallResponse> {
+    const res = await fetch(`${API_BASE}/ivr/call/voice`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => null);
+      throw new Error(err?.detail || `Failed to process voice query (HTTP ${res.status})`);
+    }
+    return await res.json();
+  },
+
+  async simulateIvrError(data: IvrErrorPayload): Promise<IvrCallResponse> {
+    const res = await fetch(`${API_BASE}/ivr/call/simulate-error`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => null);
+      throw new Error(err?.detail || `Failed to simulate IVR error (HTTP ${res.status})`);
+    }
+    return await res.json();
+  },
+
+  async endIvrCall(callId: string): Promise<IvrCallResponse> {
+    const res = await fetch(`${API_BASE}/ivr/call/end`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ call_id: callId })
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => null);
+      throw new Error(err?.detail || `Failed to terminate IVR call (HTTP ${res.status})`);
+    }
+    return await res.json();
+  },
+
+  async getIvrCallSession(callId: string): Promise<IvrCallSession> {
+    const res = await fetch(`${API_BASE}/ivr/call/${encodeURIComponent(callId)}`);
+    if (!res.ok) {
+      const err = await res.json().catch(() => null);
+      throw new Error(err?.detail || `Failed to fetch IVR session (HTTP ${res.status})`);
+    }
     return await res.json();
   }
 };

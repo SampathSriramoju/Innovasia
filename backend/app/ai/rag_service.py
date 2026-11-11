@@ -920,12 +920,16 @@ class RAGService:
         crop: Optional[str] = None,
         top_k: int = 3,
         collection_filter: Optional[List[str]] = None,
-        min_relevance_threshold: float = 0.28
+        min_relevance_threshold: float = 0.28,
+        affected_part: Optional[str] = None,
+        growth_stage: Optional[str] = None
     ) -> List[Dict[str, Any]]:
         """
         Calibrated Hybrid Retrieval combining BM25 lexical relevance and semantic vector similarity.
         Applies multilingual query expansion (Telugu, Hindi, English), intent routing,
         and bounded multipliers to eliminate false positive dominance.
+        Enforces stage-aware ranking: for standing crops with foliar symptoms (leaf, stem, fruit),
+        foliar standing crop management documents are boosted and seed treatments are demoted.
         Filters out low-scoring documents below min_relevance_threshold.
         """
         if not self.documents:
@@ -941,6 +945,29 @@ class RAGService:
 
         effective_crop = analysis.get("crop")
         recommended_cols = set(analysis.get("recommended_collections", []))
+
+        # Growth stage & plant part analysis
+        query_lower = query.lower()
+        is_explicit_pre_sowing = any(w in query_lower for w in [
+            "seed treatment", "seedling dip", "rhizome dip", "sowing", "nursery", "delinting",
+            "acid delinting", "hot water treatment", "pre-sowing", "pre sowing", "before sowing",
+            "solarization before", "విత్తన శుద్ధి", "విత్తనాలు", "నారుమడి", "బీజ్ ఉపచార్", "बीज उपचार", "बुवाई", "बीज"
+        ])
+
+        is_standing_foliar = False
+        if growth_stage in ["standing_crop", "standing_foliar_crop", "vegetative", "flowering", "fruiting", "boll_formation", "maturity"]:
+            is_standing_foliar = True
+        elif affected_part in ["leaf", "foliage", "stem", "fruit", "panicle", "flower", "boll", "whorl", "shoot", "twigs"]:
+            is_standing_foliar = True
+        else:
+            foliar_query_signals = [
+                "leaf", "leaves", "foliar", "foliage", "lesion", "lesions", "spot", "spots", "blight", "blast", "rot",
+                "curling", "yellowing", "stippling", "mildew", "rust", "standing", "spray",
+                "ఆకు", "ఆకులు", "మచ్చలు", "ముడత", "పచ్చ", "పిచికారీ", "తెగులు",
+                "पत्ती", "पत्तियां", "धब्बे", "झुलसा", "छिड़काव"
+            ]
+            if any(w in query_lower for w in foliar_query_signals):
+                is_standing_foliar = True
 
         query_tokens, detected_entities = self._expand_multilingual_query(query)
         if not query_tokens:
@@ -984,6 +1011,29 @@ class RAGService:
                 elif not doc_crop_norm and doc_col in ["KB01", "KB02", "KB03", "KB04", "KB05", "KB07", "KB08", "KB20"]:
                     # Crop-specific collection document missing a valid crop match -> do not attribute to this crop
                     continue
+            else:
+                # When no crop is specified or detected in the query:
+                # Strictly reject crop-specific disease (KB04), pest (KB05), and pesticide (KB07, KB08) documents
+                # unless the query explicitly mentions the specific pathogen, disease, pest, or product target entity.
+                # This ensures an unrelated or generic query NEVER returns a specific crop's disease (e.g. Chickpea Fusarium Wilt).
+                if doc_col in ["KB04", "KB05", "KB07", "KB08"] and doc_crop_norm and doc_crop_norm not in ["general", "all", "soils", "soil", "weather", "market", "agri", ""]:
+                    doc_target = (doc.get("target") or "").lower()
+                    doc_title = (doc.get("title") or "").lower()
+                    target_entity = (analysis.get("target_entity") or "").lower()
+
+                    target_matched = bool(target_entity and (target_entity in doc_target or target_entity in doc_title))
+                    if not target_matched and substantive_query_tokens:
+                        target_tokens = [t for t in self._tokenize(doc_target) if t not in GENERIC_AGRI_STOPWORDS and len(t) >= 4]
+                        if target_tokens and any(tt in substantive_query_tokens for tt in target_tokens):
+                            target_matched = True
+                        title_tokens = [t for t in self._tokenize(doc_title) if t not in GENERIC_AGRI_STOPWORDS and len(t) >= 4]
+                        specific_terms = ["fusarium", "wilt", "bollworm", "armyworm", "thrips", "whitefly", "blast", "blight", "mildew", "rust", "smut"]
+                        if any(st in substantive_query_tokens for st in specific_terms):
+                            if any(st in title_tokens for st in substantive_query_tokens if st in specific_terms):
+                                target_matched = True
+
+                    if not target_matched:
+                        continue
 
             bm25_norm = raw_bm25_scores[idx] / max_bm25
             vec_sim = max(0.0, self.vector_embedder.cosine_similarity(query_vec, self.doc_vectors[idx]))
@@ -1038,6 +1088,33 @@ class RAGService:
                     multiplier *= 1.15
                     break
 
+            # Stage-Aware Scoring Adjustments (Standing Crop / Foliar vs Pre-Sowing Seed Treatment)
+            doc_text_for_stage = f"{doc.get('title', '')} {doc.get('target', '')} {doc.get('content', '')}".lower()
+            doc_has_pre_sowing = any(w in doc_text_for_stage for w in [
+                "seed treatment", "seedling root dip", "seedling dip", "rhizome dip",
+                "acid delinting", "delinting", "hot water seed", "hot water treatment",
+                "10g/kg seed", "2g/kg seed", "5g/kg seed", "g/kg seed", "ml/kg seed",
+                "/kg seed", "per kg seed", "kg seed", "solarize nursery",
+                "విత్తన శుద్ధి", "విత్తనశుద్ధి", "నారుమడి", "బీజ్ ఉపచార్", "बीज उपचार", "बुवाई से पहले"
+            ])
+            doc_has_foliar = any(w in doc_text_for_stage for w in [
+                "foliar spray", "foliar application", "foliage", "standing crop", "canopy",
+                "leaf spot", "leaf blight", "pruning", "prune bottom", "improve air circulation",
+                "spray mancozeb", "spray blitox", "spray bacillus", "bacillus subtilis",
+                "copper oxychloride", "streptocycline", "azoxystrobin", "difenoconazole",
+                "పిచికారీ", "ఆకులపై", "छिड़काव", "पत्तियों पर"
+            ])
+
+            if is_standing_foliar and not is_explicit_pre_sowing:
+                if doc_has_foliar:
+                    multiplier *= 1.35
+                if doc_has_pre_sowing and not doc_has_foliar:
+                    # Heavily penalize pure seed treatment / pre-sowing documents when diagnosing standing crop
+                    multiplier *= 0.35
+            elif is_explicit_pre_sowing:
+                if doc_has_pre_sowing:
+                    multiplier *= 1.45
+
             final_score = base_score * multiplier
 
             # Filter against minimum relevance threshold
@@ -1046,6 +1123,7 @@ class RAGService:
                 doc_copy["score"] = round(final_score, 4)
                 doc_copy["base_score"] = round(base_score, 4)
                 doc_copy["query_analysis"] = analysis
+                doc_copy["stage_relevance"] = "foliar_standing_crop" if doc_has_foliar else ("pre_sowing" if doc_has_pre_sowing else "general")
                 scored_candidates.append((final_score, doc_copy))
 
         # 5. Sort by descending score and take top_k

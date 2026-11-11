@@ -50,12 +50,12 @@ def test_banned_chemicals_rigorous_rejection(safety_gate, validator):
         assert decision.needs_escalation is True
         assert decision.severity in ["HIGH", "CRITICAL"]
 
-def test_crop_vision_quality_gate_rejects_non_plant_and_blank_images():
+async def test_crop_vision_quality_gate_rejects_non_plant_and_blank_images():
     # 1. Blank pure black image (underexposed / non-plant)
     black_img = Image.new("RGB", (224, 224), color=(0, 0, 0))
     buf = io.BytesIO()
     black_img.save(buf, format="JPEG")
-    _, quality = crop_vision_engine.analyze_image(buf.getvalue(), crop_name="Cotton")
+    _, quality = await crop_vision_engine.analyze_image(buf.getvalue(), crop_name="Cotton")
     assert quality.is_acceptable is False
     assert quality.error_code in ["NON_PLANT_IMAGE", "UNDEREXPOSED", "LOW_FOLIAGE_RATIO", "NO_PLANT_DETECTED"]
 
@@ -63,7 +63,7 @@ def test_crop_vision_quality_gate_rejects_non_plant_and_blank_images():
     white_img = Image.new("RGB", (224, 224), color=(255, 255, 255))
     buf2 = io.BytesIO()
     white_img.save(buf2, format="JPEG")
-    _, quality2 = crop_vision_engine.analyze_image(buf2.getvalue(), crop_name="Cotton")
+    _, quality2 = await crop_vision_engine.analyze_image(buf2.getvalue(), crop_name="Cotton")
     assert quality2.is_acceptable is False
     assert quality2.error_code in ["NON_PLANT_IMAGE", "OVEREXPOSED", "LOW_FOLIAGE_RATIO", "NO_PLANT_DETECTED"]
 

@@ -21,7 +21,9 @@
       "Particulate/vapor respirator mask",
       "Protective goggles / eyewear",
       "Long-sleeved shirt, trousers and boots"
-    ]
+    ],
+    "method_category": "foliar_spray",
+    "re_entry_interval": "24 hours"
   },
   {
     "product_trade_name": "Ulala 50% WG",
@@ -45,7 +47,9 @@
       "Particulate/vapor respirator mask",
       "Protective goggles / eyewear",
       "Long-sleeved shirt, trousers and boots"
-    ]
+    ],
+    "method_category": "foliar_spray",
+    "re_entry_interval": "24 hours"
   },
   {
     "product_trade_name": "Chess 50% WG",
@@ -69,7 +73,9 @@
       "Particulate/vapor respirator mask",
       "Protective goggles / eyewear",
       "Long-sleeved shirt, trousers and boots"
-    ]
+    ],
+    "method_category": "foliar_spray",
+    "re_entry_interval": "24 hours"
   },
   {
     "product_trade_name": "Amistar Top",
@@ -93,7 +99,9 @@
       "Particulate/vapor respirator mask",
       "Protective goggles / eyewear",
       "Long-sleeved shirt, trousers and boots"
-    ]
+    ],
+    "method_category": "foliar_spray",
+    "re_entry_interval": "24 hours"
   },
   {
     "product_trade_name": "Pegasus 50% WP",
@@ -117,7 +125,9 @@
       "Particulate/vapor respirator mask",
       "Protective goggles / eyewear",
       "Long-sleeved shirt, trousers and boots"
-    ]
+    ],
+    "method_category": "foliar_spray",
+    "re_entry_interval": "24 hours"
   },
   {
     "product_trade_name": "Tracer 45% SC",
@@ -141,7 +151,9 @@
       "Particulate/vapor respirator mask",
       "Protective goggles / eyewear",
       "Long-sleeved shirt, trousers and boots"
-    ]
+    ],
+    "method_category": "foliar_spray",
+    "re_entry_interval": "24 hours"
   },
   {
     "product_trade_name": "Dithane M-45",
@@ -153,19 +165,21 @@
     "target_crop": "Tomato",
     "target_disease": "Early Blight / Late Blight",
     "dosage_per_hectare": "1500 - 2000 g",
-    "dosage_per_acre": "600 g/acre",
+    "dosage_per_acre": "600-800 g/acre",
     "dilution_water_liters": "500–750 L/ha (200–300 L/acre depending on crop canopy)",
     "pre_harvest_interval_days": 5,
     "max_applications_per_season": 3,
     "application_method": "Prophylactic foliar spray before disease spreads onto upper canopy",
     "safety_precautions": "Broad spectrum protectant. Wear protective clothing and rubber gloves.",
-    "dosage_per_15l_knapsack": "30.0 - 37.5 g per 15-litre knapsack sprayer (based on label recommended dilution of 2.0 - 2.5 g/L water; spray volume varies 200–300 L/acre by canopy)",
+    "dosage_per_15l_knapsack": "30-40 g per 15-litre knapsack sprayer (calibrated for 200 L water/acre; approx 30.0 - 40.0 g/pump)",
     "ppe_requirements": [
       "Chemical-resistant rubber gloves",
       "Particulate/vapor respirator mask",
       "Protective goggles / eyewear",
       "Long-sleeved shirt, trousers and boots"
-    ]
+    ],
+    "method_category": "foliar_spray",
+    "re_entry_interval": "24 hours"
   },
   {
     "product_trade_name": "Coragen 18.5% SC",
@@ -189,7 +203,9 @@
       "Particulate/vapor respirator mask",
       "Protective goggles / eyewear",
       "Long-sleeved shirt, trousers and boots"
-    ]
+    ],
+    "method_category": "foliar_spray",
+    "re_entry_interval": "24 hours"
   },
   {
     "product_trade_name": "Tilt 25% EC",
@@ -213,7 +229,9 @@
       "Particulate/vapor respirator mask",
       "Protective goggles / eyewear",
       "Long-sleeved shirt, trousers and boots"
-    ]
+    ],
+    "method_category": "foliar_spray",
+    "re_entry_interval": "24 hours"
   },
   {
     "product_trade_name": "Actara 25% WG",
@@ -237,7 +255,9 @@
       "Particulate/vapor respirator mask",
       "Protective goggles / eyewear",
       "Long-sleeved shirt, trousers and boots"
-    ]
+    ],
+    "method_category": "foliar_spray",
+    "re_entry_interval": "24 hours"
   },
   {
     "product_trade_name": "Delegate 11.7% SC",
@@ -261,7 +281,9 @@
       "Particulate/vapor respirator mask",
       "Protective goggles / eyewear",
       "Long-sleeved shirt, trousers and boots"
-    ]
+    ],
+    "method_category": "foliar_spray",
+    "re_entry_interval": "24 hours"
   },
   {
     "product_trade_name": "Saaf 75% WP",
@@ -285,7 +307,9 @@
       "Particulate/vapor respirator mask",
       "Protective goggles / eyewear",
       "Long-sleeved shirt, trousers and boots"
-    ]
+    ],
+    "method_category": "foliar_spray",
+    "re_entry_interval": "24 hours"
   },
   {
     "product_trade_name": "Fame 39.35% SC",
@@ -309,7 +333,9 @@
       "Particulate/vapor respirator mask",
       "Protective goggles / eyewear",
       "Long-sleeved shirt, trousers and boots"
-    ]
+    ],
+    "method_category": "foliar_spray",
+    "re_entry_interval": "24 hours"
   },
   {
     "product_trade_name": "Coragen 18.5% SC",
@@ -333,7 +359,9 @@
       "Particulate/vapor respirator mask",
       "Protective goggles / eyewear",
       "Long-sleeved shirt, trousers and boots"
-    ]
+    ],
+    "method_category": "foliar_spray",
+    "re_entry_interval": "24 hours"
   },
   {
     "product_trade_name": "Proclaim 5% SG",
@@ -357,7 +385,9 @@
       "Particulate/vapor respirator mask",
       "Protective goggles / eyewear",
       "Long-sleeved shirt, trousers and boots"
-    ]
+    ],
+    "method_category": "foliar_spray",
+    "re_entry_interval": "24 hours"
   },
   {
     "product_trade_name": "Rogor 30% EC",
@@ -381,7 +411,9 @@
       "Particulate/vapor respirator mask",
       "Protective goggles / eyewear",
       "Long-sleeved shirt, trousers and boots"
-    ]
+    ],
+    "method_category": "foliar_spray",
+    "re_entry_interval": "24 hours"
   },
   {
     "product_trade_name": "Coragen 18.5% SC",
@@ -405,7 +437,9 @@
       "Particulate/vapor respirator mask",
       "Protective goggles / eyewear",
       "Long-sleeved shirt, trousers and boots"
-    ]
+    ],
+    "method_category": "soil_drench",
+    "re_entry_interval": "24 hours"
   },
   {
     "product_trade_name": "Bavistin 50% WP",
@@ -429,7 +463,9 @@
       "Particulate/vapor respirator mask",
       "Protective goggles / eyewear",
       "Long-sleeved shirt, trousers and boots"
-    ]
+    ],
+    "method_category": "sett_treatment",
+    "re_entry_interval": "24 hours"
   },
   {
     "product_trade_name": "Caldan 50% SP",
@@ -453,7 +489,9 @@
       "Particulate/vapor respirator mask",
       "Protective goggles / eyewear",
       "Long-sleeved shirt, trousers and boots"
-    ]
+    ],
+    "method_category": "foliar_spray",
+    "re_entry_interval": "24 hours"
   },
   {
     "product_trade_name": "Token 20% SG",
@@ -477,7 +515,9 @@
       "Particulate/vapor respirator mask",
       "Protective goggles / eyewear",
       "Long-sleeved shirt, trousers and boots"
-    ]
+    ],
+    "method_category": "foliar_spray",
+    "re_entry_interval": "24 hours"
   },
   {
     "product_trade_name": "Contaf 5% SC",
@@ -501,7 +541,9 @@
       "Particulate/vapor respirator mask",
       "Protective goggles / eyewear",
       "Long-sleeved shirt, trousers and boots"
-    ]
+    ],
+    "method_category": "foliar_spray",
+    "re_entry_interval": "24 hours"
   },
   {
     "product_trade_name": "Folicur 25.9% EC",
@@ -525,7 +567,9 @@
       "Particulate/vapor respirator mask",
       "Protective goggles / eyewear",
       "Long-sleeved shirt, trousers and boots"
-    ]
+    ],
+    "method_category": "foliar_spray",
+    "re_entry_interval": "24 hours"
   },
   {
     "product_trade_name": "Nativo 75% WG",
@@ -549,7 +593,9 @@
       "Particulate/vapor respirator mask",
       "Protective goggles / eyewear",
       "Long-sleeved shirt, trousers and boots"
-    ]
+    ],
+    "method_category": "foliar_spray",
+    "re_entry_interval": "24 hours"
   },
   {
     "product_trade_name": "Ridomil Gold",
@@ -573,7 +619,9 @@
       "Particulate/vapor respirator mask",
       "Protective goggles / eyewear",
       "Long-sleeved shirt, trousers and boots"
-    ]
+    ],
+    "method_category": "foliar_spray",
+    "re_entry_interval": "24 hours"
   },
   {
     "product_trade_name": "Oberon 22.9% SC",
@@ -597,7 +645,9 @@
       "Particulate/vapor respirator mask",
       "Protective goggles / eyewear",
       "Long-sleeved shirt, trousers and boots"
-    ]
+    ],
+    "method_category": "foliar_spray",
+    "re_entry_interval": "24 hours"
   },
   {
     "product_trade_name": "Regent 5% SC",
@@ -621,7 +671,9 @@
       "Particulate/vapor respirator mask",
       "Protective goggles / eyewear",
       "Long-sleeved shirt, trousers and boots"
-    ]
+    ],
+    "method_category": "foliar_spray",
+    "re_entry_interval": "24 hours"
   },
   {
     "product_trade_name": "Confidor 17.8% SL",
@@ -645,7 +697,9 @@
       "Particulate/vapor respirator mask",
       "Protective goggles / eyewear",
       "Long-sleeved shirt, trousers and boots"
-    ]
+    ],
+    "method_category": "foliar_spray",
+    "re_entry_interval": "24 hours"
   },
   {
     "product_trade_name": "Stomp 30% EC",
@@ -669,7 +723,9 @@
       "Particulate/vapor respirator mask",
       "Protective goggles / eyewear",
       "Long-sleeved shirt, trousers and boots"
-    ]
+    ],
+    "method_category": "soil_application",
+    "re_entry_interval": "24 hours"
   },
   {
     "product_trade_name": "Rifit 50% EC",
@@ -693,7 +749,9 @@
       "Particulate/vapor respirator mask",
       "Protective goggles / eyewear",
       "Long-sleeved shirt, trousers and boots"
-    ]
+    ],
+    "method_category": "soil_application",
+    "re_entry_interval": "24 hours"
   },
   {
     "product_trade_name": "Atrataf 50% WP",
@@ -717,7 +775,9 @@
       "Particulate/vapor respirator mask",
       "Protective goggles / eyewear",
       "Long-sleeved shirt, trousers and boots"
-    ]
+    ],
+    "method_category": "soil_application",
+    "re_entry_interval": "24 hours"
   },
   {
     "product_trade_name": "Nominee Gold 10% SC",
@@ -741,7 +801,9 @@
       "Particulate/vapor respirator mask",
       "Protective goggles / eyewear",
       "Long-sleeved shirt, trousers and boots"
-    ]
+    ],
+    "method_category": "foliar_spray",
+    "re_entry_interval": "24 hours"
   },
   {
     "product_trade_name": "Targa Super 5% EC",
@@ -765,7 +827,9 @@
       "Particulate/vapor respirator mask",
       "Protective goggles / eyewear",
       "Long-sleeved shirt, trousers and boots"
-    ]
+    ],
+    "method_category": "foliar_spray",
+    "re_entry_interval": "24 hours"
   },
   {
     "product_trade_name": "Pursuit 10% SL",
@@ -789,7 +853,9 @@
       "Particulate/vapor respirator mask",
       "Protective goggles / eyewear",
       "Long-sleeved shirt, trousers and boots"
-    ]
+    ],
+    "method_category": "foliar_spray",
+    "re_entry_interval": "24 hours"
   },
   {
     "product_trade_name": "Sempra 75% WG",
@@ -813,7 +879,9 @@
       "Particulate/vapor respirator mask",
       "Protective goggles / eyewear",
       "Long-sleeved shirt, trousers and boots"
-    ]
+    ],
+    "method_category": "foliar_spray",
+    "re_entry_interval": "24 hours"
   },
   {
     "product_trade_name": "Topik 15% WP",
@@ -837,7 +905,9 @@
       "Particulate/vapor respirator mask",
       "Protective goggles / eyewear",
       "Long-sleeved shirt, trousers and boots"
-    ]
+    ],
+    "method_category": "foliar_spray",
+    "re_entry_interval": "24 hours"
   },
   {
     "product_trade_name": "Kasu-B",
@@ -861,7 +931,9 @@
       "Particulate/vapor respirator mask",
       "Protective goggles / eyewear",
       "Long-sleeved shirt, trousers and boots"
-    ]
+    ],
+    "method_category": "foliar_spray",
+    "re_entry_interval": "24 hours"
   },
   {
     "product_trade_name": "Blitox 50% WP",
@@ -879,13 +951,15 @@
     "max_applications_per_season": 2,
     "application_method": "Preventive foliar spray and root zone drenching",
     "safety_precautions": "Incompatible with strongly acidic compounds. Wear protective eyewear.",
-    "dosage_per_15l_knapsack": "37.5 - 45.0 g per 15-litre knapsack sprayer (based on label recommended dilution of 2.5 - 3.0 g/L water; water volume varies 200–300 L/acre with canopy growth)",
+    "dosage_per_15l_knapsack": "50 g per 15-litre knapsack sprayer (in 200-300L water/acre; approx 37.5-50 g per pump)",
     "ppe_requirements": [
       "Chemical-resistant rubber gloves",
       "Particulate/vapor respirator mask",
       "Protective goggles / eyewear",
       "Long-sleeved shirt, trousers and boots"
-    ]
+    ],
+    "method_category": "foliar_spray",
+    "re_entry_interval": "24 hours"
   },
   {
     "product_trade_name": "Folicur 25.9% EC",
@@ -909,7 +983,9 @@
       "Particulate/vapor respirator mask",
       "Protective goggles / eyewear",
       "Long-sleeved shirt, trousers and boots"
-    ]
+    ],
+    "method_category": "foliar_spray",
+    "re_entry_interval": "24 hours"
   },
   {
     "product_trade_name": "Ridomil Gold 68% WG",
@@ -933,6 +1009,155 @@
       "Particulate/vapor respirator mask",
       "Protective goggles / eyewear",
       "Long-sleeved shirt, trousers and boots"
-    ]
+    ],
+    "method_category": "foliar_spray",
+    "re_entry_interval": "24 hours"
+  },
+  {
+    "product_trade_name": "Amistar Top",
+    "manufacturer": "Syngenta India Ltd",
+    "active_ingredient": "Azoxystrobin 18.2% + Difenoconazole 11.4% SC",
+    "cibrc_registration_number": "CIR-12845/2016-Azoxystrobin+Difenoconazole(SC)(362)-78",
+    "formulation_type": "Suspension Concentrate (SC)",
+    "toxicity_band": "blue_moderately_toxic",
+    "target_crop": "Tomato",
+    "target_disease": "Early Blight",
+    "dosage_per_hectare": "500 ml",
+    "dosage_per_acre": "200 ml/acre",
+    "dilution_water_liters": "500 L/ha (approx 200 L/acre as specified on CIBRC label)",
+    "pre_harvest_interval_days": 5,
+    "max_applications_per_season": 3,
+    "application_method": "Foliar spray at first appearance of early blight lesions on foliage",
+    "method_category": "foliar_spray",
+    "safety_precautions": "Dual action systemic fungicide. Wear protective eyewear, rubber gloves and mask. Avoid spraying near aquatic ecosystems.",
+    "dosage_per_15l_knapsack": "15 ml per 15-litre knapsack sprayer (calibrated for 200 L water/acre; recommended dilution 1.0 ml/L)",
+    "ppe_requirements": [
+      "Chemical-resistant rubber gloves",
+      "Particulate/vapor respirator mask",
+      "Protective goggles / eyewear",
+      "Long-sleeved shirt, trousers and boots"
+    ],
+    "re_entry_interval": "24 hours"
+  },
+  {
+    "product_trade_name": "Blitox 50% WP + Streptocycline",
+    "manufacturer": "Rallis India Ltd / Hindustan Antibiotics",
+    "active_ingredient": "Copper Oxychloride 50% WP + Streptocycline",
+    "cibrc_registration_number": "CIR-3210/2008-Copper Oxychloride(WP)-Cotton",
+    "formulation_type": "Wettable Powder (WP)",
+    "toxicity_band": "blue_moderately_toxic",
+    "target_crop": "Cotton",
+    "target_disease": "Bacterial Blight / Angular Leaf Spot",
+    "dosage_per_hectare": "2500 g",
+    "dosage_per_acre": "1000 g/acre (+ 40-50 g Streptocycline)",
+    "dilution_water_liters": "500 L/ha (200 L/acre)",
+    "pre_harvest_interval_days": 14,
+    "max_applications_per_season": 2,
+    "application_method": "Foliar spray at first appearance of angular water-soaked leaf spots",
+    "method_category": "foliar_spray",
+    "dosage_per_15l_knapsack": "50 g per 15-litre knapsack sprayer (in 200 L water/acre)",
+    "safety_precautions": "Wear protective clothing and rubber gloves. Do not apply during extreme hot midday.",
+    "ppe_requirements": [
+      "Chemical-resistant rubber gloves",
+      "Particulate/vapor respirator mask",
+      "Protective goggles / eyewear",
+      "Long-sleeved shirt, trousers and boots"
+    ],
+    "re_entry_interval": "24 hours"
+  },
+  {
+    "product_trade_name": "Carboxin 37.5% + Thiram 37.5% DS",
+    "manufacturer": "Chemtura / Crystal",
+    "active_ingredient": "Carboxin 37.5% + Thiram 37.5% DS",
+    "cibrc_registration_number": "CIR-15420/2012-Carboxin+Thiram(DS)",
+    "formulation_type": "Dry Seed Dresser (DS)",
+    "toxicity_band": "blue_moderately_toxic",
+    "target_crop": "Cotton",
+    "target_disease": "Bacterial Blight / Seedling Rot / Seed-borne infection",
+    "dosage_per_hectare": "35-50 g/ha seed rate",
+    "dosage_per_acre": "3.5 g/kg seed",
+    "dilution_water_liters": "Dry seed dressing or slurry with 10 ml water/kg seed",
+    "pre_harvest_interval_days": 90,
+    "max_applications_per_season": 1,
+    "application_method": "Dry seed dressing or slurry treatment before sowing",
+    "method_category": "seed_treatment",
+    "dosage_per_15l_knapsack": "Refuse knapsack conversion: Seed treatment formulation must be applied as seed dressing (3.5 g/kg seed), not in a knapsack sprayer.",
+    "safety_precautions": "Treated seeds must not be used for food, feed, or oil purposes. Wear gloves while treating seeds.",
+    "ppe_requirements": [
+      "Chemical-resistant rubber gloves",
+      "Particulate/vapor respirator mask"
+    ],
+    "re_entry_interval": "24 hours"
+  },
+  {
+    "product_trade_name": "Bavistin 50% WP",
+    "manufacturer": "Crystal Crop Protection Ltd",
+    "active_ingredient": "Carbendazim 50% WP",
+    "cibrc_registration_number": "CIR-5812/2010-Carbendazim(WP)-Chickpea",
+    "formulation_type": "Wettable Powder (WP)",
+    "toxicity_band": "blue_moderately_toxic",
+    "target_crop": "Chickpea",
+    "target_disease": "Fusarium Wilt / Root Rot / Seedling Rot",
+    "dosage_per_hectare": "150-200 g for seed requirement per ha",
+    "dosage_per_acre": "2 g/kg seed",
+    "dilution_water_liters": "Dry seed dressing or slurry with 10 ml water/kg seed",
+    "pre_harvest_interval_days": 60,
+    "max_applications_per_season": 1,
+    "application_method": "Seed treatment before sowing to protect against wilt and root rot",
+    "method_category": "seed_treatment",
+    "dosage_per_15l_knapsack": "Refuse knapsack conversion: Seed treatment formulation must be applied as seed dressing (2 g/kg seed), not in a knapsack sprayer.",
+    "safety_precautions": "Treated seeds must never be consumed. Wear gloves while mixing.",
+    "ppe_requirements": [
+      "Chemical-resistant rubber gloves",
+      "Dust mask"
+    ],
+    "re_entry_interval": "24 hours"
+  },
+  {
+    "product_trade_name": "Thiram 75% WP",
+    "manufacturer": "Cheminova India Ltd",
+    "active_ingredient": "Thiram 75% WP",
+    "cibrc_registration_number": "CIR-4102/2006-Thiram(WP)-Chickpea",
+    "formulation_type": "Wettable Powder (WP)",
+    "toxicity_band": "blue_moderately_toxic",
+    "target_crop": "Chickpea",
+    "target_disease": "Fusarium Wilt / Seedling Rot",
+    "dosage_per_hectare": "200 g for seed requirement per ha",
+    "dosage_per_acre": "2-3 g/kg seed",
+    "dilution_water_liters": "Dry seed dressing before sowing",
+    "pre_harvest_interval_days": 60,
+    "max_applications_per_season": 1,
+    "application_method": "Dry seed treatment before sowing",
+    "method_category": "seed_treatment",
+    "dosage_per_15l_knapsack": "Refuse knapsack conversion: Seed treatment formulation must be applied as seed dressing (2-3 g/kg seed), not in a knapsack sprayer.",
+    "safety_precautions": "Wear gloves and dust mask. Dispose treated seed packaging safely.",
+    "ppe_requirements": [
+      "Chemical-resistant rubber gloves",
+      "Dust mask"
+    ],
+    "re_entry_interval": "24 hours"
+  },
+  {
+    "product_trade_name": "Trichoderma viride 1% WP",
+    "manufacturer": "National Centre of Organic Farming (NCOF) / ICAR",
+    "active_ingredient": "Trichoderma viride 1% WP (Bio-fungicide)",
+    "cibrc_registration_number": "CIBRC Bio-fungicide Schedule II Reg. 2011",
+    "formulation_type": "Wettable Powder (WP)",
+    "toxicity_band": "green_slightly_toxic",
+    "target_crop": "Chickpea",
+    "target_disease": "Fusarium Wilt / Root Rot",
+    "dosage_per_hectare": "1000 g/ha seed rate",
+    "dosage_per_acre": "10 g/kg seed",
+    "dilution_water_liters": "Slurry mix with rice kanji or 20 ml water/kg seed",
+    "pre_harvest_interval_days": 0,
+    "max_applications_per_season": 1,
+    "application_method": "Biological seed treatment before sowing",
+    "method_category": "seed_treatment",
+    "dosage_per_15l_knapsack": "Refuse knapsack conversion: Bio-fungicide seed treatment (10 g/kg seed), not for knapsack spray.",
+    "safety_precautions": "Store in cool shade. Do not mix with chemical fungicides.",
+    "ppe_requirements": [
+      "Protective gloves"
+    ],
+    "re_entry_interval": "0 - 4 hours (immediate once spray deposits dry)"
   }
 ]

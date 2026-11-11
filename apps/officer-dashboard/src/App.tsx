@@ -5,12 +5,14 @@ import { Navbar } from './components/Navbar';
 import { OfficerDashboard } from './pages/OfficerDashboard';
 import { OfficerLogin } from './pages/OfficerLogin';
 import { FarmerMobileSimulator } from './components/FarmerMobileSimulator';
-import { Smartphone, Building2, SplitSquareVertical } from 'lucide-react';
+import { SmsDemoSimulator } from './components/SmsDemoSimulator';
+import { IVRFallbackSimulator } from './components/IVRFallbackSimulator';
+import { Smartphone, Building2, SplitSquareVertical, MessageSquare, PhoneCall } from 'lucide-react';
 
 export const App: React.FC = () => {
   const [user, setUser] = useState<OfficerUser | null>(null);
   const [initialized, setInitialized] = useState(false);
-  const [viewMode, setViewMode] = useState<'split' | 'farmer' | 'officer'>('split');
+  const [viewMode, setViewMode] = useState<'split' | 'farmer' | 'officer' | 'sms' | 'ivr'>('split');
   const [escalationTrigger, setEscalationTrigger] = useState(0);
 
   useEffect(() => {
@@ -93,6 +95,30 @@ export const App: React.FC = () => {
             <Building2 className="w-3.5 h-3.5" />
             <span>Officer Portal</span>
           </button>
+
+          <button
+            onClick={() => setViewMode('sms')}
+            className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+              viewMode === 'sms' 
+                ? 'bg-emerald-600 text-white shadow-md' 
+                : 'text-slate-300 hover:text-white hover:bg-slate-700'
+            }`}
+          >
+            <MessageSquare className="w-3.5 h-3.5" />
+            <span>SMS Fallback (Demo)</span>
+          </button>
+
+          <button
+            onClick={() => setViewMode('ivr')}
+            className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+              viewMode === 'ivr' 
+                ? 'bg-emerald-600 text-white shadow-md' 
+                : 'text-slate-300 hover:text-white hover:bg-slate-700'
+            }`}
+          >
+            <PhoneCall className="w-3.5 h-3.5" />
+            <span>IVR Fallback (Demo)</span>
+          </button>
         </div>
       </header>
 
@@ -149,6 +175,14 @@ export const App: React.FC = () => {
               )}
             </div>
           </div>
+        )}
+
+        {viewMode === 'sms' && (
+          <SmsDemoSimulator />
+        )}
+
+        {viewMode === 'ivr' && (
+          <IVRFallbackSimulator />
         )}
       </main>
 

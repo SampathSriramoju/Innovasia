@@ -111,16 +111,48 @@ data class TicketItemDto(
     @SerializedName("ticket_number") val ticketNumber: String,
     @SerializedName("status") val status: String,
     @SerializedName("priority") val priority: String,
+    @SerializedName("crop_name") val cropName: String? = null,
+    @SerializedName("crop") val crop: String? = null,
     @SerializedName("original_question_transcript") val transcript: String,
     @SerializedName("escalation_reason") val reason: String,
     @SerializedName("resolution_prescription") val resolutionPrescription: String?,
     @SerializedName("officer_response") val officerResponse: String? = null,
     @SerializedName("created_at") val createdAt: String?,
     @SerializedName("resolved_at") val resolvedAt: String?
+) {
+    val displayCrop: String
+        get() = cropName ?: crop ?: "General"
+}
+
+data class TicketMessageDto(
+    @SerializedName("id") val id: String,
+    @SerializedName("ticket_id") val ticket_id: String,
+    @SerializedName("sender_id") val sender_id: String,
+    @SerializedName("sender_type") val sender_type: String, // "FARMER" or "OFFICER"
+    @SerializedName("sender_name") val sender_name: String,
+    @SerializedName("msg_type") val msg_type: String = "text", // "text", "image", "prescription"
+    @SerializedName("content") val content: String,
+    @SerializedName("media_url") val media_url: String? = null,
+    @SerializedName("created_at") val created_at: String
+) {
+    val ticketId: String get() = ticket_id
+    val senderId: String get() = sender_id
+    val senderType: String get() = sender_type
+    val senderName: String get() = sender_name
+    val msgType: String get() = msg_type
+    val mediaUrl: String? get() = media_url
+    val createdAt: String get() = created_at
+}
+
+data class SendTicketMessageRequest(
+    @SerializedName("content") val content: String,
+    @SerializedName("msg_type") val msg_type: String = "text",
+    @SerializedName("media_url") val media_url: String? = null
 )
 
 // DISEASE DIAGNOSIS
 data class DiseaseDiagnosisDto(
+    @SerializedName("status") val status: String? = null,
     @SerializedName("disease_name") val diseaseName: String,
     @SerializedName("crop_name") val cropName: String? = null,
     @SerializedName("confidence") val confidence: Double? = null,
@@ -131,7 +163,12 @@ data class DiseaseDiagnosisDto(
     @SerializedName("citations") val citations: List<String>? = null,
     @SerializedName("is_safe") val isSafe: Boolean = true,
     @SerializedName("ticket_number") val ticketNumber: String? = null,
-    @SerializedName("is_offline_sync_pending") val isOfflineSyncPending: Boolean = false
+    @SerializedName("is_offline_sync_pending") val isOfflineSyncPending: Boolean = false,
+    @SerializedName("message") val message: String? = null,
+    @SerializedName("farmer_explanation") val farmerExplanation: String? = null,
+    @SerializedName("image_url") val imageUrl: String? = null,
+    @SerializedName("image_sha256") val imageSha256: String? = null,
+    @SerializedName("image_dimensions") val imageDimensions: String? = null
 )
 
 // OFFLINE SYNC

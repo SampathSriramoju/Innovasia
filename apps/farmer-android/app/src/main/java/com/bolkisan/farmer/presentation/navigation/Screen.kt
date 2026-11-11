@@ -8,4 +8,7 @@ sealed class Screen(val route: String) {
     object DiseaseCamera : Screen("disease_camera")
     object OfflineLibrary : Screen("offline_library")
     object OfficerTickets : Screen("officer_tickets")
+    object MarketPrices : Screen("market_prices")
+    object OfflineIVR : Screen("offline_ivr")
+    object SMSFallback : Screen("sms_fallback")
 }

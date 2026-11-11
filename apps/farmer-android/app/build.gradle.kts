@@ -10,6 +10,8 @@ plugins {
     id("com.google.devtools.ksp")
 }
 
+layout.buildDirectory.set(file("C:/temp/bolkisan-build/app"))
+
 android {
     namespace = "com.bolkisan.farmer"
     compileSdk = 34

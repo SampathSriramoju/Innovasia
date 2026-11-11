@@ -47,7 +47,9 @@ object OfflineKnowledgeFormatter {
         ScientificNameMapping(Regex("""\bTetranychus urticae\b""", RegexOption.IGNORE_CASE), "ఎర్ర నల్లి (Red Spider Mite)", "लाल मकड़ी", "Red Spider Mite"),
         ScientificNameMapping(Regex("""\bPolyphagotarsonemus latus\b""", RegexOption.IGNORE_CASE), "పసుపు నల్లి (Yellow Mite)", "पीली मकड़ी", "Broad/Yellow Mite"),
         ScientificNameMapping(Regex("""\bPyricularia oryzae\b""", RegexOption.IGNORE_CASE), "అగ్గితెగులు (Blast Disease)", "झुलसा रोग (Blast)", "Blast disease"),
-        ScientificNameMapping(Regex("""\bXanthomonas oryzae\b""", RegexOption.IGNORE_CASE), "బాక్టీరియా ఆకు ఎండు తెగులు (BLB)", "जीवाणु पत्ती झुलसा (BLB)", "Bacterial Leaf Blight"),
+        ScientificNameMapping(Regex("""\bAlternaria solani\b""", RegexOption.IGNORE_CASE), "ముందస్తు ఆకుమచ్చ శిలీంధ్రం (Early Blight)", "अगेती झुलसा कवक (Early Blight)", "Early Blight Fungus"),
+        ScientificNameMapping(Regex("""\bPhytophthora infestans\b""", RegexOption.IGNORE_CASE), "ఆలస్యపు ఆకుమచ్చ శిలీంధ్రం (Late Blight)", "पछेती झुलसा कवक (Late Blight)", "Late Blight Fungus"),
+        ScientificNameMapping(Regex("""\bXanthomonas oryzae\b""", RegexOption.IGNORE_CASE), "బాక్టీరియా ఆకు ఎండు తెగులు (BLB)", "जीवाणु पत्ती झुलసా (BLB)", "Bacterial Leaf Blight"),
         ScientificNameMapping(Regex("""\bFusarium oxysporum\b""", RegexOption.IGNORE_CASE), "ఎండు తెగులు (Fusarium Wilt)", "उकठा रोग (Fusarium Wilt)", "Fusarium Wilt"),
         ScientificNameMapping(Regex("""\bRhizoctonia solani\b""", RegexOption.IGNORE_CASE), "మట్ట కుళ్ళు తెగులు (Sheath Blight)", "शीथ ब्लाइट", "Sheath Blight"),
         ScientificNameMapping(Regex("""\bLeveillula taurica\b""", RegexOption.IGNORE_CASE), "బూడిద తెగులు (Powdery Mildew)", "चूर्णिल आसिता (Powdery Mildew)", "Powdery Mildew"),
@@ -616,10 +618,10 @@ object OfflineKnowledgeFormatter {
 
         // Detect or extract key segments using pattern boundaries
         val problemMatch = extractBetween(fullText, null, listOf("Symptoms & ETL:", "Growth Stages & Symptoms:", "Symptoms:", "పురుగు లక్షణాలు & నష్ట పరిమితి", "దశలు మరియు లక్షణాలు:", "లక్షణాలు & ETL:", "లక్షణాలు:", "लक्षण व ईटीएल:", "लक्षण:"))
-        val symptomsMatch = extractBetween(fullText, listOf("Symptoms & ETL:", "Growth Stages & Symptoms:", "Symptoms:", "పురుగు లక్షణాలు & నష్ట పరిమితి", "దశలు మరియు లక్షణాలు:", "లక్షణాలు & ETL:", "లక్షణాలు:", "लक्षण व ईटीएल:", "लक्षण:"), listOf("IPM:", "సమగ్ర నివారణ (IPM):", "సమగ్ర సస్యరక్షణ (IPM):", "కొమ్మల చివర్లను తుంచడం", "చిగుళ్లు తుంచడం", "Terminal Shoot Nipping", "समेकित प्रबंधन (IPM):", "शीर्ष खूंटाई"))
-        val ipmMatch = extractBetween(fullText, listOf("IPM:", "సమగ్ర నివారణ (IPM):", "సమగ్ర సస్యరక్షణ (IPM):", "కొమ్మల చివర్లను తుంచడం", "చిగుళ్లు తుంచడం", "Terminal Shoot Nipping", "समेकित प्रबंधन (IPM):", "शीर्ष खूंटाई"), listOf("CIBRC Approved Chemical Control:", "CIBRC Chemical Vector Control:", "Chemical Control:", "CIBRC ఆమోదిత రసాయన నివారణ:", "రసాయన నివారణ:", "CIBRC पंजीकृत रासायनिक नियंत्रण:", "रासायनिक नियंत्रण:"))
-        val chemicalMatch = extractBetween(fullText, listOf("CIBRC Approved Chemical Control:", "CIBRC Chemical Vector Control:", "Chemical Control:", "CIBRC ఆమోదిత రసాయన నివారణ:", "రసాయన నివారణ:", "CIBRC पंजीकृत रासायनिक नियंत्रण:", "रासायनिक नियंत्रण:"), listOf("Safety & PPE:", "PPE:", "Safety Precautions:", "రక్షణ చర్యలు:", "జాగ్రత్తలు:", "सुरक्षा सावधानियां:", "सावधानियां:"))
-        val safetyMatch = extractBetween(fullText, listOf("Safety & PPE:", "PPE:", "Safety Precautions:", "రక్షణ చర్యలు:", "జాగ్రత్తలు:", "सुरक्षा सावधानियां:", "सावधानियां:"), null)
+        val symptomsMatch = extractBetween(fullText, listOf("Symptoms & ETL:", "Growth Stages & Symptoms:", "Symptoms:", "పురుగు లక్షణాలు & నష్ట పరిమితి", "దశలు మరియు లక్షణాలు:", "లక్షణాలు & ETL:", "లక్షణాలు:", "लक्षण व ईटीएल:", "लक्षण:"), listOf("IPM:", "IPM Measures:", "సమగ్ర నివారణ (IPM):", "సమగ్ర సస్యరక్షణ (IPM):", "కొమ్మల చివర్లను తుంచడం", "చిగుళ్లు తుంచడం", "Terminal Shoot Nipping", "समेकित प्रबंधन (IPM):", "शीर्ष खूंटाई"))
+        val ipmMatch = extractBetween(fullText, listOf("IPM:", "IPM Measures:", "సమగ్ర నివారణ (IPM):", "సమగ్ర సస్యరక్షణ (IPM):", "కొమ్మల చివర్లను తుంచడం", "చిగుళ్లు తుంచడం", "Terminal Shoot Nipping", "समेकित प्रबंधन (IPM):", "शीर्ष खूंटाई"), listOf("CIBRC Approved Chemical Control:", "CIBRC Chemical Vector Control:", "Chemical Control:", "CIBRC ఆమోదిత రసాయన నివారణ:", "రసాయన నివారణ:", "CIBRC पंजीकृत रासायनिक नियंत्रण:", "रासायनिक नियंत्रण:"))
+        val chemicalMatch = extractBetween(fullText, listOf("CIBRC Approved Chemical Control:", "CIBRC Chemical Vector Control:", "Chemical Control:", "CIBRC ఆమోదిత రసాయన నివారణ:", "రసాయన నివారణ:", "CIBRC पंजीकृत रासायनिक नियंत्रण:", "रासायनिक नियंत्रण:"), listOf("Safety & PPE:", "PPE:", "Safety Precautions:", "Safety:", "రక్షణ చర్యలు:", "జాగ్రత్తలు:", "सुरक्षा सावधानियां:", "सावधानियां:"))
+        val safetyMatch = extractBetween(fullText, listOf("Safety & PPE:", "PPE:", "Safety Precautions:", "Safety:", "రక్షణ చర్యలు:", "జాగ్రత్తలు:", "सुरक्षा सावधानियां:", "सावधानियां:"), null)
 
         val cropPrefix = if (crop.isNotBlank()) "$crop: " else ""
 

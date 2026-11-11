@@ -2,7 +2,7 @@ from contextlib import asynccontextmanager
 from pathlib import Path
 from fastapi import FastAPI, Request, Response, status
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from app.core.config import settings
 from app.core.logging import setup_logging, logger
@@ -19,7 +19,23 @@ async def lifespan(app: FastAPI):
         logger.info("Database tables initialized successfully.")
     except Exception as e:
         logger.error(f"Error during database initialization: {e}")
+
+    # Start automated Mandi price background scheduler (~12 hours)
+    from app.services.mandi_scheduler import mandi_scheduler
+    try:
+        await mandi_scheduler.start()
+        logger.info("Mandi price sync scheduler started in lifespan.")
+    except Exception as e:
+        logger.error(f"Error starting mandi scheduler: {e}")
+
     yield
+
+    # Shutdown background scheduler gracefully
+    try:
+        await mandi_scheduler.stop()
+        logger.info("Mandi price sync scheduler stopped gracefully.")
+    except Exception as e:
+        logger.error(f"Error stopping mandi scheduler: {e}")
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
@@ -66,11 +82,17 @@ async def health_check(response: Response):
     )
 
     is_client_ready = False
+    is_vision_ready = False
+    is_text_ready = False
     try:
         from app.ai.gemini_service import gemini_service
         is_client_ready = gemini_service.client is not None
+        is_vision_ready = gemini_service.is_vision_available()
+        is_text_ready = gemini_service.is_text_available()
     except Exception:
         is_client_ready = False
+        is_vision_ready = False
+        is_text_ready = False
 
     if is_client_ready:
         ai_status = "configured_and_ready"
@@ -83,6 +105,7 @@ async def health_check(response: Response):
         "status": "healthy" if db_status == "connected" else "degraded",
         "service": "Bol Kisan Backend API",
         "version": "1.0.0",
+        "backend_api": "connected",
         "online_model": settings.GEMINI_MODEL,
         "environment": settings.ENVIRONMENT,
         "database": {
@@ -90,11 +113,19 @@ async def health_check(response: Response):
             "engine": db_engine,
             "error": db_error
         },
+        "ai_vision": "available" if is_vision_ready else "unavailable",
+        "gemini_text": "available" if is_text_ready else "unavailable",
+        "gemini_vision_available": is_vision_ready,
         "ai_provider": {
             "provider": "Google Gemini",
             "model": settings.GEMINI_MODEL,
             "is_configured": is_key_configured,
+            "gemini_configured": is_key_configured,
             "client_ready": is_client_ready,
+            "gemini_text_available": is_text_ready,
+            "gemini_vision_available": is_vision_ready,
+            "ai_vision": "available" if is_vision_ready else "unavailable",
+            "gemini_text": "available" if is_text_ready else "unavailable",
             "status": ai_status
         },
         "safety_gate": {
@@ -113,8 +144,21 @@ async def root():
         "api_v1": settings.API_V1_STR
     }
 
+@app.get("/sms-demo", response_class=HTMLResponse, tags=["SMS Fallback (Mock Demo)"])
+async def sms_demo_page():
+    """
+    Serves interactive HTML preview simulator for rural 2G/EDGE SMS fallback gateway.
+    """
+    html_file = Path(__file__).resolve().parent / "templates" / "sms_demo.html"
+    if html_file.exists():
+        return HTMLResponse(content=html_file.read_text(encoding="utf-8"))
+    return HTMLResponse(content="<h1>Bol Kisan SMS Fallback Simulator</h1><p>Demo template not found.</p>", status_code=200)
+
+
 # Private uploads directory ensured (served exclusively through authenticated API endpoints)
 uploads_dir = Path(__file__).resolve().parent / "static" / "uploads" / "diseases"
 uploads_dir.mkdir(parents=True, exist_ok=True)
 
 app.include_router(api_router, prefix=settings.API_V1_STR)
+# Backwards-compatible route alias for nested prefixes (e.g., Android /api/v1/api/v1/...)
+app.include_router(api_router, prefix=f"{settings.API_V1_STR}{settings.API_V1_STR}", include_in_schema=False)

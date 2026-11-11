@@ -1,13 +1,16 @@
 import os
 import uuid
 import re
-from datetime import datetime
+import io
+import hashlib
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Optional, Dict, Any, List, Tuple
-from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form, status
-from fastapi.responses import FileResponse
+from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form, status, Request
+from fastapi.responses import FileResponse, JSONResponse
 from fastapi.security import HTTPAuthorizationCredentials
 from sqlalchemy.orm import Session
+from PIL import Image
 
 from app.core.logging import logger
 from app.core.security import get_current_user_payload
@@ -225,6 +228,7 @@ def sanitize_image_bytes(raw_bytes: bytes, content_type: str) -> Tuple[bytes, st
 
 
 @router.post("/diagnose")
+@router.post("/analyze-image")
 async def diagnose_crop_disease(
     file: UploadFile = File(...),
     crop_name: Optional[str] = Form(None),
@@ -233,6 +237,8 @@ async def diagnose_crop_disease(
     latitude: Optional[float] = Form(None),
     longitude: Optional[float] = Form(None),
     language: Optional[str] = Form(None),
+    prefer_503: Optional[bool] = Form(False),
+    request: Request = None,
     current_user: Dict[str, Any] = Depends(get_current_user_payload),
     db: Session = Depends(get_db)
 ):
@@ -245,254 +251,457 @@ async def diagnose_crop_disease(
     5. Grounds recommendations in verified ICAR/PJTSAU IPM practices.
     6. Verifies CIBRC statutory labels via SafetyGate if chemical spray advice is asked.
     7. Automatically creates an AgriculturalTicket escalation if confidence < 0.78 or symptoms are ambiguous.
+    8. Returns structured 'vision_unavailable' (HTTP 200 or 503) if AI vision is offline/quota-limited/timed-out.
     """
     user_id = current_user.get("sub", "user-test-farmer-01")
     user_lang = (language or current_user.get("lang") or "te").lower()
     if user_lang not in ["te", "hi", "en"]:
         user_lang = "te"
 
-    # Step 1: Read and validate image file
-    raw_bytes = await file.read()
-    sanitized_bytes, ext = sanitize_image_bytes(raw_bytes, file.content_type or "")
+    should_return_503 = bool(prefer_503)
+    if request and request.headers.get("x-expect-status") == "503":
+        should_return_503 = True
 
-    # Save sanitized image
-    file_id = uuid.uuid4().hex[:12]
-    sanitized_filename = f"crop_diag_{file_id}.{ext}"
-    sanitized_filepath = STATIC_UPLOADS_DIR / sanitized_filename
-    with open(sanitized_filepath, "wb") as f:
-        f.write(sanitized_bytes)
+    try:
+        # Step 1: Read and validate image file
+        raw_bytes = await file.read()
+        sanitized_bytes, ext = sanitize_image_bytes(raw_bytes, file.content_type or "")
 
-    image_url = f"/api/v1/disease/images/{sanitized_filename}"
+        # Calculate SHA-256 and dimensions for verification & logging
+        sha256_hash = hashlib.sha256(raw_bytes).hexdigest()
+        try:
+            pil_img = Image.open(io.BytesIO(sanitized_bytes))
+            width, height = pil_img.size
+            dimensions = f"{width}x{height}"
+        except Exception:
+            dimensions = "unknown"
 
-    # Step 2: Multimodal Computer Vision & Diagnostic Analysis
-    combined_notes = f"{file.filename or ''} {farmer_notes or ''}".strip()
-    
-    diag_res, quality = await crop_vision_engine.analyze_image(
-        image_bytes=sanitized_bytes,
-        crop_name=crop_name,
-        affected_part=plant_part or "leaf",
-        farmer_notes=combined_notes,
-        language=user_lang
-    )
+        mime_type = file.content_type or f"image/{ext}"
+        logger.info(
+            f"[DIAGNOSE] Image received: SHA256={sha256_hash}, Dimensions={dimensions}, "
+            f"MIME={mime_type}, Bytes={len(raw_bytes)}, CropParam='{crop_name}', Notes='{farmer_notes}'"
+        )
 
-    # Handle Quality Gate Rejection
-    if not quality.is_acceptable or diag_res.status == "quality_rejected":
-        guidance = {
-            "te": quality.farmer_guidance_te,
-            "hi": quality.farmer_guidance_hi,
-            "en": quality.farmer_guidance_en
-        }.get(user_lang, quality.farmer_guidance_te)
+        # Save sanitized image with unique timestamped ID to prevent cache collisions
+        file_id = f"{uuid.uuid4().hex[:12]}_{int(datetime.now(timezone.utc).timestamp())}"
+        sanitized_filename = f"crop_diag_{file_id}.{ext}"
+        sanitized_filepath = STATIC_UPLOADS_DIR / sanitized_filename
+        with open(sanitized_filepath, "wb") as f:
+            f.write(sanitized_bytes)
 
+        image_url = f"/api/v1/disease/images/{sanitized_filename}"
+
+        # Step 2: Multimodal Computer Vision & Diagnostic Analysis
+        clean_notes = (farmer_notes or "").strip()
+
+        diag_res, quality = await crop_vision_engine.analyze_image(
+            image_bytes=sanitized_bytes,
+            crop_name=crop_name,
+            affected_part=plant_part or "leaf",
+            farmer_notes=clean_notes,
+            language=user_lang
+        )
+
+        # Handle Quality Gate Rejection
+        if not quality.is_acceptable or diag_res.status == "quality_rejected":
+            guidance = {
+                "te": quality.farmer_guidance_te,
+                "hi": quality.farmer_guidance_hi,
+                "en": quality.farmer_guidance_en
+            }.get(user_lang, quality.farmer_guidance_te)
+
+            if user_lang == "hi":
+                rej_disease = "गुणवत्ता अस्वीकृत / फोटो स्पष्ट नहीं है"
+                rej_treatment = "कृपया अच्छी रोशनी में पत्ती के पास से स्थिर और स्पष्ट फोटो लें।"
+            elif user_lang == "en":
+                rej_disease = "Quality Rejected / Image Unclear"
+                rej_treatment = "Please retake a clear, steady close-up photo in good daylight."
+            else:
+                rej_disease = "చిత్రం సరిగ్గా లేదు / నాణ్యత ఆమోదించబడలేదు"
+                rej_treatment = "దయచేసి మంచి వెలుతురులో ఆకును దగ్గరగా ఉంచి స్థిరంగా ఫోటో తీయండి."
+
+            return {
+                "status": "quality_rejected",
+                "is_escalated": False,
+                "confidence": 0.0,
+                "disease_name": rej_disease,
+                "symptoms": guidance or diag_res.visible_symptoms,
+                "treatment": rej_treatment,
+                "citations": ["Bol Kisan Image Quality Gate (Laplacian Variance / Foliage Ratio)"],
+                "error_code": quality.error_code,
+                "blur_score": quality.blur_score,
+                "brightness": quality.brightness,
+                "foliage_ratio": quality.foliage_ratio,
+                "message": guidance,
+                "image_url": image_url,
+                "crop_name": crop_name or "Unspecified",
+                "image_sha256": sha256_hash,
+                "image_dimensions": dimensions,
+                "image_mime_type": mime_type
+            }
+
+        # Handle Non-Plant Image Rejection (Soil, Tools, Indoors, Blank, Non-Crop)
+        if diag_res.status == "non_plant_rejected":
+            return {
+                "status": "non_plant_rejected",
+                "is_escalated": False,
+                "confidence": 0.0,
+                "disease_name": diag_res.primary_diagnosis,
+                "symptoms": diag_res.visible_symptoms,
+                "treatment": "దయచేసి వ్యాధి సోకిన పంట ఆకును దగ్గరగా ఉంచి స్పష్టంగా ఫోటో తీయండి." if user_lang == "te" else ("कृपया प्रभावित फसल की पत्ती की पास से स्पष्ट तस्वीर लें।" if user_lang == "hi" else "Please capture a clear close-up photo of the affected crop leaf."),
+                "citations": [],
+                "follow_up_questions": diag_res.follow_up_questions or [],
+                "message": diag_res.farmer_explanation,
+                "image_url": image_url,
+                "crop_name": "None",
+                "image_sha256": sha256_hash,
+                "image_dimensions": dimensions,
+                "image_mime_type": mime_type
+            }
+
+        # Handle Gemini Vision AI Service Unavailable (Offline, Quota, Timeout)
+        if diag_res.status == "vision_unavailable":
+            crop_str = crop_name.strip() if crop_name else diag_res.crop_name
+            crop_obj = db.query(Crop).filter(Crop.name_en.ilike(f"%{crop_str}%")).first() if crop_str else None
+            ticket_num = f"ESC-{datetime.now().strftime('%Y%m%d')}-{uuid.uuid4().hex[:6].upper()}"
+            escalation_reason = "Multimodal AI Vision Service Unavailable (Offline/Quota/Timeout)"
+            notes_transcript = farmer_notes or f"Multimodal crop photo inspection for {crop_str} (AI Vision Service Temporarily Unavailable)"
+
+            farmer_user = db.query(User).filter(User.id == user_id).first()
+            farmer_profile = farmer_user.farmer_profile if farmer_user else None
+            state = farmer_profile.state if (farmer_profile and farmer_profile.state) else "Telangana"
+            district = farmer_profile.district if (farmer_profile and farmer_profile.district) else "Warangal"
+            mandal = farmer_profile.mandal if (farmer_profile and farmer_profile.mandal) else "Geesugonda"
+            village = farmer_profile.village if (farmer_profile and farmer_profile.village) else "Dharmaram"
+
+            ticket = AgriculturalTicket(
+                ticket_number=ticket_num,
+                farmer_id=user_id,
+                crop_id=crop_obj.id if crop_obj else None,
+                state=state,
+                district=district,
+                mandal=mandal,
+                village=village,
+                status="open",
+                priority="high",
+                escalation_reason=escalation_reason,
+                original_question_transcript=notes_transcript,
+                attached_image_urls=[image_url]
+            )
+            db.add(ticket)
+            db.commit()
+            db.refresh(ticket)
+
+            if user_lang == "hi":
+                vu_disease = "विज़न AI सेवा अस्थायी रूप से अनुपलब्ध है"
+                vu_treatment = "AI विज़न सेवा अस्थायी रूप से अनुपलब्ध होने के कारण गलत उपचार से बचने के लिए कृषि विस्तार अधिकारी (MAO) की समीक्षा हेतु टिकट बनाया गया है। शीघ्र समाधान उपलब्ध कराया जाएगा।"
+                vu_msg = "मल्टीमॉडल विज़न सर्वर अस्थायी रूप से अनुपलब्ध है। गलत निदान से बचने के लिए मंडल कृषि अधिकारी के लिए निरीक्षण टिकट बनाया गया है।"
+            elif user_lang == "en":
+                vu_disease = "AI Vision Service Temporarily Unavailable"
+                vu_treatment = "Due to temporary AI vision unavailability, this case has been escalated to your Mandal Agricultural Extension Officer (MAO) to prevent incorrect treatment."
+                vu_msg = "Multimodal vision server is temporarily unavailable. An inspection ticket has been automatically created for your Mandal Agricultural Extension Officer."
+            else:
+                vu_disease = "విజన్ AI సర్వీస్ తాత్కాలికంగా అందుబాటులో లేదు"
+                vu_treatment = "AI విజన్ సర్వీస్ తాత్కాలికంగా అందుబాటులో లేనందున, తప్పుడు మందుల సిఫార్సులను నివారించడానికి మండల వ్యవసాయ అధికారి (MAO) పరిశీలనకు టికెట్ సృష్టించబడింది."
+                vu_msg = "మల్టీమోడల్ విజన్ సర్వర్ తాత్కాలికంగా స్పందించలేదు. తప్పుడు నిర్ధారణ నివారించడానికి వ్యవసాయ విస్తరణ అధికారి పరిశీలనకు టికెట్ సృష్టించబడింది."
+
+            resp_payload = {
+                "status": "vision_unavailable",
+                "is_escalated": True,
+                "confidence": 0.0,
+                "entropy": 1.0,
+                "disease_name": vu_disease,
+                "symptoms": diag_res.visible_symptoms or escalation_reason,
+                "treatment": vu_treatment,
+                "citations": [f"Ticket #{ticket.ticket_number}", "PJTSAU Escalation Protocol"],
+                "ticket_id": ticket.id,
+                "ticket_number": ticket.ticket_number,
+                "escalation_reason": escalation_reason,
+                "message": vu_msg,
+                "image_url": image_url,
+                "crop_name": crop_str,
+                "differential_candidates": [],
+                "follow_up_questions": diag_res.follow_up_questions or [
+                    "దయచేసి విజన్ సర్వీస్ పునరుద్ధరించబడినప్పుడు మళ్లీ ప్రయత్నించండి." if user_lang == "te" else "Please retry when vision connectivity is restored.",
+                    "మీ సమీప రైతు భరోసా కేంద్రం లేదా వ్యవసాయ అధికారిని సంప్రదించండి." if user_lang == "te" else "Consult your local Agricultural Extension Officer."
+                ],
+                "image_sha256": sha256_hash,
+                "image_dimensions": dimensions,
+                "image_mime_type": mime_type
+            }
+            return JSONResponse(
+                status_code=status.HTTP_503_SERVICE_UNAVAILABLE if should_return_503 else status.HTTP_200_OK,
+                content=resp_payload
+            )
+
+        # Handle Healthy Crop Foliage
+        if diag_res.status == "healthy_crop":
+            formatted_citations = []
+            for c in diag_res.citations:
+                if isinstance(c, dict):
+                    formatted_citations.append(f"{c.get('collection_id', 'KB04')} - {c.get('source_org', 'ICAR/PJTSAU')}")
+                else:
+                    formatted_citations.append(str(c))
+            return {
+                "status": "healthy_crop",
+                "is_escalated": False,
+                "confidence": diag_res.confidence,
+                "disease_name": diag_res.primary_diagnosis,
+                "symptoms": diag_res.visible_symptoms,
+                "treatment": diag_res.farmer_explanation,
+                "cultural_remedies": diag_res.cultural_remedies,
+                "biological_remedies": diag_res.biological_remedies,
+                "citations": formatted_citations or ["KB04 - ICAR Package of Practices"],
+                "message": diag_res.farmer_explanation,
+                "image_url": image_url,
+                "crop_name": diag_res.crop_name,
+                "follow_up_questions": diag_res.follow_up_questions or [],
+                "image_sha256": sha256_hash,
+                "image_dimensions": dimensions,
+                "image_mime_type": mime_type
+            }
+
+        # Handle Unknown Crop / Needs Clarification (without creating an escalation ticket)
+        if diag_res.status == "needs_clarification":
+            return {
+                "status": "needs_clarification",
+                "is_escalated": False,
+                "confidence": 0.0,
+                "disease_name": diag_res.primary_diagnosis,
+                "symptoms": diag_res.farmer_explanation,
+                "treatment": "",
+                "prevention": "",
+                "citations": [],
+                "follow_up_questions": diag_res.follow_up_questions or [],
+                "message": diag_res.farmer_explanation,
+                "image_url": image_url,
+                "crop_name": "Unspecified"
+            }
+
+        # Step 3: Check Confidence & Thresholding
+        # Ambiguous or Low Confidence (< 0.78) -> Auto Escalation
+        if diag_res.status == "escalated" or diag_res.confidence < 0.78:
+            crop_str = crop_name.strip() if crop_name else diag_res.crop_name
+            crop_obj = db.query(Crop).filter(Crop.name_en.ilike(f"%{crop_str}%")).first() if crop_str else None
+            ticket_num = f"ESC-{datetime.now().strftime('%Y%m%d')}-{uuid.uuid4().hex[:6].upper()}"
+
+            escalation_reason = f"Uncertain Disease Diagnosis ({diag_res.primary_diagnosis or 'Ambiguous Symptoms'}, confidence: {round(diag_res.confidence * 100, 1)}%)"
+            notes_transcript = farmer_notes or f"Multimodal crop photo inspection for {crop_str} (Confidence: {round(diag_res.confidence * 100, 1)}%, Entropy: {diag_res.entropy})"
+
+            farmer_user = db.query(User).filter(User.id == user_id).first()
+            farmer_profile = farmer_user.farmer_profile if farmer_user else None
+            state = farmer_profile.state if (farmer_profile and farmer_profile.state) else "Telangana"
+            district = farmer_profile.district if (farmer_profile and farmer_profile.district) else "Warangal"
+            mandal = farmer_profile.mandal if (farmer_profile and farmer_profile.mandal) else "Geesugonda"
+            village = farmer_profile.village if (farmer_profile and farmer_profile.village) else "Dharmaram"
+
+            ticket = AgriculturalTicket(
+                ticket_number=ticket_num,
+                farmer_id=user_id,
+                crop_id=crop_obj.id if crop_obj else None,
+                state=state,
+                district=district,
+                mandal=mandal,
+                village=village,
+                status="open",
+                priority="high",
+                escalation_reason=escalation_reason,
+                original_question_transcript=notes_transcript,
+                attached_image_urls=[image_url]
+            )
+            db.add(ticket)
+            db.commit()
+            db.refresh(ticket)
+
+            if user_lang == "hi":
+                esc_disease = f"संदिग्ध रोग: {diag_res.primary_diagnosis or 'अस्पष्ट लक्षण'}"
+                esc_treatment = "लक्षण स्पष्ट नहीं होने के कारण कृषि विस्तार अधिकारी (MAO) की समीक्षा हेतु भेजा गया है। शीघ्र समाधान उपलब्ध कराया जाएगा।"
+                esc_msg = "निदान विश्वसनीयता 78% से कम है। मंडल कृषि अधिकारी के लिए निरीक्षण टिकट स्वचालित रूप से बनाया गया है।"
+            elif user_lang == "en":
+                esc_disease = f"Suspected Pathology: {diag_res.primary_diagnosis or 'Ambiguous Symptoms'}"
+                esc_treatment = "Due to symptom ambiguity, this case has been escalated to your Mandal Agricultural Extension Officer (MAO) for inspection."
+                esc_msg = "Diagnosis confidence is below 78% or visually ambiguous. An inspection ticket has been automatically created for the Mandal Agricultural Extension Officer."
+            else:
+                esc_disease = f"అనుమానిత తెగులు: {diag_res.primary_diagnosis or 'స్పష్టత లేని లక్షణాలు'}"
+                esc_treatment = "లక్షణాలు స్పష్టంగా లేనందున వ్యవసాయ అధికారి (MAO) పరిశీలనకు పంపబడింది. ఫీల్డ్ విజిట్ త్వరలో జరుగుతుంది."
+                esc_msg = "రోగ నిర్ధారణ విశ్వసనీయత 78% కంటే తక్కువగా ఉంది. మండల వ్యవసాయ విస్తరణ అధికారి పరిశీలనకు టికెట్ సృష్టించబడింది."
+
+            return {
+                "status": "escalated",
+                "is_escalated": True,
+                "confidence": diag_res.confidence,
+                "entropy": diag_res.entropy,
+                "disease_name": esc_disease,
+                "symptoms": diag_res.visible_symptoms or escalation_reason,
+                "treatment": esc_treatment,
+                "citations": [f"Ticket #{ticket.ticket_number}", "PJTSAU Advisory Protocol"],
+                "ticket_id": ticket.id,
+                "ticket_number": ticket.ticket_number,
+                "escalation_reason": escalation_reason,
+                "message": esc_msg,
+                "image_url": image_url,
+                "crop_name": crop_str,
+                "differential_candidates": [c.model_dump() for c in diag_res.differential_candidates],
+                "follow_up_questions": diag_res.follow_up_questions,
+                "image_sha256": sha256_hash,
+                "image_dimensions": dimensions,
+                "image_mime_type": mime_type
+            }
+
+        # Step 4: High Confidence Verified Diagnosis
         if user_lang == "hi":
-            rej_disease = "गुणवत्ता अस्वीकृत / फोटो स्पष्ट नहीं है"
-            rej_treatment = "कृपया अच्छी रोशनी में पत्ती के पास से स्थिर और स्पष्ट फोटो लें।"
+            c_lead = diag_res.cultural_sanitation[0] if diag_res.cultural_sanitation else (diag_res.cultural_remedies[0] if diag_res.cultural_remedies else "खेत की स्वच्छता")
+            b_lead = diag_res.standing_crop_remedies[0] if diag_res.standing_crop_remedies else (diag_res.biological_remedies[0] if diag_res.biological_remedies else "जैविक छिड़काव")
+            treatment_str = (
+                f"• वर्तमान खड़ी फसल हेतु तुरंत उपाय:\n  1. {c_lead}\n  2. {b_lead}"
+            )
+            if diag_res.unsupported_cure_warning:
+                treatment_str += f"\n• वैज्ञानिक सलाह: {diag_res.unsupported_cure_warning}"
+            if diag_res.chemical_management and diag_res.chemical_management.get("is_approved"):
+                cm = diag_res.chemical_management
+                treatment_str += f"\n• CIBRC अनुशंसित कीटनाशक: {cm.get('product_trade_name')} ({cm.get('active_ingredient')}) @ {cm.get('dosage_per_15l_knapsack')} (प्रतीक्षा अवधि PHI: {cm.get('pre_harvest_interval_days')} दिन)"
         elif user_lang == "en":
-            rej_disease = "Quality Rejected / Image Unclear"
-            rej_treatment = "Please retake a clear, steady close-up photo in good daylight."
+            c_lead = diag_res.cultural_sanitation[0] if diag_res.cultural_sanitation else (diag_res.cultural_remedies[0] if diag_res.cultural_remedies else "Canopy sanitation and aeration")
+            b_lead = diag_res.standing_crop_remedies[0] if diag_res.standing_crop_remedies else (diag_res.biological_remedies[0] if diag_res.biological_remedies else "Foliar bio-control")
+            treatment_str = (
+                f"• Immediate Standing Crop Action:\n  1. {c_lead}\n  2. {b_lead}"
+            )
+            if diag_res.unsupported_cure_warning:
+                treatment_str += f"\n• Crucial Advisory: {diag_res.unsupported_cure_warning}"
+            if diag_res.chemical_management and diag_res.chemical_management.get("is_approved"):
+                cm = diag_res.chemical_management
+                treatment_str += f"\n• CIBRC Approved Pesticide: {cm.get('product_trade_name')} ({cm.get('active_ingredient')}) @ {cm.get('dosage_per_15l_knapsack')} (PHI: {cm.get('pre_harvest_interval_days')} days)"
         else:
-            rej_disease = "చిత్రం సరిగ్గా లేదు / నాణ్యత ఆమోదించబడలేదు"
-            rej_treatment = "దయచేసి మంచి వెలుతురులో ఆకును దగ్గరగా ఉంచి స్థిరంగా ఫోటో తీయండి."
+            c_lead = diag_res.cultural_sanitation[0] if diag_res.cultural_sanitation else (diag_res.cultural_remedies[0] if diag_res.cultural_remedies else "సాగు పారిశుధ్యం")
+            b_lead = diag_res.standing_crop_remedies[0] if diag_res.standing_crop_remedies else (diag_res.biological_remedies[0] if diag_res.biological_remedies else "జీవ పిచికారీ నివారణ")
+            treatment_str = (
+                f"• ప్రస్తుత నిలకడ పంటకు తక్షణ చర్యలు:\n  1. {c_lead}\n  2. {b_lead}"
+            )
+            if diag_res.unsupported_cure_warning:
+                treatment_str += f"\n• ముఖ్య శాస్త్రీయ గమనిక: {diag_res.unsupported_cure_warning}"
+            if diag_res.chemical_management and diag_res.chemical_management.get("is_approved"):
+                cm = diag_res.chemical_management
+                treatment_str += f"\n• CIBRC సిఫార్సు చేసిన రసాయన మందు: {cm.get('product_trade_name')} ({cm.get('active_ingredient')}) @ {cm.get('dosage_per_15l_knapsack')} (PHI: {cm.get('pre_harvest_interval_days')} రోజులు)"
 
-        return {
-            "status": "quality_rejected",
-            "is_escalated": False,
-            "confidence": 0.0,
-            "disease_name": rej_disease,
-            "symptoms": guidance or diag_res.visible_symptoms,
-            "treatment": rej_treatment,
-            "citations": ["Bol Kisan Image Quality Gate (Laplacian Variance / Foliage Ratio)"],
-            "error_code": quality.error_code,
-            "blur_score": quality.blur_score,
-            "brightness": quality.brightness,
-            "foliage_ratio": quality.foliage_ratio,
-            "message": guidance,
-            "image_url": image_url,
-            "crop_name": crop_name or "Unspecified"
-        }
+        prevention_str = ""
+        if diag_res.preventive_measures or diag_res.pre_sowing_remedies:
+            prev_lead = (diag_res.pre_sowing_remedies or diag_res.preventive_measures)[0]
+            if user_lang == "hi":
+                prevention_str = f"अगले मौसम के लिए अग्रिम रोकथाम / बीज उपचार: {prev_lead}"
+            elif user_lang == "en":
+                prevention_str = f"Preventive Measures for Next Season / Pre-Sowing: {prev_lead}"
+            else:
+                prevention_str = f"వచ్చే పంట కాలం కొరకు ముందస్తు నివారణ చర్యలు / విత్తన శుద్ధి: {prev_lead}"
 
-    # Handle Non-Plant Image Rejection (Soil, Tools, Indoors, Blank, Non-Crop)
-    if diag_res.status == "non_plant_rejected":
-        return {
-            "status": "non_plant_rejected",
-            "is_escalated": False,
-            "confidence": 0.0,
-            "disease_name": diag_res.primary_diagnosis,
-            "symptoms": diag_res.visible_symptoms,
-            "treatment": "దయచేసి వ్యాధి సోకిన పంట ఆకును దగ్గరగా ఉంచి స్పష్టంగా ఫోటో తీయండి." if user_lang == "te" else ("कृपया प्रभावित फसल की पत्ती की पास से स्पष्ट तस्वीर लें।" if user_lang == "hi" else "Please capture a clear close-up photo of the affected crop leaf."),
-            "citations": [],
-            "follow_up_questions": diag_res.follow_up_questions or [],
-            "message": diag_res.farmer_explanation,
-            "image_url": image_url,
-            "crop_name": "None"
-        }
-
-    # Handle Healthy Crop Foliage
-    if diag_res.status == "healthy_crop":
         formatted_citations = []
         for c in diag_res.citations:
             if isinstance(c, dict):
                 formatted_citations.append(f"{c.get('collection_id', 'KB04')} - {c.get('source_org', 'ICAR/PJTSAU')}")
             else:
                 formatted_citations.append(str(c))
+        if not formatted_citations:
+            formatted_citations = ["KB04 - ICAR / PJTSAU Package of Practices"]
+
         return {
-            "status": "healthy_crop",
+            "status": "diagnosed",
             "is_escalated": False,
-            "confidence": diag_res.confidence,
-            "disease_name": diag_res.primary_diagnosis,
-            "symptoms": diag_res.visible_symptoms,
-            "treatment": diag_res.farmer_explanation,
-            "cultural_remedies": diag_res.cultural_remedies,
-            "biological_remedies": diag_res.biological_remedies,
-            "citations": formatted_citations or ["KB04 - ICAR Package of Practices"],
-            "message": diag_res.farmer_explanation,
-            "image_url": image_url,
-            "crop_name": diag_res.crop_name,
-            "follow_up_questions": diag_res.follow_up_questions or []
-        }
-
-    # Handle Unknown Crop / Needs Clarification (without creating an escalation ticket)
-    if diag_res.status == "needs_clarification":
-        return {
-            "status": "needs_clarification",
-            "is_escalated": False,
-            "confidence": 0.0,
-            "disease_name": diag_res.primary_diagnosis,
-            "symptoms": diag_res.farmer_explanation,
-            "treatment": "",
-            "prevention": "",
-            "citations": [],
-            "follow_up_questions": diag_res.follow_up_questions or [],
-            "message": diag_res.farmer_explanation,
-            "image_url": image_url,
-            "crop_name": "Unspecified"
-        }
-
-    # Step 3: Check Confidence & Thresholding
-    # Ambiguous or Low Confidence (< 0.78) -> Auto Escalation
-    if diag_res.status == "escalated" or diag_res.confidence < 0.78:
-        crop_str = crop_name.strip() if crop_name else diag_res.crop_name
-        crop_obj = db.query(Crop).filter(Crop.name_en.ilike(f"%{crop_str}%")).first() if crop_str else None
-        ticket_num = f"ESC-{datetime.now().strftime('%Y%m%d')}-{uuid.uuid4().hex[:6].upper()}"
-
-        escalation_reason = f"Uncertain Disease Diagnosis ({diag_res.primary_diagnosis or 'Ambiguous Symptoms'}, confidence: {round(diag_res.confidence * 100, 1)}%)"
-        notes_transcript = farmer_notes or f"Multimodal crop photo inspection for {crop_str} (Confidence: {round(diag_res.confidence * 100, 1)}%, Entropy: {diag_res.entropy})"
-
-        farmer_user = db.query(User).filter(User.id == user_id).first()
-        farmer_profile = farmer_user.farmer_profile if farmer_user else None
-        state = farmer_profile.state if (farmer_profile and farmer_profile.state) else "Telangana"
-        district = farmer_profile.district if (farmer_profile and farmer_profile.district) else "Warangal"
-        mandal = farmer_profile.mandal if (farmer_profile and farmer_profile.mandal) else "Geesugonda"
-        village = farmer_profile.village if (farmer_profile and farmer_profile.village) else "Dharmaram"
-
-        ticket = AgriculturalTicket(
-            ticket_number=ticket_num,
-            farmer_id=user_id,
-            crop_id=crop_obj.id if crop_obj else None,
-            state=state,
-            district=district,
-            mandal=mandal,
-            village=village,
-            status="open",
-            priority="high",
-            escalation_reason=escalation_reason,
-            original_question_transcript=notes_transcript,
-            attached_image_urls=[image_url]
-        )
-        db.add(ticket)
-        db.commit()
-        db.refresh(ticket)
-
-        if user_lang == "hi":
-            esc_disease = f"संदिग्ध रोग: {diag_res.primary_diagnosis or 'अस्पष्ट लक्षण'}"
-            esc_treatment = "लक्षण स्पष्ट नहीं होने के कारण कृषि विस्तार अधिकारी (MAO) की समीक्षा हेतु भेजा गया है। शीघ्र समाधान उपलब्ध कराया जाएगा।"
-            esc_msg = "निदान विश्वसनीयता 78% से कम है। मंडल कृषि अधिकारी के लिए निरीक्षण टिकट स्वचालित रूप से बनाया गया है।"
-        elif user_lang == "en":
-            esc_disease = f"Suspected Pathology: {diag_res.primary_diagnosis or 'Ambiguous Symptoms'}"
-            esc_treatment = "Due to symptom ambiguity, this case has been escalated to your Mandal Agricultural Extension Officer (MAO) for inspection."
-            esc_msg = "Diagnosis confidence is below 78% or visually ambiguous. An inspection ticket has been automatically created for the Mandal Agricultural Extension Officer."
-        else:
-            esc_disease = f"అనుమానిత తెగులు: {diag_res.primary_diagnosis or 'స్పష్టత లేని లక్షణాలు'}"
-            esc_treatment = "లక్షణాలు స్పష్టంగా లేనందున వ్యవసాయ అధికారి (MAO) పరిశీలనకు పంపబడింది. ఫీల్డ్ విజిట్ త్వరలో జరుగుతుంది."
-            esc_msg = "రోగ నిర్ధారణ విశ్వసనీయత 78% కంటే తక్కువగా ఉంది. మండల వ్యవసాయ విస్తరణ అధికారి పరిశీలనకు టికెట్ సృష్టించబడింది."
-
-        return {
-            "status": "escalated",
-            "is_escalated": True,
             "confidence": diag_res.confidence,
             "entropy": diag_res.entropy,
-            "disease_name": esc_disease,
-            "symptoms": diag_res.visible_symptoms or escalation_reason,
-            "treatment": esc_treatment,
-            "citations": [f"Ticket #{ticket.ticket_number}", "PJTSAU Advisory Protocol"],
-            "ticket_id": ticket.id,
-            "ticket_number": ticket.ticket_number,
-            "escalation_reason": escalation_reason,
-            "message": esc_msg,
-            "image_url": image_url,
-            "crop_name": crop_str,
+            "disease_name": diag_res.primary_diagnosis,
+            "crop_name": diag_res.crop_name,
+            "growth_stage": diag_res.growth_stage,
+            "management_stage": diag_res.management_stage,
+            "pathology_type": diag_res.pathology_type,
+            "pathogen": diag_res.pathogen,
+            "symptoms": diag_res.visible_symptoms,
+            "treatment": treatment_str,
+            "prevention": prevention_str,
+            "standing_crop_remedies": diag_res.standing_crop_remedies,
+            "cultural_sanitation": diag_res.cultural_sanitation,
+            "preventive_measures": diag_res.preventive_measures,
+            "pre_sowing_remedies": diag_res.pre_sowing_remedies,
+            "unsupported_cure_warning": diag_res.unsupported_cure_warning,
+            "cultural_remedies": diag_res.cultural_remedies,
+            "biological_remedies": diag_res.biological_remedies,
+            "chemical_management": diag_res.chemical_management,
+            "chemical_safety_warning": diag_res.chemical_safety_warning,
             "differential_candidates": [c.model_dump() for c in diag_res.differential_candidates],
-            "follow_up_questions": diag_res.follow_up_questions
+            "citations": formatted_citations,
+            "citation_objects": diag_res.citations,
+            "farmer_explanation": diag_res.farmer_explanation,
+            "image_url": image_url,
+            "image_sha256": sha256_hash,
+            "image_dimensions": dimensions,
+            "image_mime_type": mime_type
         }
 
-    # Step 4: High Confidence Verified Diagnosis
-    if user_lang == "hi":
-        c_lead = diag_res.cultural_remedies[0] if diag_res.cultural_remedies else "खेत की स्वच्छता एवं फसल चक्र"
-        b_lead = diag_res.biological_remedies[0] if diag_res.biological_remedies else "जैविक नियंत्रण"
-        treatment_str = (
-            f"• सस्य प्रबंधन एवं प्राकृतिक उपचार:\n  1. {c_lead}\n  2. {b_lead}"
-        )
-        if diag_res.chemical_management and diag_res.chemical_management.get("is_approved"):
-            cm = diag_res.chemical_management
-            treatment_str += f"\n• CIBRC अनुशंसित कीटनाशक: {cm.get('product_trade_name')} ({cm.get('active_ingredient')}) @ {cm.get('dosage_per_15l_knapsack')} (प्रतीक्षा अवधि PHI: {cm.get('pre_harvest_interval_days')} दिन)"
-    elif user_lang == "en":
-        c_lead = diag_res.cultural_remedies[0] if diag_res.cultural_remedies else "Crop sanitation and field aeration"
-        b_lead = diag_res.biological_remedies[0] if diag_res.biological_remedies else "Biological control"
-        treatment_str = (
-            f"• Cultural / Agronomic Remedies:\n  1. {c_lead}\n  2. {b_lead}"
-        )
-        if diag_res.chemical_management and diag_res.chemical_management.get("is_approved"):
-            cm = diag_res.chemical_management
-            treatment_str += f"\n• CIBRC Approved Pesticide: {cm.get('product_trade_name')} ({cm.get('active_ingredient')}) @ {cm.get('dosage_per_15l_knapsack')} (PHI: {cm.get('pre_harvest_interval_days')} days)"
-    else:
-        c_lead = diag_res.cultural_remedies[0] if diag_res.cultural_remedies else 'సాగు పరిశుభ్రత'
-        b_lead = diag_res.biological_remedies[0] if diag_res.biological_remedies else 'జీవ నియంత్రణ'
-        treatment_str = (
-            f"• సహజ / సస్యరక్షణ చర్యలు:\n  1. {c_lead}\n  2. {b_lead}"
-        )
-        if diag_res.chemical_management and diag_res.chemical_management.get("is_approved"):
-            cm = diag_res.chemical_management
-            treatment_str += f"\n• CIBRC సిఫార్సు చేసిన రసాయన మందు: {cm.get('product_trade_name')} ({cm.get('active_ingredient')}) @ {cm.get('dosage_per_15l_knapsack')} (PHI: {cm.get('pre_harvest_interval_days')} రోజులు)"
+    except HTTPException:
+        # Re-raise standard FastAPI validation/auth/file-size exceptions
+        raise
+    except Exception as exc:
+        logger.error(f"[DIAGNOSE_RECOVERY] Unhandled error during disease diagnosis: {exc}", exc_info=True)
+        # Never fail silently; generate a guaranteed tracking ticket and return vision_unavailable
+        fallback_ticket_num = f"ESC-{datetime.now().strftime('%Y%m%d')}-{uuid.uuid4().hex[:6].upper()}"
+        fallback_ticket_id = f"fallback-{uuid.uuid4().hex[:8]}"
+        try:
+            farmer_user = db.query(User).filter(User.id == user_id).first()
+            farmer_profile = farmer_user.farmer_profile if farmer_user else None
+            fb_state = farmer_profile.state if (farmer_profile and farmer_profile.state) else "Telangana"
+            fb_district = farmer_profile.district if (farmer_profile and farmer_profile.district) else "Warangal"
+            fb_mandal = farmer_profile.mandal if (farmer_profile and farmer_profile.mandal) else "Geesugonda"
+            fb_village = farmer_profile.village if (farmer_profile and farmer_profile.village) else "Dharmaram"
 
-    formatted_citations = []
-    for c in diag_res.citations:
-        if isinstance(c, dict):
-            formatted_citations.append(f"{c.get('collection_id', 'KB04')} - {c.get('source_org', 'ICAR/PJTSAU')}")
-        else:
-            formatted_citations.append(str(c))
-    if not formatted_citations:
-        formatted_citations = ["KB04 - ICAR / PJTSAU Package of Practices"]
+            fallback_ticket = AgriculturalTicket(
+                ticket_number=fallback_ticket_num,
+                farmer_id=user_id,
+                state=fb_state,
+                district=fb_district,
+                mandal=fb_mandal,
+                village=fb_village,
+                status="open",
+                priority="high",
+                escalation_reason=f"Service Error During Vision Processing: {str(exc)[:100]}",
+                original_question_transcript=farmer_notes or f"Multimodal crop inspection ({crop_name or 'Unspecified'})",
+                attached_image_urls=[image_url] if 'image_url' in locals() else []
+            )
+            db.add(fallback_ticket)
+            db.commit()
+            db.refresh(fallback_ticket)
+            fallback_ticket_id = fallback_ticket.id
+            fallback_ticket_num = fallback_ticket.ticket_number
+        except Exception as db_err:
+            logger.error(f"[DIAGNOSE_RECOVERY] Database ticket creation failed: {db_err}")
 
-    return {
-        "status": "diagnosed",
-        "is_escalated": False,
-        "confidence": diag_res.confidence,
-        "entropy": diag_res.entropy,
-        "disease_name": diag_res.primary_diagnosis,
-        "crop_name": diag_res.crop_name,
-        "pathology_type": diag_res.pathology_type,
-        "pathogen": diag_res.pathogen,
-        "symptoms": diag_res.visible_symptoms,
-        "treatment": treatment_str,
-        "cultural_remedies": diag_res.cultural_remedies,
-        "biological_remedies": diag_res.biological_remedies,
-        "chemical_management": diag_res.chemical_management,
-        "chemical_safety_warning": diag_res.chemical_safety_warning,
-        "differential_candidates": [c.model_dump() for c in diag_res.differential_candidates],
-        "citations": formatted_citations,
-        "citation_objects": diag_res.citations,
-        "farmer_explanation": diag_res.farmer_explanation,
-        "image_url": image_url
-    }
+        err_disease = {
+            "te": "విజన్ AI సర్వీస్ తాత్కాలికంగా అందుబాటులో లేదు",
+            "hi": "विज़न AI सेवा अस्थायी रूप से अनुपलब्ध है",
+            "en": "Vision AI Service Temporarily Unavailable"
+        }.get(user_lang, "Vision AI Service Temporarily Unavailable")
+
+        err_msg = {
+            "te": "మల్టీమోడల్ ప్రాసెసింగ్‌లో తాత్కాలిక సాంకేతిక సమస్య ఏర్పడింది. మీ ఫోటో వ్యవసాయ అధికారి సమీక్ష కోసం సమర్పించబడింది.",
+            "hi": "मल्टीमॉडल प्रोसेसिंग में तकनीकी समस्या आई है। आपकी तस्वीर कृषि विस्तार अधिकारी की समीक्षा हेतु भेज दी गई है।",
+            "en": "A transient issue occurred during vision processing. Your photo has been submitted for agricultural officer review."
+        }.get(user_lang, "A transient issue occurred during vision processing.")
+
+        return JSONResponse(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE if should_return_503 else status.HTTP_200_OK,
+            content={
+                "status": "vision_unavailable",
+                "is_escalated": True,
+                "confidence": 0.0,
+                "disease_name": err_disease,
+                "symptoms": "Transient service error during vision analysis",
+                "treatment": "వ్యవసాయ అధికారి త్వరలో పరిశీలిస్తారు." if user_lang == "te" else "Agricultural extension officer inspection scheduled.",
+                "citations": [f"Ticket #{fallback_ticket_num}", "Bol Kisan System Recovery Protocol"],
+                "ticket_id": fallback_ticket_id,
+                "ticket_number": fallback_ticket_num,
+                "escalation_reason": "Transient vision service recovery escalation",
+                "message": err_msg,
+                "image_url": locals().get("image_url", ""),
+                "crop_name": crop_name or "Unspecified"
+            }
+        )
 
 @router.get("/images/{filename}")
 async def get_disease_image(

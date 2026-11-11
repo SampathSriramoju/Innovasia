@@ -29,6 +29,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Chat
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -74,6 +75,9 @@ fun HomeScreen(
     onNavigateToDiseaseCamera: () -> Unit = {},
     onNavigateToOfflineLibrary: () -> Unit = {},
     onNavigateToOfficerTickets: () -> Unit = {},
+    onNavigateToMarketPrices: () -> Unit = {},
+    onNavigateToOfflineIVR: () -> Unit = {},
+    onNavigateToSMSFallback: () -> Unit = {},
     onSwitchLanguage: () -> Unit = {}
 ) {
     val context = LocalContext.current
@@ -1113,18 +1117,37 @@ fun HomeScreen(
         SettingsAndDiagnosticsSheet(
             onNavigateToOfflineLibrary = {
                 showSettingsSheet = false
+                voiceManager.stopSpeaking()
                 onNavigateToOfflineLibrary()
+            },
+            onNavigateToMarketPrices = {
+                showSettingsSheet = false
+                voiceManager.stopSpeaking()
+                onNavigateToMarketPrices()
             },
             onNavigateToBackendSettings = {
                 showSettingsSheet = false
+                voiceManager.stopSpeaking()
                 showBackendSettingsSheet = true
             },
             onNavigateToOfficerTickets = {
                 showSettingsSheet = false
+                voiceManager.stopSpeaking()
                 onNavigateToOfficerTickets()
+            },
+            onNavigateToOfflineIVR = {
+                showSettingsSheet = false
+                voiceManager.stopSpeaking()
+                onNavigateToOfflineIVR()
+            },
+            onNavigateToSMSFallback = {
+                showSettingsSheet = false
+                voiceManager.stopSpeaking()
+                onNavigateToSMSFallback()
             },
             onSwitchLanguage = {
                 showSettingsSheet = false
+                voiceManager.stopSpeaking()
                 onSwitchLanguage()
             },
             onDismiss = { showSettingsSheet = false }
@@ -1407,8 +1430,11 @@ fun AnimatedAudioWave(
 @Composable
 fun SettingsAndDiagnosticsSheet(
     onNavigateToOfflineLibrary: () -> Unit,
+    onNavigateToMarketPrices: () -> Unit,
     onNavigateToBackendSettings: () -> Unit,
     onNavigateToOfficerTickets: () -> Unit,
+    onNavigateToOfflineIVR: () -> Unit,
+    onNavigateToSMSFallback: () -> Unit,
     onSwitchLanguage: () -> Unit,
     onDismiss: () -> Unit
 ) {
@@ -1448,7 +1474,42 @@ fun SettingsAndDiagnosticsSheet(
 
             Spacer(modifier = Modifier.height(14.dp))
 
-            // 1. Offline AI & Storage Diagnostics (Moved from main screen)
+            // 1. Offline IVR / Voice Fallback
+            SettingsMenuCard(
+                title = "Offline IVR / Voice Fallback",
+                description = "Access agricultural assistance through a guided voice menu, even without internet connectivity.",
+                icon = Icons.Default.PhoneInTalk,
+                badge = "On-Device",
+                onClick = onNavigateToOfflineIVR
+            )
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            // 2. SMS Fallback
+            SettingsMenuCard(
+                title = "SMS Fallback",
+                description = "Get agricultural assistance through text messages when mobile data is unavailable.",
+                icon = Icons.AutoMirrored.Filled.Chat,
+                badge = "Low Bandwidth / Demo",
+                badgeBg = Color(0xFFFEF3C7),
+                badgeFg = Color(0xFFB45309),
+                onClick = onNavigateToSMSFallback
+            )
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            // 3. Mandi Market Prices
+            SettingsMenuCard(
+                title = "Mandi Market Prices",
+                description = "View APMC market prices, government MSP rates, and offline commodity price cache",
+                icon = Icons.Default.Storefront,
+                badge = "AGMARKNET",
+                onClick = onNavigateToMarketPrices
+            )
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            // 4. Offline AI & Storage Diagnostics (Moved from main screen)
             SettingsMenuCard(
                 title = "Offline AI & Storage Diagnostics",
                 description = "On-device Qwen3-0.6B SLM status, model extraction, LiteRT-LM runtime, and Room SQLite packages",
@@ -1459,7 +1520,7 @@ fun SettingsAndDiagnosticsSheet(
 
             Spacer(modifier = Modifier.height(10.dp))
 
-            // 2. Backend LAN & Wi-Fi Network Settings
+            // 5. Backend LAN & Wi-Fi Network Settings
             SettingsMenuCard(
                 title = "Backend LAN & Wi-Fi Settings",
                 description = "Connect physical phone to laptop FastAPI server, test latency, configure custom endpoint",
@@ -1470,7 +1531,7 @@ fun SettingsAndDiagnosticsSheet(
 
             Spacer(modifier = Modifier.height(10.dp))
 
-            // 3. Officer Escalation Tickets
+            // 6. Officer Escalation Tickets
             SettingsMenuCard(
                 title = "Officer Escalation Tickets",
                 description = "View questions escalated to human agricultural extension officers",
@@ -1481,7 +1542,7 @@ fun SettingsAndDiagnosticsSheet(
 
             Spacer(modifier = Modifier.height(10.dp))
 
-            // 4. Change Language
+            // 7. Change Language
             SettingsMenuCard(
                 title = "Change Language (భాష / भाषा)",
                 description = "Select primary language for speech recognition, advisory, and voice output",
@@ -1501,6 +1562,8 @@ fun SettingsMenuCard(
     description: String,
     icon: androidx.compose.ui.graphics.vector.ImageVector,
     badge: String,
+    badgeBg: Color = Color(0xFFDCFCE7),
+    badgeFg: Color = ForestGreenPrimary,
     onClick: () -> Unit
 ) {
     Surface(
@@ -1541,13 +1604,13 @@ fun SettingsMenuCard(
                     )
                     Surface(
                         shape = RoundedCornerShape(6.dp),
-                        color = Color(0xFFDCFCE7)
+                        color = badgeBg
                     ) {
                         Text(
                             text = badge,
                             fontSize = 9.5.sp,
                             fontWeight = FontWeight.Bold,
-                            color = ForestGreenPrimary,
+                            color = badgeFg,
                             modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
                         )
                     }
