@@ -814,18 +814,31 @@ fun HomeScreen(
 
                                     // Escalate to Officer Button
                                     val isEscalating = isEscalatingId == item.id
-                                    val ticketNum = escalatedTickets[item.id]
+                                    val ticketNum = escalatedTickets[item.id] ?: item.ticketId
+                                    val escStatus = item.escalationStatus ?: if (ticketNum != null) (if (ticketNum.startsWith("OFFLINE-")) "PENDING_SYNC" else "SENT_TO_OFFICER") else null
 
                                     if (ticketNum != null) {
+                                        val isPending = escStatus in setOf("SAVED_OFFLINE", "PENDING_SYNC")
+                                        val isReplied = escStatus in setOf("OFFICER_REPLIED", "RESOLVED")
+                                        val badgeBg = if (isReplied) Color(0xFFDCFCE7) else if (isPending) Color(0xFFFEF3C7) else Color(0xFFE0E7FF)
+                                        val badgeFg = if (isReplied) Color(0xFF15803D) else if (isPending) Color(0xFFB45309) else Color(0xFF4338CA)
+                                        val badgeBorder = if (isReplied) SproutBorder else if (isPending) Color(0xFFFDE68A) else Color(0xFFC7D2FE)
+                                        val badgeText = when {
+                                            isReplied -> "✅ Officer Replied • $ticketNum"
+                                            isPending -> "⏳ Pending Sync • $ticketNum"
+                                            else -> "🧑‍🌾 Sent to Officer • $ticketNum"
+                                        }
+
                                         Surface(
                                             shape = RoundedCornerShape(6.dp),
-                                            color = Color(0xFFDCFCE7)
+                                            color = badgeBg,
+                                            border = androidx.compose.foundation.BorderStroke(1.dp, badgeBorder)
                                         ) {
                                             Text(
-                                                text = "Ticket: $ticketNum",
+                                                text = badgeText,
                                                 fontSize = 10.sp,
                                                 fontWeight = FontWeight.Bold,
-                                                color = Color(0xFF14532D),
+                                                color = badgeFg,
                                                 modifier = Modifier.padding(horizontal = 6.dp, vertical = 3.dp)
                                             )
                                         }
@@ -840,9 +853,15 @@ fun HomeScreen(
                                                     )
                                                     isEscalatingId = null
                                                     if (res.isSuccess) {
-                                                        val tkt = res.getOrNull()?.ticketNumber ?: "TKT-${System.currentTimeMillis().toString().takeLast(4)}"
+                                                        val resp = res.getOrNull()
+                                                        val tkt = resp?.ticketNumber ?: "Pending"
                                                         escalatedTickets = escalatedTickets + (item.id to tkt)
-                                                        Toast.makeText(context, "Escalated: $tkt", Toast.LENGTH_SHORT).show()
+                                                        val feedbackMsg = if (resp?.isOfflineSaved == true || resp?.status in listOf("SAVED_OFFLINE", "PENDING_SYNC")) {
+                                                            "Your request has been saved. It will be sent to the extension officer automatically when internet connectivity is restored."
+                                                        } else {
+                                                            resp?.message ?: "Escalated: $tkt"
+                                                        }
+                                                        Toast.makeText(context, feedbackMsg, Toast.LENGTH_LONG).show()
                                                     } else {
                                                         Toast.makeText(context, "Escalation failed: ${res.exceptionOrNull()?.message}", Toast.LENGTH_SHORT).show()
                                                     }

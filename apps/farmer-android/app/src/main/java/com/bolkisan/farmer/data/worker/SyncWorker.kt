@@ -31,6 +31,8 @@ class SyncWorker(
         val dao = db.offlineKnowledgeDao()
         val prefs = applicationContext.getSharedPreferences("bolkisan_prefs", Context.MODE_PRIVATE)
         val token = SecureTokenStorage.getToken(applicationContext)
+            ?: applicationContext.getSharedPreferences("bolkisan_prefs", Context.MODE_PRIVATE).getString("auth_token", null)
+            ?: com.bolkisan.farmer.data.repository.BolKisanRepository.activeInstance?.currentToken
         val lang = prefs.getString("selected_lang", "te") ?: "te"
 
         val unsyncedTickets = dao.getUnsyncedTickets()
@@ -58,8 +60,9 @@ class SyncWorker(
                         cropName = it.cropName,
                         questionText = it.queryText,
                         imageUrl = null,
-                        language = lang,
-                        createdAtEpoch = it.timestamp
+                        language = it.language.ifBlank { lang },
+                        createdAtEpoch = it.timestamp,
+                        conversationId = it.conversationContext
                     )
                 }
                 val response = ApiClient.getApiService(applicationContext).syncOfflineTickets(
@@ -70,10 +73,26 @@ class SyncWorker(
                 if (response.isSuccessful && response.body() != null) {
                     val body = response.body()!!
                     val ackUuids = (body.syncedClientUuids ?: body.tickets?.mapNotNull { it["client_uuid"] as? String } ?: emptyList()).toSet()
+                    val ticketsList = body.tickets ?: emptyList()
+                    val uuidToTicketNumber = ticketsList.associate { 
+                        (it["client_uuid"] as? String ?: "") to (it["ticket_number"] as? String ?: "") 
+                    }
                     Log.i(tag, "Backend acknowledged ${ackUuids.size} tickets out of ${textTickets.size} sent.")
                     for (t in textTickets) {
                         if (ackUuids.contains(t.localId)) {
-                            dao.markTicketSynced(t.localId)
+                            val backendTicketNum = uuidToTicketNumber[t.localId]?.ifBlank { null } ?: t.localId
+                            dao.markTicketSyncedWithDetails(
+                                localId = t.localId,
+                                status = "SENT_TO_OFFICER",
+                                ticketNum = backendTicketNum
+                            )
+                            try {
+                                com.bolkisan.farmer.data.repository.BolKisanRepository.activeInstance?.updateHistoryEscalation(
+                                    queryText = t.queryText,
+                                    ticketCode = backendTicketNum,
+                                    status = "SENT_TO_OFFICER"
+                                )
+                            } catch (_: Exception) {}
                         } else {
                             Log.w(tag, "Ticket ${t.localId} not acknowledged by backend; preserving for retry.")
                             allSuccessful = false

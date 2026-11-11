@@ -269,6 +269,49 @@
         "ticket_id": "433f29bc-ba16-4355-aea5-1b67ebfbc1bd",
         "crop": "Rice",
         "target_entity": "pink bollworm"
+      },
+      {
+        "message_id": "SMS-IN-C8609095",
+        "direction": "inbound",
+        "sender_number": "+919876543210",
+        "recipient_number": "56161",
+        "message_text": "వరిలో కాండం తొలిచే పురుగు నివారణకు డీడీటీ స్ప్రే చేయవచ్చా?",
+        "language": "te",
+        "timestamp": "2026-11-11T19:15:48.904094+00:00",
+        "segments": 1,
+        "char_count": 58,
+        "encoding": "UCS-2 (Unicode)",
+        "units": 58,
+        "delivery_status": "SIMULATED",
+        "simulation_label": "SIMULATED (NOT DELIVERED)",
+        "provider": "BOL_KISAN_MOCK_GATEWAY",
+        "is_demo": true,
+        "is_simulated": true,
+        "crop": "Rice",
+        "target_entity": "pink bollworm"
+      },
+      {
+        "message_id": "SMS-OUT-79ABEB61",
+        "direction": "outbound",
+        "sender_number": "56161",
+        "recipient_number": "+919876543210",
+        "message_text": "⚠️ భద్రతా హెచ్చరిక: రసాయనం/మోతాదు CIBRC ఆమోదం పొందలేదు. మీ ప్రశ్న మండల వ్యవసాయ అధికారికి (MAO) పంపబడింది. టికెట్ నం: ESC-20261112-2B4F26. పంట నష్టం నివారించండి.",
+        "language": "te",
+        "timestamp": "2026-11-11T19:15:48.904094+00:00",
+        "segments": 3,
+        "char_count": 160,
+        "encoding": "UCS-2 (Unicode)",
+        "units": 160,
+        "delivery_status": "SIMULATED",
+        "simulation_label": "SIMULATED (NOT DELIVERED)",
+        "provider": "BOL_KISAN_MOCK_GATEWAY",
+        "is_demo": true,
+        "is_simulated": true,
+        "is_safe": false,
+        "ticket_number": "ESC-20261112-2B4F26",
+        "ticket_id": "bb8f1997-94f3-41ff-8712-8629190a952e",
+        "crop": "Rice",
+        "target_entity": "pink bollworm"
       }
     ],
     "+919414022222": [
@@ -918,10 +961,10 @@
     ]
   },
   "stats": {
-    "total_inbound": 211,
-    "total_outbound": 174,
+    "total_inbound": 212,
+    "total_outbound": 175,
     "total_failed": 23,
     "total_duplicates": 12
   },
-  "saved_at": "2026-11-11T13:54:42.171962+00:00"
+  "saved_at": "2026-11-11T19:15:48.918611+00:00"
 }

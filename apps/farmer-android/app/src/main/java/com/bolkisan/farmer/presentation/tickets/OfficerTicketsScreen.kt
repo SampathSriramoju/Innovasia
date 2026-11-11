@@ -204,7 +204,9 @@ fun TicketItemCard(
 ) {
     val normStatus = ticket.status.uppercase()
     val isResolved = normStatus in setOf("RESOLVED", "CLOSED")
-    val isResponded = normStatus in setOf("OFFICER RESPONDED", "RESPONDED", "WAITING_FOR_FARMER")
+    val isResponded = normStatus in setOf("OFFICER RESPONDED", "RESPONDED", "WAITING_FOR_FARMER", "OFFICER_REPLIED", "OFFICER REPLIED")
+    val isSavedOffline = normStatus in setOf("SAVED_OFFLINE", "SAVED OFFLINE")
+    val isPendingSync = normStatus in setOf("PENDING_SYNC", "PENDING SYNC")
 
     val (badgeBg, badgeFg, badgeText) = when {
         isResolved -> Triple(
@@ -217,30 +219,54 @@ fun TicketItemCard(
             }
         )
         isResponded -> Triple(
-            Color(0xFFE0F2FE),
-            Color(0xFF0369A1),
+            Color(0xFFDCFCE7),
+            Color(0xFF15803D),
             when (currentLang) {
                 "te" -> "అధికారి సమాధానం ఇచ్చారు"
                 "hi" -> "अधिकारी ने उत्तर दिया"
-                else -> "OFFICER RESPONDED"
+                else -> "OFFICER REPLIED"
             }
         )
-        else -> Triple(
+        isSavedOffline -> Triple(
+            Color(0xFFFEF3C7),
+            Color(0xFF92400E),
+            when (currentLang) {
+                "te" -> "ఆఫ్‌లైన్‌లో భద్రపరచబడింది"
+                "hi" -> "ऑफ़लाइन सहेजा गया"
+                else -> "SAVED OFFLINE"
+            }
+        )
+        isPendingSync -> Triple(
             Color(0xFFFEF3C7),
             Color(0xFFB45309),
             when (currentLang) {
-                "te" -> "పరిశీలనలో ఉంది"
-                "hi" -> "समीक्षा में है"
-                else -> "PENDING"
+                "te" -> "సింక్ పెండింగ్‌లో ఉంది"
+                "hi" -> "सिंक लंबित है"
+                else -> "PENDING SYNC"
             }
         )
+        else -> Triple(
+            Color(0xFFE0E7FF),
+            Color(0xFF4338CA),
+            when (currentLang) {
+                "te" -> "అధికారికి పంపబడింది"
+                "hi" -> "अधिकारी को भेजा गया"
+                else -> "SENT TO OFFICER"
+            }
+        )
+    }
+
+    val borderColor = when {
+        isResolved || isResponded -> SproutBorder
+        isSavedOffline || isPendingSync -> Color(0xFFFDE68A)
+        else -> Color(0xFFC7D2FE)
     }
 
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(16.dp))
-            .border(1.dp, if (isResolved) SproutBorder else if (isResponded) Color(0xFFBAE6FD) else Color(0xFFFDE68A), RoundedCornerShape(16.dp))
+            .border(1.dp, borderColor, RoundedCornerShape(16.dp))
             .clickable { onClick() },
         colors = CardDefaults.cardColors(containerColor = CardWhite),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)

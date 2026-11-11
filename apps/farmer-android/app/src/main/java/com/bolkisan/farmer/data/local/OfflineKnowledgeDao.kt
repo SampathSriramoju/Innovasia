@@ -68,6 +68,18 @@ interface OfflineKnowledgeDao {
     @Query("SELECT * FROM pending_sync_tickets ORDER BY timestamp DESC")
     fun getAllPendingTickets(): Flow<List<PendingSyncTicketEntity>>
 
-    @Query("UPDATE pending_sync_tickets SET isSynced = 1 WHERE localId = :localId")
+    @Query("SELECT * FROM pending_sync_tickets ORDER BY timestamp DESC")
+    suspend fun getAllPendingTicketsSync(): List<PendingSyncTicketEntity>
+
+    @Query("SELECT * FROM pending_sync_tickets WHERE localId = :localId LIMIT 1")
+    suspend fun getPendingTicketById(localId: String): PendingSyncTicketEntity?
+
+    @Query("UPDATE pending_sync_tickets SET isSynced = 1, syncStatus = :status, backendTicketNumber = :ticketNum WHERE localId = :localId")
+    suspend fun markTicketSyncedWithDetails(localId: String, status: String = "SENT_TO_OFFICER", ticketNum: String? = null)
+
+    @Query("UPDATE pending_sync_tickets SET syncStatus = :status WHERE localId = :localId")
+    suspend fun updateSyncStatus(localId: String, status: String)
+
+    @Query("UPDATE pending_sync_tickets SET isSynced = 1, syncStatus = 'SENT_TO_OFFICER' WHERE localId = :localId")
     suspend fun markTicketSynced(localId: String)
 }

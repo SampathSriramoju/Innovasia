@@ -44,7 +44,8 @@ data class VoiceHistoryItem(
     val followUpSuggestions: List<String> = emptyList(),
     val origin: String = "online", // "online", "offline_slm", "offline_rule", "escalated", "needs_clarification", "offline_queued"
     val timestamp: Long = System.currentTimeMillis(),
-    val ticketId: String? = null
+    val ticketId: String? = null,
+    val escalationStatus: String? = null // "SAVED_OFFLINE", "PENDING_SYNC", "SENT_TO_OFFICER", "OFFICER_REPLIED"
 )
 
 class BolKisanRepository(private val context: Context) {
@@ -114,6 +115,31 @@ class BolKisanRepository(private val context: Context) {
                     isSafe = isSafe,
                     origin = origin,
                     ticketId = ticketId
+                )
+                updated = true
+                break
+            }
+        }
+        if (updated) {
+            _historyFlow.value = current
+            saveHistoryToPrefs(current)
+        }
+    }
+
+    fun updateHistoryEscalation(
+        queryText: String,
+        ticketCode: String,
+        status: String
+    ) {
+        val current = _historyFlow.value.toMutableList()
+        var updated = false
+        for (i in current.indices) {
+            val item = current[i]
+            if (item.query.equals(queryText, ignoreCase = true) || item.ticketId == ticketCode || item.id == ticketCode) {
+                current[i] = item.copy(
+                    ticketId = ticketCode,
+                    escalationStatus = status,
+                    origin = "escalated"
                 )
                 updated = true
                 break
@@ -247,33 +273,109 @@ class BolKisanRepository(private val context: Context) {
     suspend fun escalateToHumanOfficer(
         questionText: String,
         cropName: String? = null,
-        reason: String = "Farmer requested human agricultural officer consultation"
+        reason: String = "Farmer requested human agricultural officer consultation",
+        conversationContext: String? = null,
+        audioPath: String? = null,
+        imagePath: String? = null
     ): Result<TicketEscalateResponseDto> = withContext(Dispatchers.IO) {
         val effectiveCrop = cropName 
             ?: detectCropFromText(questionText) 
             ?: _historyFlow.value.lastOrNull { it.crop.isNotBlank() }?.crop 
             ?: selectedCrop
 
+        val currentLang = _languageFlow.value
         val authToken = currentToken
-        if (authToken == null) {
-            return@withContext Result.failure(Exception("Authentication required: Please log in to escalate questions to an officer."))
-        }
-        try {
-            val res = api.escalateTicket(
-                token = "Bearer $authToken",
-                ticket = TicketCreateDto(
-                    cropName = effectiveCrop,
-                    escalationReason = reason,
-                    originalQuestionTranscript = questionText
+        val farmerId = prefs.getString("farmer_phone", "9876543210") ?: "9876543210"
+
+        // 1. Detect network connectivity before attempting the API request
+        val isNetworkAvailable = isOnline.value && com.bolkisan.farmer.util.NetworkObserver.isNetworkAvailable(context)
+
+        if (isNetworkAvailable && authToken != null) {
+            try {
+                val res = api.escalateTicket(
+                    token = "Bearer $authToken",
+                    ticket = TicketCreateDto(
+                        cropName = effectiveCrop,
+                        escalationReason = reason,
+                        originalQuestionTranscript = questionText
+                    )
                 )
-            )
-            if (res.isSuccessful && res.body() != null) {
-                Result.success(res.body()!!)
-            } else {
-                Result.failure(Exception("Escalation failed with code ${res.code()}"))
+                if (res.isSuccessful && res.body() != null) {
+                    val body = res.body()!!
+                    try {
+                        val syncedEntity = com.bolkisan.farmer.data.local.entities.PendingSyncTicketEntity(
+                            localId = body.ticketId,
+                            queryText = questionText,
+                            cropName = effectiveCrop,
+                            audioPath = audioPath,
+                            imagePath = imagePath,
+                            timestamp = System.currentTimeMillis(),
+                            isSynced = true,
+                            farmerId = farmerId,
+                            conversationContext = conversationContext ?: questionText,
+                            language = currentLang,
+                            syncStatus = "SENT_TO_OFFICER",
+                            backendTicketNumber = body.ticketNumber
+                        )
+                        dao.enqueuePendingSyncTicket(syncedEntity)
+                        updateHistoryEscalation(
+                            queryText = questionText,
+                            ticketCode = body.ticketNumber,
+                            status = "SENT_TO_OFFICER"
+                        )
+                    } catch (_: Exception) {}
+                    return@withContext Result.success(body)
+                }
+            } catch (netEx: Exception) {
+                // Online attempt encountered network/timeout exception: never discard, fall back to offline local save!
+                android.util.Log.w("BolKisanRepository", "Online escalation failed (${netEx.message}); saving offline for automatic sync.")
             }
-        } catch (e: Exception) {
-            Result.failure(e)
+        }
+
+        // 2. Offline escalation: save complete support request locally using Room/SQLite
+        val localUuid = "OFFLINE-ESC-" + UUID.randomUUID().toString().take(8).uppercase()
+        val timestamp = System.currentTimeMillis()
+        val pendingEntity = com.bolkisan.farmer.data.local.entities.PendingSyncTicketEntity(
+            localId = localUuid,
+            queryText = questionText,
+            cropName = effectiveCrop,
+            audioPath = audioPath,
+            imagePath = imagePath,
+            timestamp = timestamp,
+            isSynced = false,
+            farmerId = farmerId,
+            conversationContext = conversationContext ?: questionText,
+            language = currentLang,
+            syncStatus = "SAVED_OFFLINE",
+            backendTicketNumber = null
+        )
+
+        try {
+            dao.enqueuePendingSyncTicket(pendingEntity)
+
+            // Update local conversation history with offline escalation status
+            updateHistoryEscalation(
+                queryText = questionText,
+                ticketCode = localUuid,
+                status = "SAVED_OFFLINE"
+            )
+
+            // Trigger WorkManager with NetworkType.CONNECTED constraint for automatic background sync
+            com.bolkisan.farmer.data.worker.SyncWorker.enqueue(context)
+
+            val offlineResponse = TicketEscalateResponseDto(
+                status = "SAVED_OFFLINE",
+                ticketId = localUuid,
+                ticketNumber = localUuid,
+                mandal = "Geesugonda",
+                priority = "high",
+                message = "Your request has been saved. It will be sent to the extension officer automatically when internet connectivity is restored.",
+                isOfflineSaved = true
+            )
+            Result.success(offlineResponse)
+        } catch (dbEx: Exception) {
+            android.util.Log.e("BolKisanRepository", "Failed to save offline ticket: ${dbEx.message}", dbEx)
+            Result.failure(Exception("Unable to save offline ticket: ${dbEx.message}"))
         }
     }
 
@@ -1315,16 +1417,67 @@ class BolKisanRepository(private val context: Context) {
 
     // Fetch Tickets
     suspend fun getTickets(): Result<List<TicketItemDto>> = withContext(Dispatchers.IO) {
-        val token = currentToken ?: return@withContext Result.failure(Exception("Not authenticated"))
+        val token = currentToken
+        val localPending: List<TicketItemDto> = try {
+            dao.getAllPendingTicketsSync().map { p ->
+                val displayStatus = if (p.isSynced) {
+                    if (p.syncStatus.isNotBlank()) p.syncStatus else "SENT_TO_OFFICER"
+                } else {
+                    "PENDING_SYNC"
+                }
+                val dateStr = try {
+                    java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", java.util.Locale.getDefault()).format(java.util.Date(p.timestamp))
+                } catch (_: Exception) {
+                    null
+                }
+                TicketItemDto(
+                    id = p.localId,
+                    ticketNumber = p.backendTicketNumber ?: p.localId,
+                    status = displayStatus,
+                    priority = "high",
+                    cropName = p.cropName,
+                    crop = p.cropName,
+                    transcript = p.queryText,
+                    reason = if (p.isSynced) "Escalated to Officer" else "Offline Escalation (Saved Locally - Pending Sync)",
+                    resolutionPrescription = null,
+                    officerResponse = null,
+                    createdAt = dateStr,
+                    resolvedAt = null
+                )
+            }
+        } catch (_: Exception) {
+            emptyList()
+        }
+
+        if (token == null) {
+            return@withContext if (localPending.isNotEmpty()) Result.success(localPending) else Result.failure(Exception("Not authenticated"))
+        }
+
         try {
             val res = api.getFarmerTickets("Bearer $token")
             if (res.isSuccessful && res.body() != null) {
-                Result.success(res.body()!!)
+                val remoteTickets = res.body()!!
+                val remoteNumbers = remoteTickets.map { it.ticketNumber }.toSet()
+                val remoteReasons = remoteTickets.map { it.reason }.toSet()
+                val unmergedLocal = localPending.filter { local ->
+                    local.status == "PENDING_SYNC" &&
+                    !remoteNumbers.contains(local.ticketNumber) &&
+                    !remoteReasons.any { it.contains(local.id) }
+                }
+                Result.success(unmergedLocal + remoteTickets)
             } else {
-                Result.failure(Exception("Error fetching tickets: ${res.code()}"))
+                if (localPending.isNotEmpty()) {
+                    Result.success(localPending)
+                } else {
+                    Result.failure(Exception("Error fetching tickets: ${res.code()}"))
+                }
             }
         } catch (e: Exception) {
-            Result.failure(e)
+            if (localPending.isNotEmpty()) {
+                Result.success(localPending)
+            } else {
+                Result.failure(e)
+            }
         }
     }
 

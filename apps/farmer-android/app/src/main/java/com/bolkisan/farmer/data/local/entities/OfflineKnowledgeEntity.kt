@@ -23,8 +23,13 @@ data class PendingSyncTicketEntity(
     val localId: String,
     val queryText: String,
     val cropName: String,
-    val audioPath: String?,
-    val imagePath: String?,
-    val timestamp: Long,
-    val isSynced: Boolean = false
+    val audioPath: String? = null,
+    val imagePath: String? = null,
+    val timestamp: Long = System.currentTimeMillis(),
+    val isSynced: Boolean = false,
+    val farmerId: String? = null,
+    val conversationContext: String? = null,
+    val language: String = "te",
+    val syncStatus: String = if (isSynced) "SENT_TO_OFFICER" else "PENDING_SYNC",
+    val backendTicketNumber: String? = null
 )

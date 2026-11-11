@@ -519,11 +519,33 @@ class FakeOfflineKnowledgeDao : OfflineKnowledgeDao {
     override fun getUnsyncedCount(): Flow<Int> = flowOf(pendingTickets.count { !it.isSynced })
     override suspend fun getUnsyncedCountSync(): Int = pendingTickets.count { !it.isSynced }
     override fun getAllPendingTickets(): Flow<List<PendingSyncTicketEntity>> = flowOf(pendingTickets)
+    override suspend fun getAllPendingTicketsSync(): List<PendingSyncTicketEntity> = pendingTickets.toList()
+
+    override suspend fun getPendingTicketById(localId: String): PendingSyncTicketEntity? =
+        pendingTickets.firstOrNull { it.localId == localId }
+
+    override suspend fun markTicketSyncedWithDetails(localId: String, status: String, ticketNum: String?) {
+        val idx = pendingTickets.indexOfFirst { it.localId == localId }
+        if (idx != -1) {
+            pendingTickets[idx] = pendingTickets[idx].copy(
+                isSynced = true,
+                syncStatus = status,
+                backendTicketNumber = ticketNum
+            )
+        }
+    }
+
+    override suspend fun updateSyncStatus(localId: String, status: String) {
+        val idx = pendingTickets.indexOfFirst { it.localId == localId }
+        if (idx != -1) {
+            pendingTickets[idx] = pendingTickets[idx].copy(syncStatus = status)
+        }
+    }
 
     override suspend fun markTicketSynced(localId: String) {
         val idx = pendingTickets.indexOfFirst { it.localId == localId }
         if (idx != -1) {
-            pendingTickets[idx] = pendingTickets[idx].copy(isSynced = true)
+            pendingTickets[idx] = pendingTickets[idx].copy(isSynced = true, syncStatus = "SENT_TO_OFFICER")
         }
     }
 }

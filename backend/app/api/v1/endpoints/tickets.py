@@ -60,6 +60,7 @@ class OfflineSyncItem(BaseModel):
     language: Optional[str] = "te"
     image_url: Optional[str] = None
     created_at_epoch: Optional[int] = None
+    conversation_id: Optional[str] = None
 
 class OfflineSyncRequest(BaseModel):
     pending_tickets: List[OfflineSyncItem]
@@ -302,9 +303,28 @@ async def sync_offline_tickets(
             continue
 
         ticket_num = generate_ticket_number()
+
+        crop_obj = None
+        if crop_name and crop_name != "General":
+            crop_obj = db.query(Crop).filter(
+                (func.lower(Crop.name_en) == crop_name.lower()) |
+                (func.lower(Crop.name_te) == crop_name.lower()) |
+                (func.lower(Crop.name_hi) == crop_name.lower())
+            ).first()
+
+        conv_id = getattr(item, "conversation_id", None)
+        if not conv_id:
+            latest_conv = db.query(Conversation).filter(
+                Conversation.user_id == user_id
+            ).order_by(Conversation.created_at.desc()).first()
+            if latest_conv:
+                conv_id = latest_conv.id
+
         ticket = AgriculturalTicket(
             ticket_number=ticket_num,
             farmer_id=user_id,
+            crop_id=crop_obj.id if crop_obj else None,
+            conversation_id=conv_id,
             state=state,
             district=district,
             mandal=mandal,
@@ -316,6 +336,25 @@ async def sync_offline_tickets(
             attached_image_urls=[item.image_url] if item.image_url else []
         )
         db.add(ticket)
+        db.flush()
+
+        # Seed initial TicketMessage so officer dashboard chat thread has the inquiry
+        first_img = item.image_url
+        init_msg = TicketMessage(
+            ticket_id=ticket.id,
+            sender_id=user_id,
+            msg_type="image" if (first_img and not item.question_text) else "text",
+            content=item.question_text or "Offline escalated inquiry",
+            media_url=first_img
+        )
+        db.add(init_msg)
+
+        if conv_id:
+            conv = db.query(Conversation).filter(Conversation.id == conv_id).first()
+            if conv:
+                conv.escalation_status = "ESCALATED"
+                conv.updated_at = datetime.now(timezone.utc)
+
         db.commit()
         db.refresh(ticket)
         synced.append({

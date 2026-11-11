@@ -103,7 +103,8 @@ data class TicketEscalateResponseDto(
     @SerializedName("ticket_number") val ticketNumber: String,
     @SerializedName("mandal") val mandal: String,
     @SerializedName("priority") val priority: String,
-    @SerializedName("message") val message: String
+    @SerializedName("message") val message: String,
+    @SerializedName("is_offline_saved") val isOfflineSaved: Boolean = false
 )
 
 data class TicketItemDto(
@@ -178,7 +179,8 @@ data class OfflineSyncItemDto(
     @SerializedName("question_text") val questionText: String,
     @SerializedName("image_url") val imageUrl: String? = null,
     @SerializedName("language") val language: String? = "te",
-    @SerializedName("created_at_epoch") val createdAtEpoch: Long? = null
+    @SerializedName("created_at_epoch") val createdAtEpoch: Long? = null,
+    @SerializedName("conversation_id") val conversationId: String? = null
 )
 
 data class OfflineSyncRequestDto(

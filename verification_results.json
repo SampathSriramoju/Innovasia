@@ -9,19 +9,19 @@
     "step": 2,
     "name": "Farmer Asks Agricultural Question",
     "status": "PASSED",
-    "details": "Conversation ID: ec6c439b-7f7d-4ce7-9f3f-e8555047ba6e, Query: 'మిరప తోటలో ఆకులు ముడుచుకుపోయి పసుపు మచ్చలు వచ్చాయి, ఏ మందు కొట్టాలి?'"
+    "details": "Conversation ID: 30f3e85a-d0bd-4775-a921-e316209c8db2, Query: 'మిరప తోటలో ఆకులు ముడుచుకుపోయి పసుపు మచ్చలు వచ్చాయి, ఏ మందు కొట్టాలి?'"
   },
   {
     "step": 3,
     "name": "Contact Agricultural Officer (Escalate)",
     "status": "PASSED",
-    "details": "Ticket Number: BK-2026-F1AE121C7E1B, ID: 0e440e98-1eee-493c-9c05-517f20574763, Linked Conv: ec6c439b-7f7d-4ce7-9f3f-e8555047ba6e"
+    "details": "Ticket Number: BK-2026-3DCC8C3EBE20, ID: 3d6e49bb-e45a-4c44-acc1-c8a86cd50cbc, Linked Conv: 30f3e85a-d0bd-4775-a921-e316209c8db2"
   },
   {
     "step": 4,
     "name": "Ticket Appears in Officer Dashboard",
     "status": "PASSED",
-    "details": "Ticket BK-2026-F1AE121C7E1B discovered in mandal jurisdiction queue (Geesugonda)"
+    "details": "Ticket BK-2026-3DCC8C3EBE20 discovered in mandal jurisdiction queue (Geesugonda)"
   },
   {
     "step": 5,
@@ -39,19 +39,19 @@
     "step": 7,
     "name": "Officer Sends Advisory Reply",
     "status": "PASSED",
-    "details": "Message ID: 984c6c7e-d9e6-4dfe-a69d-f5b0e169e96c, Status transitioned to RESPONDED"
+    "details": "Message ID: 1dbdddfb-d110-4447-a462-16673021ddca, Status transitioned to RESPONDED"
   },
   {
     "step": 8,
     "name": "Farmer Receives Advisory in Real-Time",
     "status": "PASSED",
-    "details": "Verified synchronization: Officer message synced to Conversation ec6c439b-7f7d-4ce7-9f3f-e8555047ba6e and Ticket 0e440e98-1eee-493c-9c05-517f20574763"
+    "details": "Verified synchronization: Officer message synced to Conversation 30f3e85a-d0bd-4775-a921-e316209c8db2 and Ticket 3d6e49bb-e45a-4c44-acc1-c8a86cd50cbc"
   },
   {
     "step": 9,
     "name": "Farmer Follow-up with Image",
     "status": "PASSED",
-    "details": "Message ID: 0bcb142d-ecf5-402f-8b42-512eaae2a8bd, Image attached: https://storage.bolkisan.gov.in/farmer_uploads/chilli_leaf_closeup_02.jpg"
+    "details": "Message ID: 0a31e988-fff2-4691-940c-d6d0fdc28216, Image attached: https://storage.bolkisan.gov.in/farmer_uploads/chilli_leaf_closeup_02.jpg"
   },
   {
     "step": 10,

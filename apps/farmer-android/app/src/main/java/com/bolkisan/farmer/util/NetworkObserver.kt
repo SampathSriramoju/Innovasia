@@ -30,7 +30,13 @@ class NetworkObserver(private val context: Context) {
                     val hasInternet = caps?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) == true
                     val isValidated = caps?.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED) == true
                     // Do NOT mark isOnline = true merely because Wi-Fi is connected without validated internet
-                    _isOnline.value = hasInternet && isValidated
+                    val connected = hasInternet && isValidated
+                    _isOnline.value = connected
+                    if (connected) {
+                        try {
+                            com.bolkisan.farmer.data.worker.SyncWorker.enqueue(context)
+                        } catch (_: Exception) {}
+                    }
                 }
 
                 override fun onLost(network: Network) {
@@ -55,7 +61,13 @@ class NetworkObserver(private val context: Context) {
                     val hasInternet = networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
                     val isValidated = networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
                     // Strict check: NET_CAPABILITY_VALIDATED along with NET_CAPABILITY_INTERNET
-                    _isOnline.value = hasInternet && isValidated
+                    val connected = hasInternet && isValidated
+                    _isOnline.value = connected
+                    if (connected) {
+                        try {
+                            com.bolkisan.farmer.data.worker.SyncWorker.enqueue(context)
+                        } catch (_: Exception) {}
+                    }
                 }
             }
         )

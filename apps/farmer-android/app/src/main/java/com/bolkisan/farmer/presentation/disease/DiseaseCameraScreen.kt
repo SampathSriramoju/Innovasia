@@ -267,7 +267,12 @@ fun DiseaseCameraScreen(
             )
             isEscalating = false
             if (res.isSuccess) {
-                escalationNotice = strings.escalationSent(res.getOrNull()?.ticketNumber ?: "")
+                val resp = res.getOrNull()
+                if (resp?.isOfflineSaved == true || resp?.status in listOf("SAVED_OFFLINE", "PENDING_SYNC")) {
+                    escalationNotice = "Your request has been saved. It will be sent to the extension officer automatically when internet connectivity is restored."
+                } else {
+                    escalationNotice = strings.escalationSent(resp?.ticketNumber ?: "")
+                }
             } else {
                 escalationNotice = strings.escalationSendFailed
             }
